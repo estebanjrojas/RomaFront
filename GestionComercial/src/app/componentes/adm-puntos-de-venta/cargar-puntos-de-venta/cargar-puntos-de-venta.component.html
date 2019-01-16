@@ -1,0 +1,143 @@
+<app-cabecera></app-cabecera>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!----## Inicio Form Principal ##---->
+<form id="empleadosFormId" [formGroup]="empleadosForm" (ngSubmit)="guardar()">
+  <input type="hidden" formControlName="nombre_usuario">
+  <!----## Inicio Container Principal ##---->
+  <div class="container">
+    <!----## Inicio Row Principal ##---->
+    <div class="row">
+      <!----## Inicio Columna 12  ##---->
+      <div class="col-md-12 m-0 p-0">
+        <br>
+        <h3>Puntos de Venta</h3>
+        <hr>
+        <h5>Cargar Punto de Venta</h5>
+        <br>
+        <!----## Inicio Row Sucursal ##---->
+        <div class="row">
+          <div class="col-md-5">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Sucursal</label>
+              </div>
+              <select class="custom-select" id="inputGroupSelect01">
+                <option selected>Elegir</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!----## Fin Row Sucursal ##---->
+
+        <!----## Inicio Row Numero y Fecha ##---->
+        <div class="row">
+          <div class="col-md-5">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Número</span>
+              </div>
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+            </div>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-5">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Fecha De Alta</span>
+              </div>
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+            </div>
+          </div>
+        </div>
+        <!----## Fin Row Numero y Fecha ##---->
+        <br>
+        <!----## Inicio Row 1 Interior  ##---->
+        <div class="row">
+          <!----## Inicio Col 12  ##---->
+          <div class="col-md-12">
+            <!----## Inicio Card ##---->
+            <div class="card">
+              <div class="card-header">
+                Tipos de Facturas
+              </div>
+              <!----## Inicio Card Body ##---->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-5">
+                    <label for="tipoFactura" class="col-form-label">Tipo</label>
+
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-5">
+                    <label for="ultimoNroFact" class="col-form-label">Último Nro. Fact.</label>
+                  </div>
+                  <div class="col-md-1">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <select name="tipoFactura" id="tipoFactura" class="custom-select"></select>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-5">
+                    <input required type="text" formControlName="ultimoNroFact" class="form-control" placeholder="Último Numero de Factura">
+                  </div>
+                  <div class="col-md-1">
+                    <button class="btn btn-primary" id="btnAgregar">Agregar</button>
+                  </div>
+                </div>
+                <br>
+
+                Tipos de Facturas Habilitadas
+                <table class="table">
+                  <thead class="thead-dark" style="text-align: center">
+                    <th style='width:15%;'>Tipo</th>
+                    <th style='width:15%;'>Letra</th>
+                    <th style='width:15%;'>Último Nro</th>
+                    <th style='width:15%;'>Por Defecto</th>
+                    <th style='width:20%;'></th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td style='text-align: center'>
+                        <button class="btn btn-info">Obtener Nro WS AFIP</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="row">
+                  <div class="col-md-12" align="center">
+                    <input type="submit" class="btn btn-primary" value="Volver" /> &nbsp;
+                    <input type="submit" class="btn btn-primary" value="Guardar" />
+                  </div>
+                </div>
+
+
+
+              </div>
+              <!----## Fin Card Body ##---->
+            </div>
+            <!----## Fin Card ##---->
+          </div>
+          <!----## Fin Col 12  ##---->
+        </div>
+        <!----## Fin Row 1 Interior  ##---->
+        <br>
+      </div>
+      <!----## Fin Columna 12  ##---->
+    </div>
+    <!----## Fin Row Principal ##---->
+  </div>
+  <!----## Fin Container Principal ##---->
+</form>
+<!----## Fin Form Principal ##---->
+
+<app-pie></app-pie>

@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">ROMA</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Empleados
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/empleados/busqueda-empleados">Buscar Empleados</a>
+          <a class="dropdown-item" href="/empleados/cargar-empleados">Cargar Empleados</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Productos
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/productos/busqueda-productos">Buscar Productos</a>
+          <a class="dropdown-item" href="/productos/cargar-productos">Cargar Productos</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Usuarios
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/usuarios/busqueda-usuarios">Buscar Usuarios</a>
+          <a class="dropdown-item" href="/usuarios/cargar-usuarios">Cargar Usuarios</a>
+          <a class="dropdown-item" href="/usuarios/administrar-perfiles">Administrar Perfiles</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Puntos de Venta
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/puntos-venta/busqueda-puntos-venta">Buscar Punto de Venta</a>
+          <a class="dropdown-item" href="/puntos-venta/cargar-puntos-venta">Cargar Punto de Venta</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <span class="nav justify-content-end align-middle">
+    <button type="button" class="btn btn-outline-light" (click)="cerraSession()">Cerrar Sesion</button>
+  </span>
+</nav>

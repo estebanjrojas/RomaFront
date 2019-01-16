@@ -1,0 +1,78 @@
+<app-cabecera></app-cabecera>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!----## Inicio Form Principal ##---->
+<form id="empleadosFormId" [formGroup]="empleadosForm" (ngSubmit)="guardar()">
+  <input type="hidden" formControlName="nombre_usuario">
+  <!----## Inicio Container Principal ##---->
+  <div class="container">
+    <!----## Inicio Row Principal ##---->
+    <div class="row">
+      <!----## Inicio Columna 12  ##---->
+      <div class="col-md-12 m-0 p-0">
+        <br>
+        <h3>Usuarios</h3>
+        <hr>
+        <h5>Buscar Usuarios</h5>
+        <br>
+        <div class="card">
+          <div class="card-body">
+            <!--Inicio Busqueda-->
+            <div class="row">
+              <div class="col-md-5">
+                <input required type="text" formControlName="txtBuscar" class="form-control" placeholder="Nombre de Usuario o Apellido y Nombre Empleado">
+              </div>
+              <div class="col-md-1">
+                <button class="btn btn-primary" id="btnBuscar">Buscar</button>
+              </div>
+            </div>
+            <!--Fin Busqueda-->
+            <br>
+
+            <!----## Inicio Row 2 Interior  ##---->
+            <div class="row">
+              <!----## Inicio Col 12  ##---->
+              <div class="col-md-12">
+                <div class="card">
+                  <table class="table">
+                    <thead class="thead-dark" style="text-align: center">
+                      <th style='width:28%;'>Nombre de Usuario</th>
+                      <th style='width:28%;'>Apellido y Nombre</th>
+                      <th style='width:26%;'>Descripción</th>
+                      <th style='width:18%;'></th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style='text-align: center'>
+                          <button class="btn btn-info">Modificar</button>&nbsp;
+                          <button class="btn btn-danger">Baja</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-12" align="center">
+                    <input type="submit" class="btn btn-primary" value="Nuevo Usuario" />
+                  </div>
+                </div>
+              </div>
+              <!----## Fin Col 12  ##---->
+            </div>
+            <!----## Fin Row 1 Interior  ##---->
+          </div>
+        </div>
+      </div>
+      <!----## Fin Columna 12  ##---->
+    </div>
+    <!----## Fin Row Principal ##---->
+  </div>
+  <br>
+  <!----## Fin Container Principal ##---->
+</form>
+<!----## Fin Form Principal ##---->
+
+<app-pie></app-pie>

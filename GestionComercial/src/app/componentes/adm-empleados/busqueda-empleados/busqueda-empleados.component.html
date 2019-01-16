@@ -1,0 +1,83 @@
+<app-cabecera></app-cabecera>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!----## Inicio Form Principal ##---->
+<form id="empleadosFormId" [formGroup]="empleadosForm" (ngSubmit)="guardar()">
+  <input type="hidden" formControlName="nombre_usuario">
+  <!----## Inicio Container Principal ##---->
+  <div class="container">
+    <!----## Inicio Row Principal ##---->
+    <div class="row">
+      <!----## Inicio Columna 12  ##---->
+      <div class="col-md-12 m-0 p-0">
+        <br>
+        <h3>Empleados</h3>
+        <hr>
+        <h5>Lista de Empleados</h5>
+        <br>
+        <div class="card">
+          <div class="card-body">
+            <!--Inicio Busqueda-->
+            <div class="row">
+              <label for="txtBuscar" class="col-md-1 col-form-label"><b>&nbsp; Buscar</b></label>
+              <div class="col-md-5">
+                <input type="text" id="txtBuscar" class="form-control" placeholder="Ingrese documento, apellido o nombre a buscar"
+                  value="" />
+              </div>
+            </div>
+            <!--Fin Busqueda-->
+            <br>
+
+            <!----## Inicio Row 2 Interior  ##---->
+            <div class="row">
+              <!----## Inicio Col 12  ##---->
+              <div class="col-md-12">
+                <div class="card">
+                  <table class="table">
+                    <thead class="thead-dark" style="text-align: center">
+                      <th style='width:20%;'>Nombre</th>
+                      <th style='width:20%;'>Apellido</th>
+                      <th style='width:5%;'>Documento</th>
+                      <th style='width:10%;'>F. Nac.</th>
+                      <th style='width:5%;'>Telefono</th>
+                      <th style='width:10%;'>Puesto</th>
+                      <th style='width:20%;'>Opciones</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style='text-align: center'>
+                          <button class="btn btn-info">Modificar</button>&nbsp;
+                          <button class="btn btn-danger">Eliminar</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12" align="center">
+                      <input type="submit" class="btn btn-primary" value="Nuevo Empleado" />
+                    </div>
+                  </div>
+              </div>
+              <!----## Fin Col 12  ##---->
+            </div>
+            <!----## Fin Row 1 Interior  ##---->
+          </div>
+        </div>
+      </div>
+      <!----## Fin Columna 12  ##---->
+    </div>
+    <!----## Fin Row Principal ##---->
+  </div>
+  <br>
+  <!----## Fin Container Principal ##---->
+</form>
+<!----## Fin Form Principal ##---->
+
+<app-pie></app-pie>

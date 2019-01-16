@@ -1,0 +1,240 @@
+<app-cabecera></app-cabecera>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!----## Inicio Form Principal ##---->
+<form id="empleadosFormId" [formGroup]="empleadosForm" (ngSubmit)="guardar()">
+  <input type="hidden" formControlName="nombre_usuario">
+  <!----## Inicio Container Principal ##---->
+  <div class="container">
+    <!----## Inicio Row Principal ##---->
+    <div class="row">
+      <!----## Inicio Columna 12  ##---->
+      <div class="col-md-12 m-0 p-0">
+        <br>
+        <h3>Empleados</h3>
+        <hr>
+        <h5>Cargar Empleados</h5>
+        <br>
+        <!----## Inicio Row 1 Interior  ##---->
+        <div class="row">
+          <!----## Inicio Col 12  ##---->
+          <div class="col-md-12">
+            <!----## Inicio Card ##---->
+            <div class="card">
+              <!----## Inicio Card Body ##---->
+              <div class="card-body">
+                <div class="row">
+                  <!----## Inicio Primera Columna 6 ##---->
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!--~~~~~~~~~ Documento ~~~~~~~~~~~-->
+                        <label for="edad">Documento</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" required formControlName="documento" placeholder="Documento"
+                            aria-label="Text input with segmented dropdown button">
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-secondary">Buscar</button>
+                          </div>
+                        </div>
+                        <!--<p class="error_message" *ngIf="empleadosForm.get('edad').hasError('required') && (this.submitted || empleadosForm.get('edad').dirty)">Por
+                        favor, ingrese una edad</p>
+                      <p class="error_message" *ngIf="empleadosForm.get('edad').hasError('pattern') && (this.submitted || empleadosForm.get('edad').dirty)">Por
+                        favor, ingrese una edad v&aacute;lida</p>-->
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!--~~~~~~~~~ Apellido ~~~~~~~~~~~-->
+                        <label for="apellido">Apellido</label>
+                        <input required type="text" formControlName="apellido" class="form-control" placeholder="Apellido">
+                        <p class="error_message" *ngIf="empleadosForm.get('apellido').hasError('required') && (this.submitted || empleadosForm.get('apellido').dirty)">Por
+                          favor, ingrese un apellido</p>
+                        <p class="error_message" *ngIf="empleadosForm.get('apellido').hasError('pattern') && (this.submitted || empleadosForm.get('apellido').dirty)">Por
+                          favor, ingrese un apellido v&aacute;lido</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!--~~~~~~~~~ Nombre ~~~~~~~~~~~-->
+                        <label for="nombre">Nombre</label>
+                        <input required type="text" formControlName="nombre" class="form-control" placeholder="Nombre">
+                        <p class="error_message" *ngIf="empleadosForm.get('nombre').hasError('required') && (this.submitted || empleadosForm.get('nombre').dirty)">Por
+                          favor, ingrese un nombre</p>
+                        <p class="error_message" *ngIf="empleadosForm.get('nombre').hasError('pattern') && (this.submitted || empleadosForm.get('nombre').dirty)">Por
+                          favor, ingrese un nombre v&aacute;lido</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!--~~~~~~~~~ Fecha de Nacimiento ~~~~~~~~~~~-->
+                        <label for="edad">Fecha de Nacimiento</label>
+                        <input required type="date" formControlName="fecha_nacimiento" style="width:260px;" class="form-control"
+                          placeholder="Fecha de Nacimiento" bsDatepicker>
+                        <p class="error_message" *ngIf="empleadosForm.get('fecha_nacimiento').hasError('required') && (this.submitted || empleadosForm.get('fecha_nacimiento').dirty)">Por
+                          favor, ingrese una edad</p>
+                        <p class="error_message" *ngIf="empleadosForm.get('fecha_nacimiento').hasError('pattern') && (this.submitted || empleadosForm.get('fecha_nacimiento').dirty)">Por
+                          favor, ingrese una edad v&aacute;lida</p>
+                      </div>
+                    </div>
+                  </div>
+                  <!----## Fin Primera Columna 6 ##---->
+
+                  <!----## Inicio Segunda Columna 6 ##---->
+                  <div class="col-md-6">
+                    <div class="card">
+                      <div class="card-header">
+                        Relación con la Empresa
+                      </div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <!--~~~~~~~~~ Legajo ~~~~~~~~~~~-->
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Legajo</label>
+                              </div>
+                              <input type="text" formControlName="legajo" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <!--~~~~~~~~~ Oficina ~~~~~~~~~~~-->
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Oficina</label>
+                              </div>
+                              <input type="text" formControlName="oficina" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Fecha de Ingreso</label>
+                              </div>
+                              <input type="date" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Descripción</label>
+                              </div>
+                              <input type="text" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!----## Fin Segunda Columna 6 ##---->
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        Domicilio
+                      </div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-7">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Calle</label>
+                              </div>
+                              <input type="text" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Nº</label>
+                              </div>
+                              <input type="text" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Piso</label>
+                              </div>
+                              <input type="text" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Depto</label>
+                              </div>
+                              <input type="text" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Manzana</label>
+                              </div>
+                              <input type="text" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-5">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Provincia</label>
+                              </div>
+                              <select formControlName="provincia" class="custom-select">
+                                <option *ngFor="let provincia of this.provincias" [value]="provincia.codigo">
+                                  {{provincia.descrip}}
+                                </option>
+                              </select>
+                              <p class="error_message" *ngIf="empleadosForm.get('provincia').invalid && (this.submitted || empleadosForm.get('provincia').dirty)">Por
+                                favor, seleccione una provincia</p>
+                            </div>
+                          </div>
+                          <div class="col-md-5">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Ciudad</label>
+                              </div>
+                              <select name="ciudad" id="ciudad" class="custom-select"></select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-12" align="center">
+                    <input type="submit" class="btn btn-outline-primary" value="Volver" /> &nbsp;
+                    <input type="submit" class="btn btn-primary" value="Guardar" />
+                  </div>
+                </div>
+
+              </div>
+              <!----## Fin Card Body ##---->
+            </div>
+            <!----## Fin Card ##---->
+          </div>
+          <!----## Fin Col 12  ##---->
+        </div>
+        <!----## Fin Row 1 Interior  ##---->
+        <br>
+      </div>
+      <!----## Fin Columna 12  ##---->
+    </div>
+    <!----## Fin Row Principal ##---->
+  </div>
+  <!----## Fin Container Principal ##---->
+</form>
+<!----## Fin Form Principal ##---->
+
+<form class="example-form">
+  
+</form>
+
+<app-pie></app-pie>

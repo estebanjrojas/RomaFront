@@ -1,0 +1,95 @@
+<app-cabecera></app-cabecera>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!----## Inicio Form Principal ##---->
+<form id="empleadosFormId" [formGroup]="empleadosForm" (ngSubmit)="guardar()">
+  <input type="hidden" formControlName="nombre_usuario">
+  <!----## Inicio Container Principal ##---->
+  <div class="container">
+    <!----## Inicio Row Principal ##---->
+    <div class="row">
+      <!----## Inicio Columna 12  ##---->
+      <div class="col-md-12 m-0 p-0">
+        <br>
+        <h3>Usuarios</h3>
+        <hr>
+        <h5>Cargar Usuarios</h5>
+        <br>
+        <div class="card">
+          <div class="card-body">
+            <!----## Inicio Row Principal Interna ##---->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Empleado</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01">
+                      <option selected>Elegir</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon3">Nombre de Usuario</span>
+                    </div>
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="gridCheck">
+                          <label class="form-check-label" for="gridCheck">
+                            Debug
+                          </label>
+                        </div>
+                      </div>
+                </div>
+              </div>
+              <div class="col-md-1"></div>
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-body" style="text-align: center">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button class="btn btn-warning">Administrar Perfiles</button>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button class="btn btn-warning">Reestablecer Contraseña</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!----## Fin Row Principal Interna ##---->
+            <br><br>
+            <hr>
+            <div class="row">
+              <div class="col-md-12" align="center">
+                <input type="submit" class="btn btn-primary" value="Volver" /> &nbsp;
+                <input type="submit" class="btn btn-primary" value="Guardar" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
+      <!----## Fin Columna 12  ##---->
+    </div>
+    <!----## Fin Row Principal ##---->
+  </div>
+  <!----## Fin Container Principal ##---->
+</form>
+<!----## Fin Form Principal ##---->
+
+<app-pie></app-pie>
