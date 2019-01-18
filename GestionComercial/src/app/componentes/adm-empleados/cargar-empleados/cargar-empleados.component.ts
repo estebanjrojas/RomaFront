@@ -1,8 +1,19 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TabgralService } from '../../../servicios/tabgral.service';
+import { EmpleadosService } from '../../../servicios/empleados.service';
+import { Ciudades } from '../../../modelos/Ciudades';
 import { Component, OnInit } from '@angular/core';
+import { startWith, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+
+//Agregado hoy
+export interface CiudadesInterface {
+  descrip: string;
+}
+//Fin agregado hoy
+
+
 
 @Component({
   selector: 'app-cargar-empleados',
@@ -13,13 +24,22 @@ export class CargarEmpleadosComponent implements OnInit {
 
   provincias = new Array<Tabgral>();
   empleadosForm: FormGroup;
-
   nombre_usuario = new FormControl('', Validators.required);
-  myControl: FormControl = new FormControl();
-  filteredOptions: Observable<string[]>;
 
+  ciudadesInput = new FormControl();
+
+  ciudades: CiudadesInterface[] = [
+    { descrip: "San miguel de tucuman" },
+    { descrip: "Tucuman" }
+  ];
+
+  ciudadesClass: Ciudades = new Ciudades();
+
+
+  filteredOptions: Observable<CiudadesInterface[]>;
 
   constructor(private tabgral: TabgralService
+    , private empleadosService: EmpleadosService
     , private toastr: ToastrService
     , private formBuilder: FormBuilder) {
     this.empleadosForm = this.formBuilder.group({
@@ -102,7 +122,7 @@ export class CargarEmpleadosComponent implements OnInit {
         '', Validators.compose([
 
         ])
-      ]
+      ], ciudades: ''
 
     });
   }
@@ -122,7 +142,36 @@ export class CargarEmpleadosComponent implements OnInit {
       }
       this.empleadosForm.controls.provincia.setValue(1);
     });
+
+    //Obtengo ciudades y las asigno a la clase Ciudades.
+    this.tabgral.selectByNroTab(16).subscribe(respuesta => {
+      console.log(respuesta);
+      let cast: any = respuesta;
+      this.ciudadesClass = cast;
+      //console.log("ciudades:"+this.ciudades[2].descrip);
+    });
+
+
+    this.filteredOptions = this.ciudadesInput.valueChanges
+      .pipe(
+        startWith<string | CiudadesInterface>(''),
+        map(value => typeof value === 'string' ? value : value.descrip),
+        map(descrip => descrip ? this._filter(descrip) : this.ciudades.slice())
+      );
   }
+
+
+  displayFn(user?: CiudadesInterface): string | undefined {
+    return user ? user.descrip : undefined;
+  }
+
+  private _filter(descrip: string): CiudadesInterface[] {
+    const filterValue = descrip.toLowerCase();
+
+    return this.ciudades.filter(option => option.descrip.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+
 
 }
 

@@ -10,7 +10,7 @@ export class EmpleadosService {
 
   constructor(private http: HttpClient) { }
 
-  selectCiudadByNombre(nombre): Observable<any> {
-    return this.http.get('http://192.168.1.46:3000/selectCiudadByNombre/'+nombre);
+  selectAllCiudades(): Observable<any> {
+    return this.http.get('http://192.168.1.46:3000/selectAllCiudades/');
   }
 }

@@ -20,6 +20,16 @@ import { AdministrarPerfilesComponent } from './componentes/adm-usuarios/adminis
 import { BuscarProductosComponent } from './componentes/adm-productos/buscar-productos/buscar-productos.component';
 import { CargarProductosComponent } from './componentes/adm-productos/cargar-productos/cargar-productos.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { 
+  MatButtonModule,
+  MatCheckboxModule,
+  MatFormFieldModule,
+  MatAutocompleteModule,
+  MatOptionModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatNativeDateModule, 
+   } from '@angular/material';
 
 
 //Rutas para el Router de Angular
@@ -62,6 +72,14 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatButtonModule, 
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatOptionModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule, 
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',
