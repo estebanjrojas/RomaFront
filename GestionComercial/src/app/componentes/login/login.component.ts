@@ -34,12 +34,11 @@ export class LoginComponent implements OnInit {
   loginUser() {
     this.Auth.solicitarAccesoUsuario(this.formulario.controls.txtUsuario.value, this.formulario.controls.txtPassword.value).subscribe(response => {
       var cast: any = response;
-      this.acceso = cast.autorizado;
-      let usuario = String(this.formulario.controls.txtUsuario.value);
-      localStorage.setItem('usuario_autenticado', String(this.acceso));
-      localStorage.setItem('nomb_usr', usuario);
+      if (cast.respuesta!=undefined) {
+   
+        let usuario = String(this.formulario.controls.txtUsuario.value);
+        localStorage.setItem('tk_acceso', String(cast.respuesta));
 
-      if (this.acceso) {
         this.usuario_serv.getDatosUsuario(usuario).subscribe(respuesta => {
           let cast: any = respuesta;
           localStorage.setItem('apellido_usr', cast.apellido);

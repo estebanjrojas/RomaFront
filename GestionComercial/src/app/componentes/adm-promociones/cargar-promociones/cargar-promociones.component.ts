@@ -2,51 +2,61 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-cargar-puntos-de-venta',
-  templateUrl: './cargar-puntos-de-venta.component.html',
-  styleUrls: ['./cargar-puntos-de-venta.component.css']
+  selector: 'app-cargar-promociones',
+  templateUrl: './cargar-promociones.component.html',
+  styleUrls: ['./cargar-promociones.component.css']
 })
-export class CargarPuntosDeVentaComponent implements OnInit {
+export class CargarPromocionesComponent implements OnInit {
 
   //Instancias
-  puntosdeventaForm: FormGroup;
+  promocionesForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
-    this.puntosdeventaForm = this.formBuilder.group({
-      sucursal: [
+    this.promocionesForm = this.formBuilder.group({
+      nombre_promocion: [
         '', Validators.compose([
           Validators.required
         ])
       ],
-      numero: [
+      descripcion_promocion: [
         '', Validators.compose([
           Validators.required
         ])
       ],
-      fecha_alta: [
+      fecha_desde: [
+        '', Validators.compose([
+          Validators.required
+        ])
+      ],
+      fecha_hasta: [
+        '', Validators.compose([
+          Validators.required
+        ])
+      ],
+      producto: [
         '', Validators.compose([
           Validators.required
         ])
       ],
       tipo: [
         '', Validators.compose([
-          Validators.required
         ])
       ],
-      ultimo_nro_factura: [
+      valor: [
         '', Validators.compose([
-          Validators.required
+        ])
+      ],
+      unidad: [
+        '', Validators.compose([
         ])
       ],
       nombre_usuario: [
         '', Validators.compose([
-          Validators.required
+
         ])
       ]
     });
   }
-
-
   ngOnInit() {
   }
 

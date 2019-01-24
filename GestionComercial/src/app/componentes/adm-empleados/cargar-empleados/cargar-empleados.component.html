@@ -25,54 +25,41 @@
                 <div class="row">
                   <!----## Inicio Primera Columna 6 ##---->
                   <div class="col-md-6">
+                    <h5>Datos Personales</h5>
+                    <br>
                     <div class="row">
                       <div class="col-md-12">
                         <!--~~~~~~~~~ Documento ~~~~~~~~~~~-->
-                        <label for="edad">Documento</label>
-                        <div class="input-group">
-                          <input type="text" class="form-control" required formControlName="documento" placeholder="Documento"
-                            aria-label="Text input with segmented dropdown button">
-                          <div class="input-group-append">
-                            <button type="button" class="btn btn-outline-secondary">Buscar</button>
-                          </div>
-                        </div>
-                        <!--<p class="error_message" *ngIf="empleadosForm.get('edad').hasError('required') && (this.submitted || empleadosForm.get('edad').dirty)">Por
-                        favor, ingrese una edad</p>
-                      <p class="error_message" *ngIf="empleadosForm.get('edad').hasError('pattern') && (this.submitted || empleadosForm.get('edad').dirty)">Por
-                        favor, ingrese una edad v&aacute;lida</p>-->
+                        <mat-form-field class="example-full-width" style="width:80%">
+                          <input matInput placeholder="Documento" formControlName="documento">
+                        </mat-form-field> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-outline-secondary">Buscar</button>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-12">
                         <!--~~~~~~~~~ Apellido ~~~~~~~~~~~-->
-                        <label for="apellido">Apellido</label>
-                        <input required type="text" formControlName="apellido" class="form-control" placeholder="Apellido">
-                        <p class="error_message" *ngIf="empleadosForm.get('apellido').hasError('required') && (this.submitted || empleadosForm.get('apellido').dirty)">Por
-                          favor, ingrese un apellido</p>
-                        <p class="error_message" *ngIf="empleadosForm.get('apellido').hasError('pattern') && (this.submitted || empleadosForm.get('apellido').dirty)">Por
-                          favor, ingrese un apellido v&aacute;lido</p>
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Apellido" formControlName="apellido">
+                        </mat-form-field>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-12">
                         <!--~~~~~~~~~ Nombre ~~~~~~~~~~~-->
-                        <label for="nombre">Nombre</label>
-                        <input required type="text" formControlName="nombre" class="form-control" placeholder="Nombre">
-                        <p class="error_message" *ngIf="empleadosForm.get('nombre').hasError('required') && (this.submitted || empleadosForm.get('nombre').dirty)">Por
-                          favor, ingrese un nombre</p>
-                        <p class="error_message" *ngIf="empleadosForm.get('nombre').hasError('pattern') && (this.submitted || empleadosForm.get('nombre').dirty)">Por
-                          favor, ingrese un nombre v&aacute;lido</p>
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Nombre" formControlName="nombre">
+                        </mat-form-field>
                       </div>
                     </div>
-                    <br>
                     <div class="row">
                       <div class="col-md-12">
                         <!--~~~~~~~~~ Fecha de Nacimiento ~~~~~~~~~~~-->
-                        <label for="edad">Fecha de Nacimiento</label>
                         <div class="row">
                           <div class="col-md-12">
                             <mat-form-field>
-                              <input matInput [matDatepicker]="pickerFechaNac" placeholder="Elija una fecha">
+                              <input matInput [matDatepicker]="pickerFechaNac" formControlName="fecha_nacimiento"
+                                placeholder="Fecha de Nacimiento">
                               <mat-datepicker-toggle matSuffix [for]="pickerFechaNac"></mat-datepicker-toggle>
                               <mat-datepicker #pickerFechaNac></mat-datepicker>
                             </mat-form-field>
@@ -93,37 +80,31 @@
                         <div class="row">
                           <div class="col-md-12">
                             <!--~~~~~~~~~ Legajo ~~~~~~~~~~~-->
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Legajo</label>
-                              </div>
-                              <input type="text" formControlName="legajo" class="form-control">
-                            </div>
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Legajo" formControlName="legajo">
+                            </mat-form-field>
                           </div>
                           <div class="col-md-12">
                             <!--~~~~~~~~~ Oficina ~~~~~~~~~~~-->
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Oficina</label>
-                              </div>
-                              <input type="text" formControlName="oficina" class="form-control">
-                            </div>
+                            <mat-form-field style="width:100%">
+                              <mat-select [(value)]="selected" placeholder="Oficina" formControlName="oficina">
+                                <mat-option>None</mat-option>
+                                <mat-option value="option1">Producto</mat-option>
+                                <mat-option value="option2">Servicio</mat-option>
+                              </mat-select>
+                            </mat-form-field>
                           </div>
                           <div class="col-md-12">
-                            <label class="input-group-text" for="inputGroupSelect01">Fecha de Ingreso</label>
                             <mat-form-field>
-                              <input matInput [matDatepicker]="picker" placeholder="Elija una fecha">
+                              <input matInput [matDatepicker]="picker" formControlName="fecha_ingreso" placeholder="Elija una fecha">
                               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                               <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
                           </div>
                           <div class="col-md-12">
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Descripción</label>
-                              </div>
-                              <input type="text" class="form-control">
-                            </div>
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Descripcion" formControlName="descripcion">
+                            </mat-form-field>
                           </div>
                         </div>
                       </div>
@@ -141,74 +122,45 @@
                       <div class="card-body">
                         <div class="row">
                           <div class="col-md-7">
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Calle</label>
-                              </div>
-                              <input type="text" class="form-control">
-                            </div>
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Calle" formControlName="calle">
+                            </mat-form-field>
                           </div>
                           <div class="col-md-2">
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Nº</label>
-                              </div>
-                              <input type="text" class="form-control">
-                            </div>
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Número" formControlName="numero">
+                            </mat-form-field>
                           </div>
                           <div class="col-md-2">
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Piso</label>
-                              </div>
-                              <input type="text" class="form-control">
-                            </div>
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Piso" formControlName="piso">
+                            </mat-form-field>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-md-3">
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Depto</label>
-                              </div>
-                              <input type="text" class="form-control">
-                            </div>
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Dpto" formControlName="depto">
+                            </mat-form-field>
                           </div>
                           <div class="col-md-3">
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Manzana</label>
-                              </div>
-                              <input type="text" class="form-control">
-                            </div>
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Manzana" formControlName="manzana">
+                            </mat-form-field>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-md-5">
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Provincia</label>
-                              </div>
-                              <select formControlName="provincia" class="custom-select">
-                                <option *ngFor="let provincia of this.provincias" [value]="provincia.codigo">
+                            <mat-form-field class="example-full-width">
+                              <mat-select placeholder="Provincia" formControlName="provincia">
+                                <mat-option *ngFor="let provincia of this.provincias" [value]="provincia.codigo">
                                   {{provincia.descrip}}
-                                </option>
-                              </select>
-                              <p class="error_message" *ngIf="empleadosForm.get('provincia').invalid && (this.submitted || empleadosForm.get('provincia').dirty)">Por
-                                favor, seleccione una provincia</p>
-                            </div>
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
                           </div>
+                          <div class="col-md-1"></div>
                           <div class="col-md-5">
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Ciudad</label>
-                              </div>
-                              <select name="ciudad" id="ciudad" class="custom-select"></select>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
                             <mat-form-field class="example-full-width">
                               <input type="text" placeholder="Ciudad" aria-label="Ciudad" matInput [formControl]="ciudadesInput"
                                 [matAutocomplete]="auto">
@@ -225,10 +177,10 @@
                   </div>
                 </div>
                 <br>
-                <div class="row">
+                <div class="row h-100">
                   <div class="col-md-12" align="center">
-                    <input type="submit" class="btn btn-outline-primary" value="Volver" /> &nbsp;
-                    <input type="submit" class="btn btn-primary" value="Guardar" />
+                    <input type="submit" class="btn btn-outline-primary btn-xs col-md-2" value="Volver" /> &nbsp;
+                    <input type="submit" class="btn btn-primary btn-xs col-md-2" value="Guardar" />
                   </div>
                 </div>
 
@@ -250,8 +202,5 @@
 </form>
 <!----## Fin Form Principal ##---->
 
-<form class="example-form">
-
-</form>
 
 <app-pie></app-pie>

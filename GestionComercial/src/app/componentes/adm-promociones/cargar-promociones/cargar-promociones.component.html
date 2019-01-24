@@ -1,7 +1,7 @@
 <app-cabecera></app-cabecera>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
-<form id="empleadosFormId" [formGroup]="productosForm">
+<form id="empleadosFormId" [formGroup]="promocionesForm">
 
   <input type="hidden" formControlName="nombre_usuario">
   <!----## Inicio Container Principal ##---->
@@ -11,9 +11,9 @@
       <!----## Inicio Columna 12  ##---->
       <div class="col-md-12 m-0 p-0">
         <br>
-        <h3>Productos</h3>
+        <h3>Promociones</h3>
         <hr>
-        <h5>Nuevo Producto</h5>
+        <h5>Nueva Promoción</h5>
         <br>
         <!----## Inicio Row 1 Interior  ##---->
         <div class="row">
@@ -28,74 +28,43 @@
                   <div class="col-md-6">
                     <div class="row">
                       <div class="col-md-12">
-                        <!--~~~~~~~~~ Código ~~~~~~~~~~~-->
-                        &nbsp; <mat-form-field class="example-full-width" style="width:90%">
-                          <input matInput placeholder="Código" formControlName="codigo">
+                        <!--~~~~~~~~~ Nombre Promoción ~~~~~~~~~~~-->
+                        <mat-form-field class="example-full-width" style="width:90%">
+                          <input matInput placeholder="Nombre" formControlName="nombre_promocion">
                         </mat-form-field>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-12">
-                        <!--~~~~~~~~~ Nombre Producto ~~~~~~~~~~~-->
-                        &nbsp; <mat-form-field class="example-full-width" style="width:90%">
-                          <input matInput placeholder="Nombre" formControlName="nombre_producto">
+                        <!--~~~~~~~~~ Descripción Promoción ~~~~~~~~~~~-->
+                        <mat-form-field class="example-full-width" style="width:90%">
+                          <input matInput placeholder="Descripción" formControlName="descripcion_promocion">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <mat-form-field>
+                          <input matInput [matDatepicker]="pickerFechaDesde" formControlName="fecha_desde" placeholder="Fecha Desde">
+                          <mat-datepicker-toggle matSuffix [for]="pickerFechaDesde"></mat-datepicker-toggle>
+                          <mat-datepicker #pickerFechaDesde></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-6">
+                        <mat-form-field>
+                          <input matInput [matDatepicker]="pickerFechaHasta" formControlName="fecha_hasta" placeholder="Fecha Hasta">
+                          <mat-datepicker-toggle matSuffix [for]="pickerFechaHasta"></mat-datepicker-toggle>
+                          <mat-datepicker #pickerFechaHasta></mat-datepicker>
                         </mat-form-field>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-12">
-                        <!--~~~~~~~~~ Descripción Producto ~~~~~~~~~~~-->
-                        &nbsp; <mat-form-field class="example-full-width" style="width:90%">
-                          <input matInput placeholder="Descripción" formControlName="descripcion_producto">
-                        </mat-form-field>
+
                       </div>
                     </div>
                   </div>
                   <!----## Fin Primera Columna 6 ##---->
-
-                  <!----## Inicio Segunda Columna 6 ##---->
-                  <div class="col-md-6">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <!--~~~~~~~~~ Tipo ~~~~~~~~~~~-->
-                        <mat-form-field style="width:100%">
-                          <mat-select [(value)]="selected" placeholder="Tipo" formControlName="tipo">
-                            <mat-option>None</mat-option>
-                            <mat-option value="option1">Producto</mat-option>
-                            <mat-option value="option2">Servicio</mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-5">
-                        <!--~~~~~~~~~ Precio ~~~~~~~~~~~-->
-                        <mat-form-field class="example-full-width" style="width:100%">
-                          <input matInput placeholder="Precio" formControlName="precio">
-                        </mat-form-field>
-                      </div>
-                      <div class="col-md-7">
-                        <mat-form-field style="width:100%">
-                          <mat-select [(value)]="selected" placeholder="Unidad" formControlName="unidad">
-                            <mat-option>None</mat-option>
-                            <mat-option value="option1">1</mat-option>
-                            <mat-option value="option2">2</mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-12">
-                        <!--~~~~~~~~~ Descripción Factura ~~~~~~~~~~~-->
-                        <mat-form-field class="example-full-width" style="width:100%">
-                          <input matInput placeholder="Descripción Factura" formControlName="descripcion_factura">
-                        </mat-form-field>
-                      </div>
-                    </div>
-                  </div>
-                  <!----## Fin Segunda Columna 6 ##---->
                 </div>
                 <br>
                 <!-- Inicio Card Caracteristicas del producto -->
@@ -103,29 +72,15 @@
                   <div class="col-md-12">
                     <div class="card">
                       <div class="card-header">
-                        Caracteristicas
+                        Productos
                       </div>
                       <div class="card-body">
                         <div class="row">
                           <div class="col-md-6">
                             <div class="row">
                               <div class="col-md-12">
-                                <mat-form-field class="example-full-width" style="width:90%">
-                                  <input matInput placeholder="Nombre" formControlName="nombre">
-                                </mat-form-field>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-12">
-                                <mat-form-field class="example-full-width" style="width:90%">
-                                  <input matInput placeholder="Descripción" formControlName="descripcion">
-                                </mat-form-field>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-12">
                                 <mat-form-field style="width:90%">
-                                  <mat-select [(value)]="selected" placeholder="Unidad Medida" formControlName="unidad_medida">
+                                  <mat-select [(value)]="selected" placeholder="Producto" formControlName="producto">
                                     <mat-option>None</mat-option>
                                     <mat-option value="option1">1</mat-option>
                                     <mat-option value="option2">2</mat-option>
@@ -135,25 +90,19 @@
                             </div>
                             <div class="row">
                               <div class="col-md-12">
-                                <mat-form-field class="example-full-width" style="width:70%">
-                                  <input matInput placeholder="Valor" formControlName="valor">
-                                </mat-form-field> &nbsp;&nbsp;&nbsp;
-                                <button mat-stroked-button>Agregar</button>
+                                <button class="btn btn-outline-secondary">Agregar</button>
                               </div>
                             </div>
                           </div>
-
                           <div class="col-md-6">
                             <table class="table">
                               <thead class="thead-dark" style="text-align: center">
                                 <th style='width:20%;'>Nombre</th>
                                 <th style='width:20%;'>Descrip.</th>
-                                <th style='width:5%;'>Unidad</th>
-                                <th style='width:10%;'>Valor</th>
+                                <th style='width:10%;'></th>
                               </thead>
                               <tbody>
                                 <tr>
-                                  <td></td>
                                   <td></td>
                                   <td></td>
                                   <td style='text-align: center'>
@@ -170,18 +119,71 @@
                     <br>
                   </div>
 
-                  <!-- Inicio Card de categorias del producto-->
+                  <!-- Inicio Card de Restricciones de la promoción-->
                   <div class="col-md-12">
                     <div class="card">
                       <div class="card-header">
-                        Categoria
+                        Restricciones
                       </div>
                       <div class="card-body">
-
+                        <div class="row">
+                          <div class="col-md-6">
+                            <mat-form-field style="width:100%">
+                              <mat-select [(value)]="selected" placeholder="Tipo" formControlName="tipo">
+                                <mat-option>None</mat-option>
+                                <mat-option value="option1">1</mat-option>
+                                <mat-option value="option2">2</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <mat-form-field class="example-full-width" style="width:90%">
+                              <input matInput placeholder="Valor" formControlName="valor">
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-3">
+                            <mat-form-field style="width:100%">
+                              <mat-select [(value)]="selected" placeholder="Unidad" formControlName="unidad">
+                                <mat-option>None</mat-option>
+                                <mat-option value="option1">1</mat-option>
+                                <mat-option value="option2">2</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-3">
+                            <button class="btn btn-outline-secondary">Agregar</button>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-8">
+                            <table class="table">
+                              <thead class="thead-dark" style="text-align: center">
+                                <th style='width:20%;'>Tipo</th>
+                                <th style='width:20%;'>Valor</th>
+                                <th style='width:20%;'>Unidad</th>
+                                <th style='width:10%;'></th>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td style='text-align: center'>
+                                    <button class="btn btn-danger">X</button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <!-- Fin Card de categorias del producto-->
+                  <!-- Fin Card de Restricciones de la promoción-->
 
                 </div>
                 <br>

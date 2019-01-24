@@ -1,0 +1,91 @@
+<app-cabecera></app-cabecera>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!----## Inicio Form Principal ##---->
+<form id="empleadosFormId" [formGroup]="categoriasForm">
+
+  <input type="hidden" formControlName="nombre_usuario">
+  <!----## Inicio Container Principal ##---->
+  <div class="container">
+    <!----## Inicio Row Principal ##---->
+    <div class="row">
+      <!----## Inicio Columna 12  ##---->
+      <div class="col-md-12 m-0 p-0">
+        <br>
+        <h3>Categorías</h3>
+        <hr>
+        <h5>Nueva Categoría</h5>
+        <br>
+        <!----## Inicio Row 1 Interior  ##---->
+        <div class="row">
+          <!----## Inicio Col 12  ##---->
+          <div class="col-md-12">
+            <!----## Inicio Card ##---->
+            <div class="card">
+              <!----## Inicio Card Body ##---->
+              <div class="card-body">
+                <div class="row">
+                  <!----## Inicio Primera Columna 6 ##---->
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!--~~~~~~~~~ Nombre Categoria ~~~~~~~~~~~-->
+                        <mat-form-field class="example-full-width" style="width:90%">
+                          <input matInput placeholder="Nombre" formControlName="nombre">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!--~~~~~~~~~ Descripción Categoria ~~~~~~~~~~~-->
+                        <mat-form-field class="example-full-width" style="width:90%">
+                          <input matInput placeholder="Descripción" formControlName="descripcion">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <!----## Fin Primera Columna 6 ##---->
+                </div>
+                <br>
+                <!-- Inicio Card Caracteristicas del producto -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        Categoría Padre
+                      </div>
+                      <div class="card-body">
+
+                      </div>
+                    </div>
+                    <!-- Fin Card Caracteristicas del producto -->
+                    <br>
+                  </div>
+                </div>
+                <br>
+                <div class="row h-100">
+                    <div class="col-md-12" align="center">
+                      <input type="submit" class="btn btn-outline-primary btn-xs col-md-2" value="Volver" /> &nbsp;
+                      <input type="submit" class="btn btn-primary btn-xs col-md-2" value="Guardar" />
+                    </div>
+                  </div>
+
+              </div>
+              <!----## Fin Card Body ##---->
+            </div>
+            <!----## Fin Card ##---->
+          </div>
+          <!----## Fin Col 12  ##---->
+        </div>
+        <!----## Fin Row 1 Interior  ##---->
+        <br>
+      </div>
+      <!----## Fin Columna 12  ##---->
+    </div>
+    <!----## Fin Row Principal ##---->
+  </div>
+  <!----## Fin Container Principal ##---->
+</form>
+<!----## Fin Form Principal ##---->
+
+
+<app-pie></app-pie>

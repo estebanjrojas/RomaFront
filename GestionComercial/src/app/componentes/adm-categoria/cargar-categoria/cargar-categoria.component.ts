@@ -2,18 +2,23 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-cargar-usuarios',
-  templateUrl: './cargar-usuarios.component.html',
-  styleUrls: ['./cargar-usuarios.component.css']
+  selector: 'app-cargar-categoria',
+  templateUrl: './cargar-categoria.component.html',
+  styleUrls: ['./cargar-categoria.component.css']
 })
-export class CargarUsuariosComponent implements OnInit {
+export class CargarCategoriaComponent implements OnInit {
 
   //Instancias
-  usuariosForm: FormGroup;
+  categoriasForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
-    this.usuariosForm = this.formBuilder.group({
-      empleado: [
+    this.categoriasForm = this.formBuilder.group({
+      nombre: [
+        '', Validators.compose([
+          Validators.required
+        ])
+      ],
+      descripcion: [
         '', Validators.compose([
           Validators.required
         ])
