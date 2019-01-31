@@ -152,15 +152,6 @@ export class CargarEmpleadosComponent implements OnInit {
       this.empleadosForm.controls.provincia.setValue(1);
     });
 
-    //Obtengo ciudades y las asigno a la clase Ciudades.
-    this.tabgral.selectByNroTab(16).subscribe(respuesta => {
-      console.log(respuesta);
-      let cast: any = respuesta;
-      this.ciudadesClass = cast;
-      //console.log("ciudades:"+this.ciudades[2].descrip);
-    });
-
-
     this.filteredOptions = this.ciudadesInput.valueChanges
       .pipe(
         startWith<string | CiudadesInterface>(''),
@@ -184,9 +175,4 @@ export class CargarEmpleadosComponent implements OnInit {
 
 }
 
-
-interface Tabgral {
-  codigo: string;
-  descrip: string;
-}
 
