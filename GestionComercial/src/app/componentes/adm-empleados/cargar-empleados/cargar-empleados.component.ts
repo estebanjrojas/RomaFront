@@ -1,17 +1,18 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TabgralService } from '../../../servicios/tabgral.service';
 import { EmpleadosService } from '../../../servicios/empleados.service';
+import { DomiciliosService } from '../../../servicios/domicilios.service';
 import { Ciudades } from '../../../modelos/Ciudades';
 import { Component, OnInit } from '@angular/core';
 import { startWith, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 
-//Agregado hoy
+
 export interface CiudadesInterface {
   descrip: string;
 }
-//Fin agregado hoy
+
 
 
 
@@ -22,16 +23,13 @@ export interface CiudadesInterface {
 })
 export class CargarEmpleadosComponent implements OnInit {
 
-  provincias = new Array<Tabgral>();
+  provincias : any;
   empleadosForm: FormGroup;
   nombre_usuario = new FormControl('', Validators.required);
 
   ciudadesInput = new FormControl();
 
-  ciudades: CiudadesInterface[] = [
-    { descrip: "San miguel de tucuman" },
-    { descrip: "Tucuman" }
-  ];
+  ciudades: CiudadesInterface[] = [];
 
   ciudadesClass: Ciudades = new Ciudades();
 
@@ -39,7 +37,8 @@ export class CargarEmpleadosComponent implements OnInit {
   filteredOptions: Observable<CiudadesInterface[]>;
 
   constructor(private tabgral: TabgralService
-    , private empleadosService: EmpleadosService
+    , private SrvEmpleados: EmpleadosService
+    , private SrvDomicilios: DomiciliosService
     , private toastr: ToastrService
     , private formBuilder: FormBuilder) {
     this.empleadosForm = this.formBuilder.group({
@@ -127,19 +126,29 @@ export class CargarEmpleadosComponent implements OnInit {
     });
   }
 
+  getCiudadesPorProvincia() {
+    let provincias_id = this.empleadosForm.controls.provincia.value;
+    this.SrvDomicilios.getCiudadesPorProvincia(provincias_id).subscribe(respuesta => {
+      let cast: any = respuesta;
+      console.log({"SrvDomicilios.getCiudadesPorProvincia" : cast});
+      for(let i=0; i<cast.length; i++) {
+        this.ciudades.push({descrip : cast[i].nombre.trim()}); 
+        //por alguna razon el nombre viene con espacios en blanco alrededor asi que se hace un trim por javascript
+      }
+      console.log(this.ciudades);
+      
+      
+    })
+  }
 
   ngOnInit() {
 
+
+
     //Llenado de combo provincias
-    this.tabgral.selectByNroTab(191).subscribe(respuesta => {
-      console.log(respuesta);
-      let cast: any = respuesta;
-      for (var i = 0; i < cast.length; i++) {
-        let rel: Tabgral = { codigo: "0", descrip: "" };
-        rel.codigo = cast[i].codigo;
-        rel.descrip = cast[i].descrip;
-        this.provincias.push(rel);
-      }
+    this.SrvDomicilios.getProvinciasPorPais(1).subscribe(respuesta => {
+      console.log({"SrvDomicilios.getProvinciasPorPais(1)" : respuesta});
+      this.provincias = respuesta;
       this.empleadosForm.controls.provincia.setValue(1);
     });
 

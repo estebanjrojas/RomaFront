@@ -35,6 +35,7 @@ import { BuscarPromocionesComponent } from './componentes/adm-promociones/buscar
 const appRoutes: Routes = [{ path: '', component: LoginComponent }
   , { path: 'login', component: LoginComponent }
   , { path: 'empleados/cargar-empleados', component: CargarEmpleadosComponent }
+  , { path: 'empleados/cargar-empleados/:empleados_id', component: CargarEmpleadosComponent }
   , { path: 'empleados/busqueda-empleados', component: BusquedaEmpleadosComponent }
   , { path: 'productos/cargar-productos', component: CargarProductosComponent }
   , { path: 'productos/busqueda-productos', component: BuscarProductosComponent }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment} from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders(
@@ -10,8 +11,6 @@ const httpOptions = {
   )
 };
 
-const apiUrl = "http://192.168.1.44:3000";
-
 @Injectable({
   providedIn: 'root'
 })
@@ -20,6 +19,6 @@ export class TabgralService {
   constructor(private http: HttpClient) { }
 
   selectByNroTab(nro_tab): Observable<any> {
-    return this.http.get('http://192.168.1.46:3000/selectTabgralByNroTab/'+nro_tab);
+    return this.http.get(environment.apiEndpoint+'/selectTabgralByNroTab/'+nro_tab, httpOptions);
   }
 }

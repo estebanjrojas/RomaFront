@@ -13,12 +13,15 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class UsuariosService {
+export class DomiciliosService {
 
   constructor(private http: HttpClient) { }
 
-  getDatosUsuario(usuario){
-    return this.http.get(environment.apiEndpoint+'/getDatosUsuario/'+usuario, httpOptions);
+  getProvinciasPorPais(paices_id){
+    return this.http.get(environment.apiEndpoint+'/getProvinciasPorPais/'+paices_id, httpOptions);
   }
 
+  getCiudadesPorProvincia(provincias_id){
+    return this.http.get(environment.apiEndpoint+'/getCiudadesPorProvincia/'+provincias_id, httpOptions);
+  }
 }

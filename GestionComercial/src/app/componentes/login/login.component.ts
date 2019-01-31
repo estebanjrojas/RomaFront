@@ -37,18 +37,10 @@ export class LoginComponent implements OnInit {
       if (cast.respuesta!=undefined) {
    
         let usuario = String(this.formulario.controls.txtUsuario.value);
+        localStorage.setItem('roma_usuario', usuario);
         localStorage.setItem('tk_acceso', String(cast.respuesta));
 
-        this.usuario_serv.getDatosUsuario(usuario).subscribe(respuesta => {
-          let cast: any = respuesta;
-          localStorage.setItem('apellido_usr', cast.apellido);
-          localStorage.setItem('nombre_usr', cast.nombre);
-          localStorage.setItem('organismo_usr', cast.organismo);
-          localStorage.setItem('oficina_usr', cast.oficina_descripcion);
-          localStorage.setItem('email_usr', cast.mail);
-
-          this.router.navigate(['empleados/cargar-empleados']);
-        });
+        this.router.navigate(['empleados/cargar-empleados']);
       } else {
         this.toastr.error('Datos de Acceso Incorrectos', 'Acceso Denegado', {
           tapToDismiss: true

@@ -2,7 +2,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
 <form id="empleadosFormId" [formGroup]="empleadosForm" (ngSubmit)="guardar()">
-  <input type="hidden" formControlName="nombre_usuario">
   <!----## Inicio Container Principal ##---->
   <div class="container">
     <!----## Inicio Row Principal ##---->
@@ -20,8 +19,10 @@
             <div class="row">
               <label for="txtBuscar" class="col-md-1 col-form-label"><b>&nbsp; Buscar</b></label>
               <div class="col-md-5">
-                <input type="text" id="txtBuscar" class="form-control" placeholder="Ingrese documento, apellido o nombre a buscar"
-                  value="" />
+                <input type="text" formControlName="txtBuscar" id="txtBuscar" class="form-control" placeholder="Ingrese documento, apellido o nombre a buscar"/>
+              </div>
+              <div class="col-md-1">
+                <input type="button" value="Buscar" class="btn btn-outline-primary" (click)="buscarEmpleado();" />
               </div>
             </div>
             <!--Fin Busqueda-->
@@ -32,27 +33,27 @@
               <!----## Inicio Col 12  ##---->
               <div class="col-md-12">
                 <div class="card">
-                  <table class="table">
-                    <thead class="thead-dark" style="text-align: center">
+                  <table class="table table-hover table-sm">
+                    <thead class="thead-dark">
                       <th style='width:20%;'>Nombre</th>
                       <th style='width:20%;'>Apellido</th>
                       <th style='width:5%;'>Documento</th>
                       <th style='width:10%;'>F. Nac.</th>
-                      <th style='width:5%;'>Telefono</th>
-                      <th style='width:10%;'>Puesto</th>
-                      <th style='width:20%;'>Opciones</th>
+                      <th style='width:5%;'>Tel&eacute;fono</th>
+                      <th style='width:10%;'>Oficina</th>
+                      <th style='width:20%; text-align:center;'>Opciones</th>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                      <tr *ngFor="let em of cast">
+                        <td>{{em.nombre}}</td>
+                        <td>{{em.apellido}}</td>
+                        <td>{{em.nro_doc}}</td>
+                        <td>{{em.fecha_nac | date:'dd-MM-yyyy'}} </td>
+                        <td>{{em.telefono}}</td>
+                        <td>{{em.oficina}}</td>
                         <td style='text-align: center'>
-                          <button class="btn btn-info btn-sm">Modificar</button>&nbsp;
-                          <button class="btn btn-danger btn-sm">Eliminar</button>
+                          <a class="btn btn-info btn-sm" [routerLink]="['/empleados/cargar-empleados', em.id]" routerLinkActive="active">Modificar</a>&nbsp;
+                          <input type="button" class="btn btn-danger btn-sm" (click)="eliminarEmpleado(em.id)" value="Eliminar" />
                         </td>
                       </tr>
                     </tbody>
@@ -61,7 +62,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-12" align="center">
-                      <input type="submit" class="btn btn-primary" value="Nuevo Empleado" />
+                      <a class="btn btn-primary" [routerLink]="['/empleados/cargar-empleados']" routerLinkActive="active">Nuevo Empleado</a>
                     </div>
                   </div>
               </div>

@@ -152,9 +152,9 @@
                         <div class="row">
                           <div class="col-md-5">
                             <mat-form-field class="example-full-width">
-                              <mat-select placeholder="Provincia" formControlName="provincia">
-                                <mat-option *ngFor="let provincia of this.provincias" [value]="provincia.codigo">
-                                  {{provincia.descrip}}
+                              <mat-select id="provincia" placeholder="Provincia" formControlName="provincia" (selectionChange)="this.getCiudadesPorProvincia();">
+                                <mat-option *ngFor="let provincia of this.provincias" [value]="provincia.id">
+                                  {{provincia.nombre}}
                                 </mat-option>
                               </mat-select>
                             </mat-form-field>
