@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { startWith, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { PersonasService} from '../../../servicios/personas.service';
 
 
 export interface CiudadesInterface {
@@ -24,6 +25,7 @@ export interface CiudadesInterface {
 export class CargarEmpleadosComponent implements OnInit {
 
   provincias : any;
+  oficinas : any;
   empleadosForm: FormGroup;
   nombre_usuario = new FormControl('', Validators.required);
 
@@ -36,8 +38,9 @@ export class CargarEmpleadosComponent implements OnInit {
 
   filteredOptions: Observable<CiudadesInterface[]>;
 
-  constructor(private tabgral: TabgralService
+  constructor(private SrvTabgral: TabgralService
     , private SrvEmpleados: EmpleadosService
+    , private SrvPersonas: PersonasService
     , private SrvDomicilios: DomiciliosService
     , private toastr: ToastrService
     , private formBuilder: FormBuilder) {
@@ -141,16 +144,38 @@ export class CargarEmpleadosComponent implements OnInit {
     })
   }
 
+  buscarPorDocumento() {
+    let documento = this.empleadosForm.get('documento').value;
+    this.SrvPersonas.getPersonaPorNroDoc(documento).subscribe(respuesta => {
+      console.log({"SrvPersonas.getPersonaPorNroDoc" : respuesta});
+      let cast : any = respuesta;
+      this.empleadosForm.controls.apellido.setValue(cast[0].apellido);
+      this.empleadosForm.controls.nombre.setValue(cast[0].nombre);
+      this.empleadosForm.controls.fecha_nacimiento.setValue(cast[0].fecha_nac);
+    });
+
+    this.SrvEmpleados.getEmpleadoPorNroDoc(documento).subscribe(respuesta => {
+      console.log({"SrvEmpleados.getEmpleadoPorNroDoc" : respuesta});
+      let cast : any = respuesta;
+      this.empleadosForm.controls.legajo.setValue(cast[0].legajo);
+      this.empleadosForm.controls.fecha_ingreso.setValue(cast[0].fecha_ingreso);
+      this.empleadosForm.controls.descripcion.setValue(cast[0].descripcion);
+      this.empleadosForm.controls.oficina.setValue(cast[0].oficinas_id);
+    })
+  }
+
   ngOnInit() {
-
-
-
     //Llenado de combo provincias
     this.SrvDomicilios.getProvinciasPorPais(1).subscribe(respuesta => {
-      console.log({"SrvDomicilios.getProvinciasPorPais(1)" : respuesta});
+      console.log({"SrvDomicilios.getProvinciasPorPais" : respuesta});
       this.provincias = respuesta;
       this.empleadosForm.controls.provincia.setValue(1);
     });
+
+    this.SrvTabgral.selectByNroTab(3).subscribe(respuesta => {
+      console.log({"SrvTabgral.selectByNroTab" : respuesta});
+      this.oficinas = respuesta;
+    })
 
     this.filteredOptions = this.ciudadesInput.valueChanges
       .pipe(

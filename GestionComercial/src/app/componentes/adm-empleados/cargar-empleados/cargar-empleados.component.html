@@ -33,7 +33,7 @@
                         <mat-form-field class="example-full-width" style="width:80%">
                           <input matInput placeholder="Documento" formControlName="documento">
                         </mat-form-field> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-outline-secondary">Buscar</button>
+                        <button type="button" class="btn btn-outline-secondary" (click)="buscarPorDocumento()">Buscar</button>
                       </div>
                     </div>
                     <div class="row">
@@ -88,9 +88,9 @@
                             <!--~~~~~~~~~ Oficina ~~~~~~~~~~~-->
                             <mat-form-field style="width:100%">
                               <mat-select [(value)]="selected" placeholder="Oficina" formControlName="oficina">
-                                <mat-option>None</mat-option>
-                                <mat-option value="option1">Producto</mat-option>
-                                <mat-option value="option2">Servicio</mat-option>
+                                  <mat-option *ngFor="let oficina of this.oficinas" [value]="oficina.codigo">
+                                      {{oficina.descrip}}
+                                    </mat-option>
                               </mat-select>
                             </mat-form-field>
                           </div>
