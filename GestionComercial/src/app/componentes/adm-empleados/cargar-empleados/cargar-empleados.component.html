@@ -9,12 +9,8 @@
     <div class="row">
       <!----## Inicio Columna 12  ##---->
       <div class="col-md-12 m-0 p-0">
-        <br>
-        <h3>Empleados</h3>
-        <hr>
-        <h5>Cargar Empleados</h5>
-        <br>
-        <!----## Inicio Row 1 Interior  ##---->
+        <h3>Ingreso de Empleados</h3>
+          <!----## Inicio Row 1 Interior  ##---->
         <div class="row">
           <!----## Inicio Col 12  ##---->
           <div class="col-md-12">
@@ -25,48 +21,57 @@
                 <div class="row">
                   <!----## Inicio Primera Columna 6 ##---->
                   <div class="col-md-6">
-                    <h5>Datos Personales</h5>
-                    <br>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <!--~~~~~~~~~ Documento ~~~~~~~~~~~-->
-                        <mat-form-field class="example-full-width" style="width:80%">
-                          <input matInput placeholder="Documento" formControlName="documento">
-                        </mat-form-field> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-outline-secondary" (click)="buscarPorDocumento()">Buscar</button>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <!--~~~~~~~~~ Apellido ~~~~~~~~~~~-->
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Apellido" formControlName="apellido">
-                        </mat-form-field>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <!--~~~~~~~~~ Nombre ~~~~~~~~~~~-->
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Nombre" formControlName="nombre">
-                        </mat-form-field>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <!--~~~~~~~~~ Fecha de Nacimiento ~~~~~~~~~~~-->
-                        <div class="row">
-                          <div class="col-md-12">
-                            <mat-form-field>
-                              <input matInput [matDatepicker]="pickerFechaNac" formControlName="fecha_nacimiento"
-                                placeholder="Fecha de Nacimiento">
-                              <mat-datepicker-toggle matSuffix [for]="pickerFechaNac"></mat-datepicker-toggle>
-                              <mat-datepicker #pickerFechaNac></mat-datepicker>
-                            </mat-form-field>
-                          </div>
+                      <div class="card">
+                        <div class="card-header">
+                            Datos Personales
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                  <!--~~~~~~~~~ Documento ~~~~~~~~~~~-->
+                                  <mat-form-field class="example-full-width" style="width:60%">
+                                    <input matInput placeholder="Documento" formControlName="documento">
+                                  </mat-form-field> &nbsp;&nbsp;
+                                  <button type="button" class="btn btn-outline-secondary" (click)="buscarPorDocumento()">Buscar</button>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <!--~~~~~~~~~ Apellido ~~~~~~~~~~~-->
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Apellido" formControlName="apellido">
+                                  </mat-form-field>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <!--~~~~~~~~~ Nombre ~~~~~~~~~~~-->
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Nombre" formControlName="nombre">
+                                  </mat-form-field>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <!--~~~~~~~~~ Fecha de Nacimiento ~~~~~~~~~~~-->
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <mat-form-field>
+                                        <input matInput [matDatepicker]="pickerFechaNac" formControlName="fecha_nacimiento"
+                                          placeholder="Fecha de Nacimiento">
+                                        <mat-datepicker-toggle matSuffix [for]="pickerFechaNac"></mat-datepicker-toggle>
+                                        <mat-datepicker #pickerFechaNac></mat-datepicker>
+                                      </mat-form-field>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
                         </div>
                       </div>
-                    </div>
+                    
+                   
+                    
                   </div>
                   <!----## Fin Primera Columna 6 ##---->
 
@@ -96,14 +101,14 @@
                           </div>
                           <div class="col-md-12">
                             <mat-form-field>
-                              <input matInput [matDatepicker]="picker" formControlName="fecha_ingreso" placeholder="Elija una fecha">
+                              <input matInput [matDatepicker]="picker" formControlName="fecha_ingreso" placeholder="Fecha de Ingreso">
                               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                               <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
                           </div>
                           <div class="col-md-12">
                             <mat-form-field class="example-full-width">
-                              <input matInput placeholder="Descripcion" formControlName="descripcion">
+                              <input matInput placeholder="Descripci&oacute;n" formControlName="descripcion">
                             </mat-form-field>
                           </div>
                         </div>
@@ -138,19 +143,17 @@
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col-md-3">
+                          <div class="col-md-1">
                             <mat-form-field class="example-full-width">
                               <input matInput placeholder="Dpto" formControlName="depto">
                             </mat-form-field>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-md-2">
                             <mat-form-field class="example-full-width">
                               <input matInput placeholder="Manzana" formControlName="manzana">
                             </mat-form-field>
                           </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-5">
+                          <div class="col-md-3">
                             <mat-form-field class="example-full-width">
                               <mat-select id="provincia" placeholder="Provincia" formControlName="provincia" (selectionChange)="this.getCiudadesPorProvincia();">
                                 <mat-option *ngFor="let provincia of this.provincias" [value]="provincia.id">
@@ -159,18 +162,17 @@
                               </mat-select>
                             </mat-form-field>
                           </div>
-                          <div class="col-md-1"></div>
                           <div class="col-md-5">
-                            <mat-form-field class="example-full-width">
-                              <input type="text" placeholder="Ciudad" aria-label="Ciudad" matInput [formControl]="ciudadesInput"
-                                [matAutocomplete]="auto">
-                              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                  {{option.descrip}}
-                                </mat-option>
-                              </mat-autocomplete>
-                            </mat-form-field>
-                          </div>
+                              <mat-form-field class="example-full-width">
+                                <input type="text" placeholder="Ciudad" aria-label="Ciudad" matInput [formControl]="ciudadesInput"
+                                  [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                    {{option.descrip}}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                            </div>
                         </div>
                       </div>
                     </div>
@@ -179,7 +181,8 @@
                 <br>
                 <div class="row h-100">
                   <div class="col-md-12" align="center">
-                    <input type="submit" class="btn btn-outline-primary btn-xs col-md-2" value="Volver" /> &nbsp;
+                      <a class="btn btn-outline-primary btn-xs col-md-2" [routerLink]="['/empleados/busqueda-empleados']" routerLinkActive="active">Volver</a>
+                    &nbsp;
                     <input type="submit" class="btn btn-primary btn-xs col-md-2" value="Guardar" />
                   </div>
                 </div>

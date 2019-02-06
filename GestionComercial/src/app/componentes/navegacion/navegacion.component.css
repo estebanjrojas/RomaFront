@@ -1,0 +1,24 @@
+.navbar-brand {
+    color: white;
+}
+
+.dropdown-menu {
+    background-color: rgb(55, 106, 158);
+}
+
+.dropdown-item {
+    background-color: rgb(55, 106, 158);
+    color: white;
+}
+
+.dropdown-item:active, .dropdown-item:hover {
+    background-color: white; 
+    color: black;
+  }
+
+#barra_navegacion {
+    background-color: rgb(55, 106, 158);
+    color: white;     
+}
+
+
