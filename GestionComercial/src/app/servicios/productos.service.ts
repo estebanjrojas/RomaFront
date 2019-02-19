@@ -32,15 +32,15 @@ export class ProductosService {
     return this.http.get(environment.apiEndpoint + '/getDatosProductos/' + id_producto, httpOptions);
   }
 
-  cargarProducto(menu: any) {
-    const url = environment.apiEndpoint+`/cargarProducto`;
-    let json = JSON.stringify(menu);
+  insertProductoReturnId(datos: any) {
+    const url = environment.apiEndpoint+`/insertProductoReturnId`;
+    let json = JSON.stringify(datos);
     return this.http.post(url, json, httpOptions);
   }
 
   actualizarDatosProducto(datos: any): Observable<any> {
     let json = JSON.stringify(datos);
-    return this.http.put(environment.apiEndpoint+'/actualizarDatosFallecido', json, httpOptions);
+    return this.http.put(environment.apiEndpoint+'/actualizarDatosProducto', json, httpOptions);
   }
 
 }

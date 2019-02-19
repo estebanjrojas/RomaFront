@@ -14,6 +14,8 @@ export class CargarProductosComponent implements OnInit {
   //Variables
   submitted: boolean = false;
 
+  caracteristicas = new Array<Caracteristica>();
+
   //Instancias
   productosForm: FormGroup;
 
@@ -74,7 +76,6 @@ export class CargarProductosComponent implements OnInit {
       ],
       valor: [
         '', Validators.compose([
-          Validators.required
         ])
       ],
       nombre_usuario: [
@@ -138,36 +139,22 @@ export class CargarProductosComponent implements OnInit {
     var _uni = this.productosForm.controls.unidad_medida.value;
     var _val = this.productosForm.controls.valor.value;
 
-
-    var fila = "<tr><td style='padding-left:20px'>" + _nom
-      + "</td><td>" + _descrip
-      + "</td><td  style='text-align: center'>" + _uni
-      + "</td><td  style='text-align: center'>" + _val
-      + "</td><td  style='text-align: center'><button class='btn btn-danger btn-sm' click='deleteRow(this);'>X</button></td></tr>";
-
-    if (_nom != null && _descrip.length != 0 && _val.length != 0 && _uni != 0) {
-      var btn = document.createElement("TR");
-      btn.innerHTML = fila;
-      document.getElementById("tablita").appendChild(btn);
+    if (_nom != null && _descrip.length != 0 && _val.length != 0 && _uni != 0 && _uni != undefined) {
+      this.caracteristicas.push({ 'nombre': _nom, 'descripcion': _descrip, 'unidad_medida': _uni, 'valor': _val });
       this.productosForm.controls.nombre.reset();
       this.productosForm.controls.descripcion.reset();
       this.productosForm.controls.unidad_medida.reset();
       this.productosForm.controls.valor.reset();
-      document.getElementById("nombretablita").focus();
     } else {
       alert("Todos los campos son obligatorios...");
+      this.toastr.error('Todos los campos son obligatorios...', "ERROR");
       document.getElementById("nombretablita").focus();
     }
   }
 
-  borrarRegistroTablita(param) {
-    var i = param.parentNode.parentNode.rowIndex;
-    (<HTMLTableElement>document.getElementById("tablita")).deleteRow(i);
-  }
-
-  deleteRow(btn) {
-    var row = btn.parentNode.parentNode;
-    row.parentNode.removeChild(row);
+  borrarFila(value) {
+    var array = this.caracteristicas;
+    array.splice(value, 1);
   }
 
 
@@ -180,11 +167,13 @@ export class CargarProductosComponent implements OnInit {
       this.submitted = true;
       if (this.productosForm.valid) {
         console.log(JSON.stringify(this.productosForm.value));
-        this.SrvProductos.cargarProducto(this.productosForm.value).subscribe(respuesta => {
-          console.log({ "SrvProductos.cargarProducto": respuesta });
+        this.SrvProductos.insertProductoReturnId(this.productosForm.value).subscribe(respuesta => {
+          console.log({ "SrvProductos.insertProductoReturnId": respuesta });
           let cast: any = respuesta;
 
-          this.toastr.success('El Fallecido se ha CARGADO Exitosamente');
+
+
+          this.toastr.success('El Producto se ha CARGADO Exitosamente');
           this.productosForm.reset();
         });
       }
@@ -211,5 +200,15 @@ export class CargarProductosComponent implements OnInit {
     }
   }
 
+
+}
+
+
+
+interface Caracteristica {
+  nombre: Text,
+  descripcion: Text,
+  unidad_medida: number,
+  valor: any
 
 }

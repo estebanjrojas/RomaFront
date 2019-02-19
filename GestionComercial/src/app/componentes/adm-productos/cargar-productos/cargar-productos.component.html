@@ -1,7 +1,7 @@
 <app-cabecera></app-cabecera>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
-<form id="empleadosFormId" [formGroup]="productosForm">
+<form id="empleadosFormId" [formGroup]="productosForm" (ngSubmit)="guardar()">
 
   <input type="hidden" formControlName="nombre_usuario">
   <input type="hidden" formControlName="id_producto">
@@ -146,7 +146,7 @@
 
                           <div class="col-md-6">
                             <table class="table table-hover table-sm">
-                              <thead class="thead-dark">
+                              <thead class="thead-celeste">
                                 <th style='width:35%;'>Nombre</th>
                                 <th style='width:35%;'>Descrip.</th>
                                 <th style='width:5%; text-align: center' >Unidad</th>
@@ -154,12 +154,12 @@
                                 <th style='width:5%; text-align: center'></th>
                               </thead>
                               <tbody id="tablita">
-                                <tr>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
+                                <tr *ngFor="let caract of caracteristicas; let indice = index">
+                                  <td>{{caract.nombre}}</td>
+                                  <td>{{caract.descripcion}}</td>
+                                  <td>{{caract.unidad_medida}}</td>
+                                  <td style="text-align:center">{{caract.valor}}</td>
+                                  <td><button class='btn btn-danger btn-sm' type="button" (click)='borrarFila(caract);'>X</button></td>
                                 </tr>
                               </tbody>
                             </table>
