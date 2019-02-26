@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 const httpOptions = {
   headers: new HttpHeaders(
     { 'Content-Type': 'application/json',
-      'Authorization':  localStorage.getItem('tk_acceso')
+      'Authorization':  localStorage.getItem('roma_acceso')
     }
   )
 };

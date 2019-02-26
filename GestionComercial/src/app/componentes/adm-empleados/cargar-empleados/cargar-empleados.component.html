@@ -1,7 +1,7 @@
 <app-cabecera></app-cabecera>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
-<form id="empleadosFormId" [formGroup]="empleadosForm" (ngSubmit)="guardar()">
+<form [formGroup]="empleadosForm">
   <input type="hidden" formControlName="nombre_usuario">
   <!----## Inicio Container Principal ##---->
   <div class="container">
@@ -66,7 +66,6 @@
                                   </div>
                                 </div>
                               </div>
-
                         </div>
                       </div>
                     
@@ -92,7 +91,7 @@
                           <div class="col-md-12">
                             <!--~~~~~~~~~ Oficina ~~~~~~~~~~~-->
                             <mat-form-field style="width:100%">
-                              <mat-select [(value)]="selected" placeholder="Oficina" formControlName="oficina">
+                              <mat-select [(value)]="selected" placeholder="Oficina" formControlName="oficina" [compareWith]="compareFn">
                                   <mat-option *ngFor="let oficina of this.oficinas" [value]="oficina.codigo">
                                       {{oficina.descrip}}
                                     </mat-option>
@@ -145,7 +144,7 @@
                         <div class="row">
                           <div class="col-md-1">
                             <mat-form-field class="example-full-width">
-                              <input matInput placeholder="Dpto" formControlName="depto">
+                              <input matInput placeholder="Depto" formControlName="depto">
                             </mat-form-field>
                           </div>
                           <div class="col-md-2">
@@ -155,7 +154,7 @@
                           </div>
                           <div class="col-md-3">
                             <mat-form-field class="example-full-width">
-                              <mat-select id="provincia" placeholder="Provincia" formControlName="provincia" (selectionChange)="this.getCiudadesPorProvincia();">
+                              <mat-select id="provincia" placeholder="Provincia" formControlName="provincia" (selectionChange)="this.getCiudadesPorProvincia();" [compareWith]="compareFn">
                                 <mat-option *ngFor="let provincia of this.provincias" [value]="provincia.id">
                                   {{provincia.nombre}}
                                 </mat-option>
@@ -164,8 +163,7 @@
                           </div>
                           <div class="col-md-5">
                               <mat-form-field class="example-full-width">
-                                <input type="text" placeholder="Ciudad" aria-label="Ciudad" matInput [formControl]="ciudadesInput"
-                                  [matAutocomplete]="auto">
+                                <input formControlName="ciudades" type="text" placeholder="Ciudad" aria-label="Ciudad" matInput [matAutocomplete]="auto" />
                                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                                   <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                                     {{option.descrip}}
@@ -183,7 +181,7 @@
                   <div class="col-md-12" align="center">
                       <a class="btn btn-outline-primary btn-xs col-md-2" [routerLink]="['/empleados/busqueda-empleados']" routerLinkActive="active">Volver</a>
                     &nbsp;
-                    <input type="submit" class="btn btn-primary btn-xs col-md-2" value="Guardar" />
+                    <input type="button" class="btn btn-primary btn-xs col-md-2" value="Guardar" (click)="guardarEmpleado()"/>
                   </div>
                 </div>
 

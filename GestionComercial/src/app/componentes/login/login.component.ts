@@ -32,21 +32,41 @@ export class LoginComponent implements OnInit {
   get f() { return this.formulario.controls; }
 
   loginUser() {
-    this.Auth.solicitarAccesoUsuario(this.formulario.controls.txtUsuario.value, this.formulario.controls.txtPassword.value).subscribe(response => {
-      var cast: any = response;
-      if (cast.respuesta!=undefined) {
-   
-        let usuario = String(this.formulario.controls.txtUsuario.value);
-        localStorage.setItem('roma_usuario', usuario);
-        localStorage.setItem('tk_acceso', String(cast.respuesta));
 
-        this.router.navigate(['empleados/cargar-empleados']);
-      } else {
-        this.toastr.error('Datos de Acceso Incorrectos', 'Acceso Denegado', {
-          tapToDismiss: true
-        });
-      }
-    });
+    try {
+
+      this.Auth.solicitarAccesoUsuario(this.formulario.controls.txtUsuario.value, this.formulario.controls.txtPassword.value).subscribe(response => {
+       console.log({"Auth.solicitarAccesoUsuario" : response});
+        var cast: any = response.body;
+        console.log({"cast" : cast});
+        if (response.status == 200 && cast.respuesta != undefined) {
+     
+          let usuario = String(this.formulario.controls.txtUsuario.value);
+          localStorage.setItem('roma_usuario', usuario);
+          localStorage.setItem('roma_acceso', String(cast.respuesta));
+  
+          this.router.navigate(['empleados/busqueda-empleados']);
+        } 
+        if (response.status == 200 && cast.respuesta == undefined) {
+          this.toastr.error('Datos de Acceso Incorrectos', 'Acceso Denegado', {
+            tapToDismiss: true
+          });
+        }
+        if (response.status != 200) {
+          let desc_error = 'Ocurri&oacute; un error al intentar conectar con el servidor.<br>';
+              desc_error += response.statusText;
+          this.toastr.error(desc_error, 'Acceso Denegado', {
+            tapToDismiss: true
+          });
+        }
+      });
+
+    }
+    catch(err) {
+      this.toastr.error('Ocurri&oacute; un error al conectar el servicio', 'Error de Conexi&oacute;n', {
+        tapToDismiss: true
+      });
+    }
 
   }
 
@@ -56,8 +76,9 @@ export class LoginComponent implements OnInit {
     // stop here if form is invalid
     if (this.formulario.invalid) {
       return;
-    } else {
-      this.loginUser();
+    } 
+    else {
+        this.loginUser();
     }
 
   }

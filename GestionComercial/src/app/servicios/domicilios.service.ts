@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 const httpOptions = {
   headers: new HttpHeaders(
     { 'Content-Type': 'application/json',
-      'Authorization':  localStorage.getItem('tk_acceso')
+      'Authorization':  localStorage.getItem('roma_acceso')
     }
   )
 };
@@ -23,5 +23,18 @@ export class DomiciliosService {
 
   getCiudadesPorProvincia(provincias_id){
     return this.http.get(environment.apiEndpoint+'/getCiudadesPorProvincia/'+provincias_id, httpOptions);
+  }
+
+  getDomicilioByNroDoc(nro_doc){
+    return this.http.get(environment.apiEndpoint+'/getDomicilioByNroDoc/'+nro_doc, httpOptions);
+  }
+
+  getCiudadesIdPorNombre(nombre){
+    return this.http.get(environment.apiEndpoint+'/getCiudadesIdPorNombre/'+nombre, httpOptions);
+  }
+
+  insert(domicilio: any) {
+    let json = JSON.stringify(domicilio);
+    return this.http.put(environment.apiEndpoint+'/insert/', json, httpOptions);
   }
 }
