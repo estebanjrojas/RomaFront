@@ -7,9 +7,9 @@ import { environment} from '../../environments/environment';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { console.log('Servicio Auth Works...');}
+  constructor(private http: HttpClient) {}
 
   solicitarAccesoUsuario(usuario, password){
-    return this.http.get(environment.apiEndpoint+'/solicitarAccesoUsuario/'+usuario+'/'+password);
+    return this.http.get(environment.apiEndpoint+'/solicitarAccesoUsuario/'+usuario+'/'+password, {observe:'response'});
   }
 }

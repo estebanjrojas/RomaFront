@@ -1,24 +1,29 @@
 .navbar-brand {
     color: white;
+    cursor: pointer;
 }
 
 .dropdown-menu {
     background-color: rgb(55, 106, 158);
+    cursor: pointer;
 }
 
 .dropdown-item {
     background-color: rgb(55, 106, 158);
     color: white;
+    cursor: pointer;
 }
 
 .dropdown-item:active, .dropdown-item:hover {
     background-color: white; 
     color: black;
+    cursor: pointer;
   }
 
 #barra_navegacion {
     background-color: rgb(55, 106, 158);
-    color: white;     
+    color: white;    
+    cursor: pointer; 
 }
 
 

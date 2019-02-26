@@ -8,14 +8,12 @@ import { startWith, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { PersonasService} from '../../../servicios/personas.service';
+import { Empleados } from '../../../modelos/Empleados';
 
 
 export interface CiudadesInterface {
   descrip: string;
 }
-
-
-
 
 @Component({
   selector: 'app-cargar-empleados',
@@ -23,16 +21,12 @@ export interface CiudadesInterface {
   styleUrls: ['./cargar-empleados.component.css']
 })
 export class CargarEmpleadosComponent implements OnInit {
-
+  miEmpleado : Empleados;
   provincias : any;
   oficinas : any;
   empleadosForm: FormGroup;
-  nombre_usuario = new FormControl('', Validators.required);
-
-  ciudadesInput = new FormControl();
-
+ 
   ciudades: CiudadesInterface[] = [];
-
   ciudadesClass: Ciudades = new Ciudades();
 
 
@@ -44,6 +38,7 @@ export class CargarEmpleadosComponent implements OnInit {
     , private SrvDomicilios: DomiciliosService
     , private toastr: ToastrService
     , private formBuilder: FormBuilder) {
+
     this.empleadosForm = this.formBuilder.group({
       documento: [
         '', Validators.compose([
@@ -95,7 +90,7 @@ export class CargarEmpleadosComponent implements OnInit {
           Validators.required
         ])
       ],
-      ciudad: [
+      ciudades: [
         '', Validators.compose([
           Validators.required
         ])
@@ -124,7 +119,7 @@ export class CargarEmpleadosComponent implements OnInit {
         '', Validators.compose([
 
         ])
-      ], ciudades: ''
+      ]
 
     });
   }
@@ -139,8 +134,6 @@ export class CargarEmpleadosComponent implements OnInit {
         //por alguna razon el nombre viene con espacios en blanco alrededor asi que se hace un trim por javascript
       }
       console.log(this.ciudades);
-      
-      
     })
   }
 
@@ -148,7 +141,11 @@ export class CargarEmpleadosComponent implements OnInit {
     let documento = this.empleadosForm.get('documento').value;
     this.SrvPersonas.getPersonaPorNroDoc(documento).subscribe(respuesta => {
       console.log({"SrvPersonas.getPersonaPorNroDoc" : respuesta});
+      
       let cast : any = respuesta;
+      if(cast.redirect) {
+        console.log('Redireccionar a Login');
+      }
       this.empleadosForm.controls.apellido.setValue(cast[0].apellido);
       this.empleadosForm.controls.nombre.setValue(cast[0].nombre);
       this.empleadosForm.controls.fecha_nacimiento.setValue(cast[0].fecha_nac);
@@ -157,11 +154,33 @@ export class CargarEmpleadosComponent implements OnInit {
     this.SrvEmpleados.getEmpleadoPorNroDoc(documento).subscribe(respuesta => {
       console.log({"SrvEmpleados.getEmpleadoPorNroDoc" : respuesta});
       let cast : any = respuesta;
+      if(cast.redirect) {
+        console.log('Redireccionar a Login');
+      }
       this.empleadosForm.controls.legajo.setValue(cast[0].legajo);
       this.empleadosForm.controls.fecha_ingreso.setValue(cast[0].fecha_ingreso);
       this.empleadosForm.controls.descripcion.setValue(cast[0].descripcion);
       this.empleadosForm.controls.oficina.setValue(cast[0].oficinas_id);
-    })
+    });
+
+    this.SrvDomicilios.getDomicilioByNroDoc(documento).subscribe(respuesta => {
+      console.log({"SrvDomicilios.getDomicilioByNroDoc" : respuesta});
+      let cast : any = respuesta[0];
+      if(cast.redirect) {
+        console.log('Redireccionar a Login');
+      }
+      if(cast) {
+        this.empleadosForm.controls.calle.setValue(cast.calle);
+        this.empleadosForm.controls.numero.setValue(cast.numero);
+        this.empleadosForm.controls.piso.setValue(cast.piso);
+        this.empleadosForm.controls.depto.setValue(cast.depto);
+        this.empleadosForm.controls.manzana.setValue(cast.manzana);
+        this.empleadosForm.controls.provincia.setValue(cast.provincias_id);
+        this.getCiudadesPorProvincia();
+      }
+      
+
+    });
   }
 
   ngOnInit() {
@@ -169,7 +188,8 @@ export class CargarEmpleadosComponent implements OnInit {
     this.SrvDomicilios.getProvinciasPorPais(1).subscribe(respuesta => {
       console.log({"SrvDomicilios.getProvinciasPorPais" : respuesta});
       this.provincias = respuesta;
-      this.empleadosForm.controls.provincia.setValue(1);
+      this.empleadosForm.controls.provincia.setValue(23);
+      this.getCiudadesPorProvincia();
     });
 
     this.SrvTabgral.selectByNroTab(3).subscribe(respuesta => {
@@ -177,14 +197,13 @@ export class CargarEmpleadosComponent implements OnInit {
       this.oficinas = respuesta;
     })
 
-    this.filteredOptions = this.ciudadesInput.valueChanges
+    this.filteredOptions = this.empleadosForm.controls.ciudades.valueChanges
       .pipe(
         startWith<string | CiudadesInterface>(''),
         map(value => typeof value === 'string' ? value : value.descrip),
         map(descrip => descrip ? this._filter(descrip) : this.ciudades.slice())
       );
   }
-
 
   displayFn(user?: CiudadesInterface): string | undefined {
     return user ? user.descrip : undefined;
@@ -196,7 +215,37 @@ export class CargarEmpleadosComponent implements OnInit {
     return this.ciudades.filter(option => option.descrip.toLowerCase().indexOf(filterValue) === 0);
   }
 
+  compareFn(c1: any, c2:any): boolean { 
+    return c1 && c2 ? c1 == c2 : false; 
+  }
 
+  guardarEmpleado() {
+    if(this.empleadosForm.valid) {
+      let ciudades_id = 0;
+      let ciudad_nombre = this.empleadosForm.controls.ciudad.value;
+      this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
+        console.log({"SrvDomicilios.getCiudadesIdPorNombre" : respuesta});
+        ciudades_id = respuesta[0].id;
+      });
+
+      let insert_domicilio = {"ciudades_id" : ciudades_id,
+                              "calle" : this.empleadosForm.controls.calle.value,
+                              "numero" : this.empleadosForm.controls.numero.value,
+                              "piso" : this.empleadosForm.controls.piso.value,
+                              "depto" : this.empleadosForm.controls.depto.value,
+                              "manzana" : this.empleadosForm.controls.manzana.value,
+                              "provincias_id" : this.empleadosForm.controls.provincia.value
+                            }
+      this.SrvDomicilios.insert(insert_domicilio).subscribe( respuesta => {
+        console.log({"SrvDomicilios.insert" : respuesta});
+        let cast = respuesta[0];
+        var domicilios_id = cast.domicilios_id;
+      });
+    }
+    else {
+      console.log({"Submit Invalido" : this.empleadosForm.controls});
+    }
+  }
 
 }
 
