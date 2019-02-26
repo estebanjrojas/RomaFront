@@ -20,8 +20,11 @@
             <div class="row">
               <label for="txtBuscar" class="col-md-1 col-form-label"><b>&nbsp; Buscar</b></label>
               <div class="col-md-5">
-                <input type="text" id="txtBuscar" class="form-control" placeholder="Ingrese nombre, descripcion o tipo a buscar"
-                  value="" />
+                <input type="text" id="txtBuscar" class="form-control" formControlName="txtBuscar"
+                  placeholder="Ingrese nombre, descripcion o tipo a buscar" />
+              </div>
+              <div class="col-md-1">
+                <input type="button" value="Buscar" class="btn btn-outline-primary" (click)="buscarProducto();" />
               </div>
             </div>
             <!--Fin Busqueda-->
@@ -32,24 +35,26 @@
               <!----## Inicio Col 12  ##---->
               <div class="col-md-12">
                 <div class="card">
-                  <table class="table">
+                  <table class="table table-hover table-sm">
                     <thead class="thead-dark" style="text-align: center">
-                      <th style='width:10%;'>Código</th>
-                      <th style='width:20%;'>Nombre</th>
-                      <th style='width:20%;'>Categoria</th>
-                      <th style='width:20%;'>Subcategoria</th>
-                      <th style='width:30%;'>Opciones</th>
+                      <th style='width:3%;text-align:center;'>Código</th>
+                      <th style='width:21%;text-align:center;'>Nombre</th>
+                      <th style='width:21%;text-align:center;'>Descripción</th>
+                      <th style='width:20%;text-align:center;'>Descripción Factura</th>
+                      <th style='width:10%;text-align:center;'>Tipo Prod.</th>
+                      <th style='width:25%;text-align:center;'>Opciones</th>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                      <tr *ngFor="let prod of cast">
+                        <td>{{prod.codigo}}</td>
+                        <td style='text-align: center'>{{prod.nombre}}</td>
+                        <td>{{prod.descripcion}}</td>
+                        <td>{{prod.descripcion_factura}}</td>
+                        <td style='text-align: center'>{{prod.tipo_producto}}</td>
                         <td style='text-align: center'>
-                          <button class="btn btn-info btn-sm">Modificar</button>&nbsp;
-                          <button class="btn btn-secondary btn-sm">Precios</button>&nbsp;
-                          <button class="btn btn-danger btn-sm">Eliminar</button>
+                          <a class="btn btn-info btn-sm" [routerLink]="['/productos/cargar-productos', prod.id]" routerLinkActive="active">Modificar</a>&nbsp;
+                          <a class="btn btn-secondary btn-sm" >Precios</a>&nbsp;
+                          <input type="button" class="btn btn-danger btn-sm" (click)="eliminarEmpleado(em.id)" value="Eliminar" />
                         </td>
                       </tr>
                     </tbody>
@@ -58,7 +63,7 @@
                 <br>
                 <div class="row">
                   <div class="col-md-12" align="center">
-                    <input type="submit" class="btn btn-primary" value="Nuevo Producto" />
+                    <a class="btn btn-primary" [routerLink]="['/productos/cargar-productos']" routerLinkActive="active">Nuevo Producto</a>
                   </div>
                 </div>
               </div>

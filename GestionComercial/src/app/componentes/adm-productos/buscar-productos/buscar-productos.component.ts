@@ -1,5 +1,7 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ProductosService } from '../../../servicios/productos.service';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-buscar-productos',
@@ -10,17 +12,47 @@ export class BuscarProductosComponent implements OnInit {
 
   //Instancias
   buscarproductosForm: FormGroup;
+  cast: any;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private SrvEmpleados: ProductosService,
+    private SrvToastr: ToastrService,
+    private formBuilder: FormBuilder) {
     this.buscarproductosForm = this.formBuilder.group({
       nombre_usuario: [
         '', Validators.compose([
 
         ])
-      ]
+      ], 
+      txtBuscar: []
     });
   }
   ngOnInit() {
   }
+
+  buscarProducto() {
+    let busqueda = this.buscarproductosForm.controls.txtBuscar.value;
+    if (busqueda == undefined || busqueda == '') {
+      this.SrvEmpleados.getProductosTodos().subscribe(respuesta => {
+        this.cast = respuesta;
+        console.log({ "SrvProductos.getProductosTodos": this.cast });
+      });
+    }
+    else {
+      this.SrvEmpleados.getProductosBusqueda(busqueda).subscribe(respuesta => {
+        this.cast = respuesta;
+        console.log({ "SrvProductos.getProductosBusqueda": this.cast });
+      });
+    }
+  }
+
+
+  actualizarProducto(productos_id) {
+    console.log("Actualizar: " + productos_id);
+  }
+
+  eliminarProducto(productos_id) {
+    console.log(" Baja de Producto: " + productos_id);
+  }
+
 
 }

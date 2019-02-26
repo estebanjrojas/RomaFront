@@ -1,9 +1,10 @@
 <app-cabecera></app-cabecera>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
-<form id="empleadosFormId" [formGroup]="productosForm">
+<form id="empleadosFormId" [formGroup]="productosForm" (ngSubmit)="guardar()">
 
   <input type="hidden" formControlName="nombre_usuario">
+  <input type="hidden" formControlName="id_producto">
   <!----## Inicio Container Principal ##---->
   <div class="container">
     <!----## Inicio Row Principal ##---->
@@ -59,10 +60,10 @@
                       <div class="col-md-12">
                         <!--~~~~~~~~~ Tipo ~~~~~~~~~~~-->
                         <mat-form-field style="width:100%">
-                          <mat-select [(value)]="selected" placeholder="Tipo" formControlName="tipo">
+                          <mat-select [(value)]="selected" [compareWith]="compareFn" placeholder="Tipo" formControlName="tipo">
                             <mat-option>None</mat-option>
-                            <mat-option value="option1">Producto</mat-option>
-                            <mat-option value="option2">Servicio</mat-option>
+                            <mat-option value="1">Producto</mat-option>
+                            <mat-option value="2">Servicio</mat-option>
                           </mat-select>
                         </mat-form-field>
                       </div>
@@ -77,10 +78,10 @@
                       </div>
                       <div class="col-md-7">
                         <mat-form-field style="width:100%">
-                          <mat-select [(value)]="selected" placeholder="Unidad" formControlName="unidad">
+                          <mat-select [(value)]="selected" [compareWith]="compareFn" placeholder="Unidad" formControlName="unidad">
                             <mat-option>None</mat-option>
-                            <mat-option value="option1">1</mat-option>
-                            <mat-option value="option2">2</mat-option>
+                            <mat-option value="1">1</mat-option>
+                            <mat-option value="2">2</mat-option>
                           </mat-select>
                         </mat-form-field>
                       </div>
@@ -111,7 +112,7 @@
                             <div class="row">
                               <div class="col-md-12">
                                 <mat-form-field class="example-full-width" style="width:90%">
-                                  <input matInput placeholder="Nombre" formControlName="nombre">
+                                  <input matInput placeholder="Nombre" id="nombretablita"formControlName="nombre">
                                 </mat-form-field>
                               </div>
                             </div>
@@ -125,7 +126,7 @@
                             <div class="row">
                               <div class="col-md-12">
                                 <mat-form-field style="width:90%">
-                                  <mat-select [(value)]="selected" placeholder="Unidad Medida" formControlName="unidad_medida">
+                                  <mat-select placeholder="Unidad Medida" formControlName="unidad_medida">
                                     <mat-option>None</mat-option>
                                     <mat-option value="option1">1</mat-option>
                                     <mat-option value="option2">2</mat-option>
@@ -138,27 +139,27 @@
                                 <mat-form-field class="example-full-width" style="width:70%">
                                   <input matInput placeholder="Valor" formControlName="valor">
                                 </mat-form-field> &nbsp;&nbsp;&nbsp;
-                                <button mat-stroked-button>Agregar</button>
+                                <button mat-stroked-button (click)="agregarDatosTablita();">Agregar</button>
                               </div>
                             </div>
                           </div>
 
                           <div class="col-md-6">
-                            <table class="table">
-                              <thead class="thead-dark" style="text-align: center">
-                                <th style='width:20%;'>Nombre</th>
-                                <th style='width:20%;'>Descrip.</th>
-                                <th style='width:5%;'>Unidad</th>
-                                <th style='width:10%;'>Valor</th>
+                            <table class="table table-hover table-sm">
+                              <thead class="thead-celeste">
+                                <th style='width:35%;'>Nombre</th>
+                                <th style='width:35%;'>Descrip.</th>
+                                <th style='width:5%; text-align: center' >Unidad</th>
+                                <th style='width:20%; text-align: center'>Valor</th>
+                                <th style='width:5%; text-align: center'></th>
                               </thead>
-                              <tbody>
-                                <tr>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td style='text-align: center'>
-                                    <button class="btn btn-danger btn-sm">X</button>
-                                  </td>
+                              <tbody id="tablita">
+                                <tr *ngFor="let caract of caracteristicas; let indice = index">
+                                  <td>{{caract.nombre}}</td>
+                                  <td>{{caract.descripcion}}</td>
+                                  <td>{{caract.unidad_medida}}</td>
+                                  <td style="text-align:center">{{caract.valor}}</td>
+                                  <td><button class='btn btn-danger btn-sm' type="button" (click)='borrarFila(caract);'>X</button></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -187,7 +188,6 @@
                 <br>
                 <div class="row h-100">
                   <div class="col-md-12" align="center">
-                    <input type="submit" class="btn btn-outline-primary btn-xs col-md-2" value="Volver" /> &nbsp;
                     <input type="submit" class="btn btn-primary btn-xs col-md-2" value="Guardar" />
                   </div>
                 </div>

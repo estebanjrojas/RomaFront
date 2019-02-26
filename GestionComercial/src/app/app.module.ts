@@ -38,6 +38,7 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
   , { path: 'empleados/cargar-empleados/:empleados_id', component: CargarEmpleadosComponent }
   , { path: 'empleados/busqueda-empleados', component: BusquedaEmpleadosComponent }
   , { path: 'productos/cargar-productos', component: CargarProductosComponent }
+  , { path: 'productos/cargar-productos/:productos_id', component: CargarProductosComponent }
   , { path: 'productos/busqueda-productos', component: BuscarProductosComponent }
   , { path: 'puntos-venta/cargar-puntos-venta', component: CargarPuntosDeVentaComponent }
   , { path: 'puntos-venta/busqueda-puntos-venta', component: BuscarPuntosDeVentaComponent }
