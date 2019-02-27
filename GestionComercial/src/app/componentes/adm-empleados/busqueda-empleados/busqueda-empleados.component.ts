@@ -28,16 +28,18 @@ export class BusquedaEmpleadosComponent implements OnInit {
   buscarEmpleado() {
     let busqueda = this.empleadosForm.controls.txtBuscar.value;
     if(busqueda==undefined || busqueda=='') {
-      this.SrvEmpleados.getEmpleadosTodos().subscribe(respuesta => {
+      console.log("SIN PARAMETROS");
+     /* this.SrvEmpleados.getEmpleadosTodos().subscribe(respuesta => {
         this.cast = respuesta;
-        console.log({"SrvEmpleados.getEmpleadosTodos" : this.cast});   
-      });
+        console.log({"SrvEmpleados.getEmpleadosTodos" : respuesta });   
+      });*/
     }
     else {
-      this.SrvEmpleados.getEmpleadosBusqueda(busqueda).subscribe(respuesta => {
+      console.log("CON PARAMETROS");
+     /* this.SrvEmpleados.getEmpleadosBusqueda(busqueda).subscribe(respuesta => {
         this.cast = respuesta;
-        console.log({"SrvEmpleados.getEmpleadosBusqueda" : this.cast});   
-      });
+        console.log({"SrvEmpleados.getEmpleadosBusqueda" : respuesta});   
+      });*/
     }
   }
 
