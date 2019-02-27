@@ -13,6 +13,7 @@ export class CargarProductosComponent implements OnInit {
 
   //Variables
   submitted: boolean = false;
+  nomb_usr: string;
 
   caracteristicas = new Array<Caracteristica>();
 
@@ -93,7 +94,8 @@ export class CargarProductosComponent implements OnInit {
 
   ngOnInit() {
 
-
+    this.nomb_usr = localStorage.getItem('nomb_usr');
+    this.productosForm.controls.nombre_usuario.setValue(this.nomb_usr);
     this.route.params.subscribe(params => {
       this.productosForm.controls.id_producto.setValue(params.productos_id);
       console.log(params);
@@ -171,8 +173,12 @@ export class CargarProductosComponent implements OnInit {
           console.log({ "SrvProductos.insertProductoReturnId": respuesta });
           let cast: any = respuesta;
 
-
-
+          for (let caract of this.caracteristicas) {
+            this.SrvProductos.insertCaracteristicasProducto(caract, cast.id).subscribe(resp => {
+              console.log({"SrvProductos.insertCaracteristicasProducto" : resp});
+              this.toastr.success('Caracteristicas cargadas exitosamente');
+            });
+          }
           this.toastr.success('El Producto se ha CARGADO Exitosamente');
           this.productosForm.reset();
         });
@@ -184,7 +190,7 @@ export class CargarProductosComponent implements OnInit {
     } else {
       //Modificar Producto
       if (this.productosForm.valid) {
-        console.log(JSON.stringify(this.productosForm.value));
+        console.log(JSON.stringify(this.productosForm.value));  
         this.SrvProductos.actualizarDatosProducto(this.productosForm.value).subscribe(respuesta => {
           console.log({ "SrvProductos.actualizarDatosProducto": respuesta });
           let cast: any = respuesta;

@@ -7,7 +7,7 @@ const httpOptions = {
   headers: new HttpHeaders(
     {
       'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('tk_acceso')
+      'Authorization': localStorage.getItem('roma_acceso')
     }
   )
 };
@@ -35,6 +35,14 @@ export class ProductosService {
   insertProductoReturnId(datos: any) {
     const url = environment.apiEndpoint+`/insertProductoReturnId`;
     let json = JSON.stringify(datos);
+    return this.http.post(url, json, httpOptions);
+  }
+
+  insertCaracteristicasProducto(caract: any, productos_id: number) {
+    const url = environment.apiEndpoint+`/insertCaracteristicasProducto`;
+    let json = JSON.stringify({"nombre": caract.nombre, "descripcion": caract.descripcion
+                              , "unidad_medida": caract.unidad_medida, "valor": caract.valor
+                              , "productos_id": productos_id});
     return this.http.post(url, json, httpOptions);
   }
 
