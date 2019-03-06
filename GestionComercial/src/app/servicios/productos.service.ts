@@ -32,6 +32,10 @@ export class ProductosService {
     return this.http.get(environment.apiEndpoint + '/getDatosProductos/' + id_producto, httpOptions);
   }
 
+  getCaracteristicasProductos(id_producto): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getCaracteristicasProductos/' + id_producto, httpOptions);
+  }
+
   insertProductoReturnId(datos: any) {
     const url = environment.apiEndpoint+`/insertProductoReturnId`;
     let json = JSON.stringify(datos);
@@ -46,9 +50,15 @@ export class ProductosService {
     return this.http.post(url, json, httpOptions);
   }
 
-  actualizarDatosProducto(datos: any): Observable<any> {
+  actualizarDatosProductos(datos: any): Observable<any> {
     let json = JSON.stringify(datos);
-    return this.http.put(environment.apiEndpoint+'/actualizarDatosProducto', json, httpOptions);
+    return this.http.put(environment.apiEndpoint+'/actualizarDatosProductos', json, httpOptions);
+  }
+
+
+  eliminarCaracteristicasProductos(id_producto: number){
+    const url = environment.apiEndpoint+`/eliminarCaracteristicasProductos/`+id_producto;
+    return this.http.delete(url, httpOptions);
   }
 
 }

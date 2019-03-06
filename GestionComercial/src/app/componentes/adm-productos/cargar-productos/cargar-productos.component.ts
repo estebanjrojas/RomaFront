@@ -114,7 +114,7 @@ export class CargarProductosComponent implements OnInit {
       console.log("paso por aqui");
       this.SrvProductos.getDatosProductos(id_producto).subscribe(resp => {
         let respuesta: any = resp;
-        console.log({ "SrvProductos.getProductosTodos": respuesta });
+        console.log({ "SrvProductos.getDatosProductos": respuesta });
 
         this.productosForm.patchValue({
           codigo: respuesta[0].codigo,
@@ -127,6 +127,21 @@ export class CargarProductosComponent implements OnInit {
         });
         console.log("Tipo Producto: " + this.productosForm.controls.tipo.value);
       });
+
+      this.SrvProductos.getCaracteristicasProductos(id_producto).subscribe(resp => {
+        let respuesta: any = resp;
+        console.log({ "SrvProductos.getCaracteristicasProductos": respuesta });
+        console.log("ID PRODUCTO:" + id_producto);
+
+        for (let resp of respuesta)
+          this.caracteristicas.push({
+            'nombre': resp.nombre,
+            'descripcion': resp.descripcion,
+            'unidad_medida': resp.unidad_medida,
+            'valor': resp.valor
+          });
+      });
+
     }
   }
 
@@ -175,7 +190,7 @@ export class CargarProductosComponent implements OnInit {
 
           for (let caract of this.caracteristicas) {
             this.SrvProductos.insertCaracteristicasProducto(caract, cast.id).subscribe(resp => {
-              console.log({"SrvProductos.insertCaracteristicasProducto" : resp});
+              console.log({ "SrvProductos.insertCaracteristicasProducto": resp });
               this.toastr.success('Caracteristicas cargadas exitosamente');
             });
           }
@@ -190,13 +205,29 @@ export class CargarProductosComponent implements OnInit {
     } else {
       //Modificar Producto
       if (this.productosForm.valid) {
-        console.log(JSON.stringify(this.productosForm.value));  
-        this.SrvProductos.actualizarDatosProducto(this.productosForm.value).subscribe(respuesta => {
-          console.log({ "SrvProductos.actualizarDatosProducto": respuesta });
-          let cast: any = respuesta;
-          this.toastr.success('El producto se ha ACTUALIZADO Exitosamente');
-          this.productosForm.reset();
-          this.router.navigate(['productos/busqueda-productos']);
+        console.log(JSON.stringify(this.productosForm.value));
+        this.SrvProductos.actualizarDatosProductos(this.productosForm.value).subscribe(respuesta => {
+          console.log({ "SrvAvisos.actualizarDatosProductos": respuesta });
+
+          this.SrvProductos.eliminarCaracteristicasProductos(id_producto).subscribe(respuesta => {
+            console.log({ "SrvProductos.eliminarCaracteristicasProductos": respuesta });
+
+            for (let caract of this.caracteristicas) {
+              this.SrvProductos.insertCaracteristicasProducto(caract, id_producto).subscribe(resp => {
+                console.log({ "SrvProductos.insertCaracteristicasProducto": resp });
+                this.toastr.success('Caracteristicas cargadas exitosamente');
+              });
+            }
+
+            this.toastr.success('El producto se ha ACTUALIZADO Exitosamente');
+            this.productosForm.reset();
+            this.router.navigate(['productos/busqueda-productos']);
+          });
+
+
+
+
+
         });
       } else {
         this.productosForm.getError;
