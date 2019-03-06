@@ -11,7 +11,7 @@ import { ToastrService} from 'ngx-toastr';
 export class BusquedaEmpleadosComponent implements OnInit {
 
   empleadosForm: FormGroup;
-  cast: any;
+  empleados: any = [];
 
   constructor(private SrvEmpleados: EmpleadosService
     , private SrvToastr: ToastrService
@@ -26,20 +26,19 @@ export class BusquedaEmpleadosComponent implements OnInit {
   }
 
   buscarEmpleado() {
-    let busqueda = this.empleadosForm.controls.txtBuscar.value;
-    if(busqueda==undefined || busqueda=='') {
-      console.log("SIN PARAMETROS");
-     /* this.SrvEmpleados.getEmpleadosTodos().subscribe(respuesta => {
-        this.cast = respuesta;
+    let busqueda = this.empleadosForm.get('txtBuscar').value;
+    if(busqueda==undefined || busqueda=='' || busqueda==null) {
+      this.SrvEmpleados.getEmpleadosTodos().subscribe(respuesta => {
+        this.empleados = respuesta;
+        this.SrvToastr.success('Have fun storming the castle!', 'Miracle Max Says');
         console.log({"SrvEmpleados.getEmpleadosTodos" : respuesta });   
-      });*/
+      });
     }
     else {
-      console.log("CON PARAMETROS");
-     /* this.SrvEmpleados.getEmpleadosBusqueda(busqueda).subscribe(respuesta => {
-        this.cast = respuesta;
+      this.SrvEmpleados.getEmpleadosBusqueda(busqueda).subscribe(respuesta => {
+        this.empleados = respuesta;
         console.log({"SrvEmpleados.getEmpleadosBusqueda" : respuesta});   
-      });*/
+      });
     }
   }
 
