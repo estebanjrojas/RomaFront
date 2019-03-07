@@ -23,6 +23,7 @@ export class BusquedaEmpleadosComponent implements OnInit {
      }
 
   ngOnInit() {
+    this.buscarEmpleado();
   }
 
   buscarEmpleado() {
