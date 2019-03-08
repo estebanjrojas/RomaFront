@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { PersonasService} from '../../../servicios/personas.service';
 import { Empleados } from '../../../modelos/Empleados';
+import { Provincias } from 'src/app/modelos/Provincias';
 
 
 export interface CiudadesInterface {
@@ -22,7 +23,7 @@ export interface CiudadesInterface {
 })
 export class CargarEmpleadosComponent implements OnInit {
   miEmpleado : Empleados;
-  provincias : any;
+  provincias : Provincias[] = [];
   oficinas : any;
   empleadosForm: FormGroup;
  
@@ -187,7 +188,11 @@ export class CargarEmpleadosComponent implements OnInit {
     //Llenado de combo provincias
     this.SrvDomicilios.getProvinciasPorPais(1).subscribe(respuesta => {
       console.log({"SrvDomicilios.getProvinciasPorPais" : respuesta});
-      this.provincias = respuesta;
+      let cast : any = respuesta;
+      for(let i=0; i<cast.length; i++) {
+        this.provincias.push({"id" : cast[i].id, "nombre" : cast[i].nombre});
+      }
+      
       this.empleadosForm.controls.provincia.setValue(23);
       this.getCiudadesPorProvincia();
     });
@@ -220,12 +225,15 @@ export class CargarEmpleadosComponent implements OnInit {
   }
 
   guardarEmpleado() {
+    console.log({"Form Valido" : this.empleadosForm.valid});
+
     if(this.empleadosForm.valid) {
       let ciudades_id = 0;
-      let ciudad_nombre = this.empleadosForm.controls.ciudad.value;
+      let ciudad_nombre = this.empleadosForm.get('ciudades').value.descrip;
       this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
         console.log({"SrvDomicilios.getCiudadesIdPorNombre" : respuesta});
-        ciudades_id = respuesta[0].id;
+        let cast : any = respuesta;
+        ciudades_id = cast.id;
       });
 
       let insert_domicilio = {"ciudades_id" : ciudades_id,
@@ -236,11 +244,12 @@ export class CargarEmpleadosComponent implements OnInit {
                               "manzana" : this.empleadosForm.controls.manzana.value,
                               "provincias_id" : this.empleadosForm.controls.provincia.value
                             }
-      this.SrvDomicilios.insert(insert_domicilio).subscribe( respuesta => {
+      console.log({"Domicilio" : insert_domicilio});
+      /*this.SrvDomicilios.insert(insert_domicilio).subscribe( respuesta => {
         console.log({"SrvDomicilios.insert" : respuesta});
         let cast = respuesta[0];
         var domicilios_id = cast.domicilios_id;
-      });
+      });*/
     }
     else {
       console.log({"Submit Invalido" : this.empleadosForm.controls});

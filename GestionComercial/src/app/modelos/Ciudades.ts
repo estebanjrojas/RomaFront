@@ -1,6 +1,8 @@
+import { Provincias } from './Provincias';
+
 export class Ciudades {
     id: number;
     nombre: string;
-    provincias_id: number;
+    provincia: Provincias;
     codigo_postal: number;
 }
