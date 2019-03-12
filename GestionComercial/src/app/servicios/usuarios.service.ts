@@ -49,6 +49,7 @@ export class UsuariosService {
   }
 
   getDatosUsuariosCargados(id_usuario: number): Observable<any> {
+    console.log("El id que tengo en el servicio"+id_usuario);
     return this.http.get(environment.apiEndpoint + '/getDatosUsuariosCargados/' + id_usuario, httpOptions);
   }
 

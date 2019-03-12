@@ -38,7 +38,7 @@ export class CargarUsuariosComponent implements OnInit {
         ])
       ],
       id_usuario: [
-        '', Validators.compose([
+        0, Validators.compose([
 
         ])
       ],
@@ -58,11 +58,12 @@ export class CargarUsuariosComponent implements OnInit {
     this.nomb_usr = localStorage.getItem('roma_usuario');
     this.usuariosForm.controls.nomb_usr.setValue(this.nomb_usr);
     this.route.params.subscribe(params => {
-      this.usuariosForm.controls.id_usuario.setValue(params.id_usuario);
+      this.usuariosForm.controls.id_usuario.setValue(params.usuarios_id);
       console.log(params);
     });
 
     //Llenado combo Empleados
+    /*
     this.SrvEmpleados.getEmpleadosSinUsuario().subscribe(respuesta => {
       console.log({ "SrvEmpleados.getEmpleadosSinUsuario()": respuesta });
       let cast: any = respuesta;
@@ -88,6 +89,10 @@ export class CargarUsuariosComponent implements OnInit {
 
       }
     });
+    */
+
+    this.modificarUsuarios();
+
   }
 
 
@@ -102,10 +107,46 @@ export class CargarUsuariosComponent implements OnInit {
 
         this.usuariosForm.patchValue({
           empleado: respuesta[0].codigo,
-          nombre_usuario: respuesta[0].nombre,
+          nombre_usuario: respuesta[0].nomb_usr,
           chk_debug: respuesta[0].descripcion
         });
-        console.log("Tipo Producto: " + this.usuariosForm.controls.tipo.value);
+
+        if (!(Object.entries(respuesta).length === 0)) {
+          for (var i = 0; i < respuesta.length; i++) {
+            let rel: EmpleadosInterface = { empleados_id: 0, personas_id: 0, nombre: "", apellido: "" };
+            rel.empleados_id = respuesta[i].empleados_id;
+            rel.personas_id = respuesta[i].personas_id;
+            rel.nombre = respuesta[i].nombre_completo;
+            this.empleadosInter.push(rel);
+  
+          }
+        }
+        this.usuariosForm.controls.empleado.setValue(this.empleadosInter[0].empleados_id);
+      });
+    } else{
+      this.SrvEmpleados.getEmpleadosSinUsuario().subscribe(respuesta => {
+        console.log({ "SrvEmpleados.getEmpleadosSinUsuario()": respuesta });
+        let cast: any = respuesta;
+        //console.log(Object.keys(respuesta).length === 0);
+        if (!(Object.entries(respuesta).length === 0)) {
+          for (var i = 0; i < cast.length; i++) {
+            let rel: EmpleadosInterface = { empleados_id: 0, personas_id: 0, nombre: "", apellido: "" };
+            rel.empleados_id = cast[i].empleados_id;
+            rel.personas_id = cast[i].personas_id;
+            rel.nombre = cast[i].nombre_completo;
+            this.empleadosInter.push(rel);
+  
+          }
+        } else {
+          let rel: EmpleadosInterface = { empleados_id: 0, personas_id: 0, nombre: "", apellido: "" };
+          rel.empleados_id = 0;
+          rel.nombre = "No existen empleados sin un nombre de usuario";
+  
+          this.empleadosInter.push(rel);
+          this.usuariosForm.controls.empleado.disable();
+          this.usuariosForm.controls.empleado.setValue(0);
+  
+        }
       });
     }
   }
@@ -153,7 +194,7 @@ export class CargarUsuariosComponent implements OnInit {
 
 
   administrarPerfiles(){
-    this.router.navigate(['usuarios/busqueda-usuarios/'+this.empleadosInter[0].empleados_id]);
+    this.router.navigate(['usuarios/administrar-perfiles/'+this.empleadosInter[0].empleados_id]);
   }
 
 

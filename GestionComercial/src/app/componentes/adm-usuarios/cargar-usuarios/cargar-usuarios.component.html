@@ -25,7 +25,7 @@
                   <div class="col-md-12">
                     <mat-form-field style="width:90%">
                       <mat-select [(value)]="selected" id="cboEmpleados" placeholder="Empleado" formControlName="empleado">
-                        <mat-option *ngFor="let emp of this.empleadosInter" [value]="emp.empleados_id">{{emp.nombre}}, {{emp.apellido}}</mat-option>
+                        <mat-option *ngFor="let emp of this.empleadosInter" [value]="emp.empleados_id">{{emp.nombre}}</mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
