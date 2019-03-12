@@ -37,27 +37,29 @@ export class ProductosService {
   }
 
   insertProductoReturnId(datos: any) {
-    const url = environment.apiEndpoint+`/insertProductoReturnId`;
+    const url = environment.apiEndpoint + `/insertProductoReturnId`;
     let json = JSON.stringify(datos);
     return this.http.post(url, json, httpOptions);
   }
 
   insertCaracteristicasProducto(caract: any, productos_id: number) {
-    const url = environment.apiEndpoint+`/insertCaracteristicasProducto`;
-    let json = JSON.stringify({"nombre": caract.nombre, "descripcion": caract.descripcion
-                              , "unidad_medida": caract.unidad_medida, "valor": caract.valor
-                              , "productos_id": productos_id});
+    const url = environment.apiEndpoint + `/insertCaracteristicasProducto`;
+    let json = JSON.stringify({
+      "nombre": caract.nombre, "descripcion": caract.descripcion
+      , "unidad_medida": caract.unidad_medida, "valor": caract.valor
+      , "productos_id": productos_id
+    });
     return this.http.post(url, json, httpOptions);
   }
 
   actualizarDatosProductos(datos: any): Observable<any> {
     let json = JSON.stringify(datos);
-    return this.http.put(environment.apiEndpoint+'/actualizarDatosProductos', json, httpOptions);
+    return this.http.put(environment.apiEndpoint + '/actualizarDatosProductos', json, httpOptions);
   }
 
 
-  eliminarCaracteristicasProductos(id_producto: number){
-    const url = environment.apiEndpoint+`/eliminarCaracteristicasProductos/`+id_producto;
+  eliminarCaracteristicasProductos(id_producto: number) {
+    const url = environment.apiEndpoint + `/eliminarCaracteristicasProductos/` + id_producto;
     return this.http.delete(url, httpOptions);
   }
 

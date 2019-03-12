@@ -46,7 +46,7 @@
                         <td>{{usr.apellido}}, {{usr.nombre}}</td>
                         <td>{{usr.desc_usr}}</td>
                         <td style='text-align: center'>
-                          <button class="btn btn-info btn-sm">Modificar</button>&nbsp;
+                          <button class="btn btn-info btn-sm" [routerLink]="['/usuarios/cargar-usuarios', usr.id]" routerLinkActive="active">Modificar</button>&nbsp;
                           <button class="btn btn-danger btn-sm">Baja</button>
                         </td>
                       </tr>
@@ -56,7 +56,7 @@
                 <br>
                 <div class="row">
                   <div class="col-md-12" align="center">
-                    <input type="submit" class="btn btn-primary" value="Nuevo Usuario" />
+                    <input type="submit" class="btn btn-primary" [routerLink]="['/usuarios/cargar-usuarios']" routerLinkActive="active" value="Nuevo Usuario" />
                   </div>
                 </div>
               </div>

@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { PersonasService} from '../../../servicios/personas.service';
 import { Empleados } from '../../../modelos/Empleados';
-import { Provincias } from 'src/app/modelos/Provincias';
+import { Provincias } from '../../../modelos/Provincias';
 
 
 export interface CiudadesInterface {

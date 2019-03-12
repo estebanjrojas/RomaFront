@@ -43,6 +43,7 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
   , { path: 'puntos-venta/cargar-puntos-venta', component: CargarPuntosDeVentaComponent }
   , { path: 'puntos-venta/busqueda-puntos-venta', component: BuscarPuntosDeVentaComponent }
   , { path: 'usuarios/cargar-usuarios', component: CargarUsuariosComponent }
+  , { path: 'usuarios/cargar-usuarios/:usuarios_id', component: CargarUsuariosComponent }
   , { path: 'usuarios/busqueda-usuarios', component: BuscarUsuariosComponent }
   , { path: 'usuarios/administrar-perfiles', component: AdministrarPerfilesComponent }
   , { path: 'categorias/cargar-categorias', component: CargarCategoriaComponent }

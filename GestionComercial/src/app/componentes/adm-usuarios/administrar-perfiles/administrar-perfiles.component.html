@@ -1,7 +1,7 @@
 <app-cabecera></app-cabecera>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
-<form id="empleadosFormId" [formGroup]="empleadosForm" (ngSubmit)="guardar()">
+<form id="admPerfilesFormid" [formGroup]="perfilesForm" (ngSubmit)="guardar()">
   <input type="hidden" formControlName="nombre_usuario">
   <!----## Inicio Container Principal ##---->
   <div class="container">
@@ -52,7 +52,7 @@
                     <tr>
                       <td></td>
                       <td style='text-align: center'>
-                        <button class="btn btn-info">Agregar</button>&nbsp;
+                        <button class="btn btn-info">Quitar</button>&nbsp;
                       </td>
                     </tr>
                   </tbody>
@@ -62,10 +62,11 @@
             <!----## Fin Row Principal Interna ##---->
             <br><br>
             <hr>
-            <div class="row">
+            <div class="row h-100">
               <div class="col-md-12" align="center">
-                <input type="submit" class="btn btn-primary" value="Volver" /> &nbsp;
-                <input type="submit" class="btn btn-primary" value="Guardar" />
+                <input type="submit" class="btn btn-outline-primary btn-xs col-md-2" onClick='window.history.go(-1)'
+                  value="Volver" /> &nbsp;
+                <input type="submit" class="btn btn-primary btn-xs col-md-2" value="Guardar" />
               </div>
             </div>
           </div>

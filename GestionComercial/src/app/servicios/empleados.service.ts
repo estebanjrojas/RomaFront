@@ -31,6 +31,10 @@ export class EmpleadosService {
     return this.http.get(environment.apiEndpoint + '/getEmpleadosTodos/', httpOptions);
   }
 
+  getEmpleadosSinUsuario() {
+    return this.http.get(environment.apiEndpoint + '/getEmpleadosSinUsuario/', httpOptions);
+  }
+
 
 
 }
