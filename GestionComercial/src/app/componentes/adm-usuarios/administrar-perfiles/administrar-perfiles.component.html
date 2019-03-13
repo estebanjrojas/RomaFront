@@ -3,6 +3,7 @@
 <!----## Inicio Form Principal ##---->
 <form id="admPerfilesFormid" [formGroup]="perfilesForm" (ngSubmit)="guardar()">
   <input type="hidden" formControlName="nombre_usuario">
+  <input type="hidden" formControlName="id_empleado">
   <!----## Inicio Container Principal ##---->
   <div class="container">
     <!----## Inicio Row Principal ##---->
@@ -12,7 +13,7 @@
         <br>
         <h3>Usuarios</h3>
         <hr>
-        <h5>Administrar Perfiles: </h5>
+        <h5>Administrar Perfiles: &nbsp; <b> {{empleados.descripcion}} </b></h5>
         <br>
         <div class="card">
           <div class="card-body">
@@ -27,32 +28,38 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                <table class="table">
-                  <thead class="thead-light" style="text-align: center">
-                    <th style='width:28%;'>Nombre</th>
-                    <th style='width:18%;'></th>
+                <table class="table table-hover table-sm">
+                  <thead class="thead-light">
+                    <th style='width:30%;'>Nombre</th>
+                    <th style='width:60%;'>Descripcion</th>
+                    <th style='width:10%;'></th>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td></td>
+                    <tr *ngFor="let perf of perfilesSinAsignar; let indice = index">
+                      <td> {{perf.nombre}}</td>
+                      <td> {{perf.descripcion}}</td>
                       <td style='text-align: center'>
-                        <button class="btn btn-info">Agregar</button>&nbsp;
+                        <button class='btn btn-info btn-sm' type="button"
+                          (click)='borrarFila(caract);'>Agregar</button>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <div class="col-md-6">
-                <table class="table">
-                  <thead class="thead-light" style="text-align: center">
-                    <th style='width:28%;'>Nombre</th>
-                    <th style='width:18%;'></th>
+                <table class="table table-hover table-sm">
+                  <thead class="thead-light">
+                    <th style='width:30%;'>Nombre</th>
+                    <th style='width:60%;'>Descripcion</th>
+                    <th style='width:10%;'></th>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td></td>
+                    <tr *ngFor="let perf of perfilesAsignados; let indice = index">
+                      <td> {{perf.nombre}}</td>
+                      <td> {{perf.descripcion}}</td>
                       <td style='text-align: center'>
-                        <button class="btn btn-info">Quitar</button>&nbsp;
+                        <button class='btn btn-danger btn-sm' type="button"
+                          (click)='borrarFila(caract);'>Quitar</button>
                       </td>
                     </tr>
                   </tbody>

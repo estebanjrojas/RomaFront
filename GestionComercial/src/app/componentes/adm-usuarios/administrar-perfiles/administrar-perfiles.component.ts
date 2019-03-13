@@ -18,13 +18,17 @@ export class AdministrarPerfilesComponent implements OnInit {
   perfilesForm: FormGroup;
   nomb_usr: string;
 
+  empleados: Empleados = new Empleados();
+  perfilesAsignados = new Array<Perfiles>();
+  perfilesSinAsignar = new Array<Perfiles>();
+
   constructor(private formBuilder: FormBuilder
     , private SrvTabgral: TabgralService
     , private SrvEmpleados: EmpleadosService
     , private SrvUsuarios: UsuariosService
     , private route: ActivatedRoute
     , private router: Router
-    , private toastr: ToastrService) { 
+    , private toastr: ToastrService) {
     this.perfilesForm = this.formBuilder.group({
       empleado: [
         '', Validators.compose([
@@ -35,7 +39,7 @@ export class AdministrarPerfilesComponent implements OnInit {
           Validators.required
         ])
       ],
-      id_usuario: [
+      id_empleado: [
         '', Validators.compose([
 
         ])
@@ -55,9 +59,67 @@ export class AdministrarPerfilesComponent implements OnInit {
     this.nomb_usr = localStorage.getItem('roma_usuario');
     this.perfilesForm.controls.nomb_usr.setValue(this.nomb_usr);
     this.route.params.subscribe(params => {
-      this.perfilesForm.controls.id_usuario.setValue(params.id_usuario);
+      this.perfilesForm.controls.id_empleado.setValue(params.empleados_id);
       console.log(params);
     });
+
+    this.obtenerEmpleado();
+    this.agregarArregloTabla();
   }
+
+
+  obtenerEmpleado() {
+    var id_empleado = this.perfilesForm.controls.id_empleado.value;
+    this.SrvUsuarios.getDatosUsuariosCargados(id_empleado).subscribe(resp => {
+      let respuesta: any = resp;
+      console.log({ "SrvUsuarios.getDatosUsuariosCargados": respuesta });
+      this.empleados.descripcion = respuesta[0].nomb_usr;
+      console.log("Datos guardados: " + this.empleados.descripcion);
+      console.log("Datos guardados: " + respuesta[0].nomb_usr);
+
+    });
+  }
+
+
+  agregarArregloTabla() {
+    let id_empleado = this.perfilesForm.controls.id_empleado.value;
+    this.SrvUsuarios.getPerfilesAsignados(id_empleado).subscribe(respuesta => {
+      console.log({ "SrvUsuarios.getPerfilesAsignados": respuesta });
+      let cast: any = respuesta;
+
+      for (let resp of cast)
+        this.perfilesAsignados.push({
+          'id': resp.id,
+          'nombre': resp.nombre,
+          'descripcion': resp.descripcion,
+        });
+        console.log("Perfiles"+ this.perfilesAsignados[0].nombre);
+    });
+
+    this.SrvUsuarios.getPerfilesSinAsignar(id_empleado).subscribe(respuesta => {
+      console.log({ "SrvUsuarios.getPerfilesSinAsignar": respuesta });
+      let cast: any = respuesta;
+
+      for (let resp of cast)
+        this.perfilesSinAsignar.push({
+          'id': resp.id,
+          'nombre': resp.nombre,
+          'descripcion': resp.descripcion,
+        });
+        console.log("Perfiles"+ this.perfilesSinAsignar[0].nombre);
+    });
+
+    
+  }
+
+
+
+}
+
+
+interface Perfiles {
+  id: number,
+  nombre: string,
+  descripcion: string
 
 }

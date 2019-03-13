@@ -49,8 +49,15 @@ export class UsuariosService {
   }
 
   getDatosUsuariosCargados(id_usuario: number): Observable<any> {
-    console.log("El id que tengo en el servicio"+id_usuario);
     return this.http.get(environment.apiEndpoint + '/getDatosUsuariosCargados/' + id_usuario, httpOptions);
+  }
+
+  getPerfilesAsignados(id_perfiles: number): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getPerfilesAsignados/' + id_perfiles, httpOptions);
+  }
+  
+  getPerfilesSinAsignar(id_perfiles: number): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getPerfilesSinAsignar/' + id_perfiles, httpOptions);
   }
 
 
