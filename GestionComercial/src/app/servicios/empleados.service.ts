@@ -31,6 +31,11 @@ export class EmpleadosService {
     return this.http.get(environment.apiEndpoint + '/getEmpleadosTodos/', httpOptions);
   }
 
+  insertEmpleadoPersonaDomicilio(empleado: any) {
+    let json = JSON.stringify(empleado);
+    return this.http.post(environment.apiEndpoint+'/insertEmpleadoPersonaDomicilio/', json, httpOptions);
+  }
+
 
 
 }

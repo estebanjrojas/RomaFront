@@ -230,21 +230,62 @@ export class CargarEmpleadosComponent implements OnInit {
     if(this.empleadosForm.valid) {
       let ciudades_id = 0;
       let ciudad_nombre = this.empleadosForm.get('ciudades').value.descrip;
-      this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
-        console.log({"SrvDomicilios.getCiudadesIdPorNombre" : respuesta});
-        let cast : any = respuesta;
-        ciudades_id = cast.id;
-      });
+      
 
-      let insert_domicilio = {"ciudades_id" : ciudades_id,
-                              "calle" : this.empleadosForm.controls.calle.value,
-                              "numero" : this.empleadosForm.controls.numero.value,
-                              "piso" : this.empleadosForm.controls.piso.value,
-                              "depto" : this.empleadosForm.controls.depto.value,
-                              "manzana" : this.empleadosForm.controls.manzana.value,
-                              "provincias_id" : this.empleadosForm.controls.provincia.value
-                            }
-      console.log({"Domicilio" : insert_domicilio});
+
+     this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
+      console.log({"SrvDomicilios.getCiudadesIdPorNombre" : respuesta});
+      let cast : any = respuesta;
+      ciudades_id = cast.id;
+      
+      
+      }
+      , err => {console.log(err)}
+      , ()=>{
+        let campos_domicilio = {
+          "ciudades_id" : ciudades_id,
+          "calle" : ((this.empleadosForm.get('calle') != undefined)?this.empleadosForm.get('calle').value: ""),
+          "numero" : ((this.empleadosForm.get('numero') != undefined)?this.empleadosForm.get('numero').value: ""),
+          "piso" : ((this.empleadosForm.get('piso') != undefined)?this.empleadosForm.get('piso').value: ""),
+          "depto" :((this.empleadosForm.get('depto') != undefined)?this.empleadosForm.get('depto').value: ""),
+          "manzana" : ((this.empleadosForm.get('manzana') != undefined)?this.empleadosForm.get('manzana').value: ""),
+          "lote" : ((this.empleadosForm.get('lote') != undefined)?this.empleadosForm.get('lote').value: ""),
+          "block" : ((this.empleadosForm.get('block') != undefined)?this.empleadosForm.get('block').value: ""),
+          "barrio" : ((this.empleadosForm.get('barrio') != undefined)?this.empleadosForm.get('barrio').value: "")
+        };
+
+        let insert_completo = { 
+          domicilio: campos_domicilio,
+          //Persona
+          "nro_doc" : this.empleadosForm.get('documento').value,
+          "apellido" : this.empleadosForm.get('apellido').value,
+          "nombre" : this.empleadosForm.get('nombre').value,
+          "telefono" : "",
+          "celular" : "",
+          "email" : "",
+          "fecha_nac" : this.empleadosForm.get('fecha_nacimiento').value,
+          //Empleado
+          "legajo" : this.empleadosForm.get('legajo').value,
+          "fecha_ingreso" : this.empleadosForm.get('fecha_ingreso').value,
+          "empresas_id" : "1",
+          "oficina" : this.empleadosForm.get('oficina').value
+        }
+        console.log({"Insertar" : insert_completo});
+        this.SrvEmpleados.insertEmpleadoPersonaDomicilio(insert_completo).subscribe(resp => {
+          console.log('INSERTADO');
+         // this.empleadosForm.reset;
+        });
+
+
+
+      });
+  
+      
+    
+
+
+
+      
       /*this.SrvDomicilios.insert(insert_domicilio).subscribe( respuesta => {
         console.log({"SrvDomicilios.insert" : respuesta});
         let cast = respuesta[0];
