@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { PersonasService} from '../../../servicios/personas.service';
 import { Empleados } from '../../../modelos/Empleados';
 import { Provincias } from '../../../modelos/Provincias';
+import { ActivatedRoute } from '@angular/router';
 
 
 export interface CiudadesInterface {
@@ -26,7 +27,7 @@ export class CargarEmpleadosComponent implements OnInit {
   provincias : Provincias[] = [];
   oficinas : any;
   empleadosForm: FormGroup;
- 
+
   ciudades: CiudadesInterface[] = [];
   ciudadesClass: Ciudades = new Ciudades();
 
@@ -38,7 +39,8 @@ export class CargarEmpleadosComponent implements OnInit {
     , private SrvPersonas: PersonasService
     , private SrvDomicilios: DomiciliosService
     , private toastr: ToastrService
-    , private formBuilder: FormBuilder) {
+    , private formBuilder: FormBuilder
+    , private route: ActivatedRoute) {
 
     this.empleadosForm = this.formBuilder.group({
       documento: [
@@ -129,9 +131,9 @@ export class CargarEmpleadosComponent implements OnInit {
     let provincias_id = this.empleadosForm.controls.provincia.value;
     this.SrvDomicilios.getCiudadesPorProvincia(provincias_id).subscribe(respuesta => {
       let cast: any = respuesta;
-      console.log({"SrvDomicilios.getCiudadesPorProvincia" : cast});
+      console.log({'SrvDomicilios.getCiudadesPorProvincia' : cast});
       for(let i=0; i<cast.length; i++) {
-        this.ciudades.push({descrip : cast[i].nombre.trim()}); 
+        this.ciudades.push({descrip : cast[i].nombre.trim()});
         //por alguna razon el nombre viene con espacios en blanco alrededor asi que se hace un trim por javascript
       }
       console.log(this.ciudades);
@@ -141,9 +143,9 @@ export class CargarEmpleadosComponent implements OnInit {
   buscarPorDocumento() {
     let documento = this.empleadosForm.get('documento').value;
     this.SrvPersonas.getPersonaPorNroDoc(documento).subscribe(respuesta => {
-      console.log({"SrvPersonas.getPersonaPorNroDoc" : respuesta});
-      
-      let cast : any = respuesta;
+      console.log({'SrvPersonas.getPersonaPorNroDoc' : respuesta});
+
+      let cast: any = respuesta;
       if(cast.redirect) {
         console.log('Redireccionar a Login');
       }
@@ -153,8 +155,8 @@ export class CargarEmpleadosComponent implements OnInit {
     });
 
     this.SrvEmpleados.getEmpleadoPorNroDoc(documento).subscribe(respuesta => {
-      console.log({"SrvEmpleados.getEmpleadoPorNroDoc" : respuesta});
-      let cast : any = respuesta;
+      console.log({'SrvEmpleados.getEmpleadoPorNroDoc' : respuesta});
+      let cast: any = respuesta;
       if(cast.redirect) {
         console.log('Redireccionar a Login');
       }
@@ -165,7 +167,7 @@ export class CargarEmpleadosComponent implements OnInit {
     });
 
     this.SrvDomicilios.getDomicilioByNroDoc(documento).subscribe(respuesta => {
-      console.log({"SrvDomicilios.getDomicilioByNroDoc" : respuesta});
+      console.log({'SrvDomicilios.getDomicilioByNroDoc' : respuesta});
       let cast : any = respuesta[0];
       if(cast.redirect) {
         console.log('Redireccionar a Login');
@@ -179,26 +181,33 @@ export class CargarEmpleadosComponent implements OnInit {
         this.empleadosForm.controls.provincia.setValue(cast.provincias_id);
         this.getCiudadesPorProvincia();
       }
-      
+
 
     });
   }
 
   ngOnInit() {
+    let empleados_id = -1;
+    this.route.params.subscribe(params => {
+      empleados_id = params.empleados_id;
+      console.log(params);
+    });
+
+
     //Llenado de combo provincias
     this.SrvDomicilios.getProvinciasPorPais(1).subscribe(respuesta => {
-      console.log({"SrvDomicilios.getProvinciasPorPais" : respuesta});
+      console.log({'SrvDomicilios.getProvinciasPorPais' : respuesta});
       let cast : any = respuesta;
       for(let i=0; i<cast.length; i++) {
-        this.provincias.push({"id" : cast[i].id, "nombre" : cast[i].nombre});
+        this.provincias.push({'id' : cast[i].id, 'nombre' : cast[i].nombre});
       }
-      
+
       this.empleadosForm.controls.provincia.setValue(23);
       this.getCiudadesPorProvincia();
     });
 
     this.SrvTabgral.selectByNroTab(3).subscribe(respuesta => {
-      console.log({"SrvTabgral.selectByNroTab" : respuesta});
+      console.log({'SrvTabgral.selectByNroTab' : respuesta});
       this.oficinas = respuesta;
     })
 
@@ -220,18 +229,18 @@ export class CargarEmpleadosComponent implements OnInit {
     return this.ciudades.filter(option => option.descrip.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  compareFn(c1: any, c2:any): boolean { 
-    return c1 && c2 ? c1 == c2 : false; 
+  compareFn(c1: any, c2:any): boolean {
+    return c1 && c2 ? c1 == c2 : false;
   }
 
   guardarEmpleado() {
-    console.log({"Form Valido" : this.empleadosForm.valid});
+    console.log({'Form Valido' : this.empleadosForm.valid});
 
     if(this.empleadosForm.valid) {
       let ciudades_id = 0;
       let ciudad_nombre = this.empleadosForm.get('ciudades').value.descrip;
       this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
-        console.log({"SrvDomicilios.getCiudadesIdPorNombre" : respuesta});
+        console.log({'SrvDomicilios.getCiudadesIdPorNombre' : respuesta});
         let cast : any = respuesta;
         ciudades_id = cast.id;
       });
