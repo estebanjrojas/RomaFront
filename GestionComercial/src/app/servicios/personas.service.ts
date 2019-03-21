@@ -22,5 +22,10 @@ export class PersonasService {
     return this.http.get(environment.apiEndpoint+'/getPersonaPorNroDoc/'+nro_doc, httpOptions);
   }
 
+  insertPersonaDomicilio(persona: any) {
+    let json = JSON.stringify(persona);
+    return this.http.put(environment.apiEndpoint+'/insertPersonaDomicilio/', json, httpOptions);
+  }
+
 
 }
