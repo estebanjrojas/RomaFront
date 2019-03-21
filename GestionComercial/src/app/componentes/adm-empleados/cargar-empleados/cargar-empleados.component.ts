@@ -122,6 +122,23 @@ export class CargarEmpleadosComponent implements OnInit {
         '', Validators.compose([
 
         ])
+      ],
+      tipo_doc: [
+        '', Validators.compose([
+          Validators.required
+        ])
+      ],
+      telefono: [
+        '', Validators.compose([
+        ])
+      ],
+      celular: [
+        '', Validators.compose([
+        ])
+      ],
+      email: [
+        '', Validators.compose([
+        ])
       ]
 
     });
@@ -152,6 +169,10 @@ export class CargarEmpleadosComponent implements OnInit {
       this.empleadosForm.controls.apellido.setValue(cast[0].apellido);
       this.empleadosForm.controls.nombre.setValue(cast[0].nombre);
       this.empleadosForm.controls.fecha_nacimiento.setValue(cast[0].fecha_nac);
+      this.empleadosForm.controls.telefono.setValue(cast[0].telefono);
+      this.empleadosForm.controls.celular.setValue(cast[0].telefono_cel);
+      this.empleadosForm.controls.email.setValue(cast[0].email);
+      this.empleadosForm.controls.tipo_doc.setValue(cast[0].tipo_doc);
     });
 
     this.SrvEmpleados.getEmpleadoPorNroDoc(documento).subscribe(respuesta => {
@@ -179,6 +200,7 @@ export class CargarEmpleadosComponent implements OnInit {
         this.empleadosForm.controls.depto.setValue(cast.depto);
         this.empleadosForm.controls.manzana.setValue(cast.manzana);
         this.empleadosForm.controls.provincia.setValue(cast.provincias_id);
+        
         this.getCiudadesPorProvincia();
       }
 
@@ -239,7 +261,6 @@ export class CargarEmpleadosComponent implements OnInit {
     if(this.empleadosForm.valid) {
       let ciudades_id = 0;
       let ciudad_nombre = this.empleadosForm.get('ciudades').value.descrip;
-<<<<<<< HEAD
       
 
 
@@ -247,8 +268,6 @@ export class CargarEmpleadosComponent implements OnInit {
       console.log({"SrvDomicilios.getCiudadesIdPorNombre" : respuesta});
       let cast : any = respuesta;
       ciudades_id = cast.id;
-      
-      
       }
       , err => {console.log(err)}
       , ()=>{
@@ -267,46 +286,31 @@ export class CargarEmpleadosComponent implements OnInit {
         let insert_completo = { 
           domicilio: campos_domicilio,
           //Persona
+          "tipo_doc" : this.empleadosForm.get('tipo_doc').value,
           "nro_doc" : this.empleadosForm.get('documento').value,
           "apellido" : this.empleadosForm.get('apellido').value,
           "nombre" : this.empleadosForm.get('nombre').value,
-          "telefono" : "",
-          "celular" : "",
-          "email" : "",
+          "telefono" : this.empleadosForm.get('telefono').value,
+          "celular" : this.empleadosForm.get('celular').value,
+          "email" : this.empleadosForm.get('email').value,
           "fecha_nac" : this.empleadosForm.get('fecha_nacimiento').value,
           //Empleado
           "legajo" : this.empleadosForm.get('legajo').value,
           "fecha_ingreso" : this.empleadosForm.get('fecha_ingreso').value,
           "empresas_id" : "1",
+          "descripcion": this.empleadosForm.get('descripcion').value,
           "oficina" : this.empleadosForm.get('oficina').value
         }
         console.log({"Insertar" : insert_completo});
         this.SrvEmpleados.insertEmpleadoPersonaDomicilio(insert_completo).subscribe(resp => {
           console.log('INSERTADO');
-         // this.empleadosForm.reset;
+          this.empleadosForm.reset;
         });
 
 
 
-=======
-      this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
-        console.log({'SrvDomicilios.getCiudadesIdPorNombre' : respuesta});
-        let cast : any = respuesta;
-        ciudades_id = cast.id;
->>>>>>> e5cb8c894f494c60b0a525b48eb4cb2443f97227
       });
   
-      
-    
-
-
-
-      
-      /*this.SrvDomicilios.insert(insert_domicilio).subscribe( respuesta => {
-        console.log({"SrvDomicilios.insert" : respuesta});
-        let cast = respuesta[0];
-        var domicilios_id = cast.domicilios_id;
-      });*/
     }
     else {
       console.log({"Submit Invalido" : this.empleadosForm.controls});
