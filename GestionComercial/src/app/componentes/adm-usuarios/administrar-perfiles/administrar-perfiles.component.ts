@@ -93,7 +93,7 @@ export class AdministrarPerfilesComponent implements OnInit {
           'nombre': resp.nombre,
           'descripcion': resp.descripcion,
         });
-        console.log("Perfiles"+ this.perfilesAsignados[0].nombre);
+      console.log("Perfiles" + this.perfilesAsignados[0].nombre);
     });
 
     this.SrvUsuarios.getPerfilesSinAsignar(id_empleado).subscribe(respuesta => {
@@ -106,10 +106,20 @@ export class AdministrarPerfilesComponent implements OnInit {
           'nombre': resp.nombre,
           'descripcion': resp.descripcion,
         });
-        console.log("Perfiles"+ this.perfilesSinAsignar[0].nombre);
+      console.log("Perfiles" + this.perfilesSinAsignar[0].nombre);
     });
 
-    
+
+  }
+
+  borrarFila(value) {
+    var array = this.perfilesAsignados;
+    array.splice(value, 1);
+    this.agregarFila(value);
+  }
+
+  agregarFila(value) {
+
   }
 
 
