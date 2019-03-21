@@ -2,8 +2,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
 <form id="admPerfilesFormid" [formGroup]="perfilesForm" (ngSubmit)="guardar()">
-  <input type="hidden" formControlName="nombre_usuario">
   <input type="hidden" formControlName="id_empleado">
+  <input type="hidden" formControlName="id_usuario">
   <!----## Inicio Container Principal ##---->
   <div class="container">
     <!----## Inicio Row Principal ##---->
@@ -40,7 +40,7 @@
                       <td> {{perf.descripcion}}</td>
                       <td style='text-align: center'>
                         <button class='btn btn-info btn-sm' type="button"
-                          (click)='agregarFila(caract);'>Agregar</button>
+                          (click)='agregarFila(indice);'>Agregar</button>
                       </td>
                     </tr>
                   </tbody>
@@ -59,7 +59,7 @@
                       <td> {{perf.descripcion}}</td>
                       <td style='text-align: center'>
                         <button class='btn btn-danger btn-sm' type="button"
-                          (click)='borrarFila(caract);'>Quitar</button>
+                          (click)='borrarFila(indice);'>Quitar</button>
                       </td>
                     </tr>
                   </tbody>

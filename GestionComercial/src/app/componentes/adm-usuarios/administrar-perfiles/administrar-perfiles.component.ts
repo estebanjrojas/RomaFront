@@ -34,12 +34,12 @@ export class AdministrarPerfilesComponent implements OnInit {
         '', Validators.compose([
         ])
       ],
-      nombre_usuario: [
+      id_empleado: [
         '', Validators.compose([
-          Validators.required
+
         ])
       ],
-      id_empleado: [
+      id_usuario: [
         '', Validators.compose([
 
         ])
@@ -74,9 +74,7 @@ export class AdministrarPerfilesComponent implements OnInit {
       let respuesta: any = resp;
       console.log({ "SrvUsuarios.getDatosUsuariosCargados": respuesta });
       this.empleados.descripcion = respuesta[0].nomb_usr;
-      console.log("Datos guardados: " + this.empleados.descripcion);
-      console.log("Datos guardados: " + respuesta[0].nomb_usr);
-
+      this.perfilesForm.controls.id_usuario.setValue(respuesta[0].usuario_id);
     });
   }
 
@@ -106,7 +104,6 @@ export class AdministrarPerfilesComponent implements OnInit {
           'nombre': resp.nombre,
           'descripcion': resp.descripcion,
         });
-      console.log("Perfiles" + this.perfilesSinAsignar[0].nombre);
     });
 
 
@@ -114,12 +111,51 @@ export class AdministrarPerfilesComponent implements OnInit {
 
   borrarFila(value) {
     var array = this.perfilesAsignados;
+    this.perfilesSinAsignar.push({
+      'id': array[0].id,
+      'nombre': array[0].nombre,
+      'descripcion': array[0].descripcion
+    });
     array.splice(value, 1);
-    this.agregarFila(value);
+
   }
 
   agregarFila(value) {
+    var array = this.perfilesSinAsignar;
+    this.perfilesAsignados.push({
+      'id': array[0].id,
+      'nombre': array[0].nombre,
+      'descripcion': array[0].descripcion
+    });
+    array.splice(value, 1);
+  }
 
+
+  guardar() {
+    let usuario_id = this.perfilesForm.controls.id_usuario.value;
+    let empleados_id = this.perfilesForm.controls.id_empleado.value;
+
+    if (this.perfilesForm.valid) {
+      console.log(JSON.stringify(this.perfilesForm.value));
+      this.SrvUsuarios.deletePerfiles(usuario_id).subscribe(respuesta => {
+        console.log({ "SrvUsuarios.deletePerfiles": respuesta });
+        let cast: any = respuesta;
+
+        for (let caract of this.perfilesAsignados) {
+          this.SrvUsuarios.insertPerfilesAsignados(caract, usuario_id).subscribe(resp => {
+            console.log({ "SrvUsuarios.insertPerfilesAsignados": resp });
+            this.toastr.success('Caracteristicas cargadas exitosamente');
+          });
+        }
+        this.toastr.success('Los perfiles se han CARGADO Exitosamente');
+        this.router.navigate(['usuarios/cargar-usuarios/' + empleados_id]);
+
+      });
+
+    } else {
+      this.perfilesForm.getError;
+      console.log(this.perfilesForm);
+    }
   }
 
 

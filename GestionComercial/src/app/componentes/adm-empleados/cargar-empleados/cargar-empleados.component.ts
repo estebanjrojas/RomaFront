@@ -239,7 +239,6 @@ export class CargarEmpleadosComponent implements OnInit {
     if(this.empleadosForm.valid) {
       let ciudades_id = 0;
       let ciudad_nombre = this.empleadosForm.get('ciudades').value.descrip;
-<<<<<<< HEAD
       
 
 
@@ -288,12 +287,6 @@ export class CargarEmpleadosComponent implements OnInit {
 
 
 
-=======
-      this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
-        console.log({'SrvDomicilios.getCiudadesIdPorNombre' : respuesta});
-        let cast : any = respuesta;
-        ciudades_id = cast.id;
->>>>>>> e5cb8c894f494c60b0a525b48eb4cb2443f97227
       });
   
       
