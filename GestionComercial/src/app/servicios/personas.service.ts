@@ -18,8 +18,8 @@ export class PersonasService {
 
   constructor(private http: HttpClient) { }
 
-  getPersonaPorNroDoc(nro_doc): Observable<any> {
-    return this.http.get(environment.apiEndpoint+'/getPersonaPorNroDoc/'+nro_doc, httpOptions);
+  getPersonaPorNroDoc(tipo_doc, nro_doc): Observable<any> {
+    return this.http.get(environment.apiEndpoint+'/getPersonaPorNroDoc/'+tipo_doc+'/'+nro_doc, httpOptions);
   }
 
   insertPersonaDomicilio(persona: any) {

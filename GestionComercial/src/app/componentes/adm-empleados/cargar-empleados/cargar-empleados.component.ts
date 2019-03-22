@@ -158,29 +158,25 @@ export class CargarEmpleadosComponent implements OnInit {
   }
 
   buscarPorDocumento() {
+    let tipo_documento = this.empleadosForm.get('tipo_doc').value;
     let documento = this.empleadosForm.get('documento').value;
-    this.SrvPersonas.getPersonaPorNroDoc(documento).subscribe(respuesta => {
+    this.SrvPersonas.getPersonaPorNroDoc(tipo_documento, documento).subscribe(respuesta => {
       console.log({'SrvPersonas.getPersonaPorNroDoc' : respuesta});
 
       let cast: any = respuesta;
-      if(cast.redirect) {
-        console.log('Redireccionar a Login');
-      }
       this.empleadosForm.controls.apellido.setValue(cast[0].apellido);
       this.empleadosForm.controls.nombre.setValue(cast[0].nombre);
       this.empleadosForm.controls.fecha_nacimiento.setValue(cast[0].fecha_nac);
       this.empleadosForm.controls.telefono.setValue(cast[0].telefono);
       this.empleadosForm.controls.celular.setValue(cast[0].telefono_cel);
       this.empleadosForm.controls.email.setValue(cast[0].email);
-      this.empleadosForm.controls.tipo_doc.setValue(cast[0].tipo_doc);
+      this.empleadosForm.controls.tipo_doc.setValue(cast[0].tipo_doc+"");
     });
 
-    this.SrvEmpleados.getEmpleadoPorNroDoc(documento).subscribe(respuesta => {
+    this.SrvEmpleados.getEmpleadoPorNroDoc(tipo_documento, documento).subscribe(respuesta => {
       console.log({'SrvEmpleados.getEmpleadoPorNroDoc' : respuesta});
       let cast: any = respuesta;
-      if(cast.redirect) {
-        console.log('Redireccionar a Login');
-      }
+  
       this.empleadosForm.controls.legajo.setValue(cast[0].legajo);
       this.empleadosForm.controls.fecha_ingreso.setValue(cast[0].fecha_ingreso);
       this.empleadosForm.controls.descripcion.setValue(cast[0].descripcion);
@@ -190,9 +186,6 @@ export class CargarEmpleadosComponent implements OnInit {
     this.SrvDomicilios.getDomicilioByNroDoc(documento).subscribe(respuesta => {
       console.log({'SrvDomicilios.getDomicilioByNroDoc' : respuesta});
       let cast : any = respuesta[0];
-      if(cast.redirect) {
-        console.log('Redireccionar a Login');
-      }
       if(cast) {
         this.empleadosForm.controls.calle.setValue(cast.calle);
         this.empleadosForm.controls.numero.setValue(cast.numero);
@@ -209,6 +202,8 @@ export class CargarEmpleadosComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.empleadosForm.controls.tipo_doc.setValue("3");
+
     let empleados_id = -1;
     this.route.params.subscribe(params => {
       empleados_id = params.empleados_id;

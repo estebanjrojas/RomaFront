@@ -19,8 +19,8 @@ export class EmpleadosService {
   constructor(private http: HttpClient) { }
 
 
-  getEmpleadoPorNroDoc(nro_doc) {
-    return this.http.get(environment.apiEndpoint + '/getEmpleadoPorNroDoc/' + nro_doc, httpOptions);
+  getEmpleadoPorNroDoc(tipo_doc, nro_doc) {
+    return this.http.get(environment.apiEndpoint + '/getEmpleadoPorNroDoc/' + tipo_doc+'/'+nro_doc, httpOptions);
   }
 
   getEmpleadosBusqueda(texto_busqueda) {
