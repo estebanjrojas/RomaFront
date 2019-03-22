@@ -35,7 +35,6 @@ export class EmpleadosService {
     let json = JSON.stringify(empleado);
     return this.http.post(environment.apiEndpoint+'/insertEmpleadoPersonaDomicilio/', json, httpOptions);
   }
-  
   getEmpleadosSinUsuario() {
     return this.http.get(environment.apiEndpoint + '/getEmpleadosSinUsuario/', httpOptions);
   }

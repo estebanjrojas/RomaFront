@@ -60,6 +60,21 @@ export class UsuariosService {
     return this.http.get(environment.apiEndpoint + '/getPerfilesSinAsignar/' + id_perfiles, httpOptions);
   }
 
+  deletePerfiles(id_usuario: number): Observable<any>{
+    const url = environment.apiEndpoint + `/deletePerfiles/` + id_usuario;
+    return this.http.delete(url, httpOptions);
+  }
+
+  insertPerfilesAsignados(perfiles: any, id_usuario: number) {
+    const url = environment.apiEndpoint + `/insertPerfilesAsignados`;
+    let json = JSON.stringify({
+        "perfiles_id": perfiles.id
+      , "usuarios_id": id_usuario
+    });
+    console.log("Este es el json que armo en el service:" + json);
+    return this.http.post(url, json, httpOptions);
+  }
+
 
 
 
