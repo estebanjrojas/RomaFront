@@ -128,6 +128,11 @@ export class CargarEmpleadosComponent implements OnInit {
           Validators.required
         ])
       ],
+      sexo: [
+        '', Validators.compose([
+          Validators.required
+        ])
+      ],
       telefono: [
         '', Validators.compose([
         ])
@@ -137,6 +142,10 @@ export class CargarEmpleadosComponent implements OnInit {
         ])
       ],
       email: [
+        '', Validators.compose([
+        ])
+      ],
+      empleados_id: [
         '', Validators.compose([
         ])
       ]
@@ -171,6 +180,7 @@ export class CargarEmpleadosComponent implements OnInit {
       this.empleadosForm.controls.celular.setValue(cast[0].telefono_cel);
       this.empleadosForm.controls.email.setValue(cast[0].email);
       this.empleadosForm.controls.tipo_doc.setValue(cast[0].tipo_doc+"");
+      this.empleadosForm.controls.sexo.setValue(cast[0].sexo+"");
     });
 
     this.SrvEmpleados.getEmpleadoPorNroDoc(tipo_documento, documento).subscribe(respuesta => {
@@ -181,6 +191,7 @@ export class CargarEmpleadosComponent implements OnInit {
       this.empleadosForm.controls.fecha_ingreso.setValue(cast[0].fecha_ingreso);
       this.empleadosForm.controls.descripcion.setValue(cast[0].descripcion);
       this.empleadosForm.controls.oficina.setValue(cast[0].oficinas_id);
+      this.empleadosForm.controls.empleados_id.setValue(cast[0].empleados_id);
     });
 
     this.SrvDomicilios.getDomicilioByNroDoc(documento).subscribe(respuesta => {
@@ -204,9 +215,10 @@ export class CargarEmpleadosComponent implements OnInit {
   ngOnInit() {
     this.empleadosForm.controls.tipo_doc.setValue("3");
 
-    let empleados_id = -1;
     this.route.params.subscribe(params => {
-      empleados_id = params.empleados_id;
+      if(params.empleados_id != null) {
+        this.empleadosForm.controls.empleados_id.setValue(params.empleados_id);
+      }
       console.log(params);
     });
 
@@ -252,59 +264,67 @@ export class CargarEmpleadosComponent implements OnInit {
 
   guardarEmpleado() {
     console.log({'Form Valido' : this.empleadosForm.valid});
-
     if(this.empleadosForm.valid) {
       let ciudades_id = 0;
       let ciudad_nombre = this.empleadosForm.get('ciudades').value.descrip;
+      if(this.empleadosForm.get('empleados_id').value != undefined) {
+        console.log('Modificar...');
+      }
+      else {
+        console.log('Insertar...');
+        this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
+          console.log({"SrvDomicilios.getCiudadesIdPorNombre" : respuesta});
+          let cast : any = respuesta;
+          ciudades_id = cast.id;
+          }
+          , err => {console.log(err)}
+          , ()=>{
+            let campos_domicilio = {
+              "ciudades_id" : ciudades_id,
+              "calle" : ((this.empleadosForm.get('calle') != undefined)?this.empleadosForm.get('calle').value: ""),
+              "numero" : ((this.empleadosForm.get('numero') != undefined)?this.empleadosForm.get('numero').value: ""),
+              "piso" : ((this.empleadosForm.get('piso') != undefined)?this.empleadosForm.get('piso').value: ""),
+              "depto" :((this.empleadosForm.get('depto') != undefined)?this.empleadosForm.get('depto').value: ""),
+              "manzana" : ((this.empleadosForm.get('manzana') != undefined)?this.empleadosForm.get('manzana').value: ""),
+              "lote" : ((this.empleadosForm.get('lote') != undefined)?this.empleadosForm.get('lote').value: ""),
+              "block" : ((this.empleadosForm.get('block') != undefined)?this.empleadosForm.get('block').value: ""),
+              "barrio" : ((this.empleadosForm.get('barrio') != undefined)?this.empleadosForm.get('barrio').value: "")
+            };
+    
+            let insert_completo = { 
+              domicilio: campos_domicilio,
+              //Persona
+              "tipo_doc" : this.empleadosForm.get('tipo_doc').value,
+              "nro_doc" : this.empleadosForm.get('documento').value,
+              "apellido" : this.empleadosForm.get('apellido').value,
+              "nombre" : this.empleadosForm.get('nombre').value,
+              "telefono" : this.empleadosForm.get('telefono').value,
+              "celular" : this.empleadosForm.get('celular').value,
+              "email" : this.empleadosForm.get('email').value,
+              "fecha_nac" : this.empleadosForm.get('fecha_nacimiento').value,
+              "sexo" : this.empleadosForm.get('sexo').value,
+              //Empleado
+              "legajo" : this.empleadosForm.get('legajo').value,
+              "fecha_ingreso" : this.empleadosForm.get('fecha_ingreso').value,
+              "empresas_id" : "1",
+              "descripcion": this.empleadosForm.get('descripcion').value,
+              "oficina" : this.empleadosForm.get('oficina').value
+            }
+            console.log({"Insertar" : insert_completo});
+            this.SrvEmpleados.insertEmpleadoPersonaDomicilio(insert_completo).subscribe(resp => {
+              console.log('INSERTADO');
+              this.empleadosForm.reset;
+            });
+    
+    
+    
+          });
+
+      }
       
 
 
-     this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
-      console.log({"SrvDomicilios.getCiudadesIdPorNombre" : respuesta});
-      let cast : any = respuesta;
-      ciudades_id = cast.id;
-      }
-      , err => {console.log(err)}
-      , ()=>{
-        let campos_domicilio = {
-          "ciudades_id" : ciudades_id,
-          "calle" : ((this.empleadosForm.get('calle') != undefined)?this.empleadosForm.get('calle').value: ""),
-          "numero" : ((this.empleadosForm.get('numero') != undefined)?this.empleadosForm.get('numero').value: ""),
-          "piso" : ((this.empleadosForm.get('piso') != undefined)?this.empleadosForm.get('piso').value: ""),
-          "depto" :((this.empleadosForm.get('depto') != undefined)?this.empleadosForm.get('depto').value: ""),
-          "manzana" : ((this.empleadosForm.get('manzana') != undefined)?this.empleadosForm.get('manzana').value: ""),
-          "lote" : ((this.empleadosForm.get('lote') != undefined)?this.empleadosForm.get('lote').value: ""),
-          "block" : ((this.empleadosForm.get('block') != undefined)?this.empleadosForm.get('block').value: ""),
-          "barrio" : ((this.empleadosForm.get('barrio') != undefined)?this.empleadosForm.get('barrio').value: "")
-        };
-
-        let insert_completo = { 
-          domicilio: campos_domicilio,
-          //Persona
-          "tipo_doc" : this.empleadosForm.get('tipo_doc').value,
-          "nro_doc" : this.empleadosForm.get('documento').value,
-          "apellido" : this.empleadosForm.get('apellido').value,
-          "nombre" : this.empleadosForm.get('nombre').value,
-          "telefono" : this.empleadosForm.get('telefono').value,
-          "celular" : this.empleadosForm.get('celular').value,
-          "email" : this.empleadosForm.get('email').value,
-          "fecha_nac" : this.empleadosForm.get('fecha_nacimiento').value,
-          //Empleado
-          "legajo" : this.empleadosForm.get('legajo').value,
-          "fecha_ingreso" : this.empleadosForm.get('fecha_ingreso').value,
-          "empresas_id" : "1",
-          "descripcion": this.empleadosForm.get('descripcion').value,
-          "oficina" : this.empleadosForm.get('oficina').value
-        }
-        console.log({"Insertar" : insert_completo});
-        this.SrvEmpleados.insertEmpleadoPersonaDomicilio(insert_completo).subscribe(resp => {
-          console.log('INSERTADO');
-          this.empleadosForm.reset;
-        });
-
-
-
-      });
+    
   
     }
     else {
