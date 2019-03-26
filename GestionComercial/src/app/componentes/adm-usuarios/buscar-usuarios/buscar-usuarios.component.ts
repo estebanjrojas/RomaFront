@@ -30,6 +30,7 @@ export class BuscarUsuariosComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.buscarUsuarios();
   }
 
   buscarUsuarios() {
