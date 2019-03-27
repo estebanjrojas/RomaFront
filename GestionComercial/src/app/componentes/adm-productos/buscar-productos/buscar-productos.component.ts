@@ -27,6 +27,7 @@ export class BuscarProductosComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.buscarProducto();
   }
 
   buscarProducto() {

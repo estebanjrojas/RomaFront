@@ -1,7 +1,7 @@
 <app-cabecera></app-cabecera>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
-<form id="empleadosFormId" [formGroup]="empleadosForm" (ngSubmit)="guardar()">
+<form id="buscarPuntosVentaFormId" [formGroup]="buscarPuntosVentaForm" (ngSubmit)="guardar()">
   <input type="hidden" formControlName="nombre_usuario">
   <!----## Inicio Container Principal ##---->
   <div class="container">
@@ -24,10 +24,9 @@
                     <label class="input-group-text" for="inputGroupSelect01">Sucursal</label>
                   </div>
                   <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Elegir</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option *ngFor="let suc of this.sucursales" [value]="suc.codigo">
+                        {{suc.descrip}}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -37,10 +36,10 @@
             <!--Inicio Busqueda-->
             <div class="row">
               <div class="col-md-5">
-                <input type="text" id="txtNumero" class="form-control" placeholder="Número" value="" />
+                <input type="text" id="txtNumero" formControlName="txtBuscar" class="form-control" placeholder="Número" />
               </div>
               <div class="col-md-5">
-                <button class="btn btn-primary" id="btnBuscar">Buscar</button>
+                <button type="button" class="btn btn-outline-primary" (click)="buscarPuntosVenta();" id="btnBuscar">Buscar</button>
               </div>
             </div>
             <!--Fin Busqueda-->
@@ -51,19 +50,19 @@
               <!----## Inicio Col 12  ##---->
               <div class="col-md-12">
                 <div class="card">
-                  <table class="table">
+                  <table class="table table-hover table-sm">
                     <thead class="thead-dark" style="text-align: center">
-                      <th style='width:30%;'>Sucursal</th>
-                      <th style='width:30%;'>Número</th>
+                      <th style='width:30%; text-align: left'>Punto de Venta</th>
+                      <th style='width:30%;text-align: left'>Sucursal</th>
                       <th style='width:20%;'></th>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td></td>
-                        <td></td>
+                      <tr *ngFor="let pv of cast">
+                        <td>{{pv.numero}}</td>
+                        <td>{{pv.sucursal_descrip}}</td>
                         <td style='text-align: center'>
-                          <button class="btn btn-info btn-sm">Modificar</button>&nbsp;
-                          <button class="btn btn-danger btn-sm">Eliminar</button>
+                          <button class="btn btn-info btn-sm" [routerLink]="['/puntos-venta/cargar-puntos-venta', pv.id]" routerLinkActive="active">Modificar</button>&nbsp;
+                          <button class="btn btn-danger btn-sm">Baja</button>
                         </td>
                       </tr>
                     </tbody>
