@@ -3,6 +3,8 @@ import { ProductosService } from '../../../servicios/productos.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import {NestedTreeControl} from '@angular/cdk/tree';
+import {MatTreeNestedDataSource} from '@angular/material/tree';
 
 @Component({
   selector: 'app-cargar-productos',
@@ -19,14 +21,20 @@ export class CargarProductosComponent implements OnInit {
 
   //Instancias
   productosForm: FormGroup;
+    //Arbol de Categorias
+    treeControl = new NestedTreeControl<CategoriasNode>(node => node.children);
+    dataSource = new MatTreeNestedDataSource<CategoriasNode>();
 
-
-  //Constructor
+    //Constructor
   constructor(private formBuilder: FormBuilder
     , private route: ActivatedRoute
     , private router: Router
     , private toastr: ToastrService
     , private SrvProductos: ProductosService) {
+
+      this.dataSource.data = CATEGORIAS_DATA;
+
+
     this.productosForm = this.formBuilder.group({
       codigo: [
         '', Validators.compose([
@@ -91,6 +99,8 @@ export class CargarProductosComponent implements OnInit {
       ]
     });
   }
+
+  hasChild = (_: number, node: CategoriasNode) => !!node.children && node.children.length > 0;
 
   ngOnInit() {
 
@@ -237,6 +247,11 @@ export class CargarProductosComponent implements OnInit {
     }
   }
 
+  
+agregarCategoria(id) {
+  console.log(id);
+}
+
 
 }
 
@@ -249,3 +264,43 @@ interface Caracteristica {
   valor: any
 
 }
+
+
+/**
+ * Estructura anidada para los datos de las categorias
+ * Cada nodo tiene una opcion y una lista de hijos
+ */
+interface CategoriasNode {
+  id?: number;
+  name: string;
+  children?: CategoriasNode[];
+}
+
+const CATEGORIAS_DATA: CategoriasNode[] = [
+  {
+    id: 1,
+    name: 'Computacion',
+    children: [
+      {id: 2, name: 'Accesorios'},
+      {id: 3, name: 'Computadoras',
+        children:[
+          {id: 7, name:'Notebooks'},
+          {id: 6, name: 'PCs de Escritorio'}
+          ]
+      },
+      {id:5, name: 'Componentes',
+          children: [
+            {id: 8, name: 'Placas Madre'},
+            {id: 9, name: 'Memorias'},
+            {id: 10, name: 'Procesadores'},
+            {id: 11, name: 'Placas de Video'},
+            {id: 12, name: 'Discos Rigidos'},
+            {id: 13, name: 'Fuentes'},
+            {id: 14, name: 'Gabinetes'},
+            {id: 15, name: 'Placas de Sonido'}
+          ]},
+      {id: 4, name: 'Pantallas'},
+    ]
+  }, 
+];
+

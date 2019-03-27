@@ -218,6 +218,41 @@ export class CargarEmpleadosComponent implements OnInit {
     this.route.params.subscribe(params => {
       if(params.empleados_id != null) {
         this.empleadosForm.controls.empleados_id.setValue(params.empleados_id);
+        this.SrvEmpleados.getDatosEmpleadoPorId(params.empleados_id).subscribe(respuesta => {
+          console.log({"SrvEmpleados.getDatosEmpleadoPorId" : respuesta});
+          let cast : any =  respuesta;
+          //Datos personales
+          this.empleadosForm.controls.apellido.setValue(cast[0].apellido);
+          this.empleadosForm.controls.nombre.setValue(cast[0].nombre);
+          this.empleadosForm.controls.documento.setValue(cast[0].nro_doc);
+          this.empleadosForm.controls.tipo_doc.setValue(cast[0].tipo_doc+"");
+          this.empleadosForm.controls.fecha_nacimiento.setValue(cast[0].fecha_nac);
+          this.empleadosForm.controls.sexo.setValue(cast[0].sexo+"");
+          this.empleadosForm.controls.telefono.setValue(cast[0].telefono);
+          this.empleadosForm.controls.celular.setValue(cast[0].telefono_cel);
+          this.empleadosForm.controls.email.setValue(cast[0].email);
+          //Relacion con la empresa
+          this.empleadosForm.controls.legajo.setValue(cast[0].legajo);
+          this.empleadosForm.controls.oficina.setValue(cast[0].oficinas_id+"");
+          this.empleadosForm.controls.fecha_ingreso.setValue(cast[0].fecha_ingreso);
+          this.empleadosForm.controls.descripcion.setValue(cast[0].descripcion);
+          //Domicilio
+         /* this.SrvDomicilios.getDomicilioByNroDoc(cast[0].nro_doc).subscribe(respuesta2 => {
+            console.log({'SrvDomicilios.getDomicilioByNroDoc' : respuesta2});
+            let cast2 : any = respuesta[0];
+            if(cast2) {
+              this.empleadosForm.controls.calle.setValue(cast2.calle);
+              this.empleadosForm.controls.numero.setValue(cast2.numero);
+              this.empleadosForm.controls.piso.setValue(cast2.piso);
+              this.empleadosForm.controls.depto.setValue(cast2.depto);
+              this.empleadosForm.controls.manzana.setValue(cast2.manzana);
+              this.empleadosForm.controls.provincia.setValue(cast2.provincias_id+"");
+              this.empleadosForm.controls.ciudades.setValue(cast2.ciudad_nombre);
+            }
+      
+      
+          });*/
+        });
       }
       console.log(params);
     });

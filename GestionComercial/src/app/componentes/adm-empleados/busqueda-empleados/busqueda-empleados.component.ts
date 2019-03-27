@@ -31,7 +31,6 @@ export class BusquedaEmpleadosComponent implements OnInit {
     if(busqueda==undefined || busqueda=='' || busqueda==null) {
       this.SrvEmpleados.getEmpleadosTodos().subscribe(respuesta => {
         this.empleados = respuesta;
-        this.SrvToastr.success('Have fun storming the castle!', 'Miracle Max Says');
         console.log({"SrvEmpleados.getEmpleadosTodos" : respuesta });   
       });
     }

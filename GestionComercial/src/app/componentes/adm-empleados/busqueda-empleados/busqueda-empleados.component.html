@@ -48,8 +48,8 @@
                         <td>{{em.telefono}}</td>
                         <td>{{em.oficina}}</td>
                         <td style='text-align: center'>
-                          <a class="btn btn-info btn-sm" [routerLink]="['/empleados/cargar-empleados', em.id]" routerLinkActive="active">Modificar</a>&nbsp;
-                          <input type="button" class="btn btn-danger btn-sm" (click)="eliminarEmpleado(em.id)" value="Eliminar" />
+                          <a class="btn btn-info btn-sm" [routerLink]="['/empleados/cargar-empleados', em.empleados_id]" routerLinkActive="active">Modificar</a>&nbsp;
+                          <input type="button" class="btn btn-danger btn-sm" (click)="eliminarEmpleado(em.empleados_id)" value="Eliminar" />
                         </td>
                       </tr>
                     </tbody>

@@ -8,7 +8,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule,
   MatAutocompleteModule, MatOptionModule, MatInputModule,
-  MatDatepickerModule, MatNativeDateModule, MatSelectModule
+  MatDatepickerModule, MatNativeDateModule, MatSelectModule,
+  MatTreeModule, MatIconModule
 } from '@angular/material';
 import { AppComponent } from './app.component';
 import { CabeceraComponent } from './componentes/cabecera/cabecera.component';
@@ -92,6 +93,8 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatTreeModule,
+    MatIconModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',
