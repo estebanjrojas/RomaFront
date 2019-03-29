@@ -1,8 +1,9 @@
 <app-cabecera></app-cabecera>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
-<form id="empleadosFormId" [formGroup]="puntosdeventaForm" (ngSubmit)="guardar()">
+<form id="empleadosFormId" [formGroup]="puntosVentaForm" (ngSubmit)="guardar()">
   <input type="hidden" formControlName="nombre_usuario">
+  <input type="hidden" formControlName="id_punto_venta">
   <!----## Inicio Container Principal ##---->
   <div class="container">
     <!----## Inicio Row Principal ##---->
@@ -18,10 +19,8 @@
         <div class="row">
           <div class="col-md-6">
             <mat-form-field style="width:90%">
-              <mat-select [(value)]="selected" placeholder="Sucursal" formControlName="sucursal">
-                <mat-option>None</mat-option>
-                <mat-option value="option1">1</mat-option>
-                <mat-option value="option2">2</mat-option>
+              <mat-select placeholder="Sucursal" formControlName="sucursal">
+                <mat-option *ngFor="let suc of this.sucursales" [value]="suc.codigo">{{suc.descrip}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -57,22 +56,28 @@
               <!----## Inicio Card Body ##---->
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <mat-form-field style="width:90%">
-                      <mat-select [(value)]="selected" placeholder="Tipo" formControlName="tipo">
-                        <mat-option>None</mat-option>
-                        <mat-option value="option1">1</mat-option>
-                        <mat-option value="option2">2</mat-option>
+                      <mat-select id="nombretablita" placeholder="Tipo" formControlName="tipo">
+                        <mat-option *ngFor="let tipo of this.tipo_factura" [value]="tipo">{{tipo.descrip}}</mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                     <mat-form-field class="example-full-width" style="width:80%">
                       <input matInput placeholder="Ultimo Nro. de Fact." formControlName="ultimo_nro_factura">
                     </mat-form-field>
-                    &nbsp;
-                    <button mat-stroked-button>Agregar</button>
+
                   </div>
+                  <div class="col-md-3">
+                    <mat-checkbox formControlName="por_defecto">Por Defecto</mat-checkbox>
+                    &nbsp;
+
+                  </div>
+                  <div class="col-md-2">
+                    <button mat-stroked-button type="button" (click)="agregarDatosTablita();validarTrue();">Agregar</button>
+                  </div>
+
                 </div>
 
                 <div class="card">
@@ -80,23 +85,26 @@
                     Tipos de Facturas Habilitadas
                   </div>
                   <div class="card-body">
-                    <table class="table">
+                    <table class="table table-sm">
                       <thead class="thead-dark" style="text-align: center">
-                        <th style='width:15%;'>Tipo</th>
-                        <th style='width:15%;'>Letra</th>
-                        <th style='width:15%;'>Último Nro</th>
-                        <th style='width:15%;'>Por Defecto</th>
-                        <th style='width:20%;'></th>
+                        <th style="width: 25%">Tipo Descripcion</th>
+                        <th style="width: 25%">Último Nro</th>
+                        <th style="width: 20%">Por Defecto</th>
+                        <th style="width: 20%; text-align: right"></th>
+                        <th style="width: 10%; text-align: right"></th>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td style='text-align: center'>
+                        <tr *ngFor="let caract of caracteristicas; let indice = index">
+                          <td style='text-align: center'>{{caract.tipo_descrip}}</td>
+                          <td style='text-align: center'>{{caract.ultimo_nro}}</td>
+                          <td style='text-align: center'>{{caract.por_defecto}}</td>
+                          <td style='text-align: right'>
                             <button class="btn btn-info btn-sm">Obtener Nro WS AFIP</button>
                           </td>
+                          <td style="text-align: right">
+                            <button class='btn btn-danger btn-sm' type="button"
+                              (click)='borrarFila(indice);'>X</button>
+                            </td>
                         </tr>
                       </tbody>
                     </table>
