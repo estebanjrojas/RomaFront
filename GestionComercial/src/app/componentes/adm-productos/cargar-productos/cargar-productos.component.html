@@ -171,10 +171,10 @@
                   </div>
 
                   <!-- Inicio Card de categorias del producto-->
-                  <div class="col-md-12">
+                  <div class="col-md-9">
                     <div class="card">
                       <div class="card-header">
-                        Categoria
+                        Categor&iacute;as
                       </div>
                       <div class="card-body">
                         
@@ -184,7 +184,8 @@
                             <li class="mat-tree-node">
                               <!-- use a disabled button to provide padding for tree leaf -->
                               <button mat-icon-button disabled></button>
-                              {{node.name}}&emsp;<button (click)="agregarCategoria(node.id)">+</button>
+                              {{node.name}} 
+                              &emsp;&emsp; <button class="btn btn-outline-info btn-sm" (click)="agregarCategoria(node.id, node.name)">Agregar</button>
                             </li>
                           </mat-tree-node>
                           <!-- This is the tree node template for expandable nodes -->
@@ -197,7 +198,7 @@
                                     {{treeControl.isExpanded(node) ? '-' : '>'}}
                                   </mat-icon>
                                 </button>
-                                {{node.name}}&emsp;<button (click)="agregarCategoria(node.id)">+</button>
+                                {{node.name}}
                               </div>
                               <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
                                 <ng-container matTreeNodeOutlet></ng-container>
@@ -210,9 +211,22 @@
 
 
                       </div>
-                    </div>
+                    </div>  <!-- Fin Card de categorias del producto-->
                   </div>
-                  <!-- Fin Card de categorias del producto-->
+                  <div class="col-md-3">
+                    <table class="table table-hover table-sm">
+                      <thead class="thead-celeste">
+                        <th style='width:5%; text-align: center'></th>
+                        <th>Categor&iacute;a</th>
+                      </thead>
+                      <tbody id="tb_categorias">
+                        <tr *ngFor="let cats of categorias_guardar; let indice = index">
+                          <td> <button class='btn btn-danger btn-sm' type="button" (click)='borrarFila(cats.id);'>X</button></td>
+                          <td>{{cats.nombre}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
 
                 </div>
                 <br>

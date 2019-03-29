@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
+import { CategoriasService } from '../../../servicios/categorias.service';
+import { Categorias } from '../../../modelos/Categorias';
 
 @Component({
   selector: 'app-cargar-productos',
@@ -18,21 +20,22 @@ export class CargarProductosComponent implements OnInit {
   nomb_usr: string;
 
   caracteristicas = new Array<Caracteristica>();
-
+  categorias_guardar = new Array<{id: number, nombre: string}>();
   //Instancias
   productosForm: FormGroup;
     //Arbol de Categorias
-    treeControl = new NestedTreeControl<CategoriasNode>(node => node.children);
-    dataSource = new MatTreeNestedDataSource<CategoriasNode>();
+    treeControl = new NestedTreeControl<Categorias>(node => node.children);
+    dataSource = new MatTreeNestedDataSource<Categorias>();
 
     //Constructor
   constructor(private formBuilder: FormBuilder
     , private route: ActivatedRoute
     , private router: Router
     , private toastr: ToastrService
-    , private SrvProductos: ProductosService) {
+    , private SrvProductos: ProductosService
+    , private SrvCategorias: CategoriasService) {
 
-      this.dataSource.data = CATEGORIAS_DATA;
+      
 
 
     this.productosForm = this.formBuilder.group({
@@ -100,7 +103,7 @@ export class CargarProductosComponent implements OnInit {
     });
   }
 
-  hasChild = (_: number, node: CategoriasNode) => !!node.children && node.children.length > 0;
+  hasChild = (_: number, node: Categorias) => !!node.children && node.children.length > 0;
 
   ngOnInit() {
 
@@ -113,9 +116,25 @@ export class CargarProductosComponent implements OnInit {
 
     this.getDatosProductos();
 
+    /*this.SrvCategorias.obtenerJSONTodasCategorias().subscribe(resp => {
+      console.log(resp);
+      let cast: any = resp;
+      let cat : Categorias[];
+      console.log("cast.categorias: "+cast[0].categorias);
+      for(let i in JSON.parse(cast[0].categorias)) {
+        console.log("i: "+i);
+      }
+      this.SrvCategorias.setCategorias(JSON.stringify(cat));
+    });*/
+
+    const categoriasObservable = this.SrvCategorias.getCategorias();
+        categoriasObservable.subscribe((categoriasData: Categorias[]) => {
+            console.log(categoriasData);
+            this.dataSource.data = categoriasData;
+        }, err => {console.error('Error al obtener categorias: '+err);}
+        ,()=>{
+        });
   }
-
-
 
   getDatosProductos() {
     let id_producto = this.productosForm.controls.id_producto.value;
@@ -248,9 +267,9 @@ export class CargarProductosComponent implements OnInit {
   }
 
   
-agregarCategoria(id) {
-  console.log(id);
-}
+  agregarCategoria(id: number, nombre: string) {
+    this.categorias_guardar.push({id: id, nombre: nombre});
+  }
 
 
 }
@@ -271,36 +290,10 @@ interface Caracteristica {
  * Cada nodo tiene una opcion y una lista de hijos
  */
 interface CategoriasNode {
-  id?: number;
-  name: string;
-  children?: CategoriasNode[];
+    id?: number;
+    name: string;
+    children?: CategoriasNode[];
 }
 
-const CATEGORIAS_DATA: CategoriasNode[] = [
-  {
-    id: 1,
-    name: 'Computacion',
-    children: [
-      {id: 2, name: 'Accesorios'},
-      {id: 3, name: 'Computadoras',
-        children:[
-          {id: 7, name:'Notebooks'},
-          {id: 6, name: 'PCs de Escritorio'}
-          ]
-      },
-      {id:5, name: 'Componentes',
-          children: [
-            {id: 8, name: 'Placas Madre'},
-            {id: 9, name: 'Memorias'},
-            {id: 10, name: 'Procesadores'},
-            {id: 11, name: 'Placas de Video'},
-            {id: 12, name: 'Discos Rigidos'},
-            {id: 13, name: 'Fuentes'},
-            {id: 14, name: 'Gabinetes'},
-            {id: 15, name: 'Placas de Sonido'}
-          ]},
-      {id: 4, name: 'Pantallas'},
-    ]
-  }, 
-];
+
 
