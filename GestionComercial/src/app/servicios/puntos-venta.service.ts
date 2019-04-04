@@ -27,6 +27,14 @@ export class PuntosVentaService {
     return this.http.get(environment.apiEndpoint + '/getPuntosVentaTodos/', httpOptions);
   }
 
+  getDatosPuntosVenta(id_punto_venta): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getDatosPuntosVenta/' + id_punto_venta, httpOptions);
+  }
+
+  getCaracteristicasPuntosVenta(id_punto_venta): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getCaracteristicasPuntosVenta/' + id_punto_venta, httpOptions);
+  }
+
   insertPuntoVentaReturnId(datos: any) {
     const url = environment.apiEndpoint + `/insertPuntoVentaReturnId`;
     let json = JSON.stringify(datos);

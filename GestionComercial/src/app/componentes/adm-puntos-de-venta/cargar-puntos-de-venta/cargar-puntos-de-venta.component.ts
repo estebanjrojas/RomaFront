@@ -74,8 +74,8 @@ export class CargarPuntosDeVentaComponent implements OnInit {
     this.puntosVentaForm.controls.nombre_usuario.setValue(this.nomb_usr);
 
     this.route.params.subscribe(params => {
-      this.puntosVentaForm.controls.id_punto_venta.setValue(params.productos_id);
-      console.log(params);
+      this.puntosVentaForm.controls.id_punto_venta.setValue(params.puntos_venta_id);
+      console.log("Parametros:" + JSON.stringify(params));
     });
 
 
@@ -103,6 +103,8 @@ export class CargarPuntosDeVentaComponent implements OnInit {
         this.sucursales.push(rel);
       }
     });
+
+    this.getDatosPuntosVenta();
 
   }
 
@@ -197,18 +199,46 @@ export class CargarPuntosDeVentaComponent implements OnInit {
 
             this.toastr.success('El Punto de Venta se ha ACTUALIZADO Exitosamente');
             this.puntosVentaForm.reset();
-            this.router.navigate(['productos/busqueda-productos']);
+            this.router.navigate(['puntos-venta/busqueda-puntos-venta']);
           });
-
-
-
-
-
         });
       } else {
         this.puntosVentaForm.getError;
         console.log(this.puntosVentaForm);
       }
+
+    }
+  }
+
+
+  getDatosPuntosVenta() {
+    let id_punto_venta = this.puntosVentaForm.controls.id_punto_venta.value;
+    if (id_punto_venta != null || id_punto_venta != undefined) {
+      this.SrvPuntosVenta.getDatosPuntosVenta(id_punto_venta).subscribe(resp => {
+        let respuesta: any = resp;
+        console.log({ "SrvPuntosVenta.getDatosPuntosVenta": respuesta });
+
+        this.puntosVentaForm.patchValue({
+          sucursal: respuesta[0].sucursal,
+          numero: respuesta[0].numero,
+          fecha_alta: respuesta[0].fecha_alta,
+        });
+        this.puntosVentaForm.controls.sucursal.setValue(respuesta[0].sucursal);
+      });
+
+
+      this.SrvPuntosVenta.getCaracteristicasPuntosVenta(id_punto_venta).subscribe(resp => {
+        let respuesta: any = resp;
+        console.log({ "SrvPuntosVenta.getCaracteristicasPuntosVenta": respuesta });
+
+        for (let resp of respuesta)
+          this.caracteristicas.push({
+            'tipo': resp.tipo_comprobante,
+            'tipo_descrip': resp.descripcion,
+            'ultimo_nro': resp.ultimo_numero,
+            'por_defecto': resp.defecto
+          });
+      });
 
     }
   }
