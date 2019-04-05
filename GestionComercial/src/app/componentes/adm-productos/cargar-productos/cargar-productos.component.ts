@@ -7,6 +7,7 @@ import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import { CategoriasService } from '../../../servicios/categorias.service';
 import { Categorias } from '../../../modelos/Categorias';
+import { CargarCategoriaComponent } from '../../adm-categoria/cargar-categoria/cargar-categoria.component';
 
 @Component({
   selector: 'app-cargar-productos',
@@ -115,17 +116,19 @@ export class CargarProductosComponent implements OnInit {
     });
 
     this.getDatosProductos();
-
-    /*this.SrvCategorias.obtenerJSONTodasCategorias().subscribe(resp => {
-      console.log(resp);
+    
+    let prueba2 : Categorias[] = [];
+    this.SrvCategorias.obtenerJSONTodasCategorias().subscribe(resp => {
+      console.log({"SrvCategorias.obtenerJSONTodasCategorias" : resp});
       let cast: any = resp;
-      let cat : Categorias[];
-      console.log("cast.categorias: "+cast[0].categorias);
-      for(let i in JSON.parse(cast[0].categorias)) {
-        console.log("i: "+i);
-      }
-      this.SrvCategorias.setCategorias(JSON.stringify(cat));
-    });*/
+     for(let i in cast) {
+       console.log(JSON.parse(i).categorias);
+       prueba2.push(JSON.parse(i));
+     }
+      this.SrvCategorias.setCategorias(prueba2);
+    });
+    let prueba : Categorias[] = [{id:1, name:'Computacion', children: [{id:2, name:'Accesorios'},{id:3, name:'Computadoras', children: [{id:6, name:'PCs de Escritorio'},{id:7, name:'Notebooks'}]},{id:4, name:'Pantallas'},{id:5, name:'Componentes', children: [{id:8, name:'Placas Madre'},{id:9, name:'Memorias'},{id:10, name:'Procesadores'},{id:11, name:'Placas de Video'},{id:12, name:'Discos Rigidos'},{id:13, name:'Fuentes'},{id:14, name:'Gabinetes'},{id:15, name:'Placas de Sonido'}]}]},{id:16, name:'telefonia', children: [{id:17, name:'Telefonos Celulares'}]}];
+   // this.SrvCategorias.setCategorias(prueba);
 
     const categoriasObservable = this.SrvCategorias.getCategorias();
         categoriasObservable.subscribe((categoriasData: Categorias[]) => {
@@ -134,6 +137,7 @@ export class CargarProductosComponent implements OnInit {
         }, err => {console.error('Error al obtener categorias: '+err);}
         ,()=>{
         });
+
   }
 
   getDatosProductos() {

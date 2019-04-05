@@ -18,7 +18,7 @@ const httpOptions = {
 })
 export class CategoriasService {
 
-  categorias: Categorias[] = [{id:1, name:'Computacion', children: [{id:2, name:'Accesorios'},{id:3, name:'Computadoras', children: [{id:6, name:'PCs de Escritorio'},{id:7, name:'Notebooks'}]},{id:4, name:'Pantallas'},{id:5, name:'Componentes', children: [{id:8, name:'Placas Madre'},{id:9, name:'Memorias'},{id:10, name:'Procesadores'},{id:11, name:'Placas de Video'},{id:12, name:'Discos Rigidos'},{id:13, name:'Fuentes'},{id:14, name:'Gabinetes'},{id:15, name:'Placas de Sonido'}]}]},{id:16, name:'telefonia', children: [{id:17, name:'Telefonos Celulares'}]}];
+  categorias: Categorias[] = [];
 
   constructor(private http: HttpClient) { }
 

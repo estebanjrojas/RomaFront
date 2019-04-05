@@ -6,7 +6,44 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
-      <li class="nav-item dropdown">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Administraci&oacute;n
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <ul class="navbar-nav dropdown-item">
+                
+                <li class="dropdown-submenu">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">Empleados</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/empleados/busqueda-empleados">Buscar Empleados</a></li>
+                         <li><a class="dropdown-item" href="/empleados/cargar-empleados">Cargar Empleados</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="navbar-nav dropdown-item">
+                <li class="dropdown-submenu">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">Usuarios</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/usuarios/busqueda-usuarios">Buscar Usuarios</a></li>
+                        <li><a class="dropdown-item" href="/usuarios/cargar-usuarios">Cargar Usuarios</a></li>
+                        <li><a class="dropdown-item" href="/usuarios/administrar-perfiles">Administrar Perfiles</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="dropdown-divider"></div>
+            <ul class="navbar-nav dropdown-item">
+                <li class="dropdown-submenu">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">Puntos de Venta</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/puntos-venta/busqueda-puntos-venta">Buscar Punto de Venta</a></li>
+                        <li><a class="dropdown-item" href="/puntos-venta/cargar-puntos-venta">Cargar Punto de Venta</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+      </li>
+      <!-->li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Empleados
         </a>
@@ -14,7 +51,7 @@
           <a class="dropdown-item" href="/empleados/busqueda-empleados">Buscar Empleados</a>
           <a class="dropdown-item" href="/empleados/cargar-empleados">Cargar Empleados</a>
         </div>
-      </li>
+      </li-->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Productos
@@ -22,9 +59,18 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="/productos/busqueda-productos">Buscar Productos</a>
           <a class="dropdown-item" href="/productos/cargar-productos">Cargar Productos</a>
+          <ul class="navbar-nav dropdown-item">
+              <li class="dropdown-submenu">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown">Categor&iacute;as</a>
+                  <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="/categorias/busqueda-categorias">Buscar Categorías</a></li>
+                      <li><a class="dropdown-item" href="/categorias/cargar-categorias">Cargar Categorías</a></li>
+                  </ul>
+              </li>
+          </ul>
         </div>
       </li>
-      <li class="nav-item dropdown">
+      <!-->li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Usuarios
         </a>
@@ -33,8 +79,8 @@
           <a class="dropdown-item" href="/usuarios/cargar-usuarios">Cargar Usuarios</a>
           <a class="dropdown-item" href="/usuarios/administrar-perfiles">Administrar Perfiles</a>
         </div>
-      </li>
-      <li class="nav-item dropdown">
+      </li-->
+      <!-->li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Puntos de Venta
         </a>
@@ -42,8 +88,8 @@
           <a class="dropdown-item" href="/puntos-venta/busqueda-puntos-venta">Buscar Punto de Venta</a>
           <a class="dropdown-item" href="/puntos-venta/cargar-puntos-venta">Cargar Punto de Venta</a>
         </div>
-      </li>
-      <li class="nav-item dropdown">
+      </li-->
+      <!-->li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Categorías
         </a>
@@ -51,7 +97,7 @@
           <a class="dropdown-item" href="/categorias/busqueda-categorias">Buscar Categorías</a>
           <a class="dropdown-item" href="/categorias/cargar-categorias">Cargar Categorías</a>
         </div>
-      </li>
+      </li-->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Promociones

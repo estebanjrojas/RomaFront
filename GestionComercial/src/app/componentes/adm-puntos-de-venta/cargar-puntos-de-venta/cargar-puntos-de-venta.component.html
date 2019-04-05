@@ -10,106 +10,108 @@
       <!----## Inicio Columna 12  ##---->
       <div class="col-md-12 m-0 p-0">
         <br>
-        <h3>Puntos de Venta</h3>
-        <hr>
-        <h5>Cargar Punto de Venta</h5>
-        <br>
-        <!----## Inicio Row Sucursal ##---->
-        <div class="row">
-          <div class="col-md-6">
-            <mat-form-field style="width:90%">
-              <mat-select [(value)]="selected" placeholder="Sucursal" formControlName="sucursal">
-                <mat-option>None</mat-option>
-                <mat-option value="option1">1</mat-option>
-                <mat-option value="option2">2</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-        <!----## Fin Row Sucursal ##---->
-
-        <!----## Inicio Row Numero y Fecha ##---->
-        <div class="row">
-          <div class="col-md-6">
-            <mat-form-field class="example-full-width" style="width:90%">
-              <input matInput placeholder="Número" formControlName="numero">
-            </mat-form-field>
-          </div>
-          <div class="col-md-6">
-            <mat-form-field style="width:40%">
-              <input matInput [matDatepicker]="picker" placeholder="Fecha de Alta" formControlName="fecha_alta">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-          </div>
-        </div>
-        <!----## Fin Row Numero y Fecha ##---->
-        <br>
-        <!----## Inicio Row 1 Interior  ##---->
-        <div class="row">
-          <!----## Inicio Col 12  ##---->
-          <div class="col-md-12">
-            <!----## Inicio Card ##---->
-            <div class="card">
-              <div class="card-header">
-                Tipos de Facturas
-              </div>
-              <!----## Inicio Card Body ##---->
-              <div class="card-body">
-                <div class="row">
+        <div class="card">
+          <div class="card-body">
+              <h3>Puntos de Venta</h3>
+              <hr>
+              <div class="row">
                   <div class="col-md-6">
                     <mat-form-field style="width:90%">
-                      <mat-select [(value)]="selected" placeholder="Tipo" formControlName="tipo">
+                      <mat-select [(value)]="selected" placeholder="Sucursal" formControlName="sucursal">
                         <mat-option>None</mat-option>
                         <mat-option value="option1">1</mat-option>
                         <mat-option value="option2">2</mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
+                </div>
+                <!----## Fin Row Sucursal ##---->
+        
+                <!----## Inicio Row Numero y Fecha ##---->
+                <div class="row">
                   <div class="col-md-6">
-                    <mat-form-field class="example-full-width" style="width:80%">
-                      <input matInput placeholder="Ultimo Nro. de Fact." formControlName="ultimo_nro_factura">
+                    <mat-form-field class="example-full-width" style="width:90%">
+                      <input matInput placeholder="Número" formControlName="numero">
                     </mat-form-field>
-                    &nbsp;
-                    <button mat-stroked-button>Agregar</button>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field style="width:40%">
+                      <input matInput [matDatepicker]="picker" placeholder="Fecha de Alta" formControlName="fecha_alta">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
                   </div>
                 </div>
-
-                <div class="card">
-                  <div class="card-header">
-                    Tipos de Facturas Habilitadas
-                  </div>
-                  <div class="card-body">
-                    <table class="table">
-                      <thead class="thead-dark" style="text-align: center">
-                        <th style='width:15%;'>Tipo</th>
-                        <th style='width:15%;'>Letra</th>
-                        <th style='width:15%;'>Último Nro</th>
-                        <th style='width:15%;'>Por Defecto</th>
-                        <th style='width:20%;'></th>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td style='text-align: center'>
-                            <button class="btn btn-info btn-sm">Obtener Nro WS AFIP</button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                <!----## Fin Row Numero y Fecha ##---->
                 <br>
-                <div class="row h-100">
-                  <div class="col-md-12" align="center">
-                    <input type="submit" class="btn btn-outline-primary btn-xs col-md-2" value="Volver" /> &nbsp;
-                    <input type="submit" class="btn btn-primary btn-xs col-md-2" value="Guardar" />
-                  </div>
-                </div>
-              </div>
+                <!----## Inicio Row 1 Interior  ##---->
+                <div class="row">
+                  <!----## Inicio Col 12  ##---->
+                  <div class="col-md-12">
+                    <!----## Inicio Card ##---->
+                    <div class="card">
+                      <div class="card-header">
+                        Tipos de Facturas
+                      </div>
+                      <!----## Inicio Card Body ##---->
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <mat-form-field style="width:90%">
+                              <mat-select [(value)]="selected" placeholder="Tipo" formControlName="tipo">
+                                <mat-option>None</mat-option>
+                                <mat-option value="option1">1</mat-option>
+                                <mat-option value="option2">2</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-6">
+                            <mat-form-field class="example-full-width" style="width:80%">
+                              <input matInput placeholder="Ultimo Nro. de Fact." formControlName="ultimo_nro_factura">
+                            </mat-form-field>
+                            &nbsp;
+                            <button mat-stroked-button>Agregar</button>
+                          </div>
+                        </div>
+        
+                        <div class="card">
+                          <div class="card-header">
+                            Tipos de Facturas Habilitadas
+                          </div>
+                          <div class="card-body">
+                            <table class="table">
+                              <thead class="thead-dark" style="text-align: center">
+                                <th style='width:15%;'>Tipo</th>
+                                <th style='width:15%;'>Letra</th>
+                                <th style='width:15%;'>Último Nro</th>
+                                <th style='width:15%;'>Por Defecto</th>
+                                <th style='width:20%;'></th>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td style='text-align: center'>
+                                    <button class="btn btn-info btn-sm">Obtener Nro WS AFIP</button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row h-100">
+                          <div class="col-md-12" align="center">
+                            <input type="submit" class="btn btn-outline-primary btn-xs col-md-2" value="Volver" /> &nbsp;
+                            <input type="submit" class="btn btn-primary btn-xs col-md-2" value="Guardar" />
+                          </div>
+                        </div>
+                      </div>
+          </div>
+        </div>
+
               <!----## Fin Card Body ##---->
             </div>
             <!----## Fin Card ##---->

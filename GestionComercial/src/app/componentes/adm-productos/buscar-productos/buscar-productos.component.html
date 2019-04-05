@@ -10,12 +10,10 @@
       <!----## Inicio Columna 12  ##---->
       <div class="col-md-12 m-0 p-0">
         <br>
-        <h3>Productos</h3>
-        <hr>
-        <h5>Lista de Productos</h5>
-        <br>
         <div class="card">
           <div class="card-body">
+              <h3>Productos</h3>
+              <hr>
             <!--Inicio Busqueda-->
             <div class="row">
               <div class="col-md-5">
@@ -52,7 +50,7 @@
                         <td style='text-align: center'>{{prod.tipo_producto}}</td>
                         <td style='text-align: center'>
                           <a class="btn btn-info btn-sm" [routerLink]="['/productos/cargar-productos', prod.id]" routerLinkActive="active">Modificar</a>&nbsp;
-                          <a class="btn btn-secondary btn-sm" >Precios</a>&nbsp;
+                          <a class="btn btn-success btn-sm" >Precios</a>&nbsp;
                           <input type="button" class="btn btn-danger btn-sm" (click)="eliminarEmpleado(em.id)" value="Eliminar" />
                         </td>
                       </tr>
