@@ -157,7 +157,7 @@
                                   <td>{{caract.descripcion}}</td>
                                   <td>{{caract.unidad_medida}}</td>
                                   <td style="text-align:center">{{caract.valor}}</td>
-                                  <td><button class='btn btn-danger btn-sm' type="button" (click)='borrarFila(caract);'>X</button></td>
+                                  <td><button class='btn btn-danger btn-sm' type="button" (click)='borrarFila(indice);'>X</button></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -220,7 +220,7 @@
                       </thead>
                       <tbody id="tb_categorias">
                         <tr *ngFor="let cats of categorias_guardar; let indice = index">
-                          <td> <button class='btn btn-danger btn-sm' type="button" (click)='borrarFila(cats.id);'>X</button></td>
+                          <td> <button class='btn btn-danger btn-sm' type="button" (click)='borrarFila(indice);'>X</button></td>
                           <td>{{cats.nombre}}</td>
                         </tr>
                       </tbody>
