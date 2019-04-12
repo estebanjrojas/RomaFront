@@ -1,7 +1,7 @@
 <app-cabecera></app-cabecera>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
-<form id="empleadosFormId" [formGroup]="buscarCategoriasForm" (ngSubmit)="guardar()">
+<form id="empleadosFormId" [formGroup]="buscarClientesForm" (ngSubmit)="guardar()">
   <input type="hidden" formControlName="nombre_usuario">
   <!----## Inicio Container Principal ##---->
   <div class="container">
@@ -12,15 +12,15 @@
         <br>
         <div class="card">
           <div class="card-body">
-              <h3>Categor&iacute;as</h3>
+              <h3>Clientes</h3>
               <hr>
             <!--Inicio Busqueda-->
             <div class="row">
               <div class="col-md-5">
-                <input required type="text" formControlName="txtBuscar" class="form-control" placeholder="Nombre de la Categoria">
+                <input required type="text" formControlName="txtBuscar" class="form-control" placeholder="Nombre o apellido del cliente">
               </div>
               <div class="col-md-1">
-                <button type="button" class="btn btn-outline-primary" (click)="buscarCategorias();" id="btnBuscar">Buscar</button>
+                <button type="button" class="btn btn-outline-primary" (click)="buscarClientes();" id="btnBuscar">Buscar</button>
               </div>
             </div>
             <!--Fin Busqueda-->
@@ -33,18 +33,20 @@
                 <div class="card">
                   <table class="table table-sm ">
                     <thead class="thead-dark">
-                      <th style='width:30%;'>Nombre</th>
-                      <th style='width:30%;'>Descripción</th>
-                      <th style='width:20%;text-align: center;'>Categoría Padre</th>
+                      <th style='width:20%;'>Nombre</th>
+                      <th style='width:20%;'>Apellido</th>
+                      <th style='width:10%;text-align: center'>DNI</th>
+                      <th style='width:10%;text-align: center'>F. Nac.</th>
                       <th style='width:20%;text-align: center;'>Opciones</th>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let cat of cast">
-                        <td>{{cat.nombre}}</td>
-                        <td>{{cat.descripcion}}</td>
-                        <td style="text-align: center">{{cat.categorias_id_padre}}</td>
+                      <tr *ngFor="let cli of cast">
+                        <td>{{cli.nombre}}</td>
+                        <td>{{cli.apellido}}</td>
+                        <td style="text-align: center">{{cli.nro_doc}}</td>
+                        <td style="text-align: center">{{cli.fecha_nac | date:'dd-MM-yyyy'}}</td>
                         <td style='text-align: center'>
-                          <button class="btn btn-info btn-sm" [routerLink]="['/categorias/cargar-categorias', cat.id]" routerLinkActive="active">Modificar</button>&nbsp;
+                          <button class="btn btn-info btn-sm" [routerLink]="['/clientes/cargar-clientes', cli.id]" routerLinkActive="active">Modificar</button>&nbsp;
                           <button class="btn btn-danger btn-sm">Eliminar</button>
                         </td>
                       </tr>
@@ -54,7 +56,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-12" align="center">
-                      <input type="submit" class="btn btn-primary" value="Nueva Categoria" />
+                      <input type="submit" class="btn btn-primary" value="Nuevo Cliente" />
                     </div>
                   </div>
               </div>

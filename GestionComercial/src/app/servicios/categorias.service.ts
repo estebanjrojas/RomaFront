@@ -41,4 +41,14 @@ export class CategoriasService {
   }
 
 
+  getCategoriasBusqueda(texto_busqueda): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getCategoriasBusqueda/' + texto_busqueda, httpOptions);
+  }
+
+  getCategoriasTodas(): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getCategoriasTodas/', httpOptions);
+  }
+
+
+
 }

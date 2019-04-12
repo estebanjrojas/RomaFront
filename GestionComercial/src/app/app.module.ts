@@ -30,6 +30,8 @@ import { BuscarCategoriaComponent } from './componentes/adm-categoria/buscar-cat
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CargarPromocionesComponent } from './componentes/adm-promociones/cargar-promociones/cargar-promociones.component';
 import { BuscarPromocionesComponent } from './componentes/adm-promociones/buscar-promociones/buscar-promociones.component';
+import { BuscarClientesComponent } from './componentes/adm-clientes/buscar-clientes/buscar-clientes.component';
+import { CargarClientesComponent } from './componentes/adm-clientes/cargar-clientes/cargar-clientes.component';
 
 
 //Rutas para el Router de Angular
@@ -53,6 +55,8 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
   , { path: 'categorias/busqueda-categorias', component: BuscarCategoriaComponent }
   , { path: 'promociones/cargar-promociones', component: CargarPromocionesComponent }
   , { path: 'promociones/busqueda-promociones', component: BuscarPromocionesComponent }
+  , { path: 'clientes/cargar-clientes', component: CargarClientesComponent }
+  , { path: 'clientes/busqueda-clientes', component: BuscarClientesComponent }
 
 ];
 
@@ -76,7 +80,9 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     BuscarCategoriaComponent,
     CargarCategoriaComponent,
     BuscarPromocionesComponent,
-    CargarPromocionesComponent
+    CargarPromocionesComponent,
+    BuscarClientesComponent,
+    CargarClientesComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

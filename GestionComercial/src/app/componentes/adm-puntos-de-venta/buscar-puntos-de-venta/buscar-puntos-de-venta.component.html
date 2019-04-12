@@ -14,22 +14,6 @@
           <div class="card-body">
               <h3>Puntos de Venta</h3>
               <hr>
-            <!--Inicio Sucursal-->
-            <div class="row">
-              <div class="col-md-5">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Sucursal</label>
-                  </div>
-                  <select class="custom-select" id="inputGroupSelect01">
-                    <option *ngFor="let suc of this.sucursales" [value]="suc.codigo">
-                        {{suc.descrip}}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <!--Fin Sucursal-->
             
             <!--Inicio Busqueda-->
             <div class="row">
