@@ -56,6 +56,7 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
   , { path: 'promociones/cargar-promociones', component: CargarPromocionesComponent }
   , { path: 'promociones/busqueda-promociones', component: BuscarPromocionesComponent }
   , { path: 'clientes/cargar-clientes', component: CargarClientesComponent }
+  , { path: 'clientes/cargar-clientes/:clientes_id', component: CargarClientesComponent }
   , { path: 'clientes/busqueda-clientes', component: BuscarClientesComponent }
 
 ];

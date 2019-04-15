@@ -28,4 +28,17 @@ export class ClientesService {
     return this.http.get(environment.apiEndpoint + '/getClientesTodos/', httpOptions);
   }
 
+  getDatosClientePorId(id) {
+    return this.http.get(environment.apiEndpoint + '/getDatosClientePorId/' + id, httpOptions);
+  }
+
+  insertClientePersonaDomicilio(empleado: any) {
+    let json = JSON.stringify(empleado);
+    return this.http.post(environment.apiEndpoint+'/insertClientePersonaDomicilio/', json, httpOptions);
+  }
+
+
+
+
+
 }
