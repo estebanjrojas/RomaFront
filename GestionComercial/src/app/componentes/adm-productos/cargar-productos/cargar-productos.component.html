@@ -58,10 +58,8 @@
                       <div class="col-md-12">
                         <!--~~~~~~~~~ Tipo ~~~~~~~~~~~-->
                         <mat-form-field style="width:100%">
-                          <mat-select  [compareWith]="compareFn" placeholder="Tipo" formControlName="tipo">
-                            <mat-option>None</mat-option>
-                            <mat-option value="1">Producto</mat-option>
-                            <mat-option value="2">Servicio</mat-option>
+                          <mat-select  placeholder="Tipo" formControlName="tipo">
+                            <mat-option *ngFor="let tipo of this.tipo_producto" [value]="tipo.codigo">{{tipo.descrip}}</mat-option>
                           </mat-select>
                         </mat-form-field>
                       </div>

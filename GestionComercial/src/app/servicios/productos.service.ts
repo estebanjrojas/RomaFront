@@ -52,6 +52,12 @@ export class ProductosService {
     return this.http.post(url, json, httpOptions);
   }
 
+  insertCategoriasProducto(cat: any, productos_id: number) {
+    const url = environment.apiEndpoint + `/insertCategoriasProducto`;
+    let json = JSON.stringify({"nombre": cat.nombre, "categorias_id": cat.id, "productos_id": productos_id});
+    return this.http.post(url, json, httpOptions);
+  }
+
   actualizarDatosProductos(datos: any): Observable<any> {
     let json = JSON.stringify(datos);
     return this.http.put(environment.apiEndpoint + '/actualizarDatosProductos', json, httpOptions);

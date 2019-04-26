@@ -3,8 +3,9 @@ import { ProductosService } from '../../../servicios/productos.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import {NestedTreeControl} from '@angular/cdk/tree';
-import {MatTreeNestedDataSource} from '@angular/material/tree';
+import { TabgralService } from '../../../servicios/tabgral.service';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { CategoriasService } from '../../../servicios/categorias.service';
 import { Categorias } from '../../../modelos/Categorias';
 import { CargarCategoriaComponent } from '../../adm-categoria/cargar-categoria/cargar-categoria.component';
@@ -21,22 +22,25 @@ export class CargarProductosComponent implements OnInit {
   nomb_usr: string;
 
   caracteristicas = new Array<Caracteristica>();
-  categorias_guardar = new Array<{id: number, nombre: string}>();
+  categorias_guardar = new Array<{ id: number, nombre: string }>();
   //Instancias
   productosForm: FormGroup;
-    //Arbol de Categorias
-    treeControl = new NestedTreeControl<Categorias>(node => node.children);
-    dataSource = new MatTreeNestedDataSource<Categorias>();
+  //Arbol de Categorias
+  treeControl = new NestedTreeControl<Categorias>(node => node.children);
+  dataSource = new MatTreeNestedDataSource<Categorias>();
 
-    //Constructor
+  tipo_producto = new Array<Tabgral>();
+
+  //Constructor
   constructor(private formBuilder: FormBuilder
     , private route: ActivatedRoute
     , private router: Router
     , private toastr: ToastrService
+    , private SrvTabgral: TabgralService
     , private SrvProductos: ProductosService
     , private SrvCategorias: CategoriasService) {
 
-      
+
 
 
     this.productosForm = this.formBuilder.group({
@@ -116,20 +120,33 @@ export class CargarProductosComponent implements OnInit {
     });
 
     this.getDatosProductos();
-    
+
     this.SrvCategorias.obtenerJSONTodasCategorias().subscribe(resp => {
-      console.log({"SrvCategorias.obtenerJSONTodasCategorias" : resp});
+      console.log({ "SrvCategorias.obtenerJSONTodasCategorias": resp });
       let cast: any = resp;
       this.SrvCategorias.setCategorias(JSON.parse(cast.categorias));
     });
 
     const categoriasObservable = this.SrvCategorias.getCategorias();
-        categoriasObservable.subscribe((categoriasData: Categorias[]) => {
-            console.log(categoriasData);
-            this.dataSource.data = categoriasData;
-        }, err => {console.error('Error al obtener categorias: '+err);}
-        ,()=>{
-        });
+    categoriasObservable.subscribe((categoriasData: Categorias[]) => {
+      console.log(categoriasData);
+      this.dataSource.data = categoriasData;
+    }, err => { console.error('Error al obtener categorias: ' + err); }
+      , () => {
+      });
+
+
+    //Lleno el combo de tipo producto
+    this.SrvTabgral.selectByNroTab(7).subscribe(respuesta => {
+      console.log({ "SrvTabgral.selectByNroTab(7)": respuesta });
+      let cast: any = respuesta;
+      for (var i = 0; i < cast.length; i++) {
+        let rel: Tabgral = { codigo: "0", descrip: "" };
+        rel.codigo = cast[i].codigo;
+        rel.descrip = cast[i].descrip;
+        this.tipo_producto.push(rel);
+      }
+    });
 
   }
 
@@ -220,8 +237,17 @@ export class CargarProductosComponent implements OnInit {
               this.toastr.success('Caracteristicas cargadas exitosamente');
             });
           }
+          for (let cat of this.categorias_guardar) {
+            this.SrvProductos.insertCategoriasProducto(cat, cast.id).subscribe(resp => {
+              console.log({ "SrvProductos.insertCategoriasProducto": resp });
+              this.toastr.success('Categorias cargadas exitosamente');
+            });
+          }
           this.toastr.success('El Producto se ha CARGADO Exitosamente');
           this.productosForm.reset();
+          while (this.caracteristicas.length > 0) {
+            this.caracteristicas.pop();
+          }
         });
       }
       else {
@@ -241,17 +267,21 @@ export class CargarProductosComponent implements OnInit {
             for (let caract of this.caracteristicas) {
               this.SrvProductos.insertCaracteristicasProducto(caract, id_producto).subscribe(resp => {
                 console.log({ "SrvProductos.insertCaracteristicasProducto": resp });
-                this.toastr.success('Caracteristicas cargadas exitosamente');
+                this.toastr.success('Caracteristicas actualizadas exitosamente');
+              });
+            }
+
+            for (let cat of this.categorias_guardar) {
+              this.SrvProductos.insertCategoriasProducto(cat, id_producto).subscribe(resp => {
+                console.log({ "SrvProductos.insertCategoriasProducto": resp });
+                this.toastr.success('Categorias actualizadas exitosamente');
               });
             }
 
             this.toastr.success('El producto se ha ACTUALIZADO Exitosamente');
             this.productosForm.reset();
             this.router.navigate(['productos/busqueda-productos']);
-          });
-
-
-
+          }); 
 
 
         });
@@ -263,9 +293,9 @@ export class CargarProductosComponent implements OnInit {
     }
   }
 
-  
+
   agregarCategoria(id: number, nombre: string) {
-    this.categorias_guardar.push({id: id, nombre: nombre});
+    this.categorias_guardar.push({ id: id, nombre: nombre });
   }
 
 
@@ -287,10 +317,14 @@ interface Caracteristica {
  * Cada nodo tiene una opcion y una lista de hijos
  */
 interface CategoriasNode {
-    id?: number;
-    name: string;
-    children?: CategoriasNode[];
+  id?: number;
+  name: string;
+  children?: CategoriasNode[];
 }
 
+interface Tabgral {
+  codigo: string;
+  descrip: string;
+}
 
 
