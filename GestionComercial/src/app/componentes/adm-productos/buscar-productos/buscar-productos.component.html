@@ -49,9 +49,9 @@
                         <td>{{prod.descripcion}}</td>
                         <td style='text-align: center'>{{prod.nombre_categoria}}</td>
                         <td style='text-align: center'>
-                          <a class="btn btn-outline-info btn-sm" [routerLink]="['/productos/cargar-productos', prod.id]" routerLinkActive="active">Modificar</a>&nbsp;
+                          <a class="btn btn-outline-info btn-sm" [routerLink]="['/productos/cargar-productos', prod.productos_id]" routerLinkActive="active">Modificar</a>&nbsp;
                           <button type="button" class="btn btn-outline-success btn-sm">Precios</button>&nbsp;
-                          <input type="button" class="btn btn-outline-danger btn-sm" (click)="eliminarEmpleado(em.id)" value="Eliminar" />
+                          <input type="button" class="btn btn-outline-danger btn-sm" (click)="eliminarProducto(prod.productos_id)" value="Eliminar" />
                         </td>
                       </tr>
                     </tbody>
