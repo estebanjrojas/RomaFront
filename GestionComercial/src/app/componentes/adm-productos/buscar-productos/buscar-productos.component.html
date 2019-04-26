@@ -16,9 +16,9 @@
               <hr>
             <!--Inicio Busqueda-->
             <div class="row">
-              <div class="col-md-5">
+              <div class="col-md-6">
                 <input type="text" id="txtBuscar" class="form-control" formControlName="txtBuscar"
-                  placeholder="Ingrese nombre, descripcion o tipo a buscar" />
+                  placeholder="Ingresar el nombre &oacute; descripci&oacute;n para buscar" />
               </div>
               <div class="col-md-1">
                 <input type="button" value="Buscar" class="btn btn-outline-primary" (click)="buscarProducto();" />
@@ -32,26 +32,26 @@
               <!----## Inicio Col 12  ##---->
               <div class="col-md-12">
                 <div class="card">
-                  <table class="table table-hover table-sm">
+                  <table class="table table-hover">
                     <thead class="thead-dark">
+                      <th>Código</th>
                       <th style='width:3%;'>Código</th>
                       <th style='width:21%;'>Nombre</th>
                       <th style='width:21%;'>Descripción</th>
-                      <th style='width:20%;text-align:center;'>Categoria</th>
-                      <th style='width:10%;text-align:center;'>Tipo Prod.</th>
+                      <th style='width:20%;text-align:center;'>Categor&iacute;a</th>
                       <th style='width:25%;text-align:center;'>Opciones</th>
                     </thead>
                     <tbody>
                       <tr *ngFor="let prod of cast">
+                        <td><img src="{{prod.imagen}}" class="img-thumbnail"></td>
                         <td>{{prod.codigo}}</td>
                         <td>{{prod.nombre}}</td>
                         <td>{{prod.descripcion}}</td>
                         <td style='text-align: center'>{{prod.nombre_categoria}}</td>
-                        <td style='text-align: center'>{{prod.tipo_producto}}</td>
                         <td style='text-align: center'>
-                          <a class="btn btn-info btn-sm" [routerLink]="['/productos/cargar-productos', prod.productos_id]" routerLinkActive="active">Modificar</a>&nbsp;
-                          <a class="btn btn-success btn-sm" >Precios</a>&nbsp;
-                          <input type="button" class="btn btn-danger btn-sm" (click)="eliminarEmpleado(em.id)" value="Eliminar" />
+                          <a class="btn btn-outline-info btn-sm" [routerLink]="['/productos/cargar-productos', prod.productos_id]" routerLinkActive="active">Modificar</a>&nbsp;
+                          <button type="button" class="btn btn-outline-success btn-sm">Precios</button>&nbsp;
+                          <input type="button" class="btn btn-outline-danger btn-sm" (click)="eliminarProducto(prod.productos_id)" value="Eliminar" />
                         </td>
                       </tr>
                     </tbody>
