@@ -36,6 +36,10 @@ export class ProductosService {
     return this.http.get(environment.apiEndpoint + '/getCaracteristicasProductos/' + id_producto, httpOptions);
   }
 
+  getCategoriasProductos(id_producto): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getCategoriasProductos/' + id_producto, httpOptions);
+  }
+
   insertProductoReturnId(datos: any) {
     const url = environment.apiEndpoint + `/insertProductoReturnId`;
     let json = JSON.stringify(datos);

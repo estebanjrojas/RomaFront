@@ -41,8 +41,6 @@ export class CargarProductosComponent implements OnInit {
     , private SrvCategorias: CategoriasService) {
 
 
-
-
     this.productosForm = this.formBuilder.group({
       codigo: [
         '', Validators.compose([
@@ -182,6 +180,18 @@ export class CargarProductosComponent implements OnInit {
             'descripcion': resp.descripcion,
             'unidad_medida': resp.unidad_medida,
             'valor': resp.valor
+          });
+      });
+
+      this.SrvProductos.getCategoriasProductos(id_producto).subscribe(resp => {
+        let respuesta: any = resp;
+        console.log({ "SrvProductos.getCategoriasProductos": respuesta });
+        console.log("ID PRODUCTO:" + id_producto);
+
+        for (let resp of respuesta)
+          this.categorias_guardar.push({
+            'id': resp.id,
+            'nombre': resp.nombre
           });
       });
 
