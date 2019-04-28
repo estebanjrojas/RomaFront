@@ -1,0 +1,100 @@
+<div class="row">
+  <div class="col-12">
+    <h4>{{producto.nombre}}</h4>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="resumen-tab" data-toggle="tab" href="#resumen" role="tab" aria-controls="resumen" aria-selected="true">Resumen</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="caracteristicas-tab" data-toggle="tab" href="#caracteristicas" role="tab" aria-controls="caracteristicas" aria-selected="false">Caracter&iacute;sticas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="categorias-tab" data-toggle="tab" href="#categorias" role="tab" aria-controls="categorias" aria-selected="false">Categor&iacute;as</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="resumen" role="tabpanel" aria-labelledby="resumen-tab">
+          <b>C&oacute;digo:</b> {{producto.codigo}}<br>
+          <b>Descripci&oacute;n:</b> {{producto.descripcion}}<br>
+          <b>Descripci&oacute;n Factura:</b> {{producto.descripcion_factura}}
+          <br>
+
+          <div id="carouselImagenes" class="carousel slide" data-ride="carousel">
+            <div *ngFor="let img of imagenes; let i = index;">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselImagenes" data-slide-to="i" class="active" *ngIf="i==0"></li>
+                    <li data-target="#carouselImagenes" data-slide-to="i" *ngIf="i!=0"></li>
+                  </ol>
+            </div>
+              <div class="carousel-inner">
+                <div  *ngFor="let img of imagenes; let i = index;">
+                    <div class="carousel-item active" *ngIf="i==0">
+                        <img class="d-block w-100" src={{img.imagen}} alt="i">
+                    </div>
+                    <div class="carousel-item" *ngIf="i!=0">
+                        <img class="d-block w-100" src={{img.imagen}} alt="i">
+                    </div>
+                </div>
+
+
+              </div>
+              <a class="carousel-control-prev" href="#carouselImagenes" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselImagenes" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Siguiente</span>
+              </a>
+            </div>
+      </div>
+      <div class="tab-pane fade" id="caracteristicas" role="tabpanel" aria-labelledby="caracteristicas-tab">
+          <div class="row">
+            <div class="col-12" style="padding-top: 5px">
+              <h6>Caracter&iacute;sticas:</h6>
+              <table class="table table-sm table-hover" width=85%>
+                <thead class="thead-light">
+                  <th>Nombre</th>
+                  <th>Descripci&oacute;n</th>
+                  <th>Valor</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let caract of caracteristicas">
+                    <td>{{caract.nombre}}</td>
+                    <td>{{caract.descripcion}}</td>
+                    <td>{{caract.valor}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+      </div>
+      <div class="tab-pane fade" id="categorias" role="tabpanel" aria-labelledby="categorias-tab">
+          <div class="row">
+              <div class="col-12" style="padding-top: 5px">
+                <h6>Categor&iacute;as:</h6>
+                <table class="table table-sm table-hover" width=85%>
+                  <thead class="thead-light">
+                    <th>Descripci&oacute;n</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let categ of categorias">
+                      <td>{{categ.nombre}} ({{categ.categoria_padre}})</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <hr>
+    <small>Fecha de Creaci&oacute;n: {{producto.fecha_desde}}</small><br>
+    <small>Fecha de Baja: {{producto.fecha_hasta}}</small>
+  </div>
+</div>
