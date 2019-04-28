@@ -32,6 +32,7 @@ import { CargarPromocionesComponent } from './componentes/adm-promociones/cargar
 import { BuscarPromocionesComponent } from './componentes/adm-promociones/buscar-promociones/buscar-promociones.component';
 import { BuscarClientesComponent } from './componentes/adm-clientes/buscar-clientes/buscar-clientes.component';
 import { CargarClientesComponent } from './componentes/adm-clientes/cargar-clientes/cargar-clientes.component';
+import { DetalleProductoComponent } from './componentes/adm-productos/detalle-producto/detalle-producto.component';
 
 
 //Rutas para el Router de Angular
@@ -58,7 +59,7 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
   , { path: 'clientes/cargar-clientes', component: CargarClientesComponent }
   , { path: 'clientes/cargar-clientes/:clientes_id', component: CargarClientesComponent }
   , { path: 'clientes/busqueda-clientes', component: BuscarClientesComponent }
-
+  , { path: 'clientes/detalle-producto', component: DetalleProductoComponent }
 ];
 
 
@@ -83,7 +84,8 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     BuscarPromocionesComponent,
     CargarPromocionesComponent,
     BuscarClientesComponent,
-    CargarClientesComponent
+    CargarClientesComponent,
+    DetalleProductoComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -116,3 +118,4 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

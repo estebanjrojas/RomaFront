@@ -3,6 +3,7 @@ import { ProductosService } from '../../../servicios/productos.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
   selector: 'app-buscar-productos',
   templateUrl: './buscar-productos.component.html',
@@ -22,7 +23,7 @@ export class BuscarProductosComponent implements OnInit {
         '', Validators.compose([
 
         ])
-      ], 
+      ],
       txtBuscar: []
     });
   }

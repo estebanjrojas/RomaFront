@@ -73,4 +73,8 @@ export class ProductosService {
     return this.http.delete(url, httpOptions);
   }
 
+  getImagenesProductos(id_producto): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getImagenesProductos/' + id_producto, httpOptions);
+  }
+
 }
