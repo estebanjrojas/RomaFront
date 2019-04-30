@@ -3,17 +3,17 @@
     <h4>{{producto.nombre}}</h4>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" id="resumen-tab" data-toggle="tab" href="#resumen" role="tab" aria-controls="resumen" aria-selected="true">Resumen</a>
+        <a class="nav-link active" id="resumen-tab" data-toggle="tab" [attr.href]="'#resumen_'+producto.productos_id" role="tab" aria-controls="resumen" aria-selected="true">Resumen</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="caracteristicas-tab" data-toggle="tab" href="#caracteristicas" role="tab" aria-controls="caracteristicas" aria-selected="false">Caracter&iacute;sticas</a>
+        <a class="nav-link" id="caracteristicas-tab" data-toggle="tab" [attr.href]="'#caracteristicas_'+producto.productos_id" role="tab" aria-controls="caracteristicas" aria-selected="false">Caracter&iacute;sticas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="categorias-tab" data-toggle="tab" href="#categorias" role="tab" aria-controls="categorias" aria-selected="false">Categor&iacute;as</a>
+        <a class="nav-link" id="categorias-tab" data-toggle="tab" [attr.href]="'#categorias_'+producto.productos_id" role="tab" aria-controls="categorias" aria-selected="false">Categor&iacute;as</a>
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="resumen" role="tabpanel" aria-labelledby="resumen-tab">
+      <div class="tab-pane fade show active" id="resumen_{{producto.productos_id}}" role="tabpanel" aria-labelledby="resumen-tab">
           <b>C&oacute;digo:</b> {{producto.codigo}}<br>
           <b>Descripci&oacute;n:</b> {{producto.descripcion}}<br>
           <b>Descripci&oacute;n Factura:</b> {{producto.descripcion_factura}}
@@ -42,7 +42,7 @@
               </a>
           </div>
       </div>
-      <div class="tab-pane fade" id="caracteristicas" role="tabpanel" aria-labelledby="caracteristicas-tab">
+      <div class="tab-pane fade" id="caracteristicas_{{producto.productos_id}}" role="tabpanel" aria-labelledby="caracteristicas-tab">
           <div class="row">
             <div class="col-12" style="padding-top: 5px">
               <h6>Caracter&iacute;sticas:</h6>
@@ -63,7 +63,7 @@
             </div>
           </div>
       </div>
-      <div class="tab-pane fade" id="categorias" role="tabpanel" aria-labelledby="categorias-tab">
+      <div class="tab-pane fade" id="categorias_{{producto.productos_id}}" role="tabpanel" aria-labelledby="categorias-tab">
           <div class="row">
               <div class="col-12" style="padding-top: 5px">
                 <h6>Categor&iacute;as:</h6>
