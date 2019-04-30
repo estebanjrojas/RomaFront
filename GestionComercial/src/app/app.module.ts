@@ -9,7 +9,7 @@ import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule,
   MatAutocompleteModule, MatOptionModule, MatInputModule,
   MatDatepickerModule, MatNativeDateModule, MatSelectModule,
-  MatTreeModule, MatIconModule, MatRadioModule
+  MatTreeModule, MatIconModule, MatRadioModule, MatCardModule
 } from '@angular/material';
 import { AppComponent } from './app.component';
 import { CabeceraComponent } from './componentes/cabecera/cabecera.component';
@@ -106,6 +106,7 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     MatTreeModule,
     MatIconModule,
     MatRadioModule,
+    MatCardModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',
