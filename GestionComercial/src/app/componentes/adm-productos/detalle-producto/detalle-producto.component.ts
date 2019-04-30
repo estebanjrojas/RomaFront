@@ -11,7 +11,7 @@ export class DetalleProductoComponent implements OnInit {
   caracteristicas: ProductosCaracteristicas[];
   categorias: Categorias[];
   imagenes: Imagenes[];
-
+  cantidad_imagenes: number = 0;
   constructor(private SrvProductos: ProductosService) { }
 
   ngOnInit() {
@@ -31,12 +31,14 @@ export class DetalleProductoComponent implements OnInit {
       console.log({"SrvProductos.getImagenesProductos" : resp});
       let cast: any = resp;
       this.imagenes = cast;
+      this.cantidad_imagenes = cast.length;
     });
 
     console.log(this.imagenes);
   }
 
 }
+
 
 
 interface ProductosCaracteristicas {

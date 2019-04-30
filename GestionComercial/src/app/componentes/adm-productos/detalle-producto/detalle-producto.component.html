@@ -19,34 +19,28 @@
           <b>Descripci&oacute;n Factura:</b> {{producto.descripcion_factura}}
           <br>
 
-          <div id="carouselImagenes" class="carousel slide" data-ride="carousel">
-            <div *ngFor="let img of imagenes; let i = index;">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselImagenes" data-slide-to="i" class="active" *ngIf="i==0"></li>
-                    <li data-target="#carouselImagenes" data-slide-to="i" *ngIf="i!=0"></li>
-                  </ol>
-            </div>
+          <div id="carouselImagenes_{{producto.productos_id}}" class="carousel slide" data-ride="carousel"> 
+              <ol class="carousel-indicators" *ngIf="cantidad_imagenes>1">
+                <div *ngFor="let img of imagenes; let i = index;">
+                  <li [attr.data-target]="'#carouselImagenes_'+producto.productos_id" [attr.data-slide-to]="i" class="{{ (i == 0) ? 'active' : ''}}"></li>
+                </div>
+              </ol>
               <div class="carousel-inner">
                 <div  *ngFor="let img of imagenes; let i = index;">
-                    <div class="carousel-item active" *ngIf="i==0">
-                        <img class="d-block w-100" src={{img.imagen}} alt="i">
-                    </div>
-                    <div class="carousel-item" *ngIf="i!=0">
-                        <img class="d-block w-100" src={{img.imagen}} alt="i">
-                    </div>
-                </div>
-
-
+                  <div class="carousel-item {{ (i == 0) ? 'active' : ''}}">
+                      <img class="d-block w-100" src={{img.imagen}} alt="{{i}}">
+                  </div>
               </div>
-              <a class="carousel-control-prev" href="#carouselImagenes" role="button" data-slide="prev">
+              </div>
+              <a class="carousel-control-prev" [attr.href]="'#carouselImagenes_'+producto.productos_id" role="button" data-slide="prev" *ngIf="cantidad_imagenes>1">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Anterior</span>
               </a>
-              <a class="carousel-control-next" href="#carouselImagenes" role="button" data-slide="next">
+              <a class="carousel-control-next" [attr.href]="'#carouselImagenes_'+producto.productos_id" role="button" data-slide="next" *ngIf="cantidad_imagenes>1">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Siguiente</span>
               </a>
-            </div>
+          </div>
       </div>
       <div class="tab-pane fade" id="caracteristicas" role="tabpanel" aria-labelledby="caracteristicas-tab">
           <div class="row">
@@ -98,3 +92,5 @@
     <small>Fecha de Baja: {{producto.fecha_hasta}}</small>
   </div>
 </div>
+
+
