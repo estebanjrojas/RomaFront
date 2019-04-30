@@ -49,10 +49,10 @@
                         <td>{{prod.descripcion}}</td>
                         <td style='text-align: center'>{{prod.nombre_categoria}}</td>
                         <td style='text-align: center'>
-                          <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" [attr.data-target]="'#detalle_'+prod.codigo">Detalle</button>&nbsp;
-                          <a class="btn btn-outline-info btn-sm" [routerLink]="['/productos/cargar-productos', prod.productos_id]" routerLinkActive="active">Modificar</a>&nbsp;
-                          <button type="button" class="btn btn-outline-success btn-sm">Precios</button>&nbsp;
-                          <input type="button" class="btn btn-outline-danger btn-sm" (click)="eliminarProducto(prod.productos_id)" value="Eliminar" />
+                          <button type="button" class="btn btn-outline-info btn-sm" title="Modificar/Editar" [routerLink]="['/productos/cargar-productos', prod.productos_id]" routerLinkActive="active"><img src="/src/assets/modificar.png" alt=""></button>&nbsp;
+                          <button type="button" class="btn btn-outline-success btn-sm" title="Precio"><img src="/src/assets/precio.png" alt=""></button>&nbsp;
+                          <button type="button" class="btn btn-outline-primary btn-sm" title="Detalle" data-toggle="modal" [attr.data-target]="'#detalle_'+prod.codigo"><img src="/src/assets/detalle.png" alt=""></button>&nbsp;
+                          <button type="button" class="btn btn-outline-danger btn-sm" title="Eliminar" (click)="eliminarProducto(prod.productos_id)"><img src="/src/assets/eliminar.png" alt=""></button>
                         </td>
                         <div id="detalle_{{prod.codigo}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                           <div  class="modal-dialog modal-lg">
