@@ -53,6 +53,7 @@ export class BuscarProductosComponent implements OnInit {
   }
 
   eliminarProducto(productos_id) {
+    alert("Baja sin emplementar");
     console.log(" Baja de Producto: " + productos_id);
   }
 
