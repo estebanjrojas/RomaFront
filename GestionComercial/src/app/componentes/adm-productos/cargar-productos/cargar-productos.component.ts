@@ -23,6 +23,7 @@ export class CargarProductosComponent implements OnInit {
 
   caracteristicas = new Array<Caracteristica>();
   categorias_guardar = new Array<{ id: number, nombre: string }>();
+  imagenes = new Array<{imagen:string}>();
   //Instancias
   productosForm: FormGroup;
   //Arbol de Categorias
@@ -30,6 +31,7 @@ export class CargarProductosComponent implements OnInit {
   dataSource = new MatTreeNestedDataSource<Categorias>();
 
   tipo_producto = new Array<Tabgral>();
+  urls = new Array<string>();
 
   //Constructor
   constructor(private formBuilder: FormBuilder
@@ -102,7 +104,13 @@ export class CargarProductosComponent implements OnInit {
         '', Validators.compose([
 
         ])
+      ],
+      imagen_producto: [
+        '', Validators.compose([
+
+        ])
       ]
+      
     });
   }
 
@@ -225,6 +233,32 @@ export class CargarProductosComponent implements OnInit {
   borrarFila(value) {
     var array = this.caracteristicas;
     array.splice(value, 1);
+  }
+
+
+  detectFiles(event) {
+    //this.urls = [];
+    let files = event.target.files;
+    if (files) {
+      for (let file of files) {
+        let indice = 0;
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.urls.push(e.target.result);
+          this.imagenes.push(
+            {
+              "imagen" :reader.result.toString()
+            }
+              );
+          //console.log(this.imagenes[indice]);
+          indice++;
+        }
+        reader.readAsDataURL(file);
+
+
+      }
+    }
+    console.log(this.urls);
   }
 
 
