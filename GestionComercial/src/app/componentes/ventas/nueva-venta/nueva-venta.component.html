@@ -1,0 +1,104 @@
+<app-cabecera></app-cabecera>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!----## Inicio Form Principal ##---->
+<form id="nuevaVentaForm" [formGroup]="nuevaVentaForm" (ngSubmit)="guardar()">
+  <!----## Inicio Container Principal ##---->
+  <div class="container">
+    <!----## Inicio Row Principal ##---->
+    <div class="row">
+      <!----## Inicio Columna 12  ##---->
+      <div class="col-md-12 m-0 p-0">
+        <br>
+        <div class="card">
+          <div class="card-body">
+            <h3>Ventas</h3>
+            <hr>
+            <!----## Inicio Row 1 Interior  ##---->
+            <div class="row">
+              <!----## Inicio Col 12  ##---->
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-7">
+                    <mat-form-field class="example-full-width" style="width:90%">
+                      <input matInput placeholder="Cliente" formControlName="clienteBuscar"/>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-2">
+                    <mat-form-field class="example-full-width">
+                      <button type="button" class="btn btn-sm btn-outline-primary">Buscar</button>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      Productos
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-4">
+                          Categorias
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                              <div class="col-7">
+                                <mat-form-field class="example-full-width" style="width:90%">
+                                  <input matInput placeholder="Productos" formControlName="productosBuscar"/>
+                                </mat-form-field>
+                              </div>
+                              <div class="col-2">
+                                <mat-form-field class="example-full-width">
+                                  <button type="button" class="btn btn-sm btn-outline-primary">Buscar</button>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                          <table class="table table-sm table-bordered table-striped">
+                            <thead class="thead-light">
+                              <th>Nombre</th>
+                              <th>Precio</th>
+                              <th>Cantidad</th>
+                              <th></th>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="padding: 5px">
+                <div class="col-9">
+                  <button type="button" class="btn btn-outline-success">Detalle de la Venta</button>
+                </div>
+                <div class="col-3">
+                  TOTAL
+                </div>
+              </div>
+             <div class="row h-100">
+                <div class="col-md-12" align="center">
+                  <input type="button" class="btn btn-outline-primary btn-xs col-md-2" [routerLink]="['/ventas/busqueda-ventas']" routerLinkActive="active"value="Volver" /> &nbsp;
+                  <input type="submit" class="btn btn-primary btn-xs col-md-2" value="Guardar" />
+                </div>
+              </div>
+          </div>
+          <!----## Fin Col 12  ##---->
+        </div>
+        <!----## Fin Row 1 Interior  ##---->
+        <br>
+      </div>
+      <!----## Fin Columna 12  ##---->
+    </div>
+    <!----## Fin Row Principal ##---->
+  </div>
+  <!----## Fin Container Principal ##---->
+</form>
+<!----## Fin Form Principal ##---->
+
+<app-pie></app-pie>

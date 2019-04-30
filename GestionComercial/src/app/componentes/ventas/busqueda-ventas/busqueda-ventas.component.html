@@ -1,0 +1,69 @@
+<app-cabecera></app-cabecera>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!----## Inicio Form Principal ##---->
+<form id="busquedaVentas" [formGroup]="busquedaVentasForm">
+    <input type="hidden" formControlName="nombre_usuario">
+    <!----## Inicio Container Principal ##---->
+    <div class="container">
+      <!----## Inicio Row Principal ##---->
+      <div class="row">
+        <!----## Inicio Columna 12  ##---->
+        <div class="col-md-12 m-0 p-0">
+          <br>
+          <div class="card">
+            <div class="card-body">
+                <h3>Ventas</h3>
+                <hr>
+              <!--Inicio Busqueda-->
+              <div class="row">
+                <div class="col-md-5">
+                  <input type="text" formControlName="txtBuscar" class="form-control" placeholder="">
+                </div>
+                <div class="col-md-1">
+                  <button type="button" class="btn btn-outline-primary" (click)="buscarVentas();" id="btnBuscar">Buscar</button>
+                </div>
+              </div>
+              <!--Fin Busqueda-->
+              <br>
+  
+              <!----## Inicio Row 2 Interior  ##---->
+              <div class="row">
+                <!----## Inicio Col 12  ##---->
+                <div class="col-md-12">
+                  <div class="card">
+                    <table class="table table-sm ">
+                      <thead class="thead-dark">
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Vendedor</th>
+                        <th>Estado</th>
+                        <th></th>
+                      </thead>
+                      <tbody>
+                       
+                      </tbody>
+                    </table>
+                  </div>
+                  <br>
+                  <div class="row">
+                      <div class="col-md-12" align="center">
+                        <input type="submit" class="btn btn-primary" [routerLink]="['/ventas/nueva-venta']" routerLinkActive="active" value="Nueva Venta" />
+                      </div>
+                    </div>
+                </div>
+                <!----## Fin Col 12  ##---->
+              </div>
+              <!----## Fin Row 1 Interior  ##---->
+            </div>
+          </div>
+        </div>
+        <!----## Fin Columna 12  ##---->
+      </div>
+      <!----## Fin Row Principal ##---->
+    </div>
+    <br>
+    <!----## Fin Container Principal ##---->
+  </form>
+  <!----## Fin Form Principal ##---->
+  
+  <app-pie></app-pie>
