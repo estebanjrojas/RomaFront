@@ -77,4 +77,8 @@ export class ProductosService {
     return this.http.get(environment.apiEndpoint + '/getImagenesProductos/' + id_producto, httpOptions);
   }
 
+  getProductosPorCategoriaCampoBusqueda(categorias_id, campo_buscar, texto_buscar): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getProductosPorCategoriaCampoBusqueda/'+categorias_id+'/'+campo_buscar+'/'+texto_buscar, httpOptions);
+  }
+
 }

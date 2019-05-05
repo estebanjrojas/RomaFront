@@ -1,7 +1,7 @@
 <app-cabecera></app-cabecera>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
-<form id="nuevaVentaForm" [formGroup]="nuevaVentaForm" (ngSubmit)="guardar()">
+<form id="nuevaVentaForm" [formGroup]="nuevaVentaForm">
   <!----## Inicio Container Principal ##---->
   <div class="container">
     <!----## Inicio Row Principal ##---->
@@ -13,66 +13,45 @@
           <div class="card-body">
             <h3>Ventas</h3>
             <hr>
-            <!----## Inicio Row 1 Interior  ##---->
-            <div class="row">
-              <!----## Inicio Col 12  ##---->
-              <div class="col-md-12">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="pills-clientes-tab" data-toggle="pill" href="#pills-clientes" role="tab" aria-controls="pills-clientes" aria-selected="true">1 - Cliente</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pills-productos-tab" data-toggle="pill" href="#pills-productos" role="tab" aria-controls="pills-productos" aria-selected="false">2 - Productos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pills-confirmacion-tab" data-toggle="pill" href="#pills-confirmacion" role="tab" aria-controls="pills-confirmacion" aria-selected="false">3 - Confirmaci&oacute;n</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-clientes" role="tabpanel" aria-labelledby="pills-clientes-tab">
+                           <!----## Inicio Row 1 Interior  ##---->
                 <div class="row">
-                  <div class="col-7">
-                    <mat-form-field class="example-full-width" style="width:90%">
-                      <input matInput placeholder="Cliente" formControlName="clienteBuscar"/>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-2">
-                    <mat-form-field class="example-full-width">
-                      <button type="button" class="btn btn-sm btn-outline-primary">Buscar</button>
-                    </mat-form-field>
+                  <!----## Inicio Col 12  ##---->
+                  <div class="col-md-12">
+                        <app-seleccion-clientes></app-seleccion-clientes>
                   </div>
                 </div>
               </div>
-              
-            </div>
-            <div class="row">
-                <div class="col-12">
-                  <div class="card">
-                    <div class="card-header">
-                      Productos
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-4">
-                          Categorias
-                        </div>
-                        <div class="col-8">
-                          <div class="row">
-                              <div class="col-7">
-                                <mat-form-field class="example-full-width" style="width:90%">
-                                  <input matInput placeholder="Productos" formControlName="productosBuscar"/>
-                                </mat-form-field>
-                              </div>
-                              <div class="col-2">
-                                <mat-form-field class="example-full-width">
-                                  <button type="button" class="btn btn-sm btn-outline-primary">Buscar</button>
-                                </mat-form-field>
-                              </div>
-                            </div>
-                          <table class="table table-sm table-bordered table-striped">
-                            <thead class="thead-light">
-                              <th>Nombre</th>
-                              <th>Precio</th>
-                              <th>Cantidad</th>
-                              <th></th>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                          </table>
-                        </div>
+              <div class="tab-pane fade" id="pills-productos" role="tabpanel" aria-labelledby="pills-productos-tab">
+                <div class="row">
+                  <div class="col-md-12">
+                        <app-carga-detalle-venta></app-carga-detalle-venta>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="pills-confirmacion" role="tabpanel" aria-labelledby="pills-confirmacion-tab">
+                  <div class="row">
+                      <!----## Inicio Col 12  ##---->
+                      <div class="col-md-12">
+                            <app-confirmacion-venta></app-confirmacion-venta>
                       </div>
                     </div>
-                  </div>
-                </div>
               </div>
+            </div>
+
+
               <div class="row" style="padding: 5px">
                 <div class="col-9">
                   <button type="button" class="btn btn-outline-success">Detalle de la Venta</button>

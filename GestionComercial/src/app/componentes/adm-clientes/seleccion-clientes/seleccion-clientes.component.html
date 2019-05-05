@@ -1,0 +1,86 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!----## Inicio Form Principal ##---->
+<form id="seleccionClientesForm" [formGroup]="seleccionClientesForm">
+
+  <!----## Inicio Container Principal ##---->
+  <div class="container">
+    <!----## Inicio Row Principal ##---->
+    <div class="row">
+      <!----## Inicio Columna 12  ##---->
+      <div class="col-md-12 m-0 p-0">
+        <br>
+        <div class="card" class="p-3 mb-2 bg-light text-dark">
+          <div class="card-body">
+              <h5 class="text-secondary">Seleccionar Cliente</h5>
+            <!--Inicio Busqueda-->
+            <div class="row">
+              <div class="col-md-8">
+                  <div class="input-group">
+                      <div class="input-group-append" style="width: 80%">
+                          <input required type="text" formControlName="txtBuscarCliente" class="form-control" placeholder="Ingrese el valor a buscar.">
+                      </div>
+                      <select class="custom-select" id="cbTipoBusquedaCliente" formControlName="cbTipoBusquedaCliente">
+                        <option value="apellido">Apellido</option>
+                        <option value="nombre">Nombre</option>
+                        <option selected value="nro_doc" >Documento</option>
+                      </select>
+                    </div>
+
+              </div>
+              <div class="col-md-1">
+                <button type="button" class="btn btn-outline-primary" (click)="buscarClientes();" id="btnBuscar">Buscar</button>
+              </div>
+            </div>
+            <!--Fin Busqueda-->
+            <br>
+
+            <!----## Inicio Row 2 Interior  ##---->
+            <div class="row">
+              <!----## Inicio Col 12  ##---->
+              <div class="col-md-12" *ngIf="clientes!=undefined && clientes.length>0">
+                <div class="card">
+                  <table class="table table-sm ">
+                    <thead class="thead-dark">
+                      <th >Nombre</th>
+                      <th >Apellido</th>
+                      <th style='width:15%;text-align: center'>Documento</th>
+                      <th style='width:10%;text-align: center;'></th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let cli of clientes">
+                        <td>{{cli.nombre}}</td>
+                        <td>{{cli.apellido}}</td>
+                        <td style="text-align: center">{{cli.nro_doc}}</td>
+                        <td style='text-align: center'>
+                          <button class="btn btn-outline-success btn-sm" (click)="this.seleccionarCliente(cli)">Seleccionar</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <br>
+              </div>
+              <!----## Fin Col 12  ##---->
+            </div>
+            <!----## Fin Row 1 Interior  ##---->
+            <div class="row" *ngIf="this.clienteSeleccionado != undefined">
+              <div class="col-md-12">
+                <div class="jumbotron" style="padding: 10px">
+                    <h3>{{this.clienteSeleccionado.persona.apellido}} {{this.clienteSeleccionado.persona.nombre}}</h3>
+                    <p>Documento: {{this.clienteSeleccionado.persona.nro_doc}}</p>
+                    <p>Email: {{this.clienteSeleccionado.persona.email}}</p>
+                    <p>Tel&eacute;fono: {{this.clienteSeleccionado.persona.telefono}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----## Fin Columna 12  ##---->
+    </div>
+    <!----## Fin Row Principal ##---->
+  </div>
+  <br>
+  <!----## Fin Container Principal ##---->
+</form>
+<!----## Fin Form Principal ##---->

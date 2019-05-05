@@ -8,7 +8,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class NuevaVentaComponent implements OnInit {
   nuevaVentaForm: FormGroup;
-  constructor(private formBuilder: FormBuilder) { 
+  constructor(private formBuilder: FormBuilder) {
 
     this.nuevaVentaForm = this.formBuilder.group({
       nombre_usuario: [
@@ -16,7 +16,8 @@ export class NuevaVentaComponent implements OnInit {
 
         ])
       ],
-      clienteBuscar: []
+
+      productosBuscar: []
     });
 
   }
@@ -24,4 +25,7 @@ export class NuevaVentaComponent implements OnInit {
   ngOnInit() {
   }
 
+  seleccionarCliente(cliente) {
+    console.log(cliente);
+  }
 }
