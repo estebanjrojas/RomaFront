@@ -38,6 +38,7 @@ import { NuevaVentaComponent } from './componentes/ventas/nueva-venta/nueva-vent
 import { SeleccionClientesComponent } from './componentes/adm-clientes/seleccion-clientes/seleccion-clientes.component';
 import { CargaDetalleVentaComponent } from './componentes/ventas/carga-detalle-venta/carga-detalle-venta.component';
 import { ConfirmacionVentaComponent } from './componentes/ventas/confirmacion-venta/confirmacion-venta.component';
+import { PreciosProductosComponent } from './componentes/adm-productos/precios-productos/precios-productos.component';
 
 
 //Rutas para el Router de Angular
@@ -97,7 +98,8 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     NuevaVentaComponent,
     SeleccionClientesComponent,
     CargaDetalleVentaComponent,
-    ConfirmacionVentaComponent
+    ConfirmacionVentaComponent,
+    PreciosProductosComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
