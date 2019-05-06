@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { VentasDetalle } from '../../../modelos/VentasDetalle';
+import { Clientes } from '../../../modelos/Clientes';
+import { VentasService } from '../../../servicios/ventas.service';
+import { ClientesService } from '../../../servicios/clientes.service';
+
 
 @Component({
   selector: 'app-confirmacion-venta',
@@ -6,10 +12,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./confirmacion-venta.component.css']
 })
 export class ConfirmacionVentaComponent implements OnInit {
+  confirmacionVentaForm: FormGroup;
+  listaDetalleVentas: VentasDetalle[];
+  clienteSeleccionado: Clientes;
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder
+            , private SrvVentas: VentasService
+            , private SrvClientes: ClientesService) {
+    this.confirmacionVentaForm = this.formBuilder.group({
+      
+    });
+  }
 
   ngOnInit() {
+    this.listaDetalleVentas = this.SrvVentas.getDetalleVentaActual();
+    this.clienteSeleccionado = this.SrvClientes.getCliente();
   }
 
 }

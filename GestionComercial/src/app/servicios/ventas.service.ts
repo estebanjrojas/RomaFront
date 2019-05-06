@@ -28,6 +28,15 @@ export class VentasService {
     this.miVentasDetalle.push(detalle);
   }
 
+  quitarDetalleVenta(detalle: VentasDetalle) {
+    for(let i=0; i<this.miVentasDetalle.length; i++) {
+      if(this.miVentasDetalle[i] == detalle) {
+        this.miVentasDetalle.splice(i, 1);
+      }
+    }
+    
+  }
+
   getDetalleVentaActual() {
     return this.miVentasDetalle;
   }

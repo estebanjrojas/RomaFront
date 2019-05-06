@@ -59,6 +59,7 @@ export class CargaDetalleVentaComponent implements OnInit {
 
 
   ngOnInit() {
+    this.listaDetalleVentas = this.SrvVentas.getDetalleVentaActual();
   }
 
   buscarProductos() {
@@ -100,6 +101,11 @@ export class CargaDetalleVentaComponent implements OnInit {
     console.log(this.listaDetalleVentas);
 
 
+  }
+
+
+  quitarDetalleVenta(detalle: VentasDetalle) {
+    this.SrvVentas.quitarDetalleVenta(detalle);
   }
 
 

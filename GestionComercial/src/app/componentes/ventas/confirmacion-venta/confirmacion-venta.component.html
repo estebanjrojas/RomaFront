@@ -1,3 +1,67 @@
-<p>
-  confirmacion-venta works!
-</p>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!----## Inicio Form Principal ##---->
+<form id="confirmacionVentaForm" [formGroup]="confirmacionVentaForm">
+
+  <!----## Inicio Container Principal ##---->
+  <div class="container">
+    <!----## Inicio Row Principal ##---->
+    <div class="row">
+      <!----## Inicio Columna 12  ##---->
+      <div class="col-md-12 m-0 p-0">
+        <br>
+        <div class="card" class="p-3 mb-2 bg-light text-dark">
+          <div class="card-body">
+              <h5 class="text-secondary">Cliente</h5>
+              <div class="row" *ngIf="this.clienteSeleccionado != undefined">
+                <div class="col-md-12">
+                  <div class="jumbotron" style="padding: 10px">
+                      <h3>{{this.clienteSeleccionado.persona.apellido}} {{this.clienteSeleccionado.persona.nombre}}</h3>
+                      <p>Documento: {{this.clienteSeleccionado.persona.nro_doc}}</p>
+                      <p>Email: {{this.clienteSeleccionado.persona.email}}</p>
+                      <p>Tel&eacute;fono: {{this.clienteSeleccionado.persona.telefono}}</p>
+                  </div>
+                </div>
+              </div>
+      
+            <br>
+            <div class="row">
+                <div class="col-12">
+                    <h5 class="text-secondary">Detalle de la Venta</h5>
+                    <table class="table table-sm table-striped">
+                      <thead class="thead-light">
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let detalle of listaDetalleVentas">
+                          <td>{{detalle.producto.nombre}}</td>
+                          <td>{{detalle.producto.precio_actual}}</td>
+                          <td>{{detalle.cantidad}}</td>
+                          <td>{{detalle.subtotal}}</td>
+                        </tr>
+                      </tbody>
+        
+                    </table>
+                </div>
+                
+                
+              </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <!----## Fin Columna 12  ##---->
+    </div>
+    <!----## Fin Row Principal ##---->
+    
+  </div>
+  <div align="center">
+      <button type="button" class="btn btn-primary btn-xs col-md-2" (click)="guardarVenta()">Confirmar</button>
+  </div>
+  <br>
+  <!----## Fin Container Principal ##---->
+</form>
+<!----## Fin Form Principal ##---->
