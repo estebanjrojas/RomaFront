@@ -50,7 +50,7 @@
                         <td style='text-align: center'>{{prod.nombre_categoria}}</td>
                         <td style='text-align: center'>
                           <button type="button" class="btn btn-outline-info btn-sm" title="Modificar/Editar" [routerLink]="['/productos/cargar-productos', prod.productos_id]" routerLinkActive="active"><img src="/src/assets/modificar.png" alt=""></button>&nbsp;
-                          <button type="button" class="btn btn-outline-success btn-sm" title="Precio" data-toggle="modal" [attr.data-target]="'#precio_'+prod.codigo"><img src="/src/assets/precio.png" alt=""></button>&nbsp;
+                          <button type="button" class="btn btn-outline-success btn-sm" title="Precio" data-toggle="modal"  [attr.data-target]="'#precio_'+prod.codigo"><img src="/src/assets/precio.png" alt=""></button>&nbsp;
                           <button type="button" class="btn btn-outline-primary btn-sm" title="Detalle" data-toggle="modal" [attr.data-target]="'#detalle_'+prod.codigo"><img src="/src/assets/detalle.png" alt=""></button>&nbsp;
                           <button type="button" class="btn btn-outline-danger btn-sm" title="Eliminar" (click)="eliminarProducto(prod.productos_id)"><img src="/src/assets/eliminar.png" alt=""></button>
                         </td>

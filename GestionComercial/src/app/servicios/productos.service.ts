@@ -39,10 +39,25 @@ export class ProductosService {
   getCategoriasProductos(id_producto): Observable<any> {
     return this.http.get(environment.apiEndpoint + '/getCategoriasProductos/' + id_producto, httpOptions);
   }
+  
+  getUltimoPrecioValido(id_producto): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getUltimoPrecioValido/' + id_producto, httpOptions);
+  }
+
+  getHistorialPrecios(id_producto): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getHistorialPrecios/' + id_producto, httpOptions);
+  }
 
   insertProductoReturnId(datos: any) {
     const url = environment.apiEndpoint + `/insertProductoReturnId`;
     let json = JSON.stringify(datos);
+    return this.http.post(url, json, httpOptions);
+  }
+
+  insertNuevoPrecioProducto(precio: any, productos_id: number) {
+    const url = environment.apiEndpoint + `/insertNuevoPrecioProducto`;
+    let json = JSON.stringify({"precio": precio, "productos_id": productos_id});
+    console.log("JSON para el insert: " + json);
     return this.http.post(url, json, httpOptions);
   }
 
@@ -65,6 +80,11 @@ export class ProductosService {
   actualizarDatosProductos(datos: any): Observable<any> {
     let json = JSON.stringify(datos);
     return this.http.put(environment.apiEndpoint + '/actualizarDatosProductos', json, httpOptions);
+  }
+
+  actualizarFechaHastaPrecio(productos_id: number): Observable<any> {
+    let json = JSON.stringify({"productos_id":productos_id});
+    return this.http.put(environment.apiEndpoint + '/actualizarFechaHastaPrecio', json, httpOptions);
   }
 
 
