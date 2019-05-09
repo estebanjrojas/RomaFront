@@ -15,10 +15,11 @@
               <div class="row" *ngIf="this.clienteSeleccionado != undefined">
                 <div class="col-md-12">
                   <div class="jumbotron" style="padding: 10px">
-                      <h3>{{this.clienteSeleccionado.persona.apellido}} {{this.clienteSeleccionado.persona.nombre}}</h3>
-                      <p>Documento: {{this.clienteSeleccionado.persona.nro_doc}}</p>
-                      <p>Email: {{this.clienteSeleccionado.persona.email}}</p>
-                      <p>Tel&eacute;fono: {{this.clienteSeleccionado.persona.telefono}}</p>
+                      <p><b>Apellido: </b>{{this.clienteSeleccionado.persona.apellido}}&nbsp;<b>Nombre: </b>{{this.clienteSeleccionado.persona.nombre}}</p>
+                      <p><b>Documento: </b>{{this.clienteSeleccionado.persona.nro_doc}}</p>
+                      <p><b>Email: </b>{{this.clienteSeleccionado.persona.email}}</p>
+                      <p><b>Tel&eacute;fono: </b>{{this.clienteSeleccionado.persona.telefono}}</p>
+                      <p><b>Celular: </b>{{this.clienteSeleccionado.persona.telefono_cel}}</p>
                   </div>
                 </div>
               </div>

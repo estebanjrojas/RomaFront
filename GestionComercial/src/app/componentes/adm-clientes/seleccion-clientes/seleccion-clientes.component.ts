@@ -3,6 +3,8 @@ import { ClientesService } from '../../../servicios/clientes.service';
 import { Component, OnInit } from '@angular/core';
 import { Clientes } from '../../../modelos/Clientes';
 import { Personas } from '../../../modelos/Personas';
+import { Domicilios } from '../../../modelos/Domicilios';
+
 @Component({
   selector: 'app-seleccion-clientes',
   templateUrl: './seleccion-clientes.component.html',
@@ -14,6 +16,7 @@ export class SeleccionClientesComponent implements OnInit {
   clientes: any;
   clienteSeleccionado: Clientes;
   personaSeleccionada: Personas;
+  domicilioPersonaSeleccionada: Domicilios;
 
   constructor(private SrvClientes: ClientesService, private formBuilder: FormBuilder) {
 
@@ -41,9 +44,29 @@ export class SeleccionClientesComponent implements OnInit {
 
   seleccionarCliente(cliente: any) {
 
+    if(cliente.domicilios_id!=undefined) {
+      //Cargar Domicilio
+      this.domicilioPersonaSeleccionada = {
+        'domicilios_id': cliente.domicilios_id,
+        'calle': cliente.calle,
+        'numero': cliente.domicilio_numero,
+        'piso': cliente.piso,
+        'ciudad': {
+          'id': cliente.ciudades_id,
+          'nombre': cliente.ciudad_nombre,
+          'provincia': {
+            'id': cliente.provincias_id,
+            'nombre': cliente.provincias_nombre
+          },
+          'codigo_postal': cliente.codigo_postal  
+        }
+      }
+    }
+
     this.personaSeleccionada = {
       'personas_id': cliente.personas_id,
       'tipo_doc': cliente.tipo_doc,
+      'tipo_doc_descrip': cliente.tipo_doc_descrip,
       'nro_doc': cliente.nro_doc,
       'apellido': cliente.apellido,
       'nombre': cliente.nombre,
@@ -55,7 +78,8 @@ export class SeleccionClientesComponent implements OnInit {
       'estado_civil': cliente.estado_civil,
       'fecha_cese': cliente.fecha_cese,
       'telefono_caracteristica': cliente.telefono_caracteristica,
-      'celular_caracteristica': cliente.celular_caracteristica
+      'celular_caracteristica': cliente.celular_caracteristica,
+      'domicilio': this.domicilioPersonaSeleccionada
     };
 
     this.clienteSeleccionado = {

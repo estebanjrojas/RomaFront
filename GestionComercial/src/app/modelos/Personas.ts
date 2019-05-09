@@ -4,6 +4,7 @@ export class Personas {
     personas_id: number;
     nro_doc: number;
     tipo_doc: number;
+    tipo_doc_descrip?: string;
     apellido: string;
     nombre: string;
     telefono?: string;
