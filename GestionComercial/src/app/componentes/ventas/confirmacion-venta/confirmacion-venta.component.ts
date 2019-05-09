@@ -19,6 +19,8 @@ export class ConfirmacionVentaComponent implements OnInit {
   constructor(private formBuilder: FormBuilder
             , private SrvVentas: VentasService
             , private SrvClientes: ClientesService) {
+
+              
     this.confirmacionVentaForm = this.formBuilder.group({
       
     });
@@ -26,7 +28,14 @@ export class ConfirmacionVentaComponent implements OnInit {
 
   ngOnInit() {
     this.listaDetalleVentas = this.SrvVentas.getDetalleVentaActual();
+    
+  }
+
+  getClienteSeleccionado() {
     this.clienteSeleccionado = this.SrvClientes.getCliente();
+    console.log({"SrvClientes.getCliente": this.clienteSeleccionado});
   }
 
 }
+
+

@@ -60,6 +60,8 @@ export class CargaDetalleVentaComponent implements OnInit {
 
   ngOnInit() {
     this.listaDetalleVentas = this.SrvVentas.getDetalleVentaActual();
+    this.cargaDetalleVentaForm.controls.cbTipoBusquedaProducto.setValue("nombre");
+    this.cargaDetalleVentaForm.controls.txtCantidad.setValue("1");
   }
 
   buscarProductos() {

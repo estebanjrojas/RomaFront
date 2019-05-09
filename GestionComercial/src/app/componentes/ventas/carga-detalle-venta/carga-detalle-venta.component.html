@@ -20,7 +20,6 @@
                     <div class="collapse" id="collapseCategorias">
                         <li class="mat-tree-node">
                             <a (click)="seleccionarCategoria({'id': '0', 'name': 'Todas las Categorias'})" style="cursor: pointer" data-toggle="collapse" data-target="#collapseCategorias">Todas las Categorias</a>
-
                           </li>
                       <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
                           <!-- This is the tree node template for leaf nodes -->
@@ -29,7 +28,6 @@
                               <!-- use a disabled button to provide padding for tree leaf -->
                               <button mat-icon-button disabled></button>
                               <a (click)="seleccionarCategoria(node)" style="cursor: pointer" data-toggle="collapse" data-target="#collapseCategorias">{{node.name}}</a>
-
                             </li>
                           </mat-tree-node>
                           <!-- This is the tree node template for expandable nodes -->
@@ -45,7 +43,6 @@
                               </div>
                               <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
                                 <ng-container matTreeNodeOutlet></ng-container>
-
                               </ul>
                             </li>
                           </mat-nested-tree-node>
@@ -85,8 +82,8 @@
                   <table class="table table-sm ">
                     <thead class="thead-dark">
                       <th >C&oacute;digo</th>
-                      <th >Nombre</th>
-                      <th >descripci&oacute;n</th>
+                      <th [attr.selected]="true">Nombre</th>
+                      <th >Descripci&oacute;n</th>
                       <th >Precio</th>
 
                       <th style='width:10%;text-align: center;'></th>
@@ -106,8 +103,8 @@
                     <tfoot class="table-active">
                       <td colspan=3></td>
                       <td><i>Cantidad</i></td>
-                      <td >
-                          <input type="text" class="form-control" formControlName="txtCantidad" value="1"/>
+                      <td>
+                          <input type="text" class="form-control" formControlName="txtCantidad" />
                       </td>
 
                     </tfoot>

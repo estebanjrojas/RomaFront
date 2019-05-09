@@ -24,6 +24,7 @@ export class SeleccionClientesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.seleccionClientesForm.controls.cbTipoBusquedaCliente.setValue("apellido");
   }
 
 
