@@ -1,9 +1,10 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClientesService } from '../../../servicios/clientes.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { Clientes } from '../../../modelos/Clientes';
 import { Personas } from '../../../modelos/Personas';
 import { Domicilios } from '../../../modelos/Domicilios';
+
 
 @Component({
   selector: 'app-seleccion-clientes',
@@ -14,9 +15,10 @@ export class SeleccionClientesComponent implements OnInit {
 
   seleccionClientesForm: FormGroup;
   clientes: any;
-  clienteSeleccionado: Clientes;
-  personaSeleccionada: Personas;
-  domicilioPersonaSeleccionada: Domicilios;
+  @Input() clienteSeleccionado: Clientes;
+  @Input() personaSeleccionada: Personas;
+  @Input() domicilioPersonaSeleccionada: Domicilios;
+  @Output() seElijioCliente = new EventEmitter();
 
   constructor(private SrvClientes: ClientesService, private formBuilder: FormBuilder) {
 
@@ -29,6 +31,8 @@ export class SeleccionClientesComponent implements OnInit {
   ngOnInit() {
     this.seleccionClientesForm.controls.cbTipoBusquedaCliente.setValue("apellido");
   }
+
+  
 
 
   buscarClientes() {
@@ -51,6 +55,10 @@ export class SeleccionClientesComponent implements OnInit {
         'calle': cliente.calle,
         'numero': cliente.domicilio_numero,
         'piso': cliente.piso,
+        'depto': cliente.depto,
+        'manzana': cliente.manzana,
+        'lote': cliente.lote,
+        'barrio': cliente.barrio,
         'ciudad': {
           'id': cliente.ciudades_id,
           'nombre': cliente.ciudad_nombre,
@@ -91,6 +99,7 @@ export class SeleccionClientesComponent implements OnInit {
 
     this.SrvClientes.setCliente(this.clienteSeleccionado);
     console.log({'SrvCliente.getCliente': this.SrvClientes.getCliente()});
+    this.seElijioCliente.emit(this.clienteSeleccionado);
 
 
   }

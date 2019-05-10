@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Clientes } from 'src/app/modelos/Clientes';
+import { Personas } from 'src/app/modelos/Personas';
+import { Domicilios } from 'src/app/modelos/Domicilios';
+import { SeleccionClientesComponent } from '../../adm-clientes/seleccion-clientes/seleccion-clientes.component';
+import { VentasDetalle } from 'src/app/modelos/VentasDetalle';
+import { CargaDetalleVentaComponent } from '../carga-detalle-venta/carga-detalle-venta.component';
 
 @Component({
   selector: 'app-nueva-venta',
@@ -7,7 +13,14 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./nueva-venta.component.css']
 })
 export class NuevaVentaComponent implements OnInit {
+  @ViewChild(SeleccionClientesComponent) selectorClientes: SeleccionClientesComponent;
+  @ViewChild(CargaDetalleVentaComponent) detalleVenta: CargaDetalleVentaComponent;
   nuevaVentaForm: FormGroup;
+  clienteSeleccionado: Clientes;
+  personaSeleccionada: Personas;
+  domicilioPersonaSeleccionada: Domicilios;
+  @Input() listaDetalleVentas: VentasDetalle[];
+  
   constructor(private formBuilder: FormBuilder) {
 
     this.nuevaVentaForm = this.formBuilder.group({
@@ -21,10 +34,20 @@ export class NuevaVentaComponent implements OnInit {
     });
 
   }
+  
+  actualizarClienteSeleccionado(event){
+    this.clienteSeleccionado=this.selectorClientes.clienteSeleccionado;
+  }
+
+  actualizarDetalleVenta(event) {
+    this.listaDetalleVentas=this.detalleVenta.listaDetalleVentas;
+    console.log({"parent":this.listaDetalleVentas})
+  }
 
   ngOnInit() {
   }
 
+ 
   seleccionarCliente(cliente) {
     console.log(cliente);
   }

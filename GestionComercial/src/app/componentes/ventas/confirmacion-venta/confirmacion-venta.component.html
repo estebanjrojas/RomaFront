@@ -11,15 +11,70 @@
         <br>
         <div class="card" class="p-3 mb-2 bg-light text-dark">
           <div class="card-body">
-              <h5 class="text-secondary">Cliente</h5><button type="button" (click)="getClienteSeleccionado()">getCliente</button>
+              <h5 class="text-secondary">Cliente</h5>
               <div class="row" *ngIf="this.clienteSeleccionado != undefined">
                 <div class="col-md-12">
                   <div class="jumbotron" style="padding: 10px">
-                      <p><b>Apellido: </b>{{this.clienteSeleccionado.persona.apellido}}&nbsp;<b>Nombre: </b>{{this.clienteSeleccionado.persona.nombre}}</p>
-                      <p><b>Documento: </b>{{this.clienteSeleccionado.persona.nro_doc}}</p>
-                      <p><b>Email: </b>{{this.clienteSeleccionado.persona.email}}</p>
-                      <p><b>Tel&eacute;fono: </b>{{this.clienteSeleccionado.persona.telefono}}</p>
-                      <p><b>Celular: </b>{{this.clienteSeleccionado.persona.telefono_cel}}</p>
+                    <div class="row" style="padding: 7px">
+                      <div class="col-4">
+                        <b>Apellido: </b>{{this.clienteSeleccionado.persona.apellido}}
+                      </div>
+                      <div class="col-4">
+                        <b>Nombre: </b>{{this.clienteSeleccionado.persona.nombre}}
+                      </div>
+                    </div>
+                    <div class="row" style="padding: 7px">
+                      <div class="col-4">
+                        <b>Documento: </b>{{this.clienteSeleccionado.persona.tipo_doc_descrip}} {{this.clienteSeleccionado.persona.nro_doc}}
+                      </div>
+                      <div class="col-4">
+                        <b>Cliente Desde: </b>{{this.clienteSeleccionado.fecha_alta}}
+                      </div>
+                    </div>
+                    <div class="row" style="padding: 7px">
+                      <div class="col-4">
+                        <b>Email: </b>{{this.clienteSeleccionado.persona.email}}
+                      </div>
+                      <div class="col-4">
+                        <b>Tel&eacute;fono: </b>{{this.clienteSeleccionado.persona.telefono}}
+                      </div>
+                      <div class="col-4">
+                        <b>Celular: </b>{{this.clienteSeleccionado.persona.telefono_cel}}
+                      </div>
+                    </div>
+                    <div class="row" style="padding: 7px">
+                      <div class="col-6">
+                        <b>Domicilio: </b>{{this.clienteSeleccionado.persona.domicilio.calle}} {{this.clienteSeleccionado.persona.domicilio.numero}}
+                      </div>
+                      <div class="col-3" *ngIf="this.clienteSeleccionado.persona.domicilio.piso!=undefined && this.clienteSeleccionado.persona.domicilio.piso!=''">
+                        <b>Piso: </b>{{this.clienteSeleccionado.persona.domicilio.piso}}
+                      </div>
+                      <div class="col-3" *ngIf="this.clienteSeleccionado.persona.domicilio.depto!=undefined && this.clienteSeleccionado.persona.domicilio.depto!=''">
+                        <b>Depto: </b>{{this.clienteSeleccionado.persona.domicilio.depto}}
+                      </div>
+                    </div>
+                    <div class="row" style="padding: 7px">
+                      <div class="col-4" *ngIf="this.clienteSeleccionado.persona.domicilio.manzana!=undefined && this.clienteSeleccionado.persona.domicilio.manzana!=''">
+                        <b>Manzana: </b>{{this.clienteSeleccionado.persona.domicilio.manzana}}
+                      </div>
+                      <div class="col-4" *ngIf="this.clienteSeleccionado.persona.domicilio.lote!=undefined && this.clienteSeleccionado.persona.domicilio.lote!=''">
+                        <b>Lote: </b>{{this.clienteSeleccionado.persona.domicilio.lote}}
+                      </div>
+                      <div class="col-4" *ngIf="this.clienteSeleccionado.persona.domicilio.barrio!=undefined && this.clienteSeleccionado.persona.domicilio.barrio!=''">
+                        <b>Barrio: </b>{{this.clienteSeleccionado.persona.domicilio.barrio}}
+                      </div>
+                    </div>
+                    <div class="row" style="padding: 7px">
+                      <div class="col-4">
+                        <b>Ciudad: </b>{{this.clienteSeleccionado.persona.domicilio.ciudad.nombre}}
+                      </div>
+                      <div class="col-4">
+                        <b>C&oacute;digo Postal: </b>{{this.clienteSeleccionado.persona.domicilio.ciudad.codigo_postal}}
+                      </div>
+                      <div class="col-4">
+                        <b>Provincia: </b>{{this.clienteSeleccionado.persona.domicilio.ciudad.provincia.nombre}}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -48,6 +103,39 @@
                 </div>
                 
                 
+              </div>
+              <br>
+              <div class="row" style="padding:10px">
+                <div class="col-12">
+                  <h5 class="text-secondary">Vendedor</h5>
+                  <div class="row" style="padding:7px">
+                    <div class="col-4">
+                      <b>Apellido: </b>{{this.vendedor.apellido}}
+                    </div>
+                    <div class="col-4">
+                      <b>Nombre: </b>{{this.vendedor.nombre}}
+                    </div>
+                    <div class="col-4">
+                      <b>Documento: </b>{{this.vendedor.documento}}
+                    </div>
+                  </div>
+                  <div class="row" style="padding:7px">
+                    <div class="col-4">
+                      <b>Descripci&oacute;n: </b>{{this.vendedor.descripcion_usuario}}
+                    </div>
+                    <div class="col-4">
+                      <b>Legajo: </b>{{this.vendedor.legajo}}
+                    </div>
+                    <div class="col-4">
+                      <b>Fecha Ingreso: </b>{{this.vendedor.fecha_ingreso}}
+                    </div>
+                  </div>
+                  <div class="row" style="padding:7px">
+                    <div class="col-4">
+                      <b>Email: </b>{{this.vendedor.email}}
+                    </div>
+                  </div>
+                </div>
               </div>
           </div>
           

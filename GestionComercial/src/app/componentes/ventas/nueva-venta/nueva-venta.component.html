@@ -30,14 +30,19 @@
                 <div class="row">
                   <!----## Inicio Col 12  ##---->
                   <div class="col-md-12">
-                        <app-seleccion-clientes></app-seleccion-clientes>
+                        <app-seleccion-clientes [domicilioPersonaSeleccionada]="this.domicilioPersonaSeleccionada" [personaSeleccionada]="this.personaSeleccionada" [clienteSeleccionado]="this.clienteSeleccionado" (seElijioCliente)='actualizarClienteSeleccionado($event)'></app-seleccion-clientes>
                   </div>
                 </div>
               </div>
               <div class="tab-pane fade" id="pills-productos" role="tabpanel" aria-labelledby="pills-productos-tab">
                 <div class="row">
                   <div class="col-md-12">
-                        <app-carga-detalle-venta></app-carga-detalle-venta>
+                      <div  *ngIf="this.clienteSeleccionado!=undefined">
+                        <app-carga-detalle-venta (seModificoDetalle)='actualizarDetalleVenta($event)'></app-carga-detalle-venta>
+                      </div>
+                      <div *ngIf="this.clienteSeleccionado==undefined">
+                          Primero seleccione el cliente
+                        </div>
                   </div>
                 </div>
               </div>
@@ -45,7 +50,16 @@
                   <div class="row">
                       <!----## Inicio Col 12  ##---->
                       <div class="col-md-12">
-                            <app-confirmacion-venta></app-confirmacion-venta>
+                        <div  *ngIf="this.clienteSeleccionado!=undefined && this.listaDetalleVentas!=undefined">
+                            <app-confirmacion-venta [clienteSeleccionado]="this.clienteSeleccionado"></app-confirmacion-venta>
+                        </div>
+                        <div *ngIf="this.clienteSeleccionado==undefined">
+                          Primero seleccione el cliente
+                        </div>
+                        <div *ngIf="this.listaDetalleVentas==undefined && this.clienteSeleccionado!=undefined">
+                          Ingrese productos a la venta
+                        </div>
+                            
                       </div>
                     </div>
               </div>

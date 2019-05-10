@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoriasService } from '../../../servicios/categorias.service';
 import { ProductosService } from '../../../servicios/productos.service';
@@ -20,7 +20,7 @@ export class CargaDetalleVentaComponent implements OnInit {
   productos: any = [];
   categoriaSeleccionada: Categorias = {'id': 0, 'name': 'Todas las Categorias'};
   listaDetalleVentas: VentasDetalle[];
-
+  @Output() seModificoDetalle = new EventEmitter();
    //Arbol de Categorias
    treeControl = new NestedTreeControl<Categorias>(node => node.children);
    dataSource = new MatTreeNestedDataSource<Categorias>();
@@ -101,6 +101,8 @@ export class CargaDetalleVentaComponent implements OnInit {
     this.SrvVentas.agregarDetalleVentaActual(detalleVentaAgregar);
     this.listaDetalleVentas = this.SrvVentas.getDetalleVentaActual();
     console.log(this.listaDetalleVentas);
+
+    this.seModificoDetalle.emit(this.listaDetalleVentas);
 
 
   }
