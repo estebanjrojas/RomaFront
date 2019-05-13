@@ -91,7 +91,7 @@ export class SeleccionClientesComponent implements OnInit {
     };
 
     this.clienteSeleccionado = {
-      'clientes_id': cliente.id,
+      'clientes_id': cliente.clientes_id,
       'fecha_alta': cliente.fecha_alta,
       'persona': this.personaSeleccionada
     };

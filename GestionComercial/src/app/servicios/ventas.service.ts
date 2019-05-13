@@ -40,4 +40,10 @@ export class VentasService {
   getDetalleVentaActual() {
     return this.miVentasDetalle;
   }
+
+  insertVentaReturningFactura(datos: any) {
+    const url = environment.apiEndpoint + `/insertVentaReturningFactura`;
+    let json = JSON.stringify(datos);
+    return this.http.post(url, json, httpOptions);
+  }
 }

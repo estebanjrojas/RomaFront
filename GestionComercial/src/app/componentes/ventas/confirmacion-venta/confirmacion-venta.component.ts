@@ -75,13 +75,22 @@ export class ConfirmacionVentaComponent implements OnInit {
 
 
   guardarVenta() {
+    let monto_total:number = 0;
+    for(let i=0; i<this.listaDetalleVentas.length; i++) {
+      monto_total = monto_total + this.listaDetalleVentas[i].subtotal;
+    }
+
     let venta: Ventas = {
+      monto_total: monto_total,
       cliente: this.clienteSeleccionado,
       detalles: this.listaDetalleVentas,
       vendedor: this.vendedor
     }
 
-    console.log(venta);
+    this.SrvVentas.insertVentaReturningFactura(venta).subscribe(res=>{
+      console.log({"SrvVentas.insertVentaReturningFactura": res});
+    });
+    
   }
 
 }
