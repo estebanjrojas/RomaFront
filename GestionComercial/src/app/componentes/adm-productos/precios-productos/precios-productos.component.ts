@@ -63,17 +63,19 @@ export class PreciosProductosComponent implements OnInit {
         console.log("El precio se ha actualizado e instalado satisfactoriamente");
       });
     });
-    this.preciosProductosForm.controls.nuevo_precio.reset;
     this.mostrarPrecioActual(this.producto.productos_id);
+    this.preciosProductosForm.controls.nuevo_precio.reset;
     this.getValoresTablaPrecios();
-    
+
   }
 
-  getValoresTablaPrecios(){
-    while (this.precios.length > 0) {
-      this.precios.pop();
+  getValoresTablaPrecios() {
+    var Parent = document.getElementById("tabla_precios");
+    while (Parent.hasChildNodes()) {
+      Parent.removeChild(Parent.firstChild);
     }
     this.SrvProductos.getHistorialPrecios(this.producto.productos_id).subscribe(resp => {
+      console.log({ "SrvProductos.getHistorialPrecios": resp });
       let respuesta: any = resp;
 
       for (let resp of respuesta)
@@ -92,7 +94,7 @@ export class PreciosProductosComponent implements OnInit {
 }
 
 
-interface Precios{
+interface Precios {
   monto: number;
   unidad: number;
   fecha_desde: string;

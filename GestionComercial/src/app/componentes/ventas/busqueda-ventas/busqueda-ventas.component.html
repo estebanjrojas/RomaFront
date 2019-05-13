@@ -36,11 +36,20 @@
                         <th>Fecha</th>
                         <th>Cliente</th>
                         <th>Vendedor</th>
-                        <th>Estado</th>
+                        <th>Monto</th>
                         <th></th>
                       </thead>
                       <tbody>
-                       
+                        <tr *ngFor="let vta of cast">
+                          <td>{{vta.fecha | date:'dd-MM-yyyy' }}</td>
+                          <td>{{vta.apellido_cliente}}, {{vta.nombre_cliente}}</td>
+                          <td>{{vta.apellido_vendedor}}, {{vta.nombre_vendedor}}</td>
+                          <td>{{vta.monto}}</td>
+                          <td style='text-align: center'>
+                            <button class="btn btn-info btn-sm" [routerLink]="['/usuarios/cargar-usuarios', vta.ventas_id]" routerLinkActive="active">Modificar</button>&nbsp;
+                            <button class="btn btn-danger btn-sm">Baja</button>
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>

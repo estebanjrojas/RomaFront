@@ -24,6 +24,16 @@ export class VentasService {
 
   constructor(private http: HttpClient) { }
 
+
+  getVentasBusqueda(texto_busqueda): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getVentasBusqueda/' + texto_busqueda, httpOptions);
+  }
+
+  getVentasTodas(): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getVentasTodas/', httpOptions);
+  }
+
+
   agregarDetalleVentaActual(detalle: VentasDetalle) {
     this.miVentasDetalle.push(detalle);
   }
