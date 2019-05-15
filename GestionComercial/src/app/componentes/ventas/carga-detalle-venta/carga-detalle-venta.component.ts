@@ -36,19 +36,7 @@ export class CargaDetalleVentaComponent implements OnInit {
     });
 
 
-  this.SrvCategorias.obtenerJSONTodasCategorias().subscribe(resp => {
-    console.log({ "SrvCategorias.obtenerJSONTodasCategorias": resp });
-    let cast: any = resp;
-    this.SrvCategorias.setCategorias(JSON.parse(cast.categorias));
-  });
-
-  const categoriasObservable = this.SrvCategorias.getCategorias();
-  categoriasObservable.subscribe((categoriasData: Categorias[]) => {
-    console.log(categoriasData);
-    this.dataSource.data = categoriasData;
-  }, err => { console.error('Error al obtener categorias: ' + err); }
-    , () => {
-    });
+  
 
   }
 
@@ -62,6 +50,20 @@ export class CargaDetalleVentaComponent implements OnInit {
     this.listaDetalleVentas = this.SrvVentas.getDetalleVentaActual();
     this.cargaDetalleVentaForm.controls.cbTipoBusquedaProducto.setValue("nombre");
     this.cargaDetalleVentaForm.controls.txtCantidad.setValue("1");
+
+    this.SrvCategorias.obtenerJSONTodasCategorias().subscribe(resp => {
+      console.log({ "SrvCategorias.obtenerJSONTodasCategorias": resp });
+      let cast: any = resp;
+      this.SrvCategorias.setCategorias(JSON.parse(cast.categorias));
+    });
+  
+    const categoriasObservable = this.SrvCategorias.getCategorias();
+    categoriasObservable.subscribe((categoriasData: Categorias[]) => {
+      console.log(categoriasData);
+      this.dataSource.data = categoriasData;
+    }, err => { console.error('Error al obtener categorias: ' + err); }
+      , () => {
+      });
   }
 
   buscarProductos() {
