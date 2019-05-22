@@ -175,6 +175,13 @@ export class CargarClientesComponent implements OnInit {
           this.clientesForm.controls.telefono.setValue(cast[0].telefono);
           this.clientesForm.controls.celular.setValue(cast[0].telefono_cel);
           this.clientesForm.controls.email.setValue(cast[0].email);
+          this.clientesForm.controls.calle.setValue(cast[0].calle);
+          this.clientesForm.controls.numero.setValue(cast[0].numero);
+          this.clientesForm.controls.piso.setValue(cast[0].piso);
+          this.clientesForm.controls.depto.setValue(cast[0].depto);
+          this.clientesForm.controls.manzana.setValue(cast[0].manzana);
+          this.clientesForm.controls.provincia.setValue(cast[0].provincias_id);
+          this.clientesForm.controls.ciudades.setValue(cast[0].ciudades_id + "");
 
           //Domicilio
           /* this.SrvDomicilios.getDomicilioByNroDoc(cast[0].nro_doc).subscribe(respuesta2 => {
