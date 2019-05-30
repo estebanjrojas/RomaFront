@@ -39,6 +39,7 @@ import { SeleccionClientesComponent } from './componentes/adm-clientes/seleccion
 import { CargaDetalleVentaComponent } from './componentes/ventas/carga-detalle-venta/carga-detalle-venta.component';
 import { ConfirmacionVentaComponent } from './componentes/ventas/confirmacion-venta/confirmacion-venta.component';
 import { PreciosProductosComponent } from './componentes/adm-productos/precios-productos/precios-productos.component';
+import { CambiarPasswordComponent } from './componentes/adm-usuarios/cambiar-password/cambiar-password.component';
 
 
 //Rutas para el Router de Angular
@@ -58,6 +59,7 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
   , { path: 'usuarios/busqueda-usuarios', component: BuscarUsuariosComponent }
   , { path: 'usuarios/administrar-perfiles', component: AdministrarPerfilesComponent }
   , { path: 'usuarios/administrar-perfiles/:empleados_id', component: AdministrarPerfilesComponent }
+  , { path: 'usuarios/cambiar-password', component: CambiarPasswordComponent }
   , { path: 'categorias/cargar-categorias', component: CargarCategoriaComponent }
   , { path: 'categorias/busqueda-categorias', component: BuscarCategoriaComponent }
   , { path: 'promociones/cargar-promociones', component: CargarPromocionesComponent }
@@ -99,7 +101,8 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     SeleccionClientesComponent,
     CargaDetalleVentaComponent,
     ConfirmacionVentaComponent,
-    PreciosProductosComponent
+    PreciosProductosComponent,
+    CambiarPasswordComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

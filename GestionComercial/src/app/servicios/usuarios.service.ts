@@ -76,6 +76,15 @@ export class UsuariosService {
   }
 
 
+  validarPassVieja(usuario, password){
+    return this.http.get(environment.apiEndpoint+'/validarPassVieja/'+usuario+'/'+password, {observe:'response'});
+  }
+
+  cambiarPassword(usuario: any, password: any): Observable<any> {
+    let json = JSON.stringify({"usuario": usuario, "password": password});
+    console.log("Este es el json que armo en el service:" + json);
+    return this.http.put(environment.apiEndpoint + '/cambiarPassword', json, httpOptions);
+  }
 
 
 }
