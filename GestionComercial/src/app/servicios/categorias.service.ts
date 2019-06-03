@@ -5,13 +5,7 @@ import { Categorias } from '../../app/modelos/Categorias';
 import { Observable } from 'rxjs';
 
 
-const httpOptions = {
-  headers: new HttpHeaders(
-    { 'Content-Type': 'application/json',
-      'Authorization':  localStorage.getItem('roma_acceso')
-    }
-  )
-};
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +17,35 @@ export class CategoriasService {
   constructor(private http: HttpClient) { }
 
   setCategorias(json) {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        { 'Content-Type': 'application/json',
+          'Authorization':  localStorage.getItem('roma_acceso')
+        }
+      )
+    };
     this.categorias = json;
   }
 
   obtenerJSONTodasCategorias(){
+    const httpOptions = {
+      headers: new HttpHeaders(
+        { 'Content-Type': 'application/json',
+          'Authorization':  localStorage.getItem('roma_acceso')
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint+'/obtenerJSONTodasCategorias/', httpOptions);
   }
 
   public getCategorias(): any {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        { 'Content-Type': 'application/json',
+          'Authorization':  localStorage.getItem('roma_acceso')
+        }
+      )
+    };
       const categoriasObservable = new Observable(observer => {
             setTimeout(() => {
                 observer.next(this.categorias);
@@ -42,10 +57,24 @@ export class CategoriasService {
 
 
   getCategoriasBusqueda(texto_busqueda): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        { 'Content-Type': 'application/json',
+          'Authorization':  localStorage.getItem('roma_acceso')
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint + '/getCategoriasBusqueda/' + texto_busqueda, httpOptions);
   }
 
   getCategoriasTodas(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        { 'Content-Type': 'application/json',
+          'Authorization':  localStorage.getItem('roma_acceso')
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint + '/getCategoriasTodas/', httpOptions);
   }
 

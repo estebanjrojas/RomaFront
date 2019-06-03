@@ -27,7 +27,6 @@ import { BuscarProductosComponent } from './componentes/adm-productos/buscar-pro
 import { AdministrarPerfilesComponent } from './componentes/adm-usuarios/administrar-perfiles/administrar-perfiles.component';
 import { CargarCategoriaComponent } from './componentes/adm-categoria/cargar-categoria/cargar-categoria.component';
 import { BuscarCategoriaComponent } from './componentes/adm-categoria/buscar-categoria/buscar-categoria.component';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CargarPromocionesComponent } from './componentes/adm-promociones/cargar-promociones/cargar-promociones.component';
 import { BuscarPromocionesComponent } from './componentes/adm-promociones/buscar-promociones/buscar-promociones.component';
 import { BuscarClientesComponent } from './componentes/adm-clientes/buscar-clientes/buscar-clientes.component';
@@ -129,9 +128,8 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
       newestOnTop: true
-    }),
-    BsDatepickerModule.forRoot()
-  ],
+    })
+  ], 
   providers: [],
   bootstrap: [AppComponent]
 })
