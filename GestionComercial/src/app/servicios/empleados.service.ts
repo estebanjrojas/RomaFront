@@ -48,7 +48,7 @@ export class EmpleadosService {
     return this.http.get(environment.apiEndpoint + '/getEmpleadosTodos/', httpOptions);
   }
 
-  insertEmpleadoPersonaDomicilio(empleado: any) {
+  guardarEmpleadoPersonaDomicilio(empleado: any) {
     const httpOptions = {
       headers: new HttpHeaders(
         {
@@ -58,7 +58,7 @@ export class EmpleadosService {
       )
     };
     let json = JSON.stringify(empleado);
-    return this.http.post(environment.apiEndpoint+'/insertEmpleadoPersonaDomicilio/', json, httpOptions);
+    return this.http.post(environment.apiEndpoint+'/guardarEmpleadoPersonaDomicilio/', json, httpOptions);
   }
   getEmpleadosSinUsuario() {
     const httpOptions = {
