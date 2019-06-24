@@ -21,16 +21,15 @@
 
           <div id="carouselImagenes_{{producto.productos_id}}" class="carousel slide" data-ride="carousel"> 
               <ol class="carousel-indicators" *ngIf="cantidad_imagenes>1">
-                <div *ngFor="let img of imagenes; let i = index;">
-                  <li [attr.data-target]="'#carouselImagenes_'+producto.productos_id" [attr.data-slide-to]="i" class="{{ (i == 0) ? 'active' : ''}}"></li>
-                </div>
+                  <li *ngFor="let img of imagenes; let i = index;" [attr.data-target]="'#carouselImagenes_'+producto.productos_id" [attr.data-slide-to]="i" class="{{ (i == 0) ? 'active' : ''}}"></li>
+               
               </ol>
-              <div class="carousel-inner">
-                <div  *ngFor="let img of imagenes; let i = index;">
-                  <div class="carousel-item {{ (i == 0) ? 'active' : ''}}">
-                      <img class="d-block w-100" src={{img.imagen}} alt="{{i}}">
+              <div class="carousel-inner" role="listbox">
+                
+                  <div *ngFor="let img of imagenes; let i = index;" class="{{ (i == 0) ? 'carousel-item active' : 'carousel-item'}}">
+                      <img class="d-block w-100 img-fluid" src={{img.imagen}} alt="{{i}}">
                   </div>
-              </div>
+                
               </div>
               <a class="carousel-control-prev" [attr.href]="'#carouselImagenes_'+producto.productos_id" role="button" data-slide="prev" *ngIf="cantidad_imagenes>1">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
