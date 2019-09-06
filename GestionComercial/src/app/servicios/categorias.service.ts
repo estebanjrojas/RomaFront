@@ -79,5 +79,18 @@ export class CategoriasService {
   }
 
 
+  guardarCategoria(categoria: any) {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        { 'Content-Type': 'application/json',
+          'Authorization':  localStorage.getItem('roma_acceso')
+        }
+      )
+    };
+    const json = JSON.stringify(categoria);
+    return this.http.post(environment.apiEndpoint+'/categorias/insert', json, httpOptions);
+  }
+
+
 
 }
