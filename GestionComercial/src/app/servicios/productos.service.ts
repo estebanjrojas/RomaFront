@@ -74,11 +74,26 @@ export class ProductosService {
   insertCategoriasProducto(cat: any, productos_id: number) {
     const url = environment.apiEndpoint + `/insertCategoriasProducto`;
     let json = JSON.stringify({"nombre": cat.nombre, "categorias_id": cat.id, "productos_id": productos_id});
+    console.log("Datos de categorias en el servicio: " + json);
+    let jsoncategoria = JSON.stringify({"categoria_id":cat.id});
+    console.log("los datos de categoria: " + jsoncategoria);
+    return this.http.post(url, json, httpOptions);
+  }
+
+  eliminarImagenesProductos(productos_id: number) {
+    const url = environment.apiEndpoint + `/eliminarImagenesProductos/` + productos_id;
+    return this.http.delete(url, httpOptions);
+  }
+
+  cargarImagenProducto(imagen: any, productos_id: number) {
+    const url = environment.apiEndpoint + `/cargarImagenProducto`;
+    let json = JSON.stringify({ "imagen": imagen.imagen, "predeterminada": imagen.predeterminada, "productos_id": productos_id });
     return this.http.post(url, json, httpOptions);
   }
 
   actualizarDatosProductos(datos: any): Observable<any> {
     let json = JSON.stringify(datos);
+    console.log("Datos del actualizar productos: " + json);
     return this.http.put(environment.apiEndpoint + '/actualizarDatosProductos', json, httpOptions);
   }
 

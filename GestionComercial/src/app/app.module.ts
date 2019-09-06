@@ -30,7 +30,7 @@ import { BuscarCategoriaComponent } from './componentes/adm-categoria/buscar-cat
 import { CargarPromocionesComponent } from './componentes/adm-promociones/cargar-promociones/cargar-promociones.component';
 import { BuscarPromocionesComponent } from './componentes/adm-promociones/buscar-promociones/buscar-promociones.component';
 import { BuscarClientesComponent } from './componentes/adm-clientes/buscar-clientes/buscar-clientes.component';
-import { CargarClientesComponent } from './componentes/adm-clientes/cargar-clientes/cargar-clientes.component';
+import { CargarClientesComponent, MomentUtcDateAdapter } from './componentes/adm-clientes/cargar-clientes/cargar-clientes.component';
 import { DetalleProductoComponent } from './componentes/adm-productos/detalle-producto/detalle-producto.component';
 import { BusquedaVentasComponent } from './componentes/ventas/busqueda-ventas/busqueda-ventas.component';
 import { NuevaVentaComponent } from './componentes/ventas/nueva-venta/nueva-venta.component';
@@ -39,7 +39,9 @@ import { CargaDetalleVentaComponent } from './componentes/ventas/carga-detalle-v
 import { ConfirmacionVentaComponent } from './componentes/ventas/confirmacion-venta/confirmacion-venta.component';
 import { PreciosProductosComponent } from './componentes/adm-productos/precios-productos/precios-productos.component';
 import { CambiarPasswordComponent } from './componentes/adm-usuarios/cambiar-password/cambiar-password.component';
-
+import {APP_BASE_HREF} from '@angular/common';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { MomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 
 //Rutas para el Router de Angular
 const appRoutes: Routes = [{ path: '', component: LoginComponent }
@@ -130,7 +132,10 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
       newestOnTop: true
     })
   ], 
-  providers: [],
+  providers: [{provide: APP_BASE_HREF, useValue: ''},
+  { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+  { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+  { provide: DateAdapter, useClass: MomentUtcDateAdapter }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

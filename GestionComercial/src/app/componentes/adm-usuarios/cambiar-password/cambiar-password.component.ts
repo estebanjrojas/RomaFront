@@ -55,7 +55,6 @@ export class CambiarPasswordComponent implements OnInit {
               console.log({ "cast": cast });
               alert("La contrase\u00f1a se cambió exitosamente")
               this.cambiarPassForm.reset();
-
             });
           } else {
             alert("Las contraseñas no coinciden.");

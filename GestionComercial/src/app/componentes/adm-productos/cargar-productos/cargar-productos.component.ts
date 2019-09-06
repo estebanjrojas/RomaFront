@@ -105,7 +105,7 @@ export class CargarProductosComponent implements OnInit {
 
         ])
       ],
-      imagen_producto: [
+      imagenes_input: [
         '', Validators.compose([
 
         ])
@@ -118,7 +118,7 @@ export class CargarProductosComponent implements OnInit {
 
   ngOnInit() {
 
-    this.nomb_usr = localStorage.getItem('nomb_usr');
+    this.nomb_usr = localStorage.getItem('roma_usuario');
     this.productosForm.controls.nombre_usuario.setValue(this.nomb_usr);
     this.route.params.subscribe(params => {
       this.productosForm.controls.id_producto.setValue(params.productos_id);
@@ -198,7 +198,7 @@ export class CargarProductosComponent implements OnInit {
 
         for (let resp of respuesta)
           this.categorias_guardar.push({
-            'id': resp.id,
+            'id': resp.categorias_id,
             'nombre': resp.nombre
           });
       });
@@ -264,6 +264,7 @@ export class CargarProductosComponent implements OnInit {
 
   //Guardar Nuevo Producto
   guardar() {
+    
 
     let id_producto = this.productosForm.controls.id_producto.value;
 
@@ -287,6 +288,19 @@ export class CargarProductosComponent implements OnInit {
               this.toastr.success('Categorias cargadas exitosamente');
             });
           }
+
+          this.SrvProductos.eliminarImagenesProductos(id_producto).subscribe(resp => {
+            console.log({"SrvProductos.eliminarImagenesProductos" : resp});
+
+            for (let imagen of this.imagenes) {
+              this.SrvProductos.cargarImagenProducto(imagen, id_producto).subscribe(resp => {
+                console.log({"SrvProductos.cargarImagenProducto" : resp});
+                this.toastr.success('Imagenes cargadas exitosamente');
+              });
+            }
+            this.toastr.success('La imagen se ha ACTUALIZADO Exitosamente');
+          });
+          
           this.toastr.success('El Producto se ha CARGADO Exitosamente');
           this.productosForm.reset();
           while (this.caracteristicas.length > 0) {
@@ -316,18 +330,30 @@ export class CargarProductosComponent implements OnInit {
             }
 
             for (let cat of this.categorias_guardar) {
+              console.log("Cat: " + cat);
               this.SrvProductos.insertCategoriasProducto(cat, id_producto).subscribe(resp => {
                 console.log({ "SrvProductos.insertCategoriasProducto": resp });
                 this.toastr.success('Categorias actualizadas exitosamente');
               });
             }
 
+            this.SrvProductos.eliminarImagenesProductos(id_producto).subscribe(resp => {
+              console.log({"SrvProductos.eliminarImagenesProductos" : resp});
+  
+              for (let imagen of this.imagenes) {
+                this.SrvProductos.cargarImagenProducto(imagen, id_producto).subscribe(resp => {
+                  console.log({"SrvProductos.cargarImagenProducto" : resp});
+                  this.toastr.success('Imagenes cargadas exitosamente');
+                });
+              }
+  
+              this.toastr.success('La imagen se ha ACTUALIZADO Exitosamente');
+            });
+
             this.toastr.success('El producto se ha ACTUALIZADO Exitosamente');
             this.productosForm.reset();
             this.router.navigate(['productos/busqueda-productos']);
           }); 
-
-
         });
       } else {
         this.productosForm.getError;
