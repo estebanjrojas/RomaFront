@@ -3,6 +3,7 @@ import { CategoriasService } from '../../../servicios/categorias.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
   selector: 'app-buscar-categoria',
   templateUrl: './buscar-categoria.component.html',
@@ -37,7 +38,7 @@ export class BuscarCategoriaComponent implements OnInit {
     if (busqueda == undefined || busqueda == '') {
       this.SrvCategorias.getCategoriasTodas().subscribe(respuesta => {
         this.cast = respuesta;
-        console.log({ "SrvCategorias.getUsuariosTodos": this.cast });
+        console.log({ "SrvCategorias.getCategoriasTodas": this.cast });
       });
     }
     else {

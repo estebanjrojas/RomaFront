@@ -60,6 +60,7 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
   , { path: 'usuarios/administrar-perfiles/:empleados_id', component: AdministrarPerfilesComponent }
   , { path: 'usuarios/cambiar-password', component: CambiarPasswordComponent }
   , { path: 'categorias/cargar-categorias', component: CargarCategoriaComponent }
+  , { path: 'categorias/cargar-categorias/:categorias_id', component: CargarCategoriaComponent }
   , { path: 'categorias/busqueda-categorias', component: BuscarCategoriaComponent }
   , { path: 'promociones/cargar-promociones', component: CargarPromocionesComponent }
   , { path: 'promociones/busqueda-promociones', component: BuscarPromocionesComponent }
