@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-12">
-    <h4>{{producto.nombre}}</h4>
+    <h5>{{producto.nombre}}</h5>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" id="resumen-tab" data-toggle="tab" [attr.href]="'#resumen_'+producto.productos_id" role="tab" aria-controls="resumen" aria-selected="true">Resumen</a>
+        <a class="nav-link active" id="resumen-tab" data-toggle="tab" [attr.href]="'#d_resumen_'+producto.productos_id" role="tab" aria-controls="resumen" aria-selected="false">Resumen</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" id="caracteristicas-tab" data-toggle="tab" [attr.href]="'#caracteristicas_'+producto.productos_id" role="tab" aria-controls="caracteristicas" aria-selected="false">Caracter&iacute;sticas</a>
@@ -13,38 +13,43 @@
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="resumen_{{producto.productos_id}}" role="tabpanel" aria-labelledby="resumen-tab">
-          <b>C&oacute;digo:</b> {{producto.codigo}}<br>
-          <b>Descripci&oacute;n:</b> {{producto.descripcion}}<br>
-          <b>Descripci&oacute;n Factura:</b> {{producto.descripcion_factura}}
-          <br>
-
-          <div id="carouselImagenes_{{producto.productos_id}}" class="carousel slide" data-ride="carousel"> 
-              <ol class="carousel-indicators" *ngIf="cantidad_imagenes>1">
-                  <li *ngFor="let img of imagenes; let i = index;" [attr.data-target]="'#carouselImagenes_'+producto.productos_id" [attr.data-slide-to]="i" class="{{ (i == 0) ? 'active' : ''}}"></li>
-               
-              </ol>
-              <div class="carousel-inner" role="listbox">
-                
-                  <div *ngFor="let img of imagenes; let i = index;" class="{{ (i == 0) ? 'carousel-item active' : 'carousel-item'}}">
-                      <img class="d-block w-100 img-fluid" src={{img.imagen}} alt="{{i}}">
+      <div class="tab-pane fade show active" id="d_resumen_{{producto.productos_id}}" role="tabpanel" aria-labelledby="resumen-tab">
+          <div class="row">
+            <div class="col-7">
+              <div id="carouselImagenes_{{producto.productos_id}}" class="carousel slide" data-ride="carousel"> 
+                  <ol class="carousel-indicators" *ngIf="cantidad_imagenes>1">
+                      <li *ngFor="let img of imagenes; let i = index;" [attr.data-target]="'#carouselImagenes_'+producto.productos_id" [attr.data-slide-to]="i" class="{{ (i == 0) ? 'active' : ''}}"></li>
+                  
+                  </ol>
+                  <div class="carousel-inner" role="listbox">
+                    
+                      <div *ngFor="let img of imagenes; let i = index;" class="{{ (i == 0) ? 'carousel-item active' : 'carousel-item'}}">
+                          <img class="d-block w-100 imagen-limitada" src={{img.imagen}} alt="{{i}}">
+                      </div>
+                    
                   </div>
-                
+                  <a class="carousel-control-prev" [attr.href]="'#carouselImagenes_'+producto.productos_id" role="button" data-slide="prev" *ngIf="cantidad_imagenes>1">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Anterior</span>
+                  </a>
+                  <a class="carousel-control-next" [attr.href]="'#carouselImagenes_'+producto.productos_id" role="button" data-slide="next" *ngIf="cantidad_imagenes>1">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Siguiente</span>
+                  </a>
               </div>
-              <a class="carousel-control-prev" [attr.href]="'#carouselImagenes_'+producto.productos_id" role="button" data-slide="prev" *ngIf="cantidad_imagenes>1">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Anterior</span>
-              </a>
-              <a class="carousel-control-next" [attr.href]="'#carouselImagenes_'+producto.productos_id" role="button" data-slide="next" *ngIf="cantidad_imagenes>1">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Siguiente</span>
-              </a>
+            </div>
+            <div class="col-5">
+              <p><b>C&oacute;digo: </b>{{producto.codigo}}</p>
+              <p><b>Descripci&oacute;n: </b><br>{{producto.descripcion}}</p>
+              <p><b>Descripci&oacute;n Factura: </b><br>{{producto.descripcion_factura}}</p>
+            </div>
           </div>
+          
       </div>
       <div class="tab-pane fade" id="caracteristicas_{{producto.productos_id}}" role="tabpanel" aria-labelledby="caracteristicas-tab">
           <div class="row">
             <div class="col-12" style="padding-top: 5px">
-              <h6>Caracter&iacute;sticas:</h6>
+
               <table class="table table-sm table-hover" width=85%>
                 <thead class="thead-light">
                   <th>Nombre</th>
@@ -53,9 +58,9 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let caract of caracteristicas">
-                    <td>{{caract.nombre}}</td>
-                    <td>{{caract.descripcion}}</td>
-                    <td>{{caract.valor}}</td>
+                    <td class="textoCompacto">{{caract.nombre}}</td>
+                    <td class="textoCompacto">{{caract.descripcion}}</td>
+                    <td class="textoCompacto">{{caract.valor}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -65,14 +70,14 @@
       <div class="tab-pane fade" id="categorias_{{producto.productos_id}}" role="tabpanel" aria-labelledby="categorias-tab">
           <div class="row">
               <div class="col-12" style="padding-top: 5px">
-                <h6>Categor&iacute;as:</h6>
+
                 <table class="table table-sm table-hover" width=85%>
                   <thead class="thead-light">
                     <th>Descripci&oacute;n</th>
                   </thead>
                   <tbody>
                     <tr *ngFor="let categ of categorias">
-                      <td>{{categ.nombre}} ({{categ.categoria_padre}})</td>
+                      <td class="textoCompacto">{{categ.nombre}} ({{categ.categoria_padre}})</td>
                     </tr>
                   </tbody>
                 </table>
@@ -83,12 +88,10 @@
   </div>
 
 </div>
-
-<div class="row">
+<div class="row pie">
   <div class="col-12">
-    <hr>
-    <small>Fecha de Creaci&oacute;n: {{producto.fecha_desde}}</small><br>
-    <small>Fecha de Baja: {{producto.fecha_hasta}}</small>
+    Fecha de Creaci&oacute;n: {{producto.fecha_desde | date:'dd/MM/yyyy'}}<br>
+    Fecha de Baja: {{producto.fecha_hasta | date:'dd/MM/yyyy'}}
   </div>
 </div>
 

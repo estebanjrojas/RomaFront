@@ -1,0 +1,45 @@
+@font-face {
+font-family: 'cabin-reg';
+src: url(/assets/fonts/Cabin-Regular.ttf) format("truetype");
+font-weight:300;
+}
+
+@font-face {
+font-family: 'brlight';
+src: url(/assets/fonts/Barlow-Light.ttf) format("truetype");
+font-weight:300;
+}
+
+
+
+h5 {
+    font-family: 'cabin-reg', 'helvetica';
+}
+
+.nav-link {
+    font-family: 'cabin-reg', 'helvetica';
+} 
+
+.textoCompacto {
+    font-family: 'brlight', 'helvetica';
+} 
+
+.imagen-limitada {
+    max-width: 300px;
+    max-height: 300px;
+    min-width: 200px;
+    min-height: 200px;
+    margin: 0%;
+    padding: 0%;
+}
+
+.pie {
+    font-family: 'brlight', 'helvetica';
+    padding: 2px;
+    margin: 1%;
+}
+
+table {
+    border-radius: 10px;
+    margin: 5px;
+}
