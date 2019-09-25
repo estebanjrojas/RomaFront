@@ -5,6 +5,7 @@ import { CategoriasService } from '../../../servicios/categorias.service';
 import { Categorias } from '../../../modelos/Categorias';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cargar-categoria',
@@ -17,10 +18,13 @@ export class CargarCategoriaComponent implements OnInit {
     dataSource = new MatTreeNestedDataSource<Categorias>();
   //Instancias
   categoriasForm: FormGroup;
+  categorias_id: number;
 
   constructor(private formBuilder: FormBuilder
             , private SrvToastr: ToastrService
-            , private SrvCategorias: CategoriasService) {
+            , private SrvCategorias: CategoriasService
+            , private route: ActivatedRoute) {
+
     this.categoriasForm = this.formBuilder.group({
       nombre: [
         '', Validators.compose([
@@ -48,6 +52,10 @@ export class CargarCategoriaComponent implements OnInit {
   hasChild = (_: number, node: Categorias) => !!node.children && node.children.length > 0;
 
   ngOnInit() {
+
+    this.route.params.subscribe(params => {
+      this.categorias_id = params.categorias_id;
+    });
 
     this.SrvCategorias.obtenerJSONTodasCategorias().subscribe(resp => {
       console.log({ "SrvCategorias.obtenerJSONTodasCategorias": resp });
@@ -84,13 +92,24 @@ export class CargarCategoriaComponent implements OnInit {
 
 
     const categoria : CategoriaGuardar = {'nombre' : nombre, 'descripcion':descripcion, 'categorias_padre_id':categoria_padre};
-   
-    this.SrvCategorias.guardarCategoria(categoria).subscribe(resp => {
-      console.log({"SrvCategorias.guardarCategoria": resp});
-      this.SrvToastr.success('Categorias guardada exitosamente');
-      this.categoriasForm.reset();
-      this.llenarArbolCategorias();
-    });
+    
+    if(this.categorias_id==null) {
+        this.SrvCategorias.guardarCategoria(categoria).subscribe(resp => {
+          console.log({"SrvCategorias.guardarCategoria": resp});
+          this.SrvToastr.success('Categorias guardada exitosamente');
+          this.categoriasForm.reset();
+          this.llenarArbolCategorias();
+        });
+    } else {
+      //UPDATE
+      this.SrvCategorias.updateCategoria(categoria).subscribe(resp => {
+        console.log({"SrvCategorias.updateCategoria": resp});
+        this.SrvToastr.success('Categoria actualizada exitosamente');
+        
+        
+      });
+    }
+    
   }
 
 }

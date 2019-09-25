@@ -5,7 +5,11 @@
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" id="resumen-tab" data-toggle="tab" [attr.href]="'#resumen_'+producto.productos_id"
-            role="tab" aria-controls="resumen" aria-selected="true">Resumen</a>
+            role="tab" aria-controls="resumen" aria-selected="true">Precio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="historial-precios-tab" data-toggle="tab" [attr.href]="'#historial_precios_'+producto.productos_id"
+            role="tab" aria-controls="historial_precios" aria-selected="false">Historial de Precios</a>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
@@ -22,40 +26,43 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-6">
+              <input type="text" id="nuevo_precio" placeholder="Inserte nuevo precio" class="form-control" formControlName="nuevo_precio" />
+            </div>
+            <div class="col-md-1">
+              <input type="button"  value="Cargar" class="btn btn-outline-primary" (click)="cargarNuevoPrecio();" />
+            </div>
+          </div>
         </div>
+        <!-- Fin contenido Resumen-->
+        <div class="tab-pane fade" id="historial_precios_{{producto.productos_id}}" role="tabpanel"
+          aria-labelledby="historial-precios-tab">
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table" id="tabla_precios">
+                <thead>
+                  <tr>
+                    <th scope="col">Monto</th>
+                    <th scope="col">Fecha Desde</th>
+                    <th scope="col">Fecha Hasta</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let pre of precios; let indice = index">
+                    <td>${{pre.monto}}</td>
+                    <td>{{pre.fecha_desde | date:'dd-MM-yyyy'}}</td>
+                    <td>{{pre.fecha_hasta | date:'dd-MM-yyyy'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+
       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <input type="text" id="nuevo_precio" placeholder="Inserte nuevo precio" class="form-control" formControlName="nuevo_precio" />
-    </div>
-    <div class="col-md-1">
-      <input type="button"  value="Cargar" class="btn btn-outline-primary" (click)="cargarNuevoPrecio();" />
-    </div>
-  </div>
-
-  <br>
-  &nbsp; <i>Historial de Precios</i><br>
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table" id="tabla_precios">
-        <thead>
-          <tr>
-            <th scope="col">Monto</th>
-            <th scope="col">Fecha Desde</th>
-            <th scope="col">Fecha Hasta</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let pre of precios; let indice = index">
-            <td>${{pre.monto}}</td>
-            <td>{{pre.fecha_desde | date:'dd-MM-yyyy'}}</td>
-            <td>{{pre.fecha_hasta | date:'dd-MM-yyyy'}}</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 

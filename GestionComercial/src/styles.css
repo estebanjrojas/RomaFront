@@ -1,8 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+@font-face {
+  font-family: 'cabin-reg';
+  src: url(/assets/fonts/Cabin-Regular.ttf) format("truetype");
+  font-weight:300;
+}
+
+@font-face {
+  font-family: 'brlight';
+  src: url(/assets/fonts/Barlow-Light.ttf) format("truetype");
+  font-weight:300;
+  }
+  
+
+.cabin-reg {
+  font-family: 'cabin-reg', 'helvetica';
+}
+
+.brlight {
+  font-family: 'brlight', 'helvetica';
+}
+
+thead.thead-dark {
+  font-family: 'cabin-reg', 'helvetica';
+}
+thead.thead-dark th {
+  background-color: #25437c !important;
+  border-color: #25437c !important;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'cabin-reg', 'helvetica';
+}
+
+tbody {
+  font-family: 'brlight', 'helvetica';
+}
+
 html, body {
     min-height: 100%;
     height: auto;
     margin: 0;
   }
+
