@@ -1,8 +1,7 @@
 <app-cabecera></app-cabecera>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
-<form id="empleadosFormId" [formGroup]="buscarClientesForm">
-  <input type="hidden" formControlName="nombre_usuario">
+<form id="empleadosFormId">
   <!----## Inicio Container Principal ##---->
   <div class="container">
     <!----## Inicio Row Principal ##---->
@@ -12,16 +11,76 @@
         <br>
         <div class="card">
           <div class="card-body">
-              <h3>Clientes</h3>
-              <hr>
+            <h3>Clientes</h3>
+            <hr>
             <!--Inicio Busqueda-->
+
             <div class="row">
-              <div class="col-md-5">
-                <input required type="text" formControlName="txtBuscar" class="form-control" placeholder="Nombre o apellido del cliente">
+              <div class="col-md-12">
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="buscar_nombre" name="buscar_nombre"
+                    [(ngModel)]="buscar_nombre" (change)="buscarClientes()" checked>
+                  <label class="custom-control-label" for="buscar_nombre">NOMBRE</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="buscar_apellido" name="buscar_apellido"
+                    [(ngModel)]="buscar_apellido" (change)="buscarClientes()" checked>
+                  <label class="custom-control-label" for="buscar_apellido">APELLIDO</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="buscar_dni" name="buscar_dni"
+                    [(ngModel)]="buscar_dni" (change)="buscarClientes()" checked>
+                  <label class="custom-control-label" for="buscar_dni">DNI</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="buscar_fecha_nac" name="buscar_fecha_nac"
+                    [(ngModel)]="buscar_fecha_nac" (change)="buscarClientes()" checked>
+                  <label class="custom-control-label" for="buscar_fecha_nac">FECHA NACIMIENTO</label>
+                </div>
               </div>
-              <div class="col-md-1">
-                <button type="button" class="btn btn-outline-primary" (click)="buscarClientes();" id="btnBuscar">Buscar</button>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="input-group input-group-sm mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Buscar</span>
+                  </div>
+                  <input type="text" class="form-control" id="buscar" name="buscar" [(ngModel)]="buscar"
+                    (keyup)="buscarClientes()" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-sm"
+                    placeholder='Introduzca Texto para Reducir el Listado(tilde o destilde las columnas por las cuales realizará la busqueda)'>
+                </div>
               </div>
+            </div>
+
+            <div class="row">
+              <nav aria-label='...'>
+                <ul class='pagination'>
+                  <li *ngIf="this.cantidad_paginas>4" class='page-item'> <a class='page-link' id='primeraPagina'
+                      (click)="setPaginaByComponenteId(1)" aria-label='Previous'> <span
+                        aria-hidden='true'>&laquo;</span> <span class='sr-only'>Previous</span> </a> </li>
+                  <li *ngIf="this.cantidad_paginas>3" class='page-item'> <a class='page-link' id='paginaAnterior'
+                      (click)="setPaginaByComponenteId(this.valor_boton_1-1)"> Anterior </a></li>
+                  <li *ngIf="this.cantidad_paginas>1" class='page-item'
+                    [ngClass]="{'active':this.pagina_actual==this.valor_boton_1}" id='paginaObjLiNumero1'
+                    name='paginaObjLiNumero'> <a class='page-link' id='paginaNumero1' name='paginaNumero'
+                      (click)="setPaginaByComponenteId(this.valor_boton_1)"> {{this.valor_boton_1}} </a> </li>
+                  <li *ngIf="this.cantidad_paginas>1" class='page-item'
+                    [ngClass]="{'active':this.pagina_actual==this.valor_boton_2}" id='paginaObjLiNumero2'
+                    name='paginaObjLiNumero'> <a class='page-link' id='paginaNumero2' name='paginaNumero'
+                      (click)="setPaginaByComponenteId(this.valor_boton_2)"> {{this.valor_boton_2}} </a> </li>
+                  <li *ngIf="this.cantidad_paginas>2" class='page-item'
+                    [ngClass]="{'active':this.pagina_actual==this.valor_boton_3}" id='paginaObjLiNumero3'
+                    name='paginaObjLiNumero'> <a class='page-link' id='paginaNumero3' name='paginaNumero'
+                      (click)="setPaginaByComponenteId(this.valor_boton_3)"> {{this.valor_boton_3}} </a> </li>
+                  <li *ngIf="this.cantidad_paginas>3" class='page-item'> <a class='page-link' id='paginaSiguiente'
+                      (click)="setPaginaByComponenteId(this.valor_boton_3+1)"> Siguiente </a></li>
+                  <li *ngIf="this.cantidad_paginas>4" class='page-item'> <a class='page-link' id='ultimaPagina'
+                      (click)="setPaginaByComponenteId(this.cantidad_paginas)" aria-label='Next'> <span
+                        aria-hidden='true'>&raquo;</span> <span class='sr-only'>Next</span> </a> </li>
+                </ul>
+              </nav>
             </div>
             <!--Fin Busqueda-->
             <br>
@@ -46,7 +105,9 @@
                         <td style="text-align: center">{{cli.nro_doc}}</td>
                         <td style="text-align: center">{{cli.fecha_nac | date:'dd-MM-yyyy'}}</td>
                         <td style='text-align: center'>
-                          <button class="btn btn-info btn-sm" [routerLink]="['/clientes/cargar-clientes', cli.clientes_id]" routerLinkActive="active">Modificar</button>&nbsp;
+                          <button class="btn btn-info btn-sm"
+                            [routerLink]="['/clientes/cargar-clientes', cli.clientes_id]"
+                            routerLinkActive="active">Modificar</button>&nbsp;
                           <button class="btn btn-danger btn-sm">Eliminar</button>
                         </td>
                       </tr>
@@ -55,10 +116,11 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-md-12" align="center">
-                      <input type="submit" class="btn btn-primary" [routerLink]="['/clientes/cargar-clientes']" routerLinkActive="active" value="Nuevo Cliente" />
-                    </div>
+                  <div class="col-md-12" align="center">
+                    <input type="submit" class="btn btn-primary" [routerLink]="['/clientes/cargar-clientes']"
+                      routerLinkActive="active" value="Nuevo Cliente" />
                   </div>
+                </div>
               </div>
               <!----## Fin Col 12  ##---->
             </div>
