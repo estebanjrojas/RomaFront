@@ -20,6 +20,8 @@ export class ProductosService {
   constructor(private http: HttpClient) { }
 
 
+  //---------------------------GET---------------------------//
+
   getProductosBusqueda(texto_busqueda): Observable<any> {
     return this.http.get(environment.apiEndpoint + '/getProductosBusqueda/' + texto_busqueda, httpOptions);
   }
@@ -43,10 +45,32 @@ export class ProductosService {
   getUltimoPrecioValido(id_producto): Observable<any> {
     return this.http.get(environment.apiEndpoint + '/getUltimoPrecioValido/' + id_producto, httpOptions);
   }
-
+  
   getHistorialPrecios(id_producto): Observable<any> {
     return this.http.get(environment.apiEndpoint + '/getHistorialPrecios/' + id_producto, httpOptions);
   }
+  
+  getImagenesProductos(id_producto): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getImagenesProductos/' + id_producto, httpOptions);
+  }
+
+  getProductosPorCategoriaCampoBusqueda(categorias_id, campo_buscar, texto_buscar): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getProductosPorCategoriaCampoBusqueda/'+categorias_id+'/'+campo_buscar+'/'+texto_buscar, httpOptions);
+  }
+
+   //PAGINACION INICIO --------->
+
+   getCantidadPaginasProductos(buscar_codigo, buscar_nombre, buscar_descripcion, buscar_categoria, txt): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getCantidadPaginasProductos/' + buscar_codigo + '/' + buscar_nombre + '/'  + buscar_descripcion + '/' + buscar_categoria + '/' + txt, httpOptions);
+  }
+
+  getProductos(pagina_actual, cantidad_paginas, buscar_codigo, buscar_nombre, buscar_descripcion, buscar_categoria, txt): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getProductos/' + pagina_actual + '/' + cantidad_paginas + '/' + buscar_codigo + '/' + buscar_nombre + '/'  + buscar_descripcion + '/' + buscar_categoria + '/' + txt, httpOptions);
+  }
+  //PAGINACION FIN <------------
+
+
+  //---------------------------POST---------------------------//
 
   insertProductoReturnId(datos: any) {
     const url = environment.apiEndpoint + `/insertProductoReturnId`;
@@ -80,40 +104,38 @@ export class ProductosService {
     return this.http.post(url, json, httpOptions);
   }
 
-  eliminarImagenesProductos(productos_id: number) {
-    const url = environment.apiEndpoint + `/eliminarImagenesProductos/` + productos_id;
-    return this.http.delete(url, httpOptions);
-  }
-
+  
   cargarImagenProducto(imagen: any, productos_id: number) {
     const url = environment.apiEndpoint + `/cargarImagenProducto`;
     let json = JSON.stringify({ "imagen": imagen.imagen, "predeterminada": imagen.predeterminada, "productos_id": productos_id });
     return this.http.post(url, json, httpOptions);
   }
 
+  //---------------------------PUT---------------------------//
+  
   actualizarDatosProductos(datos: any): Observable<any> {
     let json = JSON.stringify(datos);
     console.log("Datos del actualizar productos: " + json);
     return this.http.put(environment.apiEndpoint + '/actualizarDatosProductos', json, httpOptions);
   }
-
+  
   actualizarFechaHastaPrecio(productos_id: number): Observable<any> {
     let json = JSON.stringify({"productos_id":productos_id});
     return this.http.put(environment.apiEndpoint + '/actualizarFechaHastaPrecio', json, httpOptions);
   }
+  
 
+  //---------------------------DELETE---------------------------//
 
+  eliminarImagenesProductos(productos_id: number) {
+    const url = environment.apiEndpoint + `/eliminarImagenesProductos/` + productos_id;
+    return this.http.delete(url, httpOptions);
+  }
+  
   eliminarCaracteristicasProductos(id_producto: number) {
     const url = environment.apiEndpoint + `/eliminarCaracteristicasProductos/` + id_producto;
     return this.http.delete(url, httpOptions);
   }
 
-  getImagenesProductos(id_producto): Observable<any> {
-    return this.http.get(environment.apiEndpoint + '/getImagenesProductos/' + id_producto, httpOptions);
-  }
-
-  getProductosPorCategoriaCampoBusqueda(categorias_id, campo_buscar, texto_buscar): Observable<any> {
-    return this.http.get(environment.apiEndpoint + '/getProductosPorCategoriaCampoBusqueda/'+categorias_id+'/'+campo_buscar+'/'+texto_buscar, httpOptions);
-  }
 
 }
