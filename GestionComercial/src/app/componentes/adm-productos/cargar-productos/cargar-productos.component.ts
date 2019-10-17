@@ -68,12 +68,10 @@ export class CargarProductosComponent implements OnInit {
         '', Validators.compose([
           Validators.required
         ])
-      ],
-      unidad: [
-        '', Validators.compose([
-          Validators.required
-        ])
-      ],
+      ]
+      , 
+      unidad: []
+      ,
       descripcion_factura: [
         '', Validators.compose([
           Validators.required
@@ -84,10 +82,6 @@ export class CargarProductosComponent implements OnInit {
         ])
       ],
       descripcion: [
-        '', Validators.compose([
-        ])
-      ],
-      unidad_medida: [
         '', Validators.compose([
         ])
       ],
@@ -117,6 +111,8 @@ export class CargarProductosComponent implements OnInit {
   hasChild = (_: number, node: Categorias) => !!node.children && node.children.length > 0;
 
   ngOnInit() {
+
+    this.productosForm.controls.unidad.setValue(1);
 
     this.nomb_usr = localStorage.getItem('roma_usuario');
     this.productosForm.controls.nombre_usuario.setValue(this.nomb_usr);
@@ -158,9 +154,7 @@ export class CargarProductosComponent implements OnInit {
 
   getDatosProductos() {
     let id_producto = this.productosForm.controls.id_producto.value;
-    console.log("ID que traigo: " + id_producto);
     if (id_producto != null || id_producto != undefined) {
-      console.log("paso por aqui");
       this.SrvProductos.getDatosProductos(id_producto).subscribe(resp => {
         let respuesta: any = resp;
         console.log({ "SrvProductos.getDatosProductos": respuesta });
@@ -171,8 +165,7 @@ export class CargarProductosComponent implements OnInit {
           descripcion_producto: respuesta[0].descripcion,
           descripcion_factura: respuesta[0].descripcion_factura,
           tipo: respuesta[0].tipo_producto,
-          precio: respuesta[0].monto,
-          unidad: respuesta[0].unidad
+          precio: respuesta[0].monto
         });
         console.log("Tipo Producto: " + this.productosForm.controls.tipo.value);
       });
@@ -180,13 +173,11 @@ export class CargarProductosComponent implements OnInit {
       this.SrvProductos.getCaracteristicasProductos(id_producto).subscribe(resp => {
         let respuesta: any = resp;
         console.log({ "SrvProductos.getCaracteristicasProductos": respuesta });
-        console.log("ID PRODUCTO:" + id_producto);
 
         for (let resp of respuesta)
           this.caracteristicas.push({
             'nombre': resp.nombre,
             'descripcion': resp.descripcion,
-            'unidad_medida': resp.unidad_medida,
             'valor': resp.valor
           });
       });
@@ -194,7 +185,6 @@ export class CargarProductosComponent implements OnInit {
       this.SrvProductos.getCategoriasProductos(id_producto).subscribe(resp => {
         let respuesta: any = resp;
         console.log({ "SrvProductos.getCategoriasProductos": respuesta });
-        console.log("ID PRODUCTO:" + id_producto);
 
         for (let resp of respuesta)
           this.categorias_guardar.push({
@@ -214,14 +204,13 @@ export class CargarProductosComponent implements OnInit {
 
     var _nom = this.productosForm.controls.nombre.value;
     var _descrip = this.productosForm.controls.descripcion.value;
-    var _uni = this.productosForm.controls.unidad_medida.value;
     var _val = this.productosForm.controls.valor.value;
 
-    if (_nom != null && _descrip.length != 0 && _val.length != 0 && _uni != 0 && _uni != undefined) {
-      this.caracteristicas.push({ 'nombre': _nom, 'descripcion': _descrip, 'unidad_medida': _uni, 'valor': _val });
+    if (_nom != null && _descrip.length != 0 && _val.length != 0) {
+      this.caracteristicas.push({ 'nombre': _nom, 'descripcion': _descrip, 'valor': _val });
       this.productosForm.controls.nombre.reset();
       this.productosForm.controls.descripcion.reset();
-      this.productosForm.controls.unidad_medida.reset();
+
       this.productosForm.controls.valor.reset();
     } else {
       alert("Todos los campos son obligatorios...");
@@ -372,13 +361,10 @@ export class CargarProductosComponent implements OnInit {
 }
 
 
-
 interface Caracteristica {
   nombre: Text,
   descripcion: Text,
-  unidad_medida: number,
   valor: any
-
 }
 
 

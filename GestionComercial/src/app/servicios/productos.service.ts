@@ -89,7 +89,7 @@ export class ProductosService {
     const url = environment.apiEndpoint + `/insertCaracteristicasProducto`;
     let json = JSON.stringify({
       "nombre": caract.nombre, "descripcion": caract.descripcion
-      , "unidad_medida": caract.unidad_medida, "valor": caract.valor
+      , "valor": caract.valor
       , "productos_id": productos_id
     });
     return this.http.post(url, json, httpOptions);
