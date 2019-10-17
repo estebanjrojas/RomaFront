@@ -17,7 +17,7 @@
           <div class="col-md-12">
             <!----## Inicio Card ##---->
             <br>
-            <div class="card">
+            <div class="card" id="cardPrincipal">
               <!----## Inicio Card Body ##---->
               <div class="card-body">
                 <h3>Productos</h3>
@@ -71,16 +71,6 @@
                         <!--~~~~~~~~~ Precio ~~~~~~~~~~~-->
                         <mat-form-field class="example-full-width" style="width:100%">
                           <input matInput placeholder="Precio" formControlName="precio">
-                        </mat-form-field>
-                      </div>
-                      <div class="col-md-7">
-                        <mat-form-field style="width:100%">
-                          <mat-select [(value)]="selected" [compareWith]="compareFn" placeholder="Unidad"
-                            formControlName="unidad">
-                            <mat-option>None</mat-option>
-                            <mat-option value="1">1</mat-option>
-                            <mat-option value="2">2</mat-option>
-                          </mat-select>
                         </mat-form-field>
                       </div>
                     </div>
@@ -165,7 +155,7 @@
                                 </mat-form-field>
                               </div>
                             </div>
-                            <div class="row">
+                            <!--div class="row">
                               <div class="col-md-12">
                                 <mat-form-field style="width:90%">
                                   <mat-select placeholder="Unidad Medida" id="unidad_medida"
@@ -176,7 +166,7 @@
                                   </mat-select>
                                 </mat-form-field>
                               </div>
-                            </div>
+                            </div-->
                             <div class="row">
                               <div class="col-md-12">
                                 <mat-form-field class="example-full-width" style="width:70%">
@@ -193,8 +183,7 @@
                               <thead class="thead-celeste">
                                 <th style='width:35%;'>Nombre</th>
                                 <th style='width:35%;'>Descrip.</th>
-                                <th style='width:5%; text-align: center'>Unidad</th>
-                                <th style='width:20%; text-align: center'>Valor</th>
+                                <th style='width:25%; text-align: center'>Valor</th>
                                 <th style='width:5%; text-align: center'></th>
                               </thead>
                               <tbody id="tablita">

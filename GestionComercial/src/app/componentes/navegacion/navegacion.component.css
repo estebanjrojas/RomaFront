@@ -4,12 +4,12 @@
 }
 
 .dropdown-menu {
-    background-color: rgb(55, 106, 158);
+    background-color: #2C70B2;
     cursor: pointer;
 }
 
 .dropdown-item {
-    background-color: rgb(55, 106, 158);
+    background-color: #2C70B2;
     color: white;
     cursor: pointer;
 }
@@ -21,7 +21,7 @@
   }
 
 #barra_navegacion {
-    background-color: rgb(55, 106, 158);
+    background-color: #2C70B2;
     color: white;    
     cursor: pointer; 
 }
