@@ -186,8 +186,8 @@
                       <div class="card-body">
                         <div class="row">
                           <div class="col-md-7">
-                            <mat-form-field class="example-full-width">
-                              <input matInput placeholder="Calle" formControlName="calle">
+                            <mat-form-field class="example-full-width" style="width:100%">
+                              <input matInput id="txtCalles" placeholder="Calle" formControlName="calle">
                             </mat-form-field>
                           </div>
                           <div class="col-md-2">
@@ -223,7 +223,7 @@
                           </div>
                           <div class="col-md-5">
                               <mat-form-field class="example-full-width">
-                                <input formControlName="ciudades" type="text" placeholder="Ciudad" aria-label="Ciudad" matInput [matAutocomplete]="auto" />
+                                <input formControlName="ciudades" id="ciudades" type="text" placeholder="Ciudad" aria-label="Ciudad" matInput [matAutocomplete]="auto" />
                                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                                   <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                                     {{option.descrip}}

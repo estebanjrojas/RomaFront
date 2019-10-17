@@ -33,6 +33,21 @@ export class DomiciliosService {
     return this.http.get(environment.apiEndpoint+'/getCiudadesPorProvincia/'+provincias_id, httpOptions);
   }
 
+
+  getCiudadesPorDepartamentos(provincias_id) {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        { 'Content-Type': 'application/json',
+          'Authorization':  localStorage.getItem('roma_acceso')
+        }
+      )
+    };
+    return this.http.get(environment.apiEndpoint + '/getCiudadesPorDepartamentos/' + provincias_id, httpOptions);
+  }
+
+
+
+
   getDomicilioByNroDoc(nro_doc){
     const httpOptions = {
       headers: new HttpHeaders(
@@ -53,6 +68,25 @@ export class DomiciliosService {
       )
     };
     return this.http.get(environment.apiEndpoint+'/getCiudadesIdPorNombre/'+nombre, httpOptions);
+  }
+
+
+  getCalles(calle_nombre) {
+    let url
+    if (calle_nombre == "") {
+      url = environment.apiEndpoint + '/getCallesEmpty/';
+    } else {
+      url = environment.apiEndpoint + '/getCalles/';
+    }
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('roma_acceso')
+        }
+      )
+    };
+    return this.http.get(url + calle_nombre, httpOptions);
   }
 
   insert(domicilio: any) {

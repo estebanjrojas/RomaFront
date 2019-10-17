@@ -12,7 +12,7 @@ import { PersonasService } from '../../../servicios/personas.service';
 import { Provincias } from '../../../modelos/Provincias';
 import { ActivatedRoute } from '@angular/router';
 import { Inject, Injectable, Optional } from '@angular/core';
-import { MAT_DATE_LOCALE } from '@angular/material';   
+import { MAT_DATE_LOCALE } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Moment } from 'moment';
 import * as moment from 'moment';
@@ -51,6 +51,7 @@ export class MomentUtcDateAdapter extends MomentDateAdapter {
 
 
 export interface CiudadesInterface {
+  id: number;
   descrip: string;
 }
 
@@ -61,186 +62,69 @@ export interface CiudadesInterface {
   styleUrls: ['./cargar-clientes.component.css']
 })
 export class CargarClientesComponent implements OnInit {
+
   //miEmpleado : Empleados;
   provincias: Provincias[] = [];
   oficinas: any;
   clientesForm: FormGroup;
 
   ciudades: CiudadesInterface[] = [];
+  filteredOptions: Observable<CiudadesInterface[]>;
+
+  nomb_usr: string;
   ciudadesClass: Ciudades = new Ciudades();
 
 
-  filteredOptions: Observable<CiudadesInterface[]>;
-
-  constructor(private SrvTabgral: TabgralService
-    , private SrvClientes: ClientesService
-    , private SrvPersonas: PersonasService
-    , private SrvDomicilios: DomiciliosService
-    , private toastr: ToastrService
-    , private formBuilder: FormBuilder
-    , private route: ActivatedRoute) {
-
+  constructor(
+    private SrvTabgral: TabgralService,
+    private SrvClientes: ClientesService,
+    private SrvPersonas: PersonasService,
+    private SrvDomicilios: DomiciliosService,
+    private toastr: ToastrService,
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute) {
     this.clientesForm = this.formBuilder.group({
-      documento: [
-        '', Validators.compose([
-          Validators.required,
-          Validators.pattern('[0-9]*')
-        ])
-      ],
-      apellido: [
-        '', Validators.compose([
-          Validators.required,
-          Validators.pattern('[a-zA-Z ]*')
-        ])
-      ],
-      nombre: [
-        '', Validators.compose([
-          Validators.required,
-          Validators.pattern('[a-zA-Z ]*')
-        ])
-      ],
-      fecha_nacimiento: [
-        '', Validators.compose([
-          Validators.required
-        ])
-      ],
-      calle: [
-        '', Validators.compose([
-          Validators.required
-        ])
-      ],
-      numero: [
-        '', Validators.compose([
-          Validators.required
-        ])
-      ],
-      piso: [
-        '', Validators.compose([
-        ])
-      ],
-      depto: [
-        '', Validators.compose([
-        ])
-      ],
-      manzana: [
-        '', Validators.compose([
-        ])
-      ],
-      provincia: [
-        '', Validators.compose([
-          Validators.required
-        ])
-      ],
-      ciudades: [
-        '', Validators.compose([
-          Validators.required
-        ])
-      ],
-      nombre_usuario: [
-        '', Validators.compose([
-
-        ])
-      ],
-      tipo_doc: [
-        '', Validators.compose([
-          Validators.required
-        ])
-      ],
-      sexo: [
-        '', Validators.compose([
-          Validators.required
-        ])
-      ],
-      telefono: [
-        '', Validators.compose([
-        ])
-      ],
-      celular: [
-        '', Validators.compose([
-        ])
-      ],
-      email: [
-        '', Validators.compose([
-        ])
-      ],
-      clientes_id: [
-        '', Validators.compose([
-        ])
-      ]
-
+      documento: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]*')])],
+      apellido: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z ]*')])],
+      nombre: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z ]*')])],
+      fecha_nacimiento: ['', Validators.compose([Validators.required])],
+      calle: ['', Validators.compose([Validators.required])],
+      numero: ['', Validators.compose([Validators.required])],
+      piso: ['', Validators.compose([])],
+      depto: ['', Validators.compose([])],
+      manzana: ['', Validators.compose([])],
+      provincia: ['', Validators.compose([Validators.required])],
+      ciudades: ['', Validators.compose([Validators.required])],
+      ciudades_id: ['', Validators.compose([Validators.required])],
+      nombre_usuario: ['', Validators.compose([])],
+      tipo_doc: ['', Validators.compose([Validators.required])],
+      sexo: ['', Validators.compose([Validators.required])],
+      telefono: ['', Validators.compose([])],
+      celular: ['', Validators.compose([])],
+      email: ['', Validators.compose([])],
+      clientes_id: ['', Validators.compose([])]
     });
-
   }
-
-
-  getCiudadesPorProvincia() {
-    let provincias_id = this.clientesForm.controls.provincia.value;
-    this.SrvDomicilios.getCiudadesPorProvincia(provincias_id).subscribe(respuesta => {
-      let cast: any = respuesta;
-      console.log({ 'SrvDomicilios.getCiudadesPorProvincia': cast });
-      for (let i = 0; i < cast.length; i++) {
-        this.ciudades.push({ descrip: cast[i].nombre.trim() });
-        //por alguna razon el nombre viene con espacios en blanco alrededor asi que se hace un trim por javascript
-      }
-      console.log(this.ciudades);
-    })
-  }
-
-
 
 
   ngOnInit() {
 
-    this.clientesForm.controls.tipo_doc.setValue("3");
+    this.nomb_usr = localStorage.getItem('nombre_usr');
+    console.log({ "Nombre de usuario": this.nomb_usr });
+    this.clientesForm.controls.nombre_usuario.setValue(this.nomb_usr);
 
+    this.clientesForm.controls.tipo_doc.setValue("3");
     this.route.params.subscribe(params => {
       this.clientesForm.controls.clientes_id.setValue(params.clientes_id);
       console.log(params);
     });
-
     this.route.params.subscribe(params => {
       if (params.clientes_id != null) {
         this.clientesForm.controls.clientes_id.setValue(params.clientes_id);
-        this.SrvClientes.getDatosClientePorId(params.clientes_id).subscribe(respuesta => {
-          console.log({ "SrvClientes.getDatosClientePorId": respuesta });
-          let cast: any = respuesta;
-          //Datos personales
-          this.clientesForm.controls.apellido.setValue(cast[0].apellido);
-          this.clientesForm.controls.nombre.setValue(cast[0].nombre);
-          this.clientesForm.controls.documento.setValue(cast[0].nro_doc);
-          this.clientesForm.controls.tipo_doc.setValue(cast[0].tipo_doc + "");
-          this.clientesForm.controls.fecha_nacimiento.setValue(cast[0].fecha_nac);
-          this.clientesForm.controls.sexo.setValue(cast[0].sexo + "");
-          this.clientesForm.controls.telefono.setValue(cast[0].telefono);
-          this.clientesForm.controls.celular.setValue(cast[0].telefono_cel);
-          this.clientesForm.controls.email.setValue(cast[0].email);
-          this.clientesForm.controls.calle.setValue(cast[0].calle);
-          this.clientesForm.controls.numero.setValue(cast[0].numero);
-          this.clientesForm.controls.piso.setValue(cast[0].piso);
-          this.clientesForm.controls.depto.setValue(cast[0].depto);
-          this.clientesForm.controls.manzana.setValue(cast[0].manzana);
-          this.clientesForm.controls.provincia.setValue(cast[0].provincias_id);
-          this.clientesForm.controls.ciudades.setValue(cast[0].ciudades_id + "");
-
-          //Domicilio
-          /* this.SrvDomicilios.getDomicilioByNroDoc(cast[0].nro_doc).subscribe(respuesta2 => {
-             console.log({'SrvDomicilios.getDomicilioByNroDoc' : respuesta2});
-             let cast2 : any = respuesta[0];
-             if(cast2) {
-               this.empleadosForm.controls.calle.setValue(cast2.calle);
-               this.empleadosForm.controls.numero.setValue(cast2.numero);
-               this.empleadosForm.controls.piso.setValue(cast2.piso);
-               this.empleadosForm.controls.depto.setValue(cast2.depto);
-               this.empleadosForm.controls.manzana.setValue(cast2.manzana);
-               this.empleadosForm.controls.provincia.setValue(cast2.provincias_id+"");
-               this.empleadosForm.controls.ciudades.setValue(cast2.ciudad_nombre);
-             }       
-           });*/
-        });
+        this.getDatosCliente(params.clientes_id);
       }
       console.log(params);
     });
-
 
     //Llenado de combo provincias
     this.SrvDomicilios.getProvinciasPorPais(1).subscribe(respuesta => {
@@ -249,7 +133,6 @@ export class CargarClientesComponent implements OnInit {
       for (let i = 0; i < cast.length; i++) {
         this.provincias.push({ 'id': cast[i].id, 'nombre': cast[i].nombre });
       }
-
       this.clientesForm.controls.provincia.setValue(23);
       this.getCiudadesPorProvincia();
     });
@@ -270,8 +153,11 @@ export class CargarClientesComponent implements OnInit {
   }
 
 
+  //Agregada validación entre objeto y String. REPETIR en Proyecto.
   displayFn(user?: CiudadesInterface): string | undefined {
-    return user ? user.descrip : undefined;
+    console.log("Display Object is ---> " + user);
+    return (typeof (user) !== 'string') ? user.descrip : user;
+    //return user ? user.descrip : undefined;
   }
 
   private _filter(descrip: string): CiudadesInterface[] {
@@ -282,6 +168,48 @@ export class CargarClientesComponent implements OnInit {
 
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1 == c2 : false;
+  }
+
+
+  getDatosCliente(id_clientes) {
+    this.SrvClientes.getDatosClientePorId(id_clientes).subscribe(respuesta => {
+      console.log({ "SrvClientes.getDatosClientePorId": respuesta });
+      let cast: any = respuesta;
+
+      this.ciudades.push({ id: cast[0].ciudades_id, descrip: cast[0].ciudad_nombre.trim() });
+      //(<HTMLInputElement>document.getElementById("ciudades")).value = cast[0].ciudad_nombre;
+      //Datos personales
+      this.clientesForm.controls.apellido.setValue(cast[0].apellido);
+      this.clientesForm.controls.nombre.setValue(cast[0].nombre);
+      this.clientesForm.controls.documento.setValue(cast[0].nro_doc);
+      this.clientesForm.controls.tipo_doc.setValue(cast[0].tipo_doc + "");
+      this.clientesForm.controls.fecha_nacimiento.setValue(cast[0].fecha_nac);
+      this.clientesForm.controls.sexo.setValue(cast[0].sexo + "");
+      this.clientesForm.controls.telefono.setValue(cast[0].telefono);
+      this.clientesForm.controls.celular.setValue(cast[0].telefono_cel);
+      this.clientesForm.controls.email.setValue(cast[0].email);
+      this.clientesForm.controls.calle.setValue(cast[0].calle);
+      this.clientesForm.controls.numero.setValue(cast[0].numero);
+      this.clientesForm.controls.piso.setValue(cast[0].piso);
+      this.clientesForm.controls.depto.setValue(cast[0].depto);
+      this.clientesForm.controls.manzana.setValue(cast[0].manzana);
+      this.clientesForm.controls.provincia.setValue(cast[0].provincias_id);
+      this.clientesForm.controls.ciudades.setValue(cast[0].ciudad_nombre);
+    });
+  }
+
+
+  getCiudadesPorProvincia() {
+    let provincias_id = this.clientesForm.controls.provincia.value;
+    this.SrvDomicilios.getCiudadesPorProvincia(provincias_id).subscribe(respuesta => {
+      let cast: any = respuesta;
+      console.log({ 'SrvDomicilios.getCiudadesPorProvincia': cast });
+      for (let i = 0; i < cast.length; i++) {
+        this.ciudades.push({ id: cast[i].id, descrip: cast[i].nombre.trim() });
+        //por alguna razon el nombre viene con espacios en blanco alrededor asi que se hace un trim por javascript
+      }
+      console.log(this.ciudades);
+    })
   }
 
 
@@ -331,17 +259,24 @@ export class CargarClientesComponent implements OnInit {
               console.log('INSERTADO');
               this.clientesForm.reset();
             });
-
-
-
           });
-
-
-
-
       }
-      else { console.log('Modificar...'); }
-
+      else {
+        console.log('Modificar...');
+        this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
+          console.log({ "SrvDomicilios.getCiudadesIdPorNombre": respuesta });
+          let cast: any = respuesta;
+          this.clientesForm.controls.ciudades_id.setValue(cast.id);
+          console.log(JSON.stringify(this.clientesForm.getRawValue()));
+        }, err => {
+          alert("Debe seleccionar una ciudad de la lista desplegable."); console.log(err)
+        }, () => {
+          this.SrvClientes.insertClientePersonaDomicilio(this.clientesForm.getRawValue()).subscribe(resp => {
+            console.log('MODIFICADO');
+            this.clientesForm.reset();
+          });
+        });
+      }
     }
     else {
       console.log({ "Submit Invalido": this.clientesForm.controls });
