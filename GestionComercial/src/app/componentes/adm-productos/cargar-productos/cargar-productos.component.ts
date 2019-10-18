@@ -23,9 +23,14 @@ export class CargarProductosComponent implements OnInit {
 
   caracteristicas = new Array<Caracteristica>();
   categorias_guardar = new Array<{ id: number, nombre: string }>();
-  imagenes = new Array<{imagen:string}>();
+  imagenes = new Array<{ imagen: string, predeterminada: boolean }>();
+
+  indiceFotoPredeterminada = 0;
+  cantidadFotos = 0;
+
   //Instancias
   productosForm: FormGroup;
+
   //Arbol de Categorias
   treeControl = new NestedTreeControl<Categorias>(node => node.children);
   dataSource = new MatTreeNestedDataSource<Categorias>();
@@ -69,7 +74,7 @@ export class CargarProductosComponent implements OnInit {
           Validators.required
         ])
       ]
-      , 
+      ,
       unidad: []
       ,
       descripcion_factura: [
@@ -104,7 +109,7 @@ export class CargarProductosComponent implements OnInit {
 
         ])
       ]
-      
+
     });
   }
 
@@ -193,6 +198,20 @@ export class CargarProductosComponent implements OnInit {
           });
       });
 
+      this.SrvProductos.getFotosCargadas(id_producto).subscribe(respuesta => {
+        console.log({ "SrvProductos.getFotosCargadas": respuesta });
+        let cast: any = respuesta;
+        for (let i = 0; i < cast.length; i++) {
+          this.urls[i] = cast[i].imagen;
+          this.imagenes[i] = {
+            "imagen": cast[i].imagen,
+            "predeterminada": cast[i].principal
+          };
+          if (cast[i].principal == true) document.getElementsByName('predeterminada')[i];
+        }
+        this.cantidadFotos = cast.length;
+      });
+
     }
   }
 
@@ -236,24 +255,45 @@ export class CargarProductosComponent implements OnInit {
           this.urls.push(e.target.result);
           this.imagenes.push(
             {
-              "imagen" :reader.result.toString()
+              "imagen": reader.result.toString()
+              , "predeterminada": (indice == this.indiceFotoPredeterminada)
             }
-              );
+          );
           //console.log(this.imagenes[indice]);
           indice++;
+          this.cantidadFotos = this.cantidadFotos + indice;
         }
         reader.readAsDataURL(file);
-
-
       }
     }
     console.log(this.urls);
   }
 
+  quitarFoto(posicion) {
+    console.log("Posicion: " + posicion);
+    this.imagenes.splice(posicion, 1);
+    this.urls.splice(posicion, 1);
+    console.log(this.imagenes);
+  }
+
+  setFotoPredeterminada(posicion) {
+    console.log({ "foto predeterminada": posicion });
+    this.indiceFotoPredeterminada = posicion;
+    for (let i = 0; i < this.imagenes.length; i++) {
+      if (i == this.indiceFotoPredeterminada) {
+        this.imagenes[i].predeterminada = true;
+      }
+      else {
+        this.imagenes[i].predeterminada = false;
+      }
+    }
+    console.log(JSON.stringify(this.imagenes[this.indiceFotoPredeterminada]));
+  }
+
 
   //Guardar Nuevo Producto
   guardar() {
-    
+
 
     let id_producto = this.productosForm.controls.id_producto.value;
 
@@ -264,6 +304,8 @@ export class CargarProductosComponent implements OnInit {
         this.SrvProductos.insertProductoReturnId(this.productosForm.value).subscribe(respuesta => {
           console.log({ "SrvProductos.insertProductoReturnId": respuesta });
           let cast: any = respuesta;
+
+          
 
           for (let caract of this.caracteristicas) {
             this.SrvProductos.insertCaracteristicasProducto(caract, cast.id).subscribe(resp => {
@@ -278,18 +320,12 @@ export class CargarProductosComponent implements OnInit {
             });
           }
 
-          this.SrvProductos.eliminarImagenesProductos(id_producto).subscribe(resp => {
-            console.log({"SrvProductos.eliminarImagenesProductos" : resp});
-
-            for (let imagen of this.imagenes) {
-              this.SrvProductos.cargarImagenProducto(imagen, id_producto).subscribe(resp => {
-                console.log({"SrvProductos.cargarImagenProducto" : resp});
-                this.toastr.success('Imagenes cargadas exitosamente');
-              });
-            }
-            this.toastr.success('La imagen se ha ACTUALIZADO Exitosamente');
-          });
-          
+          for (let imagen of this.imagenes) {
+            this.SrvProductos.cargarImagenProducto(imagen, cast.id).subscribe(resp => {
+              console.log({ "SrvProductos.cargarImagenProducto": resp });
+              this.toastr.success('Imagenes cargadas exitosamente');
+            });
+          }
           this.toastr.success('El Producto se ha CARGADO Exitosamente');
           this.productosForm.reset();
           while (this.caracteristicas.length > 0) {
@@ -327,22 +363,22 @@ export class CargarProductosComponent implements OnInit {
             }
 
             this.SrvProductos.eliminarImagenesProductos(id_producto).subscribe(resp => {
-              console.log({"SrvProductos.eliminarImagenesProductos" : resp});
-  
+              console.log({ "SrvProductos.eliminarImagenesProductos": resp });
+
               for (let imagen of this.imagenes) {
                 this.SrvProductos.cargarImagenProducto(imagen, id_producto).subscribe(resp => {
-                  console.log({"SrvProductos.cargarImagenProducto" : resp});
+                  console.log({ "SrvProductos.cargarImagenProducto": resp });
                   this.toastr.success('Imagenes cargadas exitosamente');
                 });
               }
-  
+
               this.toastr.success('La imagen se ha ACTUALIZADO Exitosamente');
             });
 
             this.toastr.success('El producto se ha ACTUALIZADO Exitosamente');
             this.productosForm.reset();
             this.router.navigate(['productos/busqueda-productos']);
-          }); 
+          });
         });
       } else {
         this.productosForm.getError;

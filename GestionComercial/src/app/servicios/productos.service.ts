@@ -58,6 +58,10 @@ export class ProductosService {
     return this.http.get(environment.apiEndpoint + '/getProductosPorCategoriaCampoBusqueda/'+categorias_id+'/'+campo_buscar+'/'+texto_buscar, httpOptions);
   }
 
+  getFotosCargadas(id: number): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getFotosCargadas/' + id, httpOptions);
+  }
+
    //PAGINACION INICIO --------->
 
    getCantidadPaginasProductos(buscar_codigo, buscar_nombre, buscar_descripcion, buscar_categoria, txt): Observable<any> {
