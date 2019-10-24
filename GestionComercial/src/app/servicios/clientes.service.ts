@@ -70,6 +70,13 @@ export class ClientesService {
   }
 
 
+  guardarClientePersonaDomicilio(cliente: any) {
+    const json = JSON.stringify(cliente);
+    return this.http.post(environment.apiEndpoint + '/guardarClientePersonaDomicilio/', json, httpOptions);
+  }
+
+
+
   //---------------------------PUT's---------------------------//
 
   //---------------------------DELETE's---------------------------//

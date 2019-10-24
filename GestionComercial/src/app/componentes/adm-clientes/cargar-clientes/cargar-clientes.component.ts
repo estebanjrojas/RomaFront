@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { PersonasService } from '../../../servicios/personas.service';
 //import { Empleados } from '../../../modelos/Clientes';
 import { Provincias } from '../../../modelos/Provincias';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Inject, Injectable, Optional } from '@angular/core';
 import { MAT_DATE_LOCALE } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -74,10 +74,13 @@ export class CargarClientesComponent implements OnInit {
   nomb_usr: string;
   ciudadesClass: Ciudades = new Ciudades();
 
+  sexo = new Array<Tabgral>();
+
 
   constructor(
     private SrvTabgral: TabgralService,
     private SrvClientes: ClientesService,
+    private router: Router,
     private SrvPersonas: PersonasService,
     private SrvDomicilios: DomiciliosService,
     private toastr: ToastrService,
@@ -88,21 +91,23 @@ export class CargarClientesComponent implements OnInit {
       apellido: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z ]*')])],
       nombre: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z ]*')])],
       fecha_nacimiento: ['', Validators.compose([Validators.required])],
-      calle: ['', Validators.compose([Validators.required])],
-      numero: ['', Validators.compose([Validators.required])],
+      calle: ['', Validators.compose([])],
+      numero: ['', Validators.compose([])],
       piso: ['', Validators.compose([])],
       depto: ['', Validators.compose([])],
       manzana: ['', Validators.compose([])],
       provincia: ['', Validators.compose([Validators.required])],
       ciudades: ['', Validators.compose([Validators.required])],
-      ciudades_id: ['', Validators.compose([Validators.required])],
+      ciudades_id: ['', Validators.compose([])],
       nombre_usuario: ['', Validators.compose([])],
-      tipo_doc: ['', Validators.compose([Validators.required])],
-      sexo: ['', Validators.compose([Validators.required])],
+      tipo_doc: ['', Validators.compose([])],
+      sexo: ['', Validators.compose([])],
       telefono: ['', Validators.compose([])],
       celular: ['', Validators.compose([])],
       email: ['', Validators.compose([])],
-      clientes_id: ['', Validators.compose([])]
+      clientes_id: [, Validators.compose([])],
+      personas_id: [, Validators.compose([])],
+      domicilios_id: [, Validators.compose([])]
     });
   }
 
@@ -115,16 +120,14 @@ export class CargarClientesComponent implements OnInit {
 
     this.clientesForm.controls.tipo_doc.setValue("3");
     this.route.params.subscribe(params => {
-      this.clientesForm.controls.clientes_id.setValue(params.clientes_id);
-      console.log(params);
-    });
-    this.route.params.subscribe(params => {
       if (params.clientes_id != null) {
         this.clientesForm.controls.clientes_id.setValue(params.clientes_id);
-        this.getDatosCliente(params.clientes_id);
+        
       }
       console.log(params);
-    });
+    }, err => {console.log(err)}, () => {});
+
+    this.getDatosCliente(this.clientesForm.controls.clientes_id.value);
 
     //Llenado de combo provincias
     this.SrvDomicilios.getProvinciasPorPais(1).subscribe(respuesta => {
@@ -141,7 +144,20 @@ export class CargarClientesComponent implements OnInit {
     this.SrvTabgral.selectByNroTab(3).subscribe(respuesta => {
       console.log({ 'SrvTabgral.selectByNroTab': respuesta });
       this.oficinas = respuesta;
-    })
+    });
+
+    //Sexo
+    this.SrvTabgral.selectByNroTab(4).subscribe(respuesta => {
+      console.log({ "SrvTabgral.selectByNroTab(4)": respuesta });
+      let cast: any = respuesta;
+      for (var i = 0; i < cast.length; i++) {
+        let rel: Tabgral = { codigo: "0", descrip: "" };
+        rel.codigo = cast[i].codigo;
+        rel.descrip = cast[i].descrip;
+        // console.log("rel "+rel);
+        this.sexo.push(rel);
+      }
+    });
 
     //Filtro de ciudades por provincia
     this.filteredOptions = this.clientesForm.controls.ciudades.valueChanges
@@ -176,25 +192,33 @@ export class CargarClientesComponent implements OnInit {
       console.log({ "SrvClientes.getDatosClientePorId": respuesta });
       let cast: any = respuesta;
 
-      this.ciudades.push({ id: cast[0].ciudades_id, descrip: cast[0].ciudad_nombre.trim() });
+      //this.ciudades.push({ id: cast[0].ciudades_id, descrip: cast[0].ciudad_nombre.trim() });
       //(<HTMLInputElement>document.getElementById("ciudades")).value = cast[0].ciudad_nombre;
       //Datos personales
-      this.clientesForm.controls.apellido.setValue(cast[0].apellido);
-      this.clientesForm.controls.nombre.setValue(cast[0].nombre);
-      this.clientesForm.controls.documento.setValue(cast[0].nro_doc);
-      this.clientesForm.controls.tipo_doc.setValue(cast[0].tipo_doc + "");
-      this.clientesForm.controls.fecha_nacimiento.setValue(cast[0].fecha_nac);
-      this.clientesForm.controls.sexo.setValue(cast[0].sexo + "");
-      this.clientesForm.controls.telefono.setValue(cast[0].telefono);
-      this.clientesForm.controls.celular.setValue(cast[0].telefono_cel);
-      this.clientesForm.controls.email.setValue(cast[0].email);
-      this.clientesForm.controls.calle.setValue(cast[0].calle);
-      this.clientesForm.controls.numero.setValue(cast[0].numero);
-      this.clientesForm.controls.piso.setValue(cast[0].piso);
-      this.clientesForm.controls.depto.setValue(cast[0].depto);
-      this.clientesForm.controls.manzana.setValue(cast[0].manzana);
-      this.clientesForm.controls.provincia.setValue(cast[0].provincias_id);
-      this.clientesForm.controls.ciudades.setValue(cast[0].ciudad_nombre);
+
+      this.clientesForm.patchValue({
+        apellido: cast[0].apellido,
+        nombre: cast[0].nombre,
+        documento: cast[0].nro_doc,
+        tipo_doc: cast[0].tipo_doc + "",
+        fecha_nacimiento: cast[0].fecha_nac,
+        sexo: cast[0].sexo,
+        telefono: cast[0].telefono,
+        celular: cast[0].telefono_cel,
+        email: cast[0].email,
+        calle: cast[0].calle,
+        numero: cast[0].numero,
+        piso: cast[0].piso,
+        depto: cast[0].depto,
+        manzana: cast[0].manzana,
+        provincia: cast[0].provincias_id,
+        ciudades: cast[0].ciudad_nombre,
+        personas_id: cast[0].personas_id,
+        domicilios_id: cast[0].domicilios_id,
+      });
+
+      this.ciudades.push({ id: cast[0].ciudades_id, descrip: cast[0].ciudad_nombre.trim() });
+      //(<HTMLInputElement>document.getElementById("ciudades")).value = cast[0].ciudades;
     });
   }
 
@@ -214,54 +238,14 @@ export class CargarClientesComponent implements OnInit {
 
 
   guardarCliente() {
-    let id_cliente = this.clientesForm.get('clientes_id').value;
+    //let id_cliente = this.clientesForm.get('clientes_id').value;
+    let id_cliente = this.clientesForm.controls.clientes_id.value;
     console.log({ 'Form Valido': this.clientesForm.valid });
     console.log(JSON.stringify(this.clientesForm.getRawValue()));
     if (this.clientesForm.valid) {
-      let ciudades_id = 0;
-      let ciudad_nombre = this.clientesForm.get('ciudades').value.descrip;
-      if (id_cliente == undefined || id_cliente == null) {
-        console.log('Insertar...');
-        this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
-          console.log({ "SrvDomicilios.getCiudadesIdPorNombre": respuesta });
-          let cast: any = respuesta;
-          ciudades_id = cast.id;
-        }
-          , err => { console.log(err) }
-          , () => {
-            let campos_domicilio = {
-              "ciudades_id": ciudades_id,
-              "calle": ((this.clientesForm.get('calle') != undefined) ? this.clientesForm.get('calle').value : ""),
-              "numero": ((this.clientesForm.get('numero') != undefined) ? this.clientesForm.get('numero').value : ""),
-              "piso": ((this.clientesForm.get('piso') != undefined) ? this.clientesForm.get('piso').value : ""),
-              "depto": ((this.clientesForm.get('depto') != undefined) ? this.clientesForm.get('depto').value : ""),
-              "manzana": ((this.clientesForm.get('manzana') != undefined) ? this.clientesForm.get('manzana').value : ""),
-              "lote": ((this.clientesForm.get('lote') != undefined) ? this.clientesForm.get('lote').value : ""),
-              "block": ((this.clientesForm.get('block') != undefined) ? this.clientesForm.get('block').value : ""),
-              "barrio": ((this.clientesForm.get('barrio') != undefined) ? this.clientesForm.get('barrio').value : "")
-            };
-
-            let insert_completo = {
-              domicilio: campos_domicilio,
-              //Persona
-              "tipo_doc": this.clientesForm.get('tipo_doc').value,
-              "nro_doc": this.clientesForm.get('documento').value,
-              "apellido": this.clientesForm.get('apellido').value,
-              "nombre": this.clientesForm.get('nombre').value,
-              "telefono": this.clientesForm.get('telefono').value,
-              "celular": this.clientesForm.get('celular').value,
-              "email": this.clientesForm.get('email').value,
-              "fecha_nac": this.clientesForm.get('fecha_nacimiento').value,
-              "sexo": this.clientesForm.get('sexo').value,
-            }
-            console.log({ "Insertar": insert_completo });
-            this.SrvClientes.insertClientePersonaDomicilio(insert_completo).subscribe(resp => {
-              console.log('INSERTADO');
-              this.clientesForm.reset();
-            });
-          });
-      }
-      else {
+      //let ciudad_nombre = this.clientesForm.get('ciudades').value.descrip;
+      let ciudad_nombre = (<HTMLInputElement>document.getElementById("ciudades")).value;
+      if (id_cliente != null || id_cliente != undefined) {
         console.log('Modificar...');
         this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
           console.log({ "SrvDomicilios.getCiudadesIdPorNombre": respuesta });
@@ -271,11 +255,28 @@ export class CargarClientesComponent implements OnInit {
         }, err => {
           alert("Debe seleccionar una ciudad de la lista desplegable."); console.log(err)
         }, () => {
-          this.SrvClientes.insertClientePersonaDomicilio(this.clientesForm.getRawValue()).subscribe(resp => {
+          this.SrvClientes.guardarClientePersonaDomicilio(this.clientesForm.getRawValue()).subscribe(resp => {
             console.log('MODIFICADO');
             this.clientesForm.reset();
+            this.router.navigate(['clientes/busqueda-clientes']);
           });
         });
+      }
+      else {
+        console.log('Insertar...');
+        this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(respuesta => {
+          console.log({ "SrvDomicilios.getCiudadesIdPorNombre": respuesta });
+          let cast: any = respuesta;
+          this.clientesForm.controls.ciudades_id.setValue(cast.id);
+        }
+          , err => { console.log(err) }
+          , () => {
+            this.SrvClientes.guardarClientePersonaDomicilio(this.clientesForm.getRawValue()).subscribe(resp => {
+              console.log('INSERTADO');
+              this.clientesForm.reset();
+              this.router.navigate(['clientes/busqueda-clientes']);
+            });
+          });
       }
     }
     else {
@@ -284,3 +285,10 @@ export class CargarClientesComponent implements OnInit {
   }
 
 }
+
+
+interface Tabgral {
+  codigo: string;
+  descrip: string;
+}
+
