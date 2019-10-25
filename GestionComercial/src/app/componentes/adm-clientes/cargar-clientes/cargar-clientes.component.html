@@ -85,9 +85,10 @@
                               </div>
                               <div class="col-md-3">
                                 <mat-form-field class="example-full-width" style="width:100%;">
-                                  <mat-select placeholder="Sexo" formControlName="sexo">
-                                    <mat-option value=1>Masculino</mat-option>
-                                    <mat-option value=2>Femenino</mat-option>
+                                  <mat-select placeholder="Sexo" formControlName="sexo" [compareWith]="compareFn">
+                                    <mat-option *ngFor="let sex of this.sexo" [value]="sex.codigo">
+                                      {{sex.descrip}}  
+                                    </mat-option>
                                   </mat-select>
                                 </mat-form-field>
                               </div>
@@ -166,8 +167,8 @@
                           </div>
                           <div class="col-md-5">
                             <mat-form-field class="example-full-width" style="width:100%;">
-                              <input formControlName="ciudades" type="text" placeholder="Ciudad" aria-label="Ciudad"
-                                matInput [matAutocomplete]="auto" />
+                              <input formControlName="ciudades" id="ciudades" type="text" placeholder="Ciudad"
+                                aria-label="Ciudad" matInput [matAutocomplete]="auto" />
                               <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                                   {{option.descrip}}
