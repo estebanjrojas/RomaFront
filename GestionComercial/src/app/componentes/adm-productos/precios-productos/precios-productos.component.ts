@@ -37,6 +37,16 @@ export class PreciosProductosComponent implements OnInit {
   }
 
 
+
+async setform(){
+  await this.preciosProductosForm.controls.nuevo_precio.reset;
+  await this.mostrarPrecioActual(this.producto.productos_id);
+  await this.getValoresTablaPrecios();
+
+}
+
+
+
   mostrarPrecioActual(productos_id) {
     this.SrvProductos.getUltimoPrecioValido(productos_id).subscribe(resp => {
       let respuesta: any = resp;
@@ -63,9 +73,7 @@ export class PreciosProductosComponent implements OnInit {
         console.log("El precio se ha actualizado e instalado satisfactoriamente");
       });
     });
-    this.mostrarPrecioActual(this.producto.productos_id);
-    this.preciosProductosForm.controls.nuevo_precio.reset;
-    this.getValoresTablaPrecios();
+    this.setform();
 
   }
 
