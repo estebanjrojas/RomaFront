@@ -50,5 +50,17 @@ export class BusquedaVentasComponent implements OnInit {
     }
   }
 
+  anularVenta(ventas_id) {
+    const usuario_anula = localStorage.getItem('roma_usuario');
+    let autoriza = confirm("Está seguro que desea anular la venta?");
+    if(autoriza) {
+      const data = {"ventas_id" : ventas_id, "usuario" : usuario_anula};
+      this.SrvVentas.anularVenta(data).subscribe(res => {
+        console.log(res);
+        this.buscarVentas();
+      });
+    }
+  }
+
 
 }

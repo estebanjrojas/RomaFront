@@ -42,6 +42,7 @@ import { CambiarPasswordComponent } from './componentes/adm-usuarios/cambiar-pas
 import {APP_BASE_HREF} from '@angular/common';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import { VisualizacionVentasComponent } from './componentes/ventas/visualizacion-ventas/visualizacion-ventas.component';
 
 //Rutas para el Router de Angular
 const appRoutes: Routes = [{ path: '', component: LoginComponent }
@@ -104,7 +105,8 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     CargaDetalleVentaComponent,
     ConfirmacionVentaComponent,
     PreciosProductosComponent,
-    CambiarPasswordComponent
+    CambiarPasswordComponent,
+    VisualizacionVentasComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

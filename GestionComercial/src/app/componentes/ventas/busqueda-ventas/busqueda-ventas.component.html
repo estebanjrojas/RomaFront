@@ -40,15 +40,35 @@
                         <th></th>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let vta of cast">
+                        <tr *ngFor="let vta of cast" [ngClass]="{'anulada': vta.anulada==true}">
                           <td>{{vta.fecha | date:'dd-MM-yyyy' }}</td>
                           <td>{{vta.apellido_cliente}}, {{vta.nombre_cliente}}</td>
                           <td>{{vta.apellido_vendedor}}, {{vta.nombre_vendedor}}</td>
                           <td>{{vta.monto}}</td>
                           <td style='text-align: center'>
-                            <button class="btn btn-info btn-sm" [routerLink]="['/usuarios/cargar-usuarios', vta.ventas_id]" routerLinkActive="active">Modificar</button>&nbsp;
-                            <button class="btn btn-danger btn-sm">Baja</button>
+                            <button type="button" class="btn btn-info btn-sm" title="Ver" data-toggle="modal" [attr.data-target]="'#ver_'+vta.ventas_id"><img src="./assets/detalle.png" alt=""></button>&nbsp;
+                            
+                            <button class="btn btn-danger btn-sm" *ngIf="vta.anulada!=true" (click)="anularVenta(vta.ventas_id)">Anular</button>
                           </td>
+                          <!--Modal Visualizacion-->
+                          <div id="ver_{{vta.ventas_id}}" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div  class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                  <div class="modal-header"  style="background-color: rgb(55, 106, 158); color: white">
+                                      <h5 class="modal-title" id="exampleModalLabel">Información de la Venta</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <app-visualizacion-ventas [ventas_id]="vta.ventas_id"></app-visualizacion-ventas>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: #f2f6f9">
+                                      <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+                              </div>
+                            </div>
+                          </div>
                         </tr>
                       </tbody>
                     </table>

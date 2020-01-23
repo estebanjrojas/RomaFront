@@ -56,4 +56,10 @@ export class VentasService {
     let json = JSON.stringify(datos);
     return this.http.post(url, json, httpOptions);
   }
+
+  anularVenta(datos: any) {
+    const url = environment.apiEndpoint + `/anularVenta`;
+    let json = JSON.stringify(datos);
+    return this.http.put(url, json, httpOptions);
+  }
 }
