@@ -33,6 +33,10 @@ export class VentasService {
     return this.http.get(environment.apiEndpoint + '/getVentasTodas/', httpOptions);
   }
 
+  getVentaPorId(ventas_id): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/getVentaPorId/' + ventas_id, httpOptions);
+  }
+
 
   agregarDetalleVentaActual(detalle: VentasDetalle) {
     this.miVentasDetalle.push(detalle);

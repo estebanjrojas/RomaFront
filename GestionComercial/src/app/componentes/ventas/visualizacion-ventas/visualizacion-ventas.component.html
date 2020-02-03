@@ -1,3 +1,18 @@
-<p>
-  visualizacion-ventas works! {{ventas_id}}
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      Fecha: {{venta.fecha}}
+    </div>
+    <div class="col-6">
+      Cliente: {{venta.apellido_cliente}} {{venta.nombre_cliente}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      Monto: {{venta.monto_total}}
+    </div>
+    <div class="col-6">
+      Vendedor: {{venta.apellido_vendedor}} {{venta.nombre_vendedor}}
+    </div>
+  </div>
+</div>
