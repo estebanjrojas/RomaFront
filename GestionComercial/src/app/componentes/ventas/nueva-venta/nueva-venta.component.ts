@@ -13,8 +13,8 @@ import { CargaDetalleVentaComponent } from '../carga-detalle-venta/carga-detalle
   styleUrls: ['./nueva-venta.component.css']
 })
 export class NuevaVentaComponent implements OnInit {
-  @ViewChild(SeleccionClientesComponent) selectorClientes: SeleccionClientesComponent;
-  @ViewChild(CargaDetalleVentaComponent) detalleVenta: CargaDetalleVentaComponent;
+  @ViewChild(SeleccionClientesComponent, { static: true }) selectorClientes: SeleccionClientesComponent;
+  @ViewChild(CargaDetalleVentaComponent, { static: false }) detalleVenta: CargaDetalleVentaComponent;
   nuevaVentaForm: FormGroup;
   clienteSeleccionado: Clientes;
   personaSeleccionada: Personas;
