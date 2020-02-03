@@ -1,7 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
+const httpOptions = {
+  headers: new HttpHeaders(
+    {
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('roma_acceso')
+    }
+  )
+};
 
 
 @Injectable({
@@ -21,7 +30,7 @@ export class EmpleadosService {
         }
       )
     };
-    return this.http.get(environment.apiEndpoint + '/getEmpleadoPorNroDoc/' + tipo_doc+'/'+nro_doc, httpOptions);
+    return this.http.get(environment.apiEndpoint + '/getEmpleadoPorNroDoc/' + tipo_doc + '/' + nro_doc, httpOptions);
   }
 
   getEmpleadosBusqueda(texto_busqueda) {
@@ -58,7 +67,7 @@ export class EmpleadosService {
       )
     };
     let json = JSON.stringify(empleado);
-    return this.http.post(environment.apiEndpoint+'/guardarEmpleadoPersonaDomicilio/', json, httpOptions);
+    return this.http.post(environment.apiEndpoint + '/guardarEmpleadoPersonaDomicilio/', json, httpOptions);
   }
   getEmpleadosSinUsuario() {
     const httpOptions = {
@@ -84,6 +93,33 @@ export class EmpleadosService {
     return this.http.get(environment.apiEndpoint + '/getDatosEmpleadoPorId/' + id, httpOptions);
   }
 
+
+  //PAGINACION INICIO --------->
+
+  getCantidadPaginasEmpleados(buscar_nombre, buscar_documento, buscar_fechanac, buscar_oficina, txt): Observable<any> {
+    return this.http.get(environment.apiEndpoint +
+      '/getCantidadPaginasEmpleados/' +
+      buscar_nombre + '/' +
+      buscar_documento + '/' +
+      buscar_fechanac + '/' +
+      buscar_oficina + '/' +
+      txt,
+      httpOptions);
+  }
+
+  getEmpleados(pagina_actual, cantidad_paginas, buscar_nombre, buscar_documento, buscar_fechanac, buscar_oficina, txt): Observable<any> {
+    return this.http.get(environment.apiEndpoint +
+      '/getEmpleados/' +
+      pagina_actual + '/' +
+      cantidad_paginas + '/' +
+      buscar_nombre + '/' +
+      buscar_documento + '/' +
+      buscar_fechanac + '/' +
+      buscar_oficina + '/' +
+      txt,
+      httpOptions);
+  }
+  //PAGINACION FIN <------------
 
 
 }
