@@ -15,4 +15,34 @@
       Vendedor: {{venta.apellido_vendedor}} {{venta.nombre_vendedor}}
     </div>
   </div>
+  <div class="row anulada" *ngIf="venta.anulada==true" >
+    <div class="col-6">
+     <strong>Fecha Anulación: {{venta.fecha_anulacion}}</strong>
+    </div>
+    <div class="col-6">
+      <strong>Usuario Anulación: {{venta.usuario_anulacion}}</strong> 
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-body">
+        <table class="table-striped">
+          <thead class="thead-dark">
+            <th>Producto</th>
+            <th>Precio Unid.</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let detalle of ventaDetalles;">
+              <td>{{detalle.nombre_producto}}</td>
+              <td>{{detalle.monto_unidad}}</td>
+              <td>{{detalle.cantidad}}</td>
+              <td>{{detalle.subtotal}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

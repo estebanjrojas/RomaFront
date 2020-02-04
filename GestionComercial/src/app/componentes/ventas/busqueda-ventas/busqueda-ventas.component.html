@@ -96,7 +96,8 @@
                       <th>Cliente</th>
                       <th>Vendedor</th>
                       <th>Monto</th>
-                      <th></th>
+                      <th class="btncolumn"></th>
+                      <th class="btncolumn"></th>
                     </thead>
                     <tbody>
                       <tr *ngFor="let vta of cast" [ngClass]="{'anulada': vta.anulada==true}">
@@ -104,13 +105,19 @@
                         <td>{{vta.apellido_cliente}}, {{vta.nombre_cliente}}</td>
                         <td>{{vta.apellido_vendedor}}, {{vta.nombre_vendedor}}</td>
                         <td>{{vta.monto}}</td>
-                        <td style='text-align: center'>
-                          <button type="button" class="btn btn-info btn-sm" title="Ver" data-toggle="modal"
+                        <td style='text-align: center' *ngIf="vta.anulada==true" colspan="2" class="btncolumn">
+                          <button type="button" class="btn btn-info btn-block" title="Ver" data-toggle="modal"
                             [attr.data-target]="'#ver_'+vta.ventas_id"><img src="./assets/detalle.png"
-                              alt=""></button>&nbsp;
-
-                          <button class="btn btn-danger btn-sm" *ngIf="vta.anulada!=true"
-                            (click)="anularVenta(vta.ventas_id)">Anular</button>
+                              alt=""><strong>Detalle</strong></button>
+                        </td>
+                        <td style='text-align: center' *ngIf="vta.anulada!=true" class="btncolumn">
+                          <button type="button" class="btn btn-info btn-block" title="Ver" data-toggle="modal"
+                            [attr.data-target]="'#ver_'+vta.ventas_id"><img src="./assets/detalle.png"
+                              alt=""><strong>Detalle</strong></button>
+                        </td>
+                        <td *ngIf="vta.anulada!=true" class="btncolumn">
+                          <button class="btn btn-danger btn-block" 
+                            (click)="anularVenta(vta.ventas_id)"><strong>Anular</strong></button>
                         </td>
                         <!--Modal Visualizacion-->
                         <div id="ver_{{vta.ventas_id}}" class="modal fade bd-example-modal-lg" tabindex="-1"

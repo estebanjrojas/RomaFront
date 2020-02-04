@@ -1,3 +1,13 @@
 tr.anulada td {
     color: red;
 }
+
+.btncolumn {
+    max-width: 60px;
+    min-width: 60px;
+}
+
+td {
+    padding: 1;
+    margin: 0;
+}

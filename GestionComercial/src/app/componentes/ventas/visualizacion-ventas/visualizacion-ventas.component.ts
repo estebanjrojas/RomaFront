@@ -24,9 +24,8 @@ export class VisualizacionVentasComponent implements OnInit {
     anulada : '', 
     monto_total: 0
 
-
   };
-  ventaDetalles: VentasDetalle[] = [];
+  ventaDetalles: VentasDetalleInterface[] = [];
 
   ngOnInit() {
     this.SrvVentas.getVentaPorId(this.ventas_id).subscribe(resp => {
@@ -41,11 +40,35 @@ export class VisualizacionVentasComponent implements OnInit {
       this.venta.anulada = cast[0].anulada;
       this.venta.fecha_anulacion = cast[0].fecha_anulacion;
       this.venta.usuario_anulacion = cast[0].usuario_anulacion;
+
+    }, err => {
+      console.log('Error al obtener los datos de la venta: '+err.message);
+    }, ()=> {
+      this.SrvVentas.getDetalleVentaPorVentasId(this.ventas_id).subscribe(resd => {
+        
+        let cast : any = resd;
+        console.log(`{'respd ${this.ventas_id}' : ${resd}}`);
+        cast.forEach(det => {
+          this.ventaDetalles.push({
+            ventas_detalle_id : det.ventas_detalle_id,
+            cantidad: det.cantidad,
+            monto_unidad: det.monto_unidad,
+            subtotal: det.subtotal,
+            codigo_producto: det.codigo,
+            nombre_producto: det.nombre,
+            descripcion_producto: det.descripcion,
+            descripcion_factura_producto: det.descripcion_factura,
+            tipo_producto: det.tipo_producto
+          });
+        });
+        console.log(this.ventaDetalles);
+      });
     })
 
   }
 
 }
+
 
 
 
@@ -58,4 +81,16 @@ interface VentasInterface {
   anulada: string;
   fecha_anulacion: string;
   usuario_anulacion: string;
+}
+
+interface VentasDetalleInterface {
+  ventas_detalle_id : number;
+  cantidad: number;
+  monto_unidad: number;
+  subtotal: number;
+  codigo_producto: string;
+  nombre_producto: string;
+  descripcion_producto: string;
+  descripcion_factura_producto: string;
+  tipo_producto: string;
 }
