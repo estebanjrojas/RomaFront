@@ -241,13 +241,18 @@ export class CargarPuntosDeVentaComponent implements OnInit {
       });
 
     }
+
   }
 
 
 
+  volver() {
+    this.router.navigate(['puntos-venta/busqueda-puntos-venta']);
+  }
 
-
-
+  obtenerNroComprobanteWS(punto_venta_id, tipo_comprobante) {
+    console.log(punto_venta_id+ " " + tipo_comprobante);
+  }
 
 
 }

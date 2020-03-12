@@ -14,6 +14,7 @@ export class VisualizacionVentasComponent implements OnInit {
   constructor(private SrvVentas: VentasService) { }
 
   @Input() ventas_id : number;
+
   venta : VentasInterface = {
     ventas_id : 0,
     fecha: '',
@@ -47,7 +48,6 @@ export class VisualizacionVentasComponent implements OnInit {
       this.SrvVentas.getDetalleVentaPorVentasId(this.ventas_id).subscribe(resd => {
         
         let cast : any = resd;
-        console.log(`{'respd ${this.ventas_id}' : ${resd}}`);
         cast.forEach(det => {
           this.ventaDetalles.push({
             ventas_detalle_id : det.ventas_detalle_id,
@@ -61,7 +61,6 @@ export class VisualizacionVentasComponent implements OnInit {
             tipo_producto: det.tipo_producto
           });
         });
-        console.log(this.ventaDetalles);
       });
     })
 
@@ -93,4 +92,20 @@ interface VentasDetalleInterface {
   descripcion_producto: string;
   descripcion_factura_producto: string;
   tipo_producto: string;
+}
+
+interface Facturas {
+  facturas_id : number;
+  tipo : string;
+  punto_venta : string;
+  numero : string;
+  fecha_emision : string;
+  fecha_vencimiento : string;
+  cae : string;
+  vencimiento_cae : string;
+  cai : string;
+  vencimiento_cai: string;
+  monto_total : number;
+  monto_neto : number;
+  monto_iva : number;
 }
