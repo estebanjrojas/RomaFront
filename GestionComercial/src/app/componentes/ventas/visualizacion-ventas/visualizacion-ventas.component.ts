@@ -28,6 +28,22 @@ export class VisualizacionVentasComponent implements OnInit {
   };
   ventaDetalles: VentasDetalleInterface[] = [];
 
+  factura: FacturasInterface = {
+    facturas_id : 0,
+    fecha_emision : '',
+    fecha_vencimiento : '',
+    punto_venta : '',
+    numero : '',
+    cae : '',
+    cai : '',
+    monto_iva : 0,
+    monto_neto : 0,
+    monto_total : 0,
+    tipo : '',
+    vencimiento_cae : '',
+    vencimiento_cai : ''
+  }
+
   ngOnInit() {
     this.SrvVentas.getVentaPorId(this.ventas_id).subscribe(resp => {
       let cast : any = resp;
@@ -41,6 +57,19 @@ export class VisualizacionVentasComponent implements OnInit {
       this.venta.anulada = cast[0].anulada;
       this.venta.fecha_anulacion = cast[0].fecha_anulacion;
       this.venta.usuario_anulacion = cast[0].usuario_anulacion;
+      this.factura.facturas_id = cast[0].facturas_id;
+      this.factura.tipo = cast[0].tipo_factura;
+      this.factura.fecha_emision = cast[0].fecha_emision_factura;
+      this.factura.fecha_vencimiento = cast[0].fecha_vencimiento_cae;
+      this.factura.punto_venta = cast[0].punto_venta_factura;
+      this.factura.numero = cast[0].numero_factura;
+      this.factura.monto_total = cast[0].monto_total_factura;
+      this.factura.monto_neto = cast[0].monto_neto_factura;
+      this.factura.monto_iva = cast[0].monto_iva_factura;
+      this.factura.cae = cast[0].cae;
+      this.factura.cai = cast[0].cai;
+      this.factura.vencimiento_cae = cast[0].fecha_vencimiento_cae;
+      this.factura.vencimiento_cai = cast[0].fecha_vencimiento_cai;
 
     }, err => {
       console.log('Error al obtener los datos de la venta: '+err.message);
@@ -80,6 +109,7 @@ interface VentasInterface {
   anulada: string;
   fecha_anulacion: string;
   usuario_anulacion: string;
+  
 }
 
 interface VentasDetalleInterface {
@@ -94,7 +124,7 @@ interface VentasDetalleInterface {
   tipo_producto: string;
 }
 
-interface Facturas {
+interface FacturasInterface {
   facturas_id : number;
   tipo : string;
   punto_venta : string;

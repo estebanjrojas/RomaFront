@@ -23,6 +23,44 @@
       <strong>Usuario Anulación: {{venta.usuario_anulacion}}</strong> 
     </div>
   </div>
+  <div *ngIf="factura.facturas_id != undefined">
+    <h5 class="mt-2">Factura</h5>
+    <div class="row m-2">
+      <div class="col-6">
+        <strong>N&uacute;mero: </strong>{{factura.punto_venta}}-{{factura.numero}}
+      </div>
+      <div class="col-6">
+        <strong>Tipo: </strong>{{factura.tipo}}
+      </div>
+    </div>
+    <div class="row m-2">
+      <div class="col-6">
+        <strong>Fecha: </strong>{{factura.fecha_emision}}
+      </div>
+      <div class="col-6">
+        <div *ngIf="factura.cae != undefined && factura.cai == undefined">
+          <strong>CAE: </strong>{{factura.cae}}  
+        </div>
+        <div *ngIf="factura.cae == undefined && factura.cai != undefined">
+          <strong>CAE: </strong>{{factura.cae}}  
+        </div>
+        <div *ngIf="factura.cae == undefined && factura.cai == undefined">
+          <strong>FACTURA RECHAZADA POR AFIP </strong>
+        </div>
+      </div>
+    </div>
+    <div class="row m-2">
+      <div class="col-4">
+        <strong>Monto Total: </strong>{{factura.monto_total}}
+      </div>
+      <div class="col-4">
+        <strong>Monto Neto: </strong>{{factura.monto_neto}}
+      </div>
+      <div class="col-4">
+        <strong>Monto IVA: </strong>{{factura.monto_iva}}
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-12">
       <div class="card card-body">
