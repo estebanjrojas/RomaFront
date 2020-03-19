@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Ventas } from '../../../modelos/Ventas';
-import { Clientes } from '../../../modelos/Clientes';
-import { Personas } from '../../../modelos/Personas';
-import { VentasDetalle } from '../../../modelos/VentasDetalle';
 import { VentasService } from '../../../servicios/ventas.service';
+import { FacturasService } from '../../../servicios/facturas.service';
+import { saveAs } from 'file-saver/FileSaver';
+
 @Component({
   selector: 'app-visualizacion-ventas',
   templateUrl: './visualizacion-ventas.component.html',
@@ -11,7 +10,7 @@ import { VentasService } from '../../../servicios/ventas.service';
 })
 export class VisualizacionVentasComponent implements OnInit {
 
-  constructor(private SrvVentas: VentasService) { }
+  constructor(private SrvVentas: VentasService, private SrvFacturas: FacturasService) { }
 
   @Input() ventas_id : number;
 
@@ -93,6 +92,14 @@ export class VisualizacionVentasComponent implements OnInit {
       });
     })
 
+  }
+
+  imprimirFactura(id) {
+    this.SrvFacturas.getFacturaPDF(id).subscribe(respuesta => {
+      let cast: any = respuesta;
+      saveAs(cast, "invoice.pdf", true);
+       
+    })
   }
 
 }
