@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { VentasService } from '../../../servicios/ventas.service';
 import { FacturasService } from '../../../servicios/facturas.service';
-import { saveAs } from 'file-saver/FileSaver';
+import { saveAs } from 'file-saver/src/FileSaver';
 
 @Component({
   selector: 'app-visualizacion-ventas',
@@ -97,7 +97,10 @@ export class VisualizacionVentasComponent implements OnInit {
   imprimirFactura(id) {
     this.SrvFacturas.getFacturaPDF(id).subscribe(respuesta => {
       let cast: any = respuesta;
-      saveAs(cast, "invoice.pdf", true);
+      var blob = new Blob(cast, { 
+                    type: 'application/pdf' // must match the Accept type
+                });
+      saveAs(blob, "invoice.pdf");
        
     })
   }

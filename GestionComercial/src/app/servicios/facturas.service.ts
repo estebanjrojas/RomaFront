@@ -11,13 +11,12 @@ export class FacturasService {
 
   getFacturaPDF(facturas_id) {
     const httpOptions = {
-      headers: new HttpHeaders(
-        {
-          'Content-Type': 'application/pdf',
-           'responseType': 'blob',
-          'Authorization': localStorage.getItem('tk_acceso')
-        }
-      )
+      headers: new HttpHeaders()
+      .set("Content-Type", "application/json")
+      .set("Accept", "aplication/pdf")
+      .set("responseType", "blob")
+      .set("Authorization", localStorage.getItem('roma_acceso'))
+        
     };
     return this.http.get(environment.apiEndpoint + `/generarFacturaPDF/${facturas_id}`, httpOptions);
   }
