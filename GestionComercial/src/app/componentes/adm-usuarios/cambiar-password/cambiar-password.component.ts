@@ -2,7 +2,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { UsuariosService } from '../../../servicios/usuarios.service';
 import { AuthService } from '../../../servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Component({
   selector: 'app-cambiar-password',
@@ -17,7 +17,7 @@ export class CambiarPasswordComponent implements OnInit {
 
   constructor(private SrvUsuarios: UsuariosService,
     private SrvAuth: AuthService,
-    private SrvToastr: ToastrService,
+    private snackBar: MatSnackBar,
     private formBuilder: FormBuilder) {
     this.cambiarPassForm = this.formBuilder.group({
       nombre_usuario: ['', Validators.compose([])],
@@ -32,6 +32,21 @@ export class CambiarPasswordComponent implements OnInit {
     this.cambiarPassForm.controls.nombre_usuario.setValue(this.nomb_usr);
   }
 
+  
+
+  mostrarMensajeError(mensaje) {
+    const config = new MatSnackBarConfig();
+    config.duration = 3000;
+    config.panelClass = ['error-alert'];
+    this.snackBar.open(`${mensaje}`, 'Cerrar', config);
+  }
+
+  mostrarMensajeInformativo(mensaje) {
+    const config = new MatSnackBarConfig();
+    config.duration = 3000;
+    config.panelClass = ['info-alert'];
+    this.snackBar.open(`${mensaje}`, 'Cerrar', config);
+  }
 
 
   guardar() {
@@ -44,8 +59,6 @@ export class CambiarPasswordComponent implements OnInit {
       this.SrvUsuarios.validarPassVieja(usuario, viejapass).subscribe(response => {
         console.log({ "SrvUsuarios.validarPassVieja": response });
         var cast: any = response.body;
-        console.log({ "cast": cast });
-
         if (response.status == 200 && cast.permitir_acceso == true) {
 
           if (nuevapass === nuevapass2) {
@@ -53,22 +66,22 @@ export class CambiarPasswordComponent implements OnInit {
               console.log({ "SrvUsuarios.cambiarPassword": response });
               var cast: any = response.body;
               console.log({ "cast": cast });
-              alert("La contrase\u00f1a se cambió exitosamente")
+              this.mostrarMensajeInformativo("La contrase\u00f1a se cambió exitosamente")
               this.cambiarPassForm.reset();
             });
           } else {
-            alert("Las contraseñas no coinciden.");
+            this.mostrarMensajeError("Las contraseñas no coinciden.");
             document.getElementById("nuevo_pass").focus();
           }
         }else{
-          alert("El password actual no es correcto.");
+          this.mostrarMensajeError("El password actual no es correcto.");
           document.getElementById("vieja_pass").focus();
         }
 
       });
     }else{
-        this.cambiarPassForm.getError;
-        console.log(this.cambiarPassForm);
+
+      this.mostrarMensajeError('Hay errores en los datos ingresados');
     }
 
 

@@ -9,7 +9,8 @@ import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule,
   MatAutocompleteModule, MatOptionModule, MatInputModule,
   MatDatepickerModule, MatNativeDateModule, MatSelectModule,
-  MatTreeModule, MatIconModule, MatRadioModule, MatCardModule
+  MatTreeModule, MatIconModule, MatRadioModule, MatCardModule,
+  MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS
 } from '@angular/material';
 import { AppComponent } from './app.component';
 import { CabeceraComponent } from './componentes/cabecera/cabecera.component';
@@ -128,6 +129,7 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     MatIconModule,
     MatRadioModule,
     MatCardModule,
+    MatSnackBarModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',
@@ -138,7 +140,9 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
   providers: [{provide: APP_BASE_HREF, useValue: ''},
   { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
   { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-  { provide: DateAdapter, useClass: MomentUtcDateAdapter }],
+  { provide: DateAdapter, useClass: MomentUtcDateAdapter },
+  {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

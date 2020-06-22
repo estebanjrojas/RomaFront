@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { VentasService } from '../../../servicios/ventas.service';
 import { FacturasService } from '../../../servicios/facturas.service';
-import { saveAs } from 'file-saver/src/FileSaver';
+import { saveAs } from 'node_modules/file-saver/FileSaver';
 
 @Component({
   selector: 'app-visualizacion-ventas',
