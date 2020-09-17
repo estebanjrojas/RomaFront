@@ -23,10 +23,19 @@ export class BuscarProductosComponent implements OnInit {
   valor_boton_1: number = 1;
   valor_boton_2: number = 2;
   valor_boton_3: number = 3;
+  htmlAdicionado: any = '';
+
+
+
+  caracteristicas: ProductosCaracteristicas[];
+  categorias: Categorias[];
+  imagenes: Imagenes[];
+  cantidad_imagenes: number = 0;
+
 
   constructor(private SrvProductos: ProductosService,
     private SrvToastr: ToastrService,
-    private formBuilder: FormBuilder) {}
+    private formBuilder: FormBuilder) { }
   ngOnInit() {
     this.buscarProductos();
   }
@@ -41,6 +50,7 @@ export class BuscarProductosComponent implements OnInit {
     if (this.buscar_descripcion) { buscar_por_descripcion = 1; } else { buscar_por_descripcion = 0; }
     if (this.buscar_categoria) { buscar_por_categoria = 1; } else { buscar_por_categoria = 0; }
     this.SrvProductos.getCantidadPaginasProductos(buscar_por_codigo, buscar_por_nombre, buscar_por_descripcion, buscar_por_categoria, this.buscar).subscribe(respuesta => {
+      console.log({ "SrvProductos.getCantidadPaginasProductos": respuesta });
       let cast: any = respuesta.regCantidadPaginas.cantidad_paginas;
       this.cantidad_paginas = cast;
       this.pagina_actual = 1;
@@ -61,10 +71,12 @@ export class BuscarProductosComponent implements OnInit {
     if (this.buscar_descripcion) { buscar_por_descripcion = 1; } else { buscar_por_descripcion = 0; }
     if (this.buscar_categoria) { buscar_por_categoria = 1; } else { buscar_por_categoria = 0; }
     this.SrvProductos.getProductos(this.pagina_actual, this.cantidad_paginas, buscar_por_codigo, buscar_por_nombre, buscar_por_descripcion, buscar_por_categoria, this.buscar).subscribe(respuesta => {
+      console.log({ "SrvProductos.getProductos": respuesta });
       this.cast = respuesta;
-    }, error => {
-      console.log(JSON.stringify(error));
-    });
+    }, error => { console.log(JSON.stringify(error)); }
+      , () => {
+
+      });
   }
   /** posiciona el indice en el boton seleccionado */
   setPaginaByComponenteId(valor) {
@@ -105,5 +117,70 @@ export class BuscarProductosComponent implements OnInit {
     console.log(" Baja de Producto: " + productos_id);
   }
 
+  mostrarDetallesProductos(productos) {
+    //this.htmlAdicionado = '<app-detalle-producto [producto]="'+productos+'"></app-detalle-producto>'
+    this.htmlAdicionado = 'ASDSD'
+  }
 
+  getCaracteristicasProductos(producto_id) {
+    this.SrvProductos.getCaracteristicasProductos(producto_id).subscribe(resp => {
+      console.log({ "SrvProductos.getCaracteristicasProductos ": resp });
+      let cast: any = resp;
+      this.caracteristicas = cast;
+    }, err => { console.log({ "ERROR": err }); }
+      , () => {
+        this.getCategoriasProductos(producto_id);
+      });
+  }
+
+  getCategoriasProductos(producto_id) {
+    this.SrvProductos.getCategoriasProductos(producto_id).subscribe(resp => {
+      console.log({ "SrvProductos.getCategoriasProductos": resp });
+      let cast: any = resp;
+      this.categorias = cast;
+    }, err => { console.log({ "ERROR": err }); }
+      , () => {
+        this.getImagenesProductos(producto_id);
+      });
+  }
+
+
+  getImagenesProductos(producto_id) {
+    this.SrvProductos.getImagenesProductos(producto_id).subscribe(resp => {
+      console.log({ "SrvProductos.getImagenesProductos": resp });
+      let cast: any = resp;
+      this.imagenes = cast;
+      this.cantidad_imagenes = cast.length;
+    });
+  }
+
+
+
+
+}
+
+
+
+
+
+interface ProductosCaracteristicas {
+  caracteristicas_id: number;
+  nombre: string;
+  descripcion: string;
+  valor: string;
+}
+
+interface Categorias {
+  categorias_id: number;
+  nombre: string;
+  categoria_padre: string;
+}
+
+interface Imagenes {
+  id: number;
+  imagen: string;
+  fecha_carga: string;
+  orden: number;
+  principal: boolean;
+  productos_id: number;
 }
