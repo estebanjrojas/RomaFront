@@ -8,7 +8,6 @@ import { startWith, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { PersonasService } from '../../../servicios/personas.service';
-//import { Empleados } from '../../../modelos/Clientes';
 import { Provincias } from '../../../modelos/Provincias';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Inject, Injectable, Optional } from '@angular/core';
@@ -63,7 +62,6 @@ export interface CiudadesInterface {
 })
 export class CargarClientesComponent implements OnInit {
 
-  //miEmpleado : Empleados;
   provincias: Provincias[] = [];
   oficinas: any;
   clientesForm: FormGroup;
@@ -86,6 +84,7 @@ export class CargarClientesComponent implements OnInit {
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute) {
+
     this.clientesForm = this.formBuilder.group({
       documento: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]*')])],
       apellido: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z ]*')])],
@@ -113,51 +112,40 @@ export class CargarClientesComponent implements OnInit {
 
 
   ngOnInit() {
-
-    this.nomb_usr = localStorage.getItem('nombre_usr');
-    console.log({ "Nombre de usuario": this.nomb_usr });
-    this.clientesForm.controls.nombre_usuario.setValue(this.nomb_usr);
-
-    this.clientesForm.controls.tipo_doc.setValue("3");
-    this.route.params.subscribe(params => {
-      if (params.clientes_id != null) {
-        this.clientesForm.controls.clientes_id.setValue(params.clientes_id);
-        
-      }
-      console.log(params);
-    }, err => {console.log(err)}, () => {});
-
-    this.getDatosCliente(this.clientesForm.controls.clientes_id.value);
-
-    //Llenado de combo provincias
-    this.SrvDomicilios.getProvinciasPorPais(1).subscribe(respuesta => {
-      console.log({ 'SrvDomicilios.getProvinciasPorPais': respuesta });
-      let cast: any = respuesta;
-      for (let i = 0; i < cast.length; i++) {
-        this.provincias.push({ 'id': cast[i].id, 'nombre': cast[i].nombre });
-      }
-      this.clientesForm.controls.provincia.setValue(23);
-      this.getCiudadesPorProvincia();
-    });
+    this.obtenerProvincias();
 
     //Tabgral
     this.SrvTabgral.selectByNroTab(3).subscribe(respuesta => {
-      console.log({ 'SrvTabgral.selectByNroTab': respuesta });
+      //console.log({ 'SrvTabgral.selectByNroTab': respuesta });
       this.oficinas = respuesta;
     });
 
     //Sexo
     this.SrvTabgral.selectByNroTab(4).subscribe(respuesta => {
-      console.log({ "SrvTabgral.selectByNroTab(4)": respuesta });
+      //console.log({ "SrvTabgral.selectByNroTab(4)": respuesta });
       let cast: any = respuesta;
       for (var i = 0; i < cast.length; i++) {
         let rel: Tabgral = { codigo: "0", descrip: "" };
         rel.codigo = cast[i].codigo;
         rel.descrip = cast[i].descrip;
-        // console.log("rel "+rel);
         this.sexo.push(rel);
       }
     });
+
+    this.nomb_usr = localStorage.getItem('nombre_usr');
+    this.clientesForm.controls.nombre_usuario.setValue(this.nomb_usr);
+    this.clientesForm.controls.tipo_doc.setValue("3");
+
+    this.route.params.subscribe(params => {
+      if (params.clientes_id != null) {
+        this.clientesForm.controls.clientes_id.setValue(params.clientes_id);  
+      }
+    }, err => {
+      console.error(`Ocurrio un error al obtener el parametro del cliente. ${err}`);
+    });
+    this.getDatosCliente(this.clientesForm.controls.clientes_id.value);
+    
+    
 
     //Filtro de ciudades por provincia
     this.filteredOptions = this.clientesForm.controls.ciudades.valueChanges
@@ -171,9 +159,7 @@ export class CargarClientesComponent implements OnInit {
 
   //Agregada validación entre objeto y String. REPETIR en Proyecto.
   displayFn(user?: CiudadesInterface): string | undefined {
-    console.log("Display Object is ---> " + user);
     return (typeof (user) !== 'string') ? user.descrip : user;
-    //return user ? user.descrip : undefined;
   }
 
   private _filter(descrip: string): CiudadesInterface[] {
@@ -192,13 +178,11 @@ export class CargarClientesComponent implements OnInit {
       console.log({ "SrvClientes.getDatosClientePorId": respuesta });
       let cast: any = respuesta;
 
-      //this.ciudades.push({ id: cast[0].ciudades_id, descrip: cast[0].ciudad_nombre.trim() });
-      //(<HTMLInputElement>document.getElementById("ciudades")).value = cast[0].ciudad_nombre;
-      //Datos personales
 
       this.clientesForm.patchValue({
-        apellido: cast[0].apellido,
+     
         nombre: cast[0].nombre,
+        apellido: cast[0].apellido,
         documento: cast[0].nro_doc,
         tipo_doc: cast[0].tipo_doc + "",
         fecha_nacimiento: cast[0].fecha_nac,
@@ -218,10 +202,26 @@ export class CargarClientesComponent implements OnInit {
       });
 
       this.ciudades.push({ id: cast[0].ciudades_id, descrip: cast[0].ciudad_nombre.trim() });
-      //(<HTMLInputElement>document.getElementById("ciudades")).value = cast[0].ciudades;
+ 
     });
   }
 
+  obtenerProvincias() {
+    //Llenado de combo provincias
+    this.SrvDomicilios.getProvinciasPorPais(1).subscribe(respuesta => {
+      console.log({ 'SrvDomicilios.getProvinciasPorPais': respuesta });
+      let cast: any = respuesta;
+      for (let i = 0; i < cast.length; i++) {
+        this.provincias.push({ 'id': cast[i].id, 'nombre': cast[i].nombre });
+      }
+      
+    }, error => {
+      console.error(`Ocurrio un error al obtener las provincias. ${error.message}`);
+    }, ()=> {
+      this.clientesForm.controls.provincia.setValue(23);
+      this.getCiudadesPorProvincia();
+    });
+  }
 
   getCiudadesPorProvincia() {
     let provincias_id = this.clientesForm.controls.provincia.value;
@@ -232,13 +232,11 @@ export class CargarClientesComponent implements OnInit {
         this.ciudades.push({ id: cast[i].id, descrip: cast[i].nombre.trim() });
         //por alguna razon el nombre viene con espacios en blanco alrededor asi que se hace un trim por javascript
       }
-      console.log(this.ciudades);
     })
   }
 
 
   guardarCliente() {
-    //let id_cliente = this.clientesForm.get('clientes_id').value;
     let id_cliente = this.clientesForm.controls.clientes_id.value;
     console.log({ 'Form Valido': this.clientesForm.valid });
     console.log(JSON.stringify(this.clientesForm.getRawValue()));

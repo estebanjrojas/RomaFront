@@ -5,6 +5,7 @@
   }
   
   body {
+    height: 100%;
     background: #9CECFB;
     /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);

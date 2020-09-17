@@ -3,6 +3,7 @@ import { UsuariosService } from '../../../servicios/usuarios.service';
 import { AuthService } from '../../../servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cambiar-password',
@@ -18,7 +19,8 @@ export class CambiarPasswordComponent implements OnInit {
   constructor(private SrvUsuarios: UsuariosService,
     private SrvAuth: AuthService,
     private snackBar: MatSnackBar,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private router: Router) {
     this.cambiarPassForm = this.formBuilder.group({
       nombre_usuario: ['', Validators.compose([])],
       oldpassword: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
@@ -66,8 +68,10 @@ export class CambiarPasswordComponent implements OnInit {
               console.log({ "SrvUsuarios.cambiarPassword": response });
               var cast: any = response.body;
               console.log({ "cast": cast });
-              this.mostrarMensajeInformativo("La contrase\u00f1a se cambió exitosamente")
-              this.cambiarPassForm.reset();
+              this.mostrarMensajeInformativo("La contrase\u00f1a se cambió exitosamente");
+              localStorage.clear();
+              this.router.navigate(['login']);
+              
             });
           } else {
             this.mostrarMensajeError("Las contraseñas no coinciden.");

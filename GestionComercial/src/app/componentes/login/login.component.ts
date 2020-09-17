@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../servicios/auth.service';
-import { UsuariosService } from '../../servicios/usuarios.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -15,13 +15,11 @@ export class LoginComponent implements OnInit {
   formulario: FormGroup;
   submitted: boolean = false;
   acceso: boolean = false;
-  mostrarNotifError = false;
-  textoNotifError = "";
   constructor(private router: Router
     , private Auth: AuthService
-    , private usuario_serv: UsuariosService
     , private toastr: ToastrService
-    , private formBuilder: FormBuilder) { }
+    , private formBuilder: FormBuilder
+    , private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
@@ -30,40 +28,56 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  mostrarMensajeError(mensaje) {
+    const config = new MatSnackBarConfig();
+    config.duration = 3000;
+    config.panelClass = ['error-alert'];
+    this.snackBar.open(`${mensaje}`, 'Cerrar', config);
+  }
+
+  mostrarMensajeInformativo(mensaje) {
+    const config = new MatSnackBarConfig();
+    config.duration = 3000;
+    config.panelClass = ['info-alert'];
+    this.snackBar.open(`${mensaje}`, 'Cerrar', config);
+  }
+
   get f() { return this.formulario.controls; }
 
   loginUser() {
 
     try {
+      let autorizado = false;
       if(this.formulario.valid) {
         const usuario =  this.formulario.controls.txtUsuario.value;
         const contrasenia = this.formulario.controls.txtPassword.value;
   
         this.Auth.solicitarAccesoUsuario(usuario, contrasenia).subscribe(response => {
-         console.log({"Auth.solicitarAccesoUsuario" : response});
+         //console.log({"Auth.solicitarAccesoUsuario" : response});
           var cast: any = response.body;
-          console.log({"cast" : cast});
           if (response.status == 200 && cast.respuesta != undefined) {
        
             let usuario = String(this.formulario.controls.txtUsuario.value);
             localStorage.setItem('roma_usuario', usuario);
             localStorage.setItem('roma_acceso', String(cast.respuesta));
+            autorizado = true;
             
-            this.router.navigate(['empleados/busqueda-empleados']);
           } 
           if (response.status == 200 && cast.respuesta == undefined) {
-            this.toastr.error('Datos de Acceso Incorrectos', 'Acceso Denegado', {
-              tapToDismiss: true
-            });
+            this.mostrarMensajeError('Acceso Denegado. Datos de Acceso Incorrectos');
           }
           if (response.status != 200) {
             let desc_error = 'Ocurri&oacute; un error al intentar conectar con el servidor.<br>';
                 desc_error += response.statusText;
-            this.toastr.error(desc_error, 'Acceso Denegado', {
-              tapToDismiss: true
-            });
+                this.mostrarMensajeError(desc_error);
           }
-          
+        }, error => {
+          this.mostrarMensajeError('Ocurrió un error al solicitar acceso.');
+          console.error(error);
+        }, ()=> {
+          if(autorizado){
+            this.router.navigate(['empleados/busqueda-empleados']);
+          }
         });
 
       }
@@ -80,11 +94,11 @@ export class LoginComponent implements OnInit {
         }
 
         if(errorUsuario && errorContrasenia) {
-          this.mostrarNotificacionError("Debe ingresar un nombre de usuario y contraseña para continuar");
+          this.mostrarMensajeError("Debe ingresar un nombre de usuario y contraseña para continuar");
         } else if(errorUsuario && !errorContrasenia) {
-          this.mostrarNotificacionError("Debe ingresar un nombre de usuario valido");
+          this.mostrarMensajeError("Debe ingresar un nombre de usuario valido");
         } else if(!errorUsuario && errorContrasenia) {
-          this.mostrarNotificacionError("Debe ingresar la contraseña");
+          this.mostrarMensajeError("Debe ingresar la contraseña");
         }
 
       }
@@ -100,30 +114,5 @@ export class LoginComponent implements OnInit {
 
   }
 
-  onSubmit() {
-    this.submitted = true;
-
-    // stop here if form is invalid
-    if (this.formulario.invalid) {
-      return;
-    } 
-    else {
-        this.loginUser();
-    }
-
-  }
-
-  mostrarNotificacionError(mensaje) {
-    let contador = 0;
-    this.textoNotifError = mensaje;
-    this.mostrarNotifError = true;
-    const inter = setInterval(() => {
-      contador++;
-      if(contador>30 && this.mostrarNotifError==true) {
-        this.mostrarNotifError=false;
-        clearInterval(inter);
-      }
-    }, 150);
-  }
 
 }
