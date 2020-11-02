@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { AuthService } from './auth.service';
 
 
 
@@ -9,13 +10,13 @@ import { environment } from '../../environments/environment';
 })
 export class DomiciliosService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private Auth: AuthService) { }
 
   getProvinciasPorPais(paices_id){
     const httpOptions = {
       headers: new HttpHeaders(
         { 'Content-Type': 'application/json',
-          'Authorization':  localStorage.getItem('roma_acceso')
+          'Authorization':  this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -26,7 +27,7 @@ export class DomiciliosService {
     const httpOptions = {
       headers: new HttpHeaders(
         { 'Content-Type': 'application/json',
-          'Authorization':  localStorage.getItem('roma_acceso')
+          'Authorization':  this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -38,7 +39,7 @@ export class DomiciliosService {
     const httpOptions = {
       headers: new HttpHeaders(
         { 'Content-Type': 'application/json',
-          'Authorization':  localStorage.getItem('roma_acceso')
+          'Authorization':  this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -52,7 +53,7 @@ export class DomiciliosService {
     const httpOptions = {
       headers: new HttpHeaders(
         { 'Content-Type': 'application/json',
-          'Authorization':  localStorage.getItem('roma_acceso')
+          'Authorization':  this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -63,7 +64,7 @@ export class DomiciliosService {
     const httpOptions = {
       headers: new HttpHeaders(
         { 'Content-Type': 'application/json',
-          'Authorization':  localStorage.getItem('roma_acceso')
+          'Authorization':  this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -82,7 +83,7 @@ export class DomiciliosService {
       headers: new HttpHeaders(
         {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('roma_acceso')
+          'Authorization':  this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -93,7 +94,7 @@ export class DomiciliosService {
     const httpOptions = {
       headers: new HttpHeaders(
         { 'Content-Type': 'application/json',
-          'Authorization':  localStorage.getItem('roma_acceso')
+          'Authorization':  this.Auth.getTokenUsuarioSesion()
         }
       )
     };

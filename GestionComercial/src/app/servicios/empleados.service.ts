@@ -2,15 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-
-const httpOptions = {
-  headers: new HttpHeaders(
-    {
-      'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('roma_acceso')
-    }
-  )
-};
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -18,7 +10,7 @@ const httpOptions = {
 })
 export class EmpleadosService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private Auth: AuthService) { }
 
 
   getEmpleadoPorNroDoc(tipo_doc, nro_doc) {
@@ -26,7 +18,7 @@ export class EmpleadosService {
       headers: new HttpHeaders(
         {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('roma_acceso')
+          'Authorization': this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -38,7 +30,7 @@ export class EmpleadosService {
       headers: new HttpHeaders(
         {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('roma_acceso')
+          'Authorization': this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -50,7 +42,7 @@ export class EmpleadosService {
       headers: new HttpHeaders(
         {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('roma_acceso')
+          'Authorization': this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -62,7 +54,7 @@ export class EmpleadosService {
       headers: new HttpHeaders(
         {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('roma_acceso')
+          'Authorization': this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -74,7 +66,7 @@ export class EmpleadosService {
       headers: new HttpHeaders(
         {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('roma_acceso')
+          'Authorization': this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -86,7 +78,7 @@ export class EmpleadosService {
       headers: new HttpHeaders(
         {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('roma_acceso')
+          'Authorization': this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -97,6 +89,14 @@ export class EmpleadosService {
   //PAGINACION INICIO --------->
 
   getCantidadPaginasEmpleados(buscar_nombre, buscar_documento, buscar_fechanac, buscar_oficina, txt): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint +
       '/getCantidadPaginasEmpleados/' +
       buscar_nombre + '/' +
@@ -108,6 +108,14 @@ export class EmpleadosService {
   }
 
   getEmpleados(pagina_actual, cantidad_paginas, buscar_nombre, buscar_documento, buscar_fechanac, buscar_oficina, txt): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint +
       '/getEmpleados/' +
       pagina_actual + '/' +

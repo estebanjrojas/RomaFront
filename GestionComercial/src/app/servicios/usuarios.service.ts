@@ -2,57 +2,114 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
-const httpOptions = {
-  headers: new HttpHeaders(
-    {
-      'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('roma_acceso')
-    }
-  )
-};
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuariosService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private Auth: AuthService) { }
 
 
   //GET's
 
   getDatosUsuario(usuario) {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint + '/getDatosUsuario/' + usuario, httpOptions);
   }
 
   getUsuariosBusqueda(texto_busqueda): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint + '/getUsuariosBusqueda/' + texto_busqueda, httpOptions);
   }
 
   getUsuariosTodos(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint + '/getUsuariosTodos/', httpOptions);
   }
 
   getDatosUsuariosCargados(id_usuario: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint + '/getDatosUsuariosCargados/' + id_usuario, httpOptions);
   }
 
   getPerfilesAsignados(id_perfiles: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint + '/getPerfilesAsignados/' + id_perfiles, httpOptions);
   }
 
   getPerfilesSinAsignar(id_perfiles: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint + '/getPerfilesSinAsignar/' + id_perfiles, httpOptions);
   }
 
   validarPassVieja(usuario, password) {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint + '/validarPassVieja/' + usuario + '/' + password, { observe: 'response' });
   }
 
   //PAGINACION INICIO --------->
 
   getCantidadPaginasUsuarios(buscar_nombre, buscar_usuario, buscar_descripcion, txt): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint +
       '/getCantidadPaginasUsuarios/' +
       buscar_nombre + '/' +
@@ -63,6 +120,14 @@ export class UsuariosService {
   }
 
   getUsuarios(pagina_actual, cantidad_paginas, buscar_nombre, buscar_usuario, buscar_descripcion, txt): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     return this.http.get(environment.apiEndpoint +
       '/getUsuarios/' +
       pagina_actual + '/' +
@@ -79,6 +144,14 @@ export class UsuariosService {
   //POST's
 
   insertPerfilesAsignados(perfiles: any, id_usuario: number) {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     const url = environment.apiEndpoint + `/insertPerfilesAsignados`;
     let json = JSON.stringify({
       "perfiles_id": perfiles.id
@@ -89,6 +162,14 @@ export class UsuariosService {
   }
 
   insertUsuarioReturnId(datos: any, usuarios: any) {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     const url = environment.apiEndpoint + `/insertUsuarioReturnId`;
     let json = JSON.stringify({
       "nombre_usuario": datos.nombre_usuario
@@ -105,12 +186,28 @@ export class UsuariosService {
   //PUT's
 
   cambiarPassword(usuario: any, password: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     let json = JSON.stringify({ "usuario": usuario, "password": password });
     console.log("Este es el json que armo en el service:" + json);
     return this.http.put(environment.apiEndpoint + '/cambiarPassword', json, httpOptions);
   }
 
   actualizarDatosUsuarios(datos: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     let json = JSON.stringify(datos);
     return this.http.put(environment.apiEndpoint + '/actualizarDatosUsuarios', json, httpOptions);
   }
@@ -118,6 +215,14 @@ export class UsuariosService {
   //DELETE's
 
   deletePerfiles(id_usuario: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
     const url = environment.apiEndpoint + `/deletePerfiles/` + id_usuario;
     return this.http.delete(url, httpOptions);
   }

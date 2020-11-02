@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FacturaElectronicaService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private Auth: AuthService) {}
 
   ultimoNumeroFacturaAprobada(punto_venta, tipo_comprobante) {
     const httpOptions = {
       headers: new HttpHeaders(
         {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('roma_acceso')
+          'Authorization': this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -26,7 +27,7 @@ export class FacturaElectronicaService {
       headers: new HttpHeaders(
         {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('roma_acceso')
+          'Authorization': this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -38,7 +39,7 @@ export class FacturaElectronicaService {
       headers: new HttpHeaders(
         {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('roma_acceso')
+          'Authorization': this.Auth.getTokenUsuarioSesion()
         }
       )
     };
@@ -50,7 +51,7 @@ export class FacturaElectronicaService {
       headers: new HttpHeaders(
         {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('roma_acceso')
+          'Authorization': this.Auth.getTokenUsuarioSesion()
         }
       )
     };
