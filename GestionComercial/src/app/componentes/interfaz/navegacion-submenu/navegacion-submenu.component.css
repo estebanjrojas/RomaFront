@@ -1,0 +1,17 @@
+ul {
+    list-style-type:none  
+}
+
+.navbar {
+    padding: 1px;
+    font-size: 5px;
+}
+
+.nav-link{
+    font-size: 14px ;
+    cursor: pointer;
+}
+
+.navbar-brand :hover>.dropdown-menu{
+    display:block;
+}

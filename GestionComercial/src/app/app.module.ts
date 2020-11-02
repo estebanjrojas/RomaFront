@@ -13,9 +13,9 @@ import {
   MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS
 } from '@angular/material';
 import { AppComponent } from './app.component';
-import { CabeceraComponent } from './componentes/cabecera/cabecera.component';
-import { PieComponent } from './componentes/pie/pie.component';
-import { NavegacionComponent } from './componentes/navegacion/navegacion.component';
+import { CabeceraComponent } from './componentes/interfaz/cabecera/cabecera.component';
+import { PieComponent } from './componentes/interfaz/pie/pie.component';
+import { NavegacionComponent } from './componentes/interfaz/navegacion/navegacion.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { CargarEmpleadosComponent } from './componentes/adm-empleados/cargar-empleados/cargar-empleados.component';
 import { BusquedaEmpleadosComponent } from './componentes/adm-empleados/busqueda-empleados/busqueda-empleados.component';
@@ -44,10 +44,13 @@ import {APP_BASE_HREF} from '@angular/common';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { VisualizacionVentasComponent } from './componentes/ventas/visualizacion-ventas/visualizacion-ventas.component';
+import { NavegacionSubmenuComponent } from './componentes/interfaz/navegacion-submenu/navegacion-submenu.component';
+import { HomeComponent } from './componentes/home/home.component';
 
 //Rutas para el Router de Angular
 const appRoutes: Routes = [{ path: '', component: LoginComponent }
   , { path: 'login', component: LoginComponent }
+  , { path: 'home', component: HomeComponent }
   , { path: 'empleados/cargar-empleados', component: CargarEmpleadosComponent }
   , { path: 'empleados/cargar-empleados/:empleados_id', component: CargarEmpleadosComponent }
   , { path: 'empleados/busqueda-empleados', component: BusquedaEmpleadosComponent }
@@ -107,7 +110,9 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     ConfirmacionVentaComponent,
     PreciosProductosComponent,
     CambiarPasswordComponent,
-    VisualizacionVentasComponent
+    VisualizacionVentasComponent,
+    NavegacionSubmenuComponent,
+    HomeComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

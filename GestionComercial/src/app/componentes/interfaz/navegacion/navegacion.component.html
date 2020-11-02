@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg" id="barra_navegacion">
+
+<nav class="navbar navbar-expand-lg" id="barra_navegacion2">
   <a class="navbar-brand brlight" href="javascript:void(0)">ROMA</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
     aria-expanded="false" aria-label="Toggle navigation">
@@ -53,15 +54,6 @@
             </ul>
         </div>
       </li>
-      <!-->li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Empleados
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/empleados/busqueda-empleados">Buscar Empleados</a>
-          <a class="dropdown-item" href="/empleados/cargar-empleados">Cargar Empleados</a>
-        </div>
-      </li-->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Productos
@@ -80,34 +72,6 @@
           </ul>
         </div>
       </li>
-      <!-->li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Usuarios
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/usuarios/busqueda-usuarios">Buscar Usuarios</a>
-          <a class="dropdown-item" href="/usuarios/cargar-usuarios">Cargar Usuarios</a>
-          <a class="dropdown-item" href="/usuarios/administrar-perfiles">Administrar Perfiles</a>
-        </div>
-      </li-->
-      <!-->li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Puntos de Venta
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/puntos-venta/busqueda-puntos-venta">Buscar Punto de Venta</a>
-          <a class="dropdown-item" href="/puntos-venta/cargar-puntos-venta">Cargar Punto de Venta</a>
-        </div>
-      </li-->
-      <!-->li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Categorías
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/categorias/busqueda-categorias">Buscar Categorías</a>
-          <a class="dropdown-item" href="/categorias/cargar-categorias">Cargar Categorías</a>
-        </div>
-      </li-->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Promociones
@@ -130,5 +94,44 @@
   </div>
   <span class="nav justify-content-end align-middle">
     <button type="button" class="btn btn-outline-light cabin-reg" (click)="cerraSession()">Cerrar Sesión</button>
+  </span>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-light py-2 shadow-sm" id="barra_navegacion">
+  <a class="nav-link text-light" [routerLink]="['/home']">HOME</a>
+    <button type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarContent" class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li *ngFor="let ObjMenuItem of this.menuArray " [ngClass]="{'nav-item dropdown': (ObjMenuItem.menu_ruta==null || ObjMenuItem.menu_ruta=='null' || ObjMenuItem.menu_ruta=='' ) }">
+            <a *ngIf=" !(ObjMenuItem.menu_ruta==null || ObjMenuItem.menu_ruta=='null' || ObjMenuItem.menu_ruta=='' )" class="nav-link text-light" [routerLink]="ObjMenuItem.menu_ruta" >
+              {{ ObjMenuItem.menu_nombre }}
+            </a>
+            <a *ngIf="(ObjMenuItem.menu_ruta==null || ObjMenuItem.menu_ruta=='null' || ObjMenuItem.menu_ruta=='')" [id]="'dropdownMenu_'+ObjMenuItem.menu_id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-light">
+              {{ ObjMenuItem.menu_nombre }}
+            </a>
+            <ul *ngIf="(ObjMenuItem.menu_tipo!=2)" (aria-labelledby)="'dropdownMenu_'+ObjMenuItem.menu_id" class="dropdown-menu border-0">
+                <app-navegacion-submenu [ObjeMenu]="this.ObjMenuItem.menu_hijo" ></app-navegacion-submenu>
+            </ul>
+        </li>
+        <!-- End Level one -->
+      </ul>
+    </div>
+ 
+
+  <span class="nav justify-content-end align-middle">
+    <div class="btn-group dropdown" *ngIf="datos_usuario!=undefined">
+      <button id="btnUsuarioNav" type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <b>{{ datos_usuario.apellido | uppercase }}, {{ datos_usuario.nombre | uppercase }}</b>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right">
+  
+        <a class="dropdown-header" >{{ datos_usuario.descripcion_empleado }}</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" routerLink="/usuarios/cambiar-password">Cambiar Contraseña</a>
+        <a class="dropdown-item" (click)="cerrarSession()" ><b>CERRRAR SESION</b></a>
+      </div>
+    </div>
   </span>
 </nav>
