@@ -163,7 +163,17 @@ export class ProductosService {
   }
   //PAGINACION FIN <------------
 
-
+  getNovedadesProductos(fecha_desde, fecha_hasta, limit): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
+    return this.http.get(environment.apiEndpoint + '/getNovedadesProductosLimit/' + fecha_desde + '/' + fecha_hasta + '/' + limit, httpOptions);
+  }
   //---------------------------POST---------------------------//
 
   insertProductoReturnId(datos: any) {

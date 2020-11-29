@@ -1,4 +1,4 @@
-<app-cabecera></app-cabecera>
+<app-navegacion></app-navegacion>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,14 +7,40 @@
     <title>Gestión Comercial</title>
 </head>
 <body>
-    <form class="pl-5 pr-5">
+    <form>
         <section>
-            <div class="container-fluid">
-                <div class="row mt-3 align-items-center">
-                    <div class="col-md-6 col-sm-12 pl-3">
-                        <h3 mat-subheader class="my-auto">Bienvenido</h3>
+            <div class="jumbotron jumbotron-fluid" id="banner-principal">
+                <div class="container-fluid">
+                    <div class="row m-0 p-0">
+                        <div class="col-9">
+                            <h3 mat-subheader class="my-auto">Hola {{datos_usuario.nombre}}</h3>
+                            <p class="lead">Vende muchas cagadas</p>
+                        </div>
+                        <div class="col-3 p-0 m-0">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="cabin-reg text-12"><strong>NOVEDADES</strong></h5>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item text-12" *ngFor="let novedad of novedades_productos">
+
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1 text-12">{{novedad.tipo}}</h5>
+                                                <small>{{novedad.fecha | date:'dd/MM/yyyy'}}</small>
+                                              </div>
+                                              <p class="mb-1">{{novedad.descripcion}}</p>
+                                        </li>                                      
+                                      </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
+                </div>
+        </section>
+        <section>
+            <div class="container-fluid" id="enlaces-usuario">
+
             </div>
         </section>
         

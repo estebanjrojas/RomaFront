@@ -1,6 +1,8 @@
 
-<nav class="navbar navbar-expand-lg" id="barra_navegacion2">
-  <a class="navbar-brand brlight" href="javascript:void(0)">ROMA</a>
+<!--nav class="navbar navbar-expand-lg" id="barra_navegacion2">
+  <a class="navbar-brand brlight" href="javascript:void(0)">
+    <img src="/src/assets/shopping_cart_logo-48px.png" alt="logo">
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -95,14 +97,17 @@
   <span class="nav justify-content-end align-middle">
     <button type="button" class="btn btn-outline-light cabin-reg" (click)="cerraSession()">Cerrar Sesión</button>
   </span>
-</nav>
+</nav -->
 
-<nav class="navbar navbar-expand-lg navbar-light py-2 shadow-sm" id="barra_navegacion">
-  <a class="nav-link text-light" [routerLink]="['/home']">HOME</a>
+<nav class="navbar navbar-expand-lg navbar-expand-lg navbar-light py-2 shadow-sm" id="barra_navegacion">
+  
     <button type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div id="navbarContent" class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <a class="nav-link text-light" [routerLink]="['/home']">
+        <img src="../../assets/shopping_cart_white_logo-48px.png" alt="HOME">
+      </a>
       <ul class="navbar-nav mr-auto">
         <li *ngFor="let ObjMenuItem of this.menuArray " [ngClass]="{'nav-item dropdown': (ObjMenuItem.menu_ruta==null || ObjMenuItem.menu_ruta=='null' || ObjMenuItem.menu_ruta=='' ) }">
             <a *ngIf=" !(ObjMenuItem.menu_ruta==null || ObjMenuItem.menu_ruta=='null' || ObjMenuItem.menu_ruta=='' )" class="nav-link text-light" [routerLink]="ObjMenuItem.menu_ruta" >

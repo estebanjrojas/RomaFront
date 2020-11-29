@@ -1,12 +1,12 @@
 
- <li *ngFor="let ObjMenuItem of this.ObjeMenu " [ngClass]="{'dropdown-submenu pull-left': ObjMenuItem.menu_tipo==2 }" >
-    <a *ngIf=" ObjMenuItem.menu_tipo!=2" [id]="'dropdownMenu'+ObjMenuItem.menu_id" class="dropdown-submenu dropdown-toggle pull-left" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+ <li *ngFor="let ObjMenuItem of this.ObjeMenu " [ngClass]="{'dropdown-submenu': ObjMenuItem.menu_tipo==2 }" >
+    <a *ngIf=" ObjMenuItem.menu_tipo!=2" [id]="'dropdownMenu'+ObjMenuItem.menu_id" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
         {{ ObjMenuItem.menu_nombre }}
     </a>
-    <ul *ngIf=" ObjMenuItem.menu_tipo!=2" (aria-labelledby)="'dropdownMenu'+ObjMenuItem.menu_id" class="dropdown-submenu border-0 pull-left ">
+    <ul *ngIf=" ObjMenuItem.menu_tipo!=2" (aria-labelledby)="'dropdownMenu'+ObjMenuItem.menu_id" class="dropdown-menu border-0 shadow">
         <app-navegacion-submenu [ObjeMenu]="this.ObjMenuItem.menu_hijo" ></app-navegacion-submenu>
     </ul>
-    <a *ngIf=" ObjMenuItem.menu_tipo==2 && ObjMenuItem.menu_ruta != undefined" [routerLink]="ObjMenuItem.menu_ruta" class="dropdown-item ">
+    <a *ngIf=" ObjMenuItem.menu_tipo==2" [routerLink]="ObjMenuItem.menu_ruta" class="dropdown-item">
         {{ ObjMenuItem.menu_nombre }}
     </a>
   </li>

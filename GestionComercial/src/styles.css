@@ -22,6 +22,10 @@
   font-family: 'brlight', 'helvetica';
 }
 
+.text-12{
+  font-size: 12px;
+}
+
 .thead-dark th{
   text-transform: uppercase;
   background-color: #596c7f !important;

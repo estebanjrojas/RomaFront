@@ -10,17 +10,17 @@ import { AuthService } from '../../../servicios/auth.service';
 })
 export class NavegacionComponent implements OnInit {
 
-  usuario: string = localStorage.getItem('roma_usuario');
   datos_usuario: any;
   menuArray: any = [];
 
   constructor(private router: Router, private SrvUsuarios: UsuariosService, private Auth: AuthService) { }
 
   ngOnInit() {
+    let usuario = this.Auth.getNombreUsuarioSesion();
     let menuLS = this.Auth.getMenuUsuarioSesion();
     this.menuArray = JSON.parse(menuLS).menu;
 
-    this.SrvUsuarios.getDatosUsuario(this.usuario).subscribe(respuesta=>{
+    this.SrvUsuarios.getDatosUsuario(usuario).subscribe(respuesta=>{
       let cast = respuesta;
       this.datos_usuario = cast[0];
       console.log(this.datos_usuario);
