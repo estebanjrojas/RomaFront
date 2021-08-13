@@ -5,19 +5,37 @@
   }
   
   body {
-    height: 100%;
+    height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
     background: #9CECFB;
     /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
     /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #12339b, #7db6ff, #2f5ccc);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    padding: 0;
+    margin: 0;
   }
+
+  .flex-container {
+    display: flex !important;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    justify-content: center; 
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
   
   .card-signin {
     border: 0;
     border-radius: 1rem;
     box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 4px;
   }
   
   .card-signin .card-title {
@@ -28,11 +46,6 @@
   
   .card-signin .card-body {
     padding: 5rem;
-  }
-  
-  .form-signin {
-    width: 100%;
-    height: 100%;
   }
   
   .form-signin .btn {
@@ -109,21 +122,27 @@
     color: #777;
   }
   
-  .btn-google {
-    color: white;
-    background-color: #ea4335;
-  }
-  
-  .btn-facebook {
-    color: white;
-    background-color: #3b5998;
-  }
-  
-  .btn-danger{
-    background-color: #c7332a;
-  }
-  
-  .form-control:focus {
+   .form-control:focus {
     border-color:  #7db6ff;
     box-shadow: inset 0 1px 1px #12339b, 0 0 8px #2f5ccc;
+  }
+
+  .img-responsive {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  #btnIngresar {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 600px){
+    .card-signin .card-body {
+      padding: 3rem;
+    }
+
+    #btnIngresar {
+      font-size: 1.1rem;
+    }
   }

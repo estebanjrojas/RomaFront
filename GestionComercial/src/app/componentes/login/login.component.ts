@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   formulario: FormGroup;
   submitted: boolean = false;
   acceso: boolean = false;
+  anioActual: number = new Date().getFullYear();
   constructor(private router: Router
     , private Auth: AuthService
     , private toastr: ToastrService
@@ -81,7 +82,8 @@ export class LoginComponent implements OnInit {
             this.miUsuarioSesion.tk_acceso = String(cast.respuesta);
             this.miUsuarioSesion.debug = 0;
             autorizado = true;
-            localStorage.setItem('roma_acceso', this.miUsuarioSesion.tk_acceso);
+            console.log("Autorizado");
+            this.Auth.setToken(String(cast.respuesta));
             
           } 
           if (response.status == 200 && cast.respuesta == undefined) {

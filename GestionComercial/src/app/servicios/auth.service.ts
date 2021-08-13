@@ -56,7 +56,7 @@ export class AuthService {
   setDebug(debug){
     debug == (debug != undefined && debug != '')? debug : 0;
     this.miUsuarioSesion.debug = parseInt(debug);
-    localStorage.setItem('romba_debug', debug.toString());
+    localStorage.setItem('roma_debug', debug.toString());
   }
 
   getNombreUsuarioSesion() {
@@ -77,6 +77,15 @@ export class AuthService {
 
   getUsuarioSesion() {
     return this.miUsuarioSesion;
+  }
+
+  setToken(token) {
+    localStorage.setItem('roma_acceso', token);
+    this.miUsuarioSesion.tk_acceso = token;
+  }
+
+  getToken() {
+    return this.miUsuarioSesion.tk_acceso;
   }
 
 

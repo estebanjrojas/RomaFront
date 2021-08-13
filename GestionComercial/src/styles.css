@@ -26,6 +26,10 @@
   font-size: 12px;
 }
 
+.text-14{
+  font-size: 14px;
+}
+
 .thead-dark th{
   text-transform: uppercase;
   background-color: #596c7f !important;
