@@ -21,7 +21,7 @@ import { BuscarUsuariosComponent } from '../../componentes/adm-usuarios/buscar-u
 import { AdministrarPerfilesComponent } from '../../componentes/adm-usuarios/administrar-perfiles/administrar-perfiles.component';
 import { BuscarClientesComponent } from '../../componentes/adm-clientes/buscar-clientes/buscar-clientes.component';
 import { CargarClientesComponent, MomentUtcDateAdapter } from '../../componentes/adm-clientes/cargar-clientes/cargar-clientes.component';
-
+import { CambiarPasswordComponent } from 'src/app/componentes/adm-usuarios/cambiar-password/cambiar-password.component';
 
 const appRoutes: Routes = [{ path: 'empleados/busqueda-empleados', component: BusquedaEmpleadosComponent }
 , { path: 'empleados/cargar-empleados', component: CargarEmpleadosComponent }
@@ -36,7 +36,8 @@ const appRoutes: Routes = [{ path: 'empleados/busqueda-empleados', component: Bu
 , { path: 'usuarios/administrar-perfiles/:empleados_id', component: AdministrarPerfilesComponent }
 , { path: 'clientes/cargar-clientes', component: CargarClientesComponent }
 , { path: 'clientes/cargar-clientes/:clientes_id', component: CargarClientesComponent }
-, { path: 'clientes/busqueda-clientes', component: BuscarClientesComponent }]
+, { path: 'clientes/busqueda-clientes', component: BuscarClientesComponent }
+, { path: 'usuarios/cambiar-password', component: CambiarPasswordComponent }]
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ const appRoutes: Routes = [{ path: 'empleados/busqueda-empleados', component: Bu
     AdministrarPerfilesComponent,
     BuscarClientesComponent,
     CargarClientesComponent,
+    CambiarPasswordComponent
   ],
   imports: [
     CommonModule,
