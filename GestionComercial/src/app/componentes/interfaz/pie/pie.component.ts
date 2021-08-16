@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-pie',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PieComponent implements OnInit {
   anio_actual: number = new Date().getFullYear();
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }

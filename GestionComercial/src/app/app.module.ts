@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule,
   MatAutocompleteModule, MatOptionModule, MatInputModule,
@@ -18,7 +19,6 @@ import { PieComponent } from './componentes/interfaz/pie/pie.component';
 import { NavegacionComponent } from './componentes/interfaz/navegacion/navegacion.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { CargarEmpleadosComponent } from './componentes/adm-empleados/cargar-empleados/cargar-empleados.component';
-import { BusquedaEmpleadosComponent } from './componentes/adm-empleados/busqueda-empleados/busqueda-empleados.component';
 import { CargarPuntosDeVentaComponent } from './componentes/adm-puntos-de-venta/cargar-puntos-de-venta/cargar-puntos-de-venta.component';
 import { BuscarPuntosDeVentaComponent } from './componentes/adm-puntos-de-venta/buscar-puntos-de-venta/buscar-puntos-de-venta.component';
 import { CargarUsuariosComponent } from './componentes/adm-usuarios/cargar-usuarios/cargar-usuarios.component';
@@ -46,14 +46,14 @@ import { MomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@a
 import { VisualizacionVentasComponent } from './componentes/ventas/visualizacion-ventas/visualizacion-ventas.component';
 import { NavegacionSubmenuComponent } from './componentes/interfaz/navegacion-submenu/navegacion-submenu.component';
 import { HomeComponent } from './componentes/home/home.component';
+import { HerramientasAdministrativasModule } from './herramientas-administrativas/herramientas-administrativas.module';
 
 //Rutas para el Router de Angular
 const appRoutes: Routes = [{ path: '', component: LoginComponent }
   , { path: 'login', component: LoginComponent }
   , { path: 'home', component: HomeComponent }
   , { path: 'empleados/cargar-empleados', component: CargarEmpleadosComponent }
-  , { path: 'empleados/cargar-empleados/:empleados_id', component: CargarEmpleadosComponent }
-  , { path: 'empleados/busqueda-empleados', component: BusquedaEmpleadosComponent }
+  , { path: 'empleados/cargar-empleados/:empleados_id', component: CargarEmpleadosComponent }  
   , { path: 'productos/cargar-productos', component: CargarProductosComponent }
   , { path: 'productos/cargar-productos/:productos_id', component: CargarProductosComponent }
   , { path: 'productos/busqueda-productos', component: BuscarProductosComponent }
@@ -77,6 +77,7 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
   , { path: 'clientes/detalle-producto', component: DetalleProductoComponent }
   , { path: 'ventas/busqueda-ventas', component: BusquedaVentasComponent }
   , { path: 'ventas/nueva-venta', component: NuevaVentaComponent }
+  //, { path: 'admin', loadChildren: ()=>import('./herramientas-administrativas/herramientas-administrativas.module').then(m => m.HerramientasAdministrativasModule)}
 ];
 
 
@@ -88,7 +89,6 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     NavegacionComponent,
     LoginComponent,
     CargarEmpleadosComponent,
-    BusquedaEmpleadosComponent,
     BuscarPuntosDeVentaComponent,
     CargarPuntosDeVentaComponent,
     BuscarUsuariosComponent,
@@ -140,8 +140,10 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
       newestOnTop: true
-    })
+    }),
+    HerramientasAdministrativasModule
   ], 
+  exports: [RouterModule],
   providers: [{provide: APP_BASE_HREF, useValue: ''},
   { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
   { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },

@@ -99,8 +99,7 @@
   </span>
 </nav -->
 
-<nav class="navbar navbar-expand-lg navbar-expand-lg navbar-light py-2 shadow-sm" id="barra_navegacion">
-  
+<nav class="navbar navbar-expand-lg navbar-expand-lg navbar-light py-2 shadow-sm" id="barra_navegacion" *ngIf="router.url!='/'">
     <button type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
         <span class="navbar-toggler-icon"></span>
     </button>
