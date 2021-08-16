@@ -12,15 +12,15 @@ import {
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 
-import { BusquedaEmpleadosComponent } from '../componentes/adm-empleados/busqueda-empleados/busqueda-empleados.component';
-import { CargarEmpleadosComponent } from '../componentes/adm-empleados/cargar-empleados/cargar-empleados.component';
-import { CargarPuntosDeVentaComponent } from '../componentes/adm-puntos-de-venta/cargar-puntos-de-venta/cargar-puntos-de-venta.component';
-import { BuscarPuntosDeVentaComponent } from '../componentes/adm-puntos-de-venta/buscar-puntos-de-venta/buscar-puntos-de-venta.component';
-import { CargarUsuariosComponent } from '../componentes/adm-usuarios/cargar-usuarios/cargar-usuarios.component';
-import { BuscarUsuariosComponent } from '../componentes/adm-usuarios/buscar-usuarios/buscar-usuarios.component';
-import { AdministrarPerfilesComponent } from '../componentes/adm-usuarios/administrar-perfiles/administrar-perfiles.component';
-import { BuscarClientesComponent } from '../componentes/adm-clientes/buscar-clientes/buscar-clientes.component';
-import { CargarClientesComponent, MomentUtcDateAdapter } from '../componentes/adm-clientes/cargar-clientes/cargar-clientes.component';
+import { BusquedaEmpleadosComponent } from '../../componentes/adm-empleados/busqueda-empleados/busqueda-empleados.component';
+import { CargarEmpleadosComponent } from '../../componentes/adm-empleados/cargar-empleados/cargar-empleados.component';
+import { CargarPuntosDeVentaComponent } from '../../componentes/adm-puntos-de-venta/cargar-puntos-de-venta/cargar-puntos-de-venta.component';
+import { BuscarPuntosDeVentaComponent } from '../../componentes/adm-puntos-de-venta/buscar-puntos-de-venta/buscar-puntos-de-venta.component';
+import { CargarUsuariosComponent } from '../../componentes/adm-usuarios/cargar-usuarios/cargar-usuarios.component';
+import { BuscarUsuariosComponent } from '../../componentes/adm-usuarios/buscar-usuarios/buscar-usuarios.component';
+import { AdministrarPerfilesComponent } from '../../componentes/adm-usuarios/administrar-perfiles/administrar-perfiles.component';
+import { BuscarClientesComponent } from '../../componentes/adm-clientes/buscar-clientes/buscar-clientes.component';
+import { CargarClientesComponent, MomentUtcDateAdapter } from '../../componentes/adm-clientes/cargar-clientes/cargar-clientes.component';
 
 
 const appRoutes: Routes = [{ path: 'empleados/busqueda-empleados', component: BusquedaEmpleadosComponent }
@@ -77,4 +77,4 @@ const appRoutes: Routes = [{ path: 'empleados/busqueda-empleados', component: Bu
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
   ]
 })
-export class HerramientasAdministrativasModule { }
+export class AdministracionModule { }

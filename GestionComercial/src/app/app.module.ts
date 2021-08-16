@@ -38,7 +38,7 @@ import { MomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@a
 import { VisualizacionVentasComponent } from './componentes/ventas/visualizacion-ventas/visualizacion-ventas.component';
 import { NavegacionSubmenuComponent } from './componentes/interfaz/navegacion-submenu/navegacion-submenu.component';
 import { HomeComponent } from './componentes/home/home.component';
-import { HerramientasAdministrativasModule } from './herramientas-administrativas/herramientas-administrativas.module';
+import { AdministracionModule } from './modulos/herramientas-administrativas/herramientas-administrativas.module';
 
 //Rutas para el Router de Angular
 const appRoutes: Routes = [{ path: '', component: LoginComponent }
@@ -112,7 +112,7 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
       preventDuplicates: true,
       newestOnTop: true
     }),
-    HerramientasAdministrativasModule
+    AdministracionModule
   ], 
   exports: [RouterModule],
   providers: [{provide: APP_BASE_HREF, useValue: ''},
