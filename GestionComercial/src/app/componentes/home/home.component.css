@@ -1,12 +1,96 @@
 #banner-principal {
-    background-image: url("../../../assets/ecommerce-banner.jpg");
-    max-width: 100%;
-    height: 500px;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-image: url("../../../assets/background-tile.png");
+    width: 100%;
+    background-repeat: repeat;
+    height: 100%;
+    
+}
+.container-principal {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    height: 90vh;
 }
 
-#enlaces-usuario {
-    background-color: #f4f4f4;
-    height: 100px;
+.container-principal .banner-container {
+    width: 70%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.container-principal .novedades {
+    background-color: #FFF;
+    width: 30%;
+    font-size: 14px;
+    padding: 1.2rem;
+}
+
+.novedades > h5 {
+    font-size: 1.4em;
+    font-weight: 500;
+    color:grey;
+}
+
+h5.novedad-tipo{
+    font-size: 1.3em;
+}
+
+@media (max-width:420px) {
+
+    #banner-principal {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .container-principal {
+        flex-direction: column;  
+        height: 100%;
+        width: 100%;
+    }
+
+    .container-principal .banner-container {
+        align-items: stretch;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .container-principal .novedades {
+        height: 100%;
+        width: 100%;
+        padding: 1rem;
+        margin: 0;
+        font-size: 12px;
+    }
+
+    .novedades > h5 {
+        font-size: 1.2em;
+        font-weight: 500;
+        color:grey;
+    }
+
+    h5.novedad-tipo{
+        font-size: 1.1em;
+    }
+    
+}
+
+
+
+.container-botones-accion {
+    display: flex;
+    flex-direction: row;
+    background-color: #E2E2E2;
+    width: 100%;
+
+}
+
+.container-botones-accion .accion {
+    margin: 20px;
+    border-radius: 5px;
+    background-color: #FFF;
+    width: 25%;
+    min-height: 200px;
+    cursor: pointer;
 }

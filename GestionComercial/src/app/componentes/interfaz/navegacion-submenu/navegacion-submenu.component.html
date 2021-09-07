@@ -1,12 +1,22 @@
+<ng-container *ngFor="let ObjMenuItem of this.ObjeMenu">
+    
+    <!-- Cuando el Item tiene otros Hijos -->
+    <ng-container *ngIf="this.opcionMenuTieneHijos(ObjMenuItem)">
+        <ul class="navbar-nav dropdown-item">
+            <li class="dropdown-submenu">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown">{{ ObjMenuItem.menu_nombre }}</a>
+                <ul (aria-labelledby)="'dropdownMenu_'+ObjMenuItem.menu_id" class="nav-item dropdown-menu border-0">
+                    <li><app-navegacion-submenu [ObjeMenu]="ObjMenuItem.menu_hijo" ></app-navegacion-submenu></li>
+                </ul>
+            </li>
+        </ul>        
+     </ng-container>
 
- <li *ngFor="let ObjMenuItem of this.ObjeMenu " [ngClass]="{'dropdown-submenu': ObjMenuItem.menu_tipo==2 }" >
-    <a *ngIf=" ObjMenuItem.menu_tipo!=2" [id]="'dropdownMenu'+ObjMenuItem.menu_id" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
-        {{ ObjMenuItem.menu_nombre }}
-    </a>
-    <ul *ngIf=" ObjMenuItem.menu_tipo!=2" (aria-labelledby)="'dropdownMenu'+ObjMenuItem.menu_id" class="dropdown-menu border-0 shadow">
-        <app-navegacion-submenu [ObjeMenu]="this.ObjMenuItem.menu_hijo" ></app-navegacion-submenu>
-    </ul>
-    <a *ngIf=" ObjMenuItem.menu_tipo==2" [routerLink]="ObjMenuItem.menu_ruta" class="dropdown-item">
-        {{ ObjMenuItem.menu_nombre }}
-    </a>
-  </li>
+     <!-- Cuando el Item NO tiene otros Hijos -->
+     <ng-container *ngIf="!this.opcionMenuTieneHijos(ObjMenuItem) && this.opcionMenuTieneRuta(ObjMenuItem)">
+        <a [routerLink]="ObjMenuItem.menu_ruta" class="nav-item nav-link">{{ ObjMenuItem.menu_nombre }}</a>
+    </ng-container>
+
+
+
+ </ng-container>
