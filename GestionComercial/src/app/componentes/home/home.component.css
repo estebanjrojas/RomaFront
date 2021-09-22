@@ -67,7 +67,7 @@ h5.novedad-tipo{
     .novedades > h5 {
         font-size: 1.2em;
         font-weight: 500;
-        color:grey;
+        color:#E2E2E2;
     }
 
     h5.novedad-tipo{
@@ -87,10 +87,35 @@ h5.novedad-tipo{
 }
 
 .container-botones-accion .accion {
-    margin: 20px;
+    margin: 40px;
     border-radius: 5px;
+    border: 2px solid #2C70B2;
     background-color: #FFF;
     width: 25%;
     min-height: 200px;
     cursor: pointer;
 }
+
+.container-botones-accion .accion:hover {
+    background-color: #f0f6fa;
+}
+.accion{
+    width: 100;
+    margin: auto;
+    padding: 10px;
+    color:#2C70B2;
+    text-align: center;
+}
+
+.contenido-accion {
+    height: 80%;
+    margin-bottom: 10%;
+    margin-top: 10%;
+}
+
+.icono-accion {
+    color: #2C70B2;
+    margin: auto;
+    align-self: center;
+}
+

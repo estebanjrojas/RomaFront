@@ -1,0 +1,15 @@
+* {
+    background-color: #2C70B2;
+    color: white;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#container-chart-row {
+    padding: 30px;
+}
+
+canvas {
+    margin: 10px;
+}

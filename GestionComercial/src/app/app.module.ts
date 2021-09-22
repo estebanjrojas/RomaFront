@@ -5,7 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ChartsModule } from 'ng2-charts';
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule,
   MatAutocompleteModule, MatOptionModule, MatInputModule,
@@ -18,7 +19,7 @@ import { CabeceraComponent } from './componentes/interfaz/cabecera/cabecera.comp
 import { PieComponent } from './componentes/interfaz/pie/pie.component';
 import { NavegacionComponent } from './componentes/interfaz/navegacion/navegacion.component';
 import { LoginComponent } from './componentes/login/login.component';
-import {APP_BASE_HREF} from '@angular/common';
+import {APP_BASE_HREF, DatePipe} from '@angular/common';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { NavegacionSubmenuComponent } from './componentes/interfaz/navegacion-submenu/navegacion-submenu.component';
@@ -26,6 +27,7 @@ import { HomeComponent } from './componentes/home/home.component';
 import { AdministracionModule } from './modulos/administracion/administracion.module';
 import { ProductosModule } from './modulos/productos/productos.module';
 import { VentasModule } from './modulos/ventas/ventas.module';
+import { RendimientoDiarioChartComponent } from './componentes/rendimiento-diario-chart/rendimiento-diario-chart.component';
 
 //Rutas para el Router de Angular
 const appRoutes: Routes = [{ path: '', component: LoginComponent }
@@ -43,11 +45,14 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     NavegacionComponent,
     LoginComponent,
     NavegacionSubmenuComponent,
-    HomeComponent
+    HomeComponent,
+    RendimientoDiarioChartComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
+    FontAwesomeModule,
+    ChartsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -77,7 +82,7 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
     VentasModule
   ], 
   exports: [RouterModule],
-  providers: [{provide: APP_BASE_HREF, useValue: ''},
+  providers: [DatePipe, {provide: APP_BASE_HREF, useValue: ''},
   { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
   { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}],

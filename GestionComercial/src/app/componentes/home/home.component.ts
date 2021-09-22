@@ -2,13 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../servicios/auth.service';
 import { UsuariosService} from '../../servicios/usuarios.service';
 import { ProductosService } from '../../servicios/productos.service';
-
+import { faChartArea, faProjectDiagram, faFileInvoice, faUserCog } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  faChartArea = faChartArea;
+  faProjectDiagram = faProjectDiagram;
+  faFileInvoice = faFileInvoice;
+  faUserCog = faUserCog;
   datos_usuario = [];
   novedades_productos = [];
     constructor(private Auth: AuthService, private SrvUsuarios: UsuariosService, private SrvProductos: ProductosService) { }

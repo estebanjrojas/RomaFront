@@ -30,10 +30,34 @@
             </aside>
         </section>
         <section class="container-botones-accion">
-            <div class="accion"></div>
-            <div class="accion"></div>
-            <div class="accion"></div>
-            <div class="accion"></div>
+            <div class="accion">
+                <div class="contenido-accion">
+                    <fa-icon class="icono-accion" [icon]="faChartArea" size="6x"></fa-icon>
+                    <h5>Estadísticas</h5>
+                </div>
+                
+            </div>
+            <div class="accion">
+                <div class="contenido-accion">
+                    <fa-icon class="icono-accion" [icon]="faProjectDiagram" size="6x"></fa-icon>
+                    <h5>Predicciones</h5>
+                </div>
+            </div>
+            <div class="accion">
+                <div class="contenido-accion">
+                    <fa-icon class="icono-accion" [icon]="faFileInvoice" size="6x"></fa-icon>
+                    <h5>Facturas</h5>
+                </div>
+            </div>
+            <div class="accion">
+                <div class="contenido-accion">
+                    <fa-icon class="icono-accion" [icon]="faUserCog" size="6x"></fa-icon>
+                    <h5>Empleados</h5>
+                </div>
+            </div>
+        </section>
+        <section class="container-chart">
+            <app-rendimiento-diario-chart></app-rendimiento-diario-chart>
         </section>
         
     </form>

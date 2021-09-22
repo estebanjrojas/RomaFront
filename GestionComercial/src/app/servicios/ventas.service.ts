@@ -118,7 +118,17 @@ export class VentasService {
   }
   //PAGINACION FIN <------------
 
-
+  getVentasDiariasEmpleados(fecha): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
+    return this.http.get(environment.apiEndpoint + '/getVentasDiariasEmpleados/' + fecha, httpOptions);
+  }
 
   //PUSH's
 
