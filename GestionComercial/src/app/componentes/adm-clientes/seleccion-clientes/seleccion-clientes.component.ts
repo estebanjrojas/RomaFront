@@ -24,12 +24,12 @@ export class SeleccionClientesComponent implements OnInit {
 
     this.seleccionClientesForm = this.formBuilder.group({
       txtBuscarCliente: [],
-      cbTipoBusquedaCliente: []
+      cbTipoBusquedaCliente: [1]
     });
   }
 
   ngOnInit() {
-    this.seleccionClientesForm.controls.cbTipoBusquedaCliente.setValue("apellido");
+    this.seleccionClientesForm.controls.cbTipoBusquedaCliente.setValue("1");
   }
 
   
@@ -41,7 +41,7 @@ export class SeleccionClientesComponent implements OnInit {
 
       this.SrvClientes.getClientesWhere(campo_busqueda, texto_busqueda).subscribe(respuesta => {
         this.clientes = respuesta;
-        console.log({'SrvCategorias.getClientesWhere': this.clientes });
+        console.log({'SrvClientes.getClientesWhere': this.clientes });
       });
 
   }
