@@ -6,10 +6,40 @@
     box-sizing: border-box;
 }
 
+h1 {
+    margin: 10px;
+}
+
 #container-chart-row {
     padding: 30px;
 }
 
 canvas {
     margin: 10px;
+}
+
+input[type="date"] {
+    padding: 10px;
+    font-size: 1.3rem;
+}
+
+@media(max-width:420px) {
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    #container-chart-row {
+        padding: 10px;
+    }
+
+    canvas {
+        margin: 0;
+    }
+
+    
 }

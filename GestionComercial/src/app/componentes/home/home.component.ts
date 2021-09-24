@@ -3,6 +3,8 @@ import { AuthService } from '../../servicios/auth.service';
 import { UsuariosService} from '../../servicios/usuarios.service';
 import { ProductosService } from '../../servicios/productos.service';
 import { faChartArea, faProjectDiagram, faFileInvoice, faUserCog } from '@fortawesome/free-solid-svg-icons';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -15,7 +17,7 @@ export class HomeComponent implements OnInit {
   faUserCog = faUserCog;
   datos_usuario = [];
   novedades_productos = [];
-    constructor(private Auth: AuthService, private SrvUsuarios: UsuariosService, private SrvProductos: ProductosService) { }
+    constructor(private Auth: AuthService, private SrvUsuarios: UsuariosService, private SrvProductos: ProductosService, private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.novedades_productos = [];
@@ -30,7 +32,7 @@ export class HomeComponent implements OnInit {
       }
     });
 
-    this.SrvProductos.getNovedadesProductos('2019-06-01', "2020-11-29", 5).subscribe(respuesta => {
+    this.SrvProductos.getNovedadesProductos('2019-06-01', this.datePipe.transform(new Date(), 'yyyy-MM-dd'), 5).subscribe(respuesta => {
       let cast : any = respuesta;
       for(let i = 0; i<cast.length; i++){
         this.novedades_productos.push({

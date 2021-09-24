@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { VentasService } from 'src/app/servicios/ventas.service';
+import { VentasService } from '../../servicios/ventas.service';
 import { DatePipe } from '@angular/common';
+import { ChartOptions, ChartType } from 'chart.js';
+import { Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, SingleDataSet } from 'ng2-charts';
 
 @Component({
   selector: 'app-rendimiento-diario-chart',
@@ -9,17 +11,38 @@ import { DatePipe } from '@angular/common';
 })
 export class RendimientoDiarioChartComponent implements OnInit {
   
-  public pieChartLabels = [];
-  public pieChartData = [];
-  public pieChartType = 'pie';
+  public pieChartLabels: Label[] = [];
+  public pieChartData: SingleDataSet = [];
+  public pieChartLegend = true;
+  public pieChartType: ChartType = 'pie';
   public total = 0;
+  public pieChartColors = [
+    {
+      backgroundColor: ['#7c8981', '#a8bbaf', '#fffff0', '#748a9e', '#424f5c'],
+    },
+  ]
+  public options: ChartOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+    legend:{
+      labels:{
+        fontColor: 'white',
+        fontSize: 14
+      }
+    }
+
+  };
+
+  
 
   private fecha;
-  constructor(private SrvVentas: VentasService, private datePipe: DatePipe) { }
+  constructor(private SrvVentas: VentasService, private datePipe: DatePipe) {
+    monkeyPatchChartJsTooltip();
+    monkeyPatchChartJsLegend();
+   }
 
   ngOnInit() {
     this.fecha = new Date();
-    console.log(this.datePipe.transform(this.fecha, 'yyyy-MM-dd'));
     this.calcularChart();
   }
 
@@ -35,9 +58,13 @@ export class RendimientoDiarioChartComponent implements OnInit {
     this.pieChartLabels = [];
     this.SrvVentas.getVentasDiariasEmpleados(this.datePipe.transform(this.fecha, 'yyyy-MM-dd')).subscribe(resp => {
       let cast: any = resp;
+      console.log(cast);
       this.pieChartData = cast.map(venta => venta.total_vendido);
       this.pieChartLabels = cast.map(venta => venta.nombre);
-      this.pieChartData.forEach(monto => {this.total = this.total + monto});
+      this.pieChartData.forEach(monto => {this.total = this.total + parseFloat(monto)});
+      console.log(this.pieChartData);
+    }, (error)=>{
+      console.error(`Ocurrio un error al obtener los datos para el gráfico: ${error}`)
     })
   }
 
