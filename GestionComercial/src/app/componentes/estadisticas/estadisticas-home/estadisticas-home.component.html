@@ -1,0 +1,42 @@
+<!----## Inicio Form Principal ##---->
+<form id="estadisticasForm">
+    <!----## Inicio Container Principal ##---->
+    <div class="container mt-4">
+      <!----## Inicio Row Principal ##---->
+      <div class="row">
+        <!----## Inicio Columna 12  ##---->
+        <div class="col-md-12 m-0 p-0">
+            <div class="card" id="cardPrincipal">
+                <div class="card-body">
+                    <h3><span><fa-icon [icon]="faChartArea"></fa-icon></span> Estadisticas</h3>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <mat-form-field style="width:100%">
+                          <mat-select placeholder="Tipo de Gráfico" id="tipo_grafico" (selectionChange)="setTipoGrafico($event.value)">
+                            <mat-option value="ventas-diarias">Ventas Diarias</mat-option>
+                            <mat-option value="ventas-mensuales">Ventas Mensuales</mat-option>
+                            <mat-option value="rendiento-vendedores">Rendimiento de Vendedores</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row p-4 mt-3">
+                      <div class="col-12" [ngSwitch]="tipoGraficoElegido">
+                        <app-chart-ventas-diarias *ngSwitchCase="'ventas-diarias'"></app-chart-ventas-diarias>
+                        <p *ngSwitchDefault>Seleccione el tipo de gráfico para mostrar</p>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!----## Fin Columna 12  ##---->
+      </div>
+      <!----## Fin Row Principal ##---->
+    </div>
+    <br>
+    <!----## Fin Container Principal ##---->
+  </form>
+  <!----## Fin Form Principal ##---->
+  

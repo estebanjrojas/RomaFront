@@ -11,6 +11,8 @@ import {
 } from '@angular/material';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ChartsModule } from 'ng2-charts';
 
 import { BusquedaEmpleadosComponent } from '../../componentes/adm-empleados/busqueda-empleados/busqueda-empleados.component';
 import { CargarEmpleadosComponent } from '../../componentes/adm-empleados/cargar-empleados/cargar-empleados.component';
@@ -21,7 +23,10 @@ import { BuscarUsuariosComponent } from '../../componentes/adm-usuarios/buscar-u
 import { AdministrarPerfilesComponent } from '../../componentes/adm-usuarios/administrar-perfiles/administrar-perfiles.component';
 import { BuscarClientesComponent } from '../../componentes/adm-clientes/buscar-clientes/buscar-clientes.component';
 import { CargarClientesComponent, MomentUtcDateAdapter } from '../../componentes/adm-clientes/cargar-clientes/cargar-clientes.component';
-import { CambiarPasswordComponent } from 'src/app/componentes/adm-usuarios/cambiar-password/cambiar-password.component';
+import { CambiarPasswordComponent } from '../../componentes/adm-usuarios/cambiar-password/cambiar-password.component';
+import { EstadisticasHomeComponent } from '../../componentes/estadisticas/estadisticas-home/estadisticas-home.component';
+import { PrediccionesHomeComponent } from '../../componentes/estadisticas/predicciones-home/predicciones-home.component';
+import { ChartVentasDiariasComponent } from '../../componentes/estadisticas/chart-ventas-diarias/chart-ventas-diarias.component';
 
 const appRoutes: Routes = [{ path: 'empleados/busqueda-empleados', component: BusquedaEmpleadosComponent }
 , { path: 'empleados/cargar-empleados', component: CargarEmpleadosComponent }
@@ -37,7 +42,9 @@ const appRoutes: Routes = [{ path: 'empleados/busqueda-empleados', component: Bu
 , { path: 'clientes/cargar-clientes', component: CargarClientesComponent }
 , { path: 'clientes/cargar-clientes/:clientes_id', component: CargarClientesComponent }
 , { path: 'clientes/busqueda-clientes', component: BuscarClientesComponent }
-, { path: 'usuarios/cambiar-password', component: CambiarPasswordComponent }]
+, { path: 'usuarios/cambiar-password', component: CambiarPasswordComponent }
+, { path: 'estadisticas/estadisticas-home', component: EstadisticasHomeComponent }
+, { path: 'estadisticas/predicciones-home', component: PrediccionesHomeComponent }]
 
 @NgModule({
   declarations: [
@@ -50,7 +57,10 @@ const appRoutes: Routes = [{ path: 'empleados/busqueda-empleados', component: Bu
     AdministrarPerfilesComponent,
     BuscarClientesComponent,
     CargarClientesComponent,
-    CambiarPasswordComponent
+    CambiarPasswordComponent,
+    EstadisticasHomeComponent,
+    PrediccionesHomeComponent,
+    ChartVentasDiariasComponent
   ],
   imports: [
     CommonModule,
@@ -71,6 +81,8 @@ const appRoutes: Routes = [{ path: 'empleados/busqueda-empleados', component: Bu
     MatRadioModule,
     MatCardModule,
     MatSnackBarModule,
+    FontAwesomeModule,
+    ChartsModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },

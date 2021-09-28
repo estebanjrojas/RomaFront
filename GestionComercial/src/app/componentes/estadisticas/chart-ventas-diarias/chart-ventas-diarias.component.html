@@ -1,0 +1,29 @@
+<form  [formGroup]="chartVentasDiariasForm">
+    <h5 class="text-azul">Ventas Diarias</h5>
+    <div class="row">
+        <div class="col-md-2 col-lg-2 col-sm-12">
+            <mat-label>Fechas</mat-label>
+        </div>
+        <div class="col-md-5 col-lg-5 col-sm-12">
+            <mat-form-field class="example-full-width">
+                <input matInput [matDatepicker]="pickerFechaDesde"
+                placeholder="Desde" formControlName="fecha_desde">
+                <mat-datepicker-toggle matSuffix [for]="pickerFechaDesde"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFechaDesde></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-5 col-lg-5 col-sm-12">
+            <mat-form-field class="example-full-width">
+                <input matInput [matDatepicker]="pickerFechaHasta"
+                placeholder="Hasta" formControlName="fecha_hasta">
+                <mat-datepicker-toggle matSuffix [for]="pickerFechaHasta"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFechaHasta></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <button type="button" class="btn btn-primary btn-lg" (click)="calcularChart()">Calcular</button>
+        </div>
+    </div>
+</form>
