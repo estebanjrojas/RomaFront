@@ -120,6 +120,20 @@ export class CategoriasService {
   //PAGINACION FIN <------------
 
 
+  getDatosCategorias(categorias_id: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('roma_acceso')
+        }
+      )
+    };
+    return this.http.get(environment.apiEndpoint + `/getDatosCategorias/${categorias_id}`, httpOptions);
+  }
+
+
+
   //POST's
 
   guardarCategoria(categoria: any) {
@@ -148,7 +162,7 @@ export class CategoriasService {
       )
     };
     const json = JSON.stringify(categoria);
-    return this.http.post(environment.apiEndpoint + '/categorias/update', json, httpOptions);
+    return this.http.put(environment.apiEndpoint + '/categorias/update', json, httpOptions);
   }
 
 
