@@ -16,7 +16,6 @@ export class EstadisticasHomeComponent implements OnInit {
 
   setTipoGrafico(valor){
     this.tipoGraficoElegido = valor;
-    console.log(valor);
-  }
+   }
 
 }

@@ -25,11 +25,6 @@ export class HomeComponent implements OnInit {
     this.SrvUsuarios.getDatosUsuario(usuario).subscribe(respuesta=>{
       let cast = respuesta;
       this.datos_usuario = cast[0];
-      console.log(this.datos_usuario);
-      
-      if(this.Auth.getDebugUsuarioSesion()==1) {
-        console.log({"SrvUsuarios.getDatosUsuario": this.datos_usuario});
-      }
     });
 
     this.SrvProductos.getNovedadesProductos('2019-06-01', this.datePipe.transform(new Date(), 'yyyy-MM-dd'), 5).subscribe(respuesta => {

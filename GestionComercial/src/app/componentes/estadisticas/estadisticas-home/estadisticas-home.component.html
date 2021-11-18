@@ -16,15 +16,17 @@
                           <mat-select placeholder="Tipo de Gráfico" id="tipo_grafico" (selectionChange)="setTipoGrafico($event.value)">
                             <mat-option value="ventas-diarias">Ventas Diarias</mat-option>
                             <mat-option value="ventas-mensuales">Ventas Mensuales</mat-option>
-                            <mat-option value="rendiento-vendedores">Rendimiento de Vendedores</mat-option>
+                            <mat-option value="rendimiento-vendedores">Rendimiento de Vendedores</mat-option>
                           </mat-select>
                         </mat-form-field>
                       </div>
                     </div>
-                    <div class="row p-4 mt-3">
-                      <div class="col-12" [ngSwitch]="tipoGraficoElegido">
+                    <div class="row p-4 mt-1">
+                      <div class="col-12 chart-container" [ngSwitch]="tipoGraficoElegido">
                         <app-chart-ventas-diarias *ngSwitchCase="'ventas-diarias'"></app-chart-ventas-diarias>
-                        <p *ngSwitchDefault>Seleccione el tipo de gráfico para mostrar</p>
+                        <app-chart-ventas-mensuales *ngSwitchCase="'ventas-mensuales'"></app-chart-ventas-mensuales>
+                        <app-chart-rendimiento-vendedores *ngSwitchCase="'rendimiento-vendedores'"></app-chart-rendimiento-vendedores>
+                        <p class="text-center" *ngSwitchDefault>Seleccione el tipo de gráfico para mostrar</p>
                       </div>
                     </div>
                 </div>

@@ -27,6 +27,8 @@ import { CambiarPasswordComponent } from '../../componentes/adm-usuarios/cambiar
 import { EstadisticasHomeComponent } from '../../componentes/estadisticas/estadisticas-home/estadisticas-home.component';
 import { PrediccionesHomeComponent } from '../../componentes/estadisticas/predicciones-home/predicciones-home.component';
 import { ChartVentasDiariasComponent } from '../../componentes/estadisticas/chart-ventas-diarias/chart-ventas-diarias.component';
+import { ChartVentasMensualesComponent } from '../../componentes/estadisticas/chart-ventas-mensuales/chart-ventas-mensuales.component';
+import { ChartRendimientoVendedoresComponent } from '../../componentes/estadisticas/chart-rendimiento-vendedores/chart-rendimiento-vendedores.component';
 
 const appRoutes: Routes = [{ path: 'empleados/busqueda-empleados', component: BusquedaEmpleadosComponent }
 , { path: 'empleados/cargar-empleados', component: CargarEmpleadosComponent }
@@ -60,7 +62,9 @@ const appRoutes: Routes = [{ path: 'empleados/busqueda-empleados', component: Bu
     CambiarPasswordComponent,
     EstadisticasHomeComponent,
     PrediccionesHomeComponent,
-    ChartVentasDiariasComponent
+    ChartVentasDiariasComponent,
+    ChartVentasMensualesComponent,
+    ChartRendimientoVendedoresComponent
   ],
   imports: [
     CommonModule,

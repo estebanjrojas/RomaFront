@@ -25,7 +25,6 @@ export class NavegacionComponent implements OnInit {
       return {...menu, tiene_ruta: this.opcionMenuTieneRuta(menu), tiene_hijos: this.opcionMenuTieneHijos(menu)};
     })*/
 
-    console.log(this.menuArray);
 
     this.SrvUsuarios.getDatosUsuario(usuario).subscribe(respuesta=>{
       let cast = respuesta;

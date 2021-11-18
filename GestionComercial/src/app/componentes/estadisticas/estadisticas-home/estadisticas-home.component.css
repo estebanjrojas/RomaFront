@@ -1,0 +1,12 @@
+.chart-container {
+    border-radius: 10px;
+    border: solid 1px #A4A4A4;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.chart-container p{
+    border: none;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}

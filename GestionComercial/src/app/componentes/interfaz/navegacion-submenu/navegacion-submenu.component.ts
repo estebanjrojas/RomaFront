@@ -11,8 +11,7 @@ export class NavegacionSubmenuComponent implements OnInit {
   }
   
   ngOnInit() {
-    console.log(this.ObjeMenu);
-    console.log(this.opcionMenuTieneHijos(this.ObjeMenu));
+
   }
 
   

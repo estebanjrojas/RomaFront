@@ -1,24 +1,14 @@
-<form  [formGroup]="chartVentasDiariasForm">
-    <h5 class="text-azul mb-4">Ventas Diarias</h5>
+<form  [formGroup]="chartVentasMensualesForm">
+    <h5 class="text-azul mb-4">Ventas Mensuales</h5>
     <div class="row">
         <div class="col-md-2 col-lg-2 col-sm-12">
-            <mat-label>Fechas</mat-label>
+            <mat-label>Periodos</mat-label>
         </div>
         <div class="col-md-4 col-lg-4 col-sm-12">
-            <mat-form-field class="example-full-width">
-                <input matInput [matDatepicker]="pickerFechaDesde"
-                placeholder="Desde" formControlName="fecha_desde">
-                <mat-datepicker-toggle matSuffix [for]="pickerFechaDesde"></mat-datepicker-toggle>
-                <mat-datepicker #pickerFechaDesde></mat-datepicker>
-            </mat-form-field>
+            
         </div>
         <div class="col-md-4 col-lg-4 col-sm-12">
-            <mat-form-field class="example-full-width">
-                <input matInput [matDatepicker]="pickerFechaHasta"
-                placeholder="Hasta" formControlName="fecha_hasta">
-                <mat-datepicker-toggle matSuffix [for]="pickerFechaHasta"></mat-datepicker-toggle>
-                <mat-datepicker #pickerFechaHasta></mat-datepicker>
-            </mat-form-field>
+            
         </div>
     </div>
     <div class="row mt-4">
@@ -27,7 +17,7 @@
         </div>
     </div>
     <hr>
-    <div class="row" *ngIf="lineChartData.length > 0">
+    <!--div class="row" *ngIf="lineChartData.length > 0">
         <div class="col-12">
             <div style="display: block;">
                 <canvas baseChart
@@ -59,5 +49,5 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div-->
 </form>

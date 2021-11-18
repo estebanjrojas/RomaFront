@@ -129,6 +129,66 @@ export class VentasService {
     return this.http.get(environment.apiEndpoint + '/getVentasDiariasEmpleados/' + fecha, httpOptions);
   }
 
+  getUltimasVentas(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
+    return this.http.get(environment.apiEndpoint + '/ultimasVentas/', httpOptions);
+  }
+
+  getUltimasVentasEmpleado(empleados_id): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
+    return this.http.get(environment.apiEndpoint + '/ultimasVentasEmpleado/' + empleados_id, httpOptions);
+  }
+
+  getEstadisticasVentasDiarias(fecha_desde, fecha_hasta): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
+    return this.http.get(`${environment.apiEndpoint}/estadisticasVentasDiarias/${fecha_desde}/${fecha_hasta}`, httpOptions);
+  }
+
+  getEstadisticasVentasDiariasEmpleado(fecha_desde, fecha_hasta, empleados_id): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
+    return this.http.get(`${environment.apiEndpoint}/estadisticasVentasDiariasEmpleado/${fecha_desde}/${fecha_hasta}/${empleados_id}`, httpOptions);
+  }
+
+  getEstadisticasVentasMensuales(fecha_desde, fecha_hasta): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
+    return this.http.get(`${environment.apiEndpoint}/estadisticasVentasMensuales/${fecha_desde}/${fecha_hasta}`, httpOptions);
+  }
+
   //PUSH's
 
   agregarDetalleVentaActual(detalle: VentasDetalle) {
