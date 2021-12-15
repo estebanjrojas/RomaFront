@@ -1,0 +1,75 @@
+<form>
+  <section class="container-principal">
+    <section class="banner-container">
+      <div class="jumbotron jumbotron-fluid" id="banner-principal">
+        <div class="container-fluid">
+          <div class="row m-0 p-0">
+            <div class="col-12">
+              <h3 mat-subheader class="my-auto">
+                Hola {{ datos_usuario.nombre }}
+              </h3>
+              <p class="lead"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <aside *ngIf="novedades_productos" class="novedades">
+      <h5 class="cabin-reg">NOVEDADES</h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let novedad of novedades_productos">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1 novedad-tipo">{{ novedad.tipo }}</h5>
+            <span class="novedad-fecha">{{
+              novedad.fecha | date: "dd/MM/yyyy"
+            }}</span>
+          </div>
+          <p class="mb-1">{{ novedad.descripcion }}</p>
+        </li>
+      </ul>
+    </aside>
+  </section>
+  <section class="container-botones-accion">
+    <div class="accion">
+      <div
+        class="contenido-accion"
+        routerLink="/panel/estadisticas/estadisticas-home"
+      >
+        <fa-icon class="icono-accion" [icon]="faChartArea" size="6x"></fa-icon>
+        <h5>Estadísticas</h5>
+      </div>
+    </div>
+    <div class="accion">
+      <div
+        class="contenido-accion"
+        routerLink="/panel/estadisticas/predicciones-home"
+      >
+        <fa-icon
+          class="icono-accion"
+          [icon]="faProjectDiagram"
+          size="6x"
+        ></fa-icon>
+        <h5>Predicciones</h5>
+      </div>
+    </div>
+    <div class="accion">
+      <div class="contenido-accion">
+        <fa-icon
+          class="icono-accion"
+          [icon]="faFileInvoice"
+          size="6x"
+        ></fa-icon>
+        <h5>Facturas</h5>
+      </div>
+    </div>
+    <div class="accion">
+      <div class="contenido-accion">
+        <fa-icon class="icono-accion" [icon]="faUserCog" size="6x"></fa-icon>
+        <h5>Empleados</h5>
+      </div>
+    </div>
+  </section>
+  <section class="container-chart">
+    <app-rendimiento-diario-chart></app-rendimiento-diario-chart>
+  </section>
+</form>

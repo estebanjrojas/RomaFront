@@ -1,0 +1,8 @@
+<ng-container *ngIf="data != undefined">
+    <ul class="tree">
+      <ng-container *ngFor="let branch of data">
+        <app-tree-branch [data]="branch"></app-tree-branch>
+      </ng-container>
+    </ul>
+  </ng-container>
+  
