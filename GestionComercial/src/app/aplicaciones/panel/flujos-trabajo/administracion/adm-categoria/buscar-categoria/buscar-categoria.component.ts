@@ -14,7 +14,6 @@ import { Component, OnInit } from "@angular/core";
 })
 export class BuscarCategoriaComponent implements OnInit {
   //Variables
-  nomb_usr: string;
   formBusquedaCategorias: FormGroup;
   cast: any;
   buscar: string = "";
@@ -39,7 +38,6 @@ export class BuscarCategoriaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.nomb_usr = localStorage.getItem("roma_usuario");
     this.buscarCategorias();
   }
 

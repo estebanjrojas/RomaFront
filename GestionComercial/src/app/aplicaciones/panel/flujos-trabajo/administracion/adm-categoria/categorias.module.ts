@@ -6,7 +6,7 @@ import { CargarCategoriaComponent } from "src/app/aplicaciones/panel/flujos-trab
 import { BuscarCategoriaComponent } from "src/app/aplicaciones/panel/flujos-trabajo/administracion/adm-categoria/buscar-categoria/buscar-categoria.component";
 import { MaterialModule } from "src/app/core/ui/material.module";
 import { SnackbarModule } from "src/app/core/ui/snackbar.module";
-
+import { UiModule } from "src/app/core/ui/ui.module";
 const appRoutes: Routes = [
   { path: "cargar-categorias", component: CargarCategoriaComponent },
   {
@@ -28,6 +28,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     MaterialModule,
     SnackbarModule,
+    UiModule,
   ],
   providers: [],
 })

@@ -1,15 +1,7 @@
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 import { SnackBarService } from "src/app/core/ui/comunes/servicios/SnackBarService";
 import { CategoriasService } from "../../../../../../comunes/servicios/categorias.service";
-import { Categorias } from "../../../../../../comunes/interfaces/Categorias";
-import { NestedTreeControl } from "@angular/cdk/tree";
-import { MatTreeNestedDataSource } from "@angular/material/tree";
 import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
@@ -19,8 +11,8 @@ import { Router, ActivatedRoute } from "@angular/router";
 })
 export class CargarCategoriaComponent implements OnInit {
   //Arbol de Categorias
-  treeControl = new NestedTreeControl<Categorias>((node) => node.children);
-  dataSource = new MatTreeNestedDataSource<Categorias>();
+  listaCategorias = [];
+
   //Instancias
   categoriasForm: FormGroup;
   categorias_id: number;
@@ -41,12 +33,7 @@ export class CargarCategoriaComponent implements OnInit {
     });
   }
 
-  hasChild = (_: number, node: Categorias) =>
-    !!node.children && node.children.length > 0;
-
   ngOnInit() {
-    this.route.params.subscribe((params) => {});
-
     this.route.params.subscribe((params) => {
       this.categorias_id = params.categorias_id;
       if (params.categorias_id != null) {
@@ -55,11 +42,9 @@ export class CargarCategoriaComponent implements OnInit {
           params.categorias_id
         );
       }
-      console.log({ "PARAMS: ": params });
     });
 
     this.SrvCategorias.obtenerJSONTodasCategorias().subscribe((resp) => {
-      console.log({ "SrvCategorias.obtenerJSONTodasCategorias": resp });
       let cast: any = resp;
       this.SrvCategorias.setCategorias(JSON.parse(cast.categorias));
     });
@@ -70,7 +55,6 @@ export class CargarCategoriaComponent implements OnInit {
   getDatosCategorias(categorias_id: any) {
     this.SrvCategorias.getDatosCategorias(categorias_id).subscribe(
       (respuesta) => {
-        console.log({ "SrvCategorias.getDatosCategorias()": respuesta });
         let cast: any = respuesta;
 
         this.categoriasForm.controls.nombre.setValue(cast[0].nombre);
@@ -80,32 +64,94 @@ export class CargarCategoriaComponent implements OnInit {
         );
       },
       (err) => {
-        console.log({ ERROR: err });
-        alert("Ha ocurrido un error... ");
+        console.error({ ERROR: err });
       }
     );
   }
 
   llenarArbolCategorias() {
-    const categoriasObservable = this.SrvCategorias.getCategorias();
-    categoriasObservable.subscribe(
-      (categoriasData: Categorias[]) => {
-        console.log(categoriasData);
-        this.dataSource.data = categoriasData;
+    this.SrvCategorias.getCategorias().subscribe(
+      (categoriasData: any[]) => {
+        this.listaCategorias = categoriasData.map((cat: any) =>
+          this.formatoDatosParaArbol(cat)
+        );
+        console.log({ llenarArbolCategorias: this.listaCategorias });
       },
       (err) => {
         console.error("Error al obtener categorias: " + err);
-      },
-      () => {}
+      }
     );
   }
 
-  seleccionarCategoriaPadre(padres_id) {
-    this.categoriasForm.controls.categorias_padre_id.setValue(padres_id);
+  private formatoDatosParaArbol(objeto: any) {
+    return {
+      id: objeto.id,
+      label: objeto.name,
+      helperText: "",
+      expandable: objeto.children !== undefined && objeto.children.length > 0,
+      selectable:
+        objeto.children === undefined ||
+        objeto.children === null ||
+        objeto.children.length === 0,
+      disabled: false,
+      isExpanded: false,
+      state: "default",
+      childrens:
+        objeto.children !== undefined && objeto.children.length !== 0
+          ? objeto.children.map((child: any) => {
+              return this.formatoDatosParaArbol(child);
+            })
+          : [],
+      onSelect: () => this.seleccionarCategoriaPadre(objeto),
+      onToggle: () => this.toggle(objeto),
+    };
+  }
+
+  private setearEstadoSeleccionado(categoria: any, idSeleccionado: string) {
+    if (categoria.id === idSeleccionado) {
+      categoria.state = "selected";
+      return;
+    } else {
+      categoria.state = "default";
+      categoria.childrens.forEach((cat) => {
+        this.setearEstadoSeleccionado(cat, idSeleccionado);
+      });
+    }
+  }
+
+  private seleccionarCategoriaPadre(objetoCategoria) {
+    this.listaCategorias.forEach((cat) => {
+      this.setearEstadoSeleccionado(cat, objetoCategoria.id);
+    });
+
+    this.categoriasForm.controls.categorias_padre_id.setValue(
+      objetoCategoria.id
+    );
 
     console.log(
       "categoria padre: " + this.categoriasForm.get("categorias_padre_id").value
     );
+  }
+
+  private toggle(toggleCategoria: any) {
+    const index = this.listaCategorias.findIndex(
+      (item: any) => item.id === toggleCategoria.id
+    );
+    if (this.listaCategorias[index].isExpanded) {
+      this.listaCategorias[index].isExpanded = false;
+      const childrens = document.querySelector(
+        `#branch-${toggleCategoria.id} > ul`
+      );
+      childrens.classList.remove("tree-branch");
+      childrens.classList.add("hidden-tree-branch");
+    } else {
+      this.listaCategorias[index].isExpanded = true;
+      const childrens = document.querySelector(
+        `#branch-${toggleCategoria.id} > ul`
+      );
+      childrens.classList.remove("hidden-tree-branch");
+      childrens.classList.add("tree-branch");
+    }
   }
 
   guardar() {
