@@ -1,26 +1,25 @@
 .hidden-tree-branch {
-    display: none;
-  }
-  
-  li.tree-branch div label {
-    text-transform: capitalize !important;
-    margin-right: 10px;
-  }
-  
-  label.selectable {
-    cursor: pointer;
-  }
-  
-  .tree-branch {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    line-height: 1.5rem;
-    position: relative;
-    margin-left: 14px;
-  }
-  .selected {
-    font-weight: 500;
-    size: 1.3rem;
-  }
-  
+  display: none;
+}
+
+li.tree-branch div label {
+  text-transform: capitalize !important;
+  margin-right: 10px;
+}
+
+label.selectable {
+  cursor: pointer;
+}
+
+.tree-branch {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  line-height: 0.5rem;
+  position: relative;
+  margin-left: 14px;
+}
+.selected {
+  font-weight: 500;
+  size: 1.3rem;
+}

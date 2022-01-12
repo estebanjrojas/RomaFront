@@ -2,16 +2,16 @@
   <div [ngClass]="data.state === 'selected' ? 'my-2 selected' : 'my-2'">
     <label
       *ngIf="data.selectable === true"
-      (click)="data.onSelect()"
+      (click)="selectItem(data)"
       class="selectable"
-      >{{ data?.label }}</label
+      >{{ data.label }}</label
     >
-    <label *ngIf="data.selectable === false">{{ data?.label }}</label>
+    <label *ngIf="data.selectable === false">{{ data.label }}</label>
 
     <span
       class="text-right"
       *ngIf="data.expandable === true"
-      (click)="data.onToggle()"
+      (click)="toggle(data)"
     >
       <i
         *ngIf="data.isExpanded === true"
@@ -25,7 +25,7 @@
   </div>
 
   <ng-container *ngIf="data.childrens != undefined">
-    <ul>
+    <ul [ngClass]="data.isExpanded === false ? 'hidden-tree-branch' : ''">
       <ng-container *ngFor="let branch of data.childrens">
         <app-tree-branch [data]="branch"></app-tree-branch>
       </ng-container>

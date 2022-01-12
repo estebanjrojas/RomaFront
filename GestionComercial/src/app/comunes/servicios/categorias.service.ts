@@ -20,12 +20,6 @@ export class CategoriasService {
   constructor(private http: HttpClient) {}
 
   setCategorias(json) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("roma_acceso"),
-      }),
-    };
     this.categorias = json;
   }
 
@@ -45,19 +39,7 @@ export class CategoriasService {
   }
 
   public getCategorias(): any {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("roma_acceso"),
-      }),
-    };
-    const categoriasObservable = new Observable((observer) => {
-      setTimeout(() => {
-        observer.next(this.categorias);
-      }, 1000);
-    });
-
-    return categoriasObservable;
+    return this.categorias;
   }
 
   getCategoriasBusqueda(texto_busqueda): Observable<any> {

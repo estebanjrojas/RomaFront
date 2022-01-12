@@ -12,6 +12,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 export class CargarCategoriaComponent implements OnInit {
   //Arbol de Categorias
   listaCategorias = [];
+  objetosArbolCategorias = [];
 
   //Instancias
   categoriasForm: FormGroup;
@@ -44,12 +45,18 @@ export class CargarCategoriaComponent implements OnInit {
       }
     });
 
-    this.SrvCategorias.obtenerJSONTodasCategorias().subscribe((resp) => {
-      let cast: any = resp;
-      this.SrvCategorias.setCategorias(JSON.parse(cast.categorias));
-    });
-
-    this.llenarArbolCategorias();
+    this.SrvCategorias.obtenerJSONTodasCategorias().subscribe(
+      (resp) => {
+        let cast: any = resp;
+        this.SrvCategorias.setCategorias(JSON.parse(cast.categorias));
+      },
+      (error) => {
+        console.error(`Ha ocurrido un error: ${error}`);
+      },
+      () => {
+        this.llenarArbolCategorias();
+      }
+    );
   }
 
   getDatosCategorias(categorias_id: any) {
@@ -70,88 +77,8 @@ export class CargarCategoriaComponent implements OnInit {
   }
 
   llenarArbolCategorias() {
-    this.SrvCategorias.getCategorias().subscribe(
-      (categoriasData: any[]) => {
-        this.listaCategorias = categoriasData.map((cat: any) =>
-          this.formatoDatosParaArbol(cat)
-        );
-        console.log({ llenarArbolCategorias: this.listaCategorias });
-      },
-      (err) => {
-        console.error("Error al obtener categorias: " + err);
-      }
-    );
-  }
-
-  private formatoDatosParaArbol(objeto: any) {
-    return {
-      id: objeto.id,
-      label: objeto.name,
-      helperText: "",
-      expandable: objeto.children !== undefined && objeto.children.length > 0,
-      selectable:
-        objeto.children === undefined ||
-        objeto.children === null ||
-        objeto.children.length === 0,
-      disabled: false,
-      isExpanded: false,
-      state: "default",
-      childrens:
-        objeto.children !== undefined && objeto.children.length !== 0
-          ? objeto.children.map((child: any) => {
-              return this.formatoDatosParaArbol(child);
-            })
-          : [],
-      onSelect: () => this.seleccionarCategoriaPadre(objeto),
-      onToggle: () => this.toggle(objeto),
-    };
-  }
-
-  private setearEstadoSeleccionado(categoria: any, idSeleccionado: string) {
-    if (categoria.id === idSeleccionado) {
-      categoria.state = "selected";
-      return;
-    } else {
-      categoria.state = "default";
-      categoria.childrens.forEach((cat) => {
-        this.setearEstadoSeleccionado(cat, idSeleccionado);
-      });
-    }
-  }
-
-  private seleccionarCategoriaPadre(objetoCategoria) {
-    this.listaCategorias.forEach((cat) => {
-      this.setearEstadoSeleccionado(cat, objetoCategoria.id);
-    });
-
-    this.categoriasForm.controls.categorias_padre_id.setValue(
-      objetoCategoria.id
-    );
-
-    console.log(
-      "categoria padre: " + this.categoriasForm.get("categorias_padre_id").value
-    );
-  }
-
-  private toggle(toggleCategoria: any) {
-    const index = this.listaCategorias.findIndex(
-      (item: any) => item.id === toggleCategoria.id
-    );
-    if (this.listaCategorias[index].isExpanded) {
-      this.listaCategorias[index].isExpanded = false;
-      const childrens = document.querySelector(
-        `#branch-${toggleCategoria.id} > ul`
-      );
-      childrens.classList.remove("tree-branch");
-      childrens.classList.add("hidden-tree-branch");
-    } else {
-      this.listaCategorias[index].isExpanded = true;
-      const childrens = document.querySelector(
-        `#branch-${toggleCategoria.id} > ul`
-      );
-      childrens.classList.remove("hidden-tree-branch");
-      childrens.classList.add("tree-branch");
-    }
+    let categoriasData: any[] = this.SrvCategorias.getCategorias();
+    this.objetosArbolCategorias = categoriasData;
   }
 
   guardar() {
@@ -191,7 +118,7 @@ export class CargarCategoriaComponent implements OnInit {
         },
         () => {
           this.categoriasForm.reset();
-          this.router.navigate(["categorias/busqueda-categorias"]);
+          this.router.navigate(["/panel/categorias/busqueda-categorias"]);
         }
       );
     }
