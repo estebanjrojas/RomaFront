@@ -62,6 +62,7 @@
                     <app-tree
                       *ngIf="objetosArbolCategorias.length > 0"
                       [data]="objetosArbolCategorias"
+                      [allSelectable]="true"
                       (newSelectedItem)="actualizarCategoriaPadre($event)"
                     ></app-tree>
                   </div>

@@ -15,6 +15,7 @@ import { TreeBranch } from "../../comunes/interfaces/TreeBranch";
 })
 export class TreeComponent implements OnInit {
   @Input() data: any[];
+  @Input() allSelectable: boolean;
   @Output() newSelectedItem: EventEmitter<{}> = new EventEmitter<{}>();
 
   formatedData: TreeBranch[];
@@ -39,7 +40,8 @@ export class TreeComponent implements OnInit {
       selectable:
         data.children === undefined ||
         data.children === null ||
-        data.children.length === 0,
+        data.children.length === 0 ||
+        this.allSelectable === true,
       disabled: false,
       isExpanded: false,
       state: data.id === this.selectedItemId ? "selected" : "default",
