@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, HostListener } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnInit,
+  HostListener,
+  EventEmitter,
+  Output,
+} from "@angular/core";
 import { TreeBranch } from "../../comunes/interfaces/TreeBranch";
 
 @Component({
@@ -8,6 +15,7 @@ import { TreeBranch } from "../../comunes/interfaces/TreeBranch";
 })
 export class TreeComponent implements OnInit {
   @Input() data: any[];
+  @Output() newSelectedItem: EventEmitter<{}> = new EventEmitter<{}>();
 
   formatedData: TreeBranch[];
   selectedItemId: string;
@@ -47,8 +55,8 @@ export class TreeComponent implements OnInit {
   @HostListener("ItemSelectedCustomEvent", ["$event"])
   onSelectionEventCaptured(event: any) {
     if (event.detail.hasOwnProperty("id")) {
-      console.log(event.detail);
       this.updateSelectedItem(event.detail.id);
+      this.newSelectedItem.emit(event.detail);
     }
   }
 

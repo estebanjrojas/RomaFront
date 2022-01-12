@@ -81,6 +81,10 @@ export class CargarCategoriaComponent implements OnInit {
     this.objetosArbolCategorias = categoriasData;
   }
 
+  actualizarCategoriaPadre(event) {
+    this.categoriasForm.controls.categorias_padre_id.setValue(event.id);
+  }
+
   guardar() {
     console.log(this.categoriasForm.controls);
 
