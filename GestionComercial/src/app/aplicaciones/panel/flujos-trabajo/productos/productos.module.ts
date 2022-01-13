@@ -10,18 +10,30 @@ import { PreciosProductosComponent } from "src/app/aplicaciones/panel/flujos-tra
 import { MaterialModule } from "src/app/core/ui/material.module";
 import { SnackbarModule } from "src/app/core/ui/snackbar.module";
 import { UiModule } from "src/app/core/ui/ui.module";
+import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
+
 const appRoutes: Routes = [
-  { path: "cargar-productos", component: CargarProductosComponent },
+  {
+    path: "cargar-productos",
+    component: CargarProductosComponent,
+    canActivate: [AutenticadoGuard],
+  },
   {
     path: "cargar-productos/:productos_id",
     component: CargarProductosComponent,
+    canActivate: [AutenticadoGuard],
   },
   {
     path: "busqueda-productos",
     component: BuscarProductosComponent,
+    canActivate: [AutenticadoGuard],
   },
 
-  { path: "clientes/detalle-producto", component: DetalleProductoComponent },
+  {
+    path: "clientes/detalle-producto",
+    component: DetalleProductoComponent,
+    canActivate: [AutenticadoGuard],
+  },
 ];
 
 @NgModule({

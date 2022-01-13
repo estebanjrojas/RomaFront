@@ -7,15 +7,22 @@ import { BuscarCategoriaComponent } from "src/app/aplicaciones/panel/flujos-trab
 import { MaterialModule } from "src/app/core/ui/material.module";
 import { SnackbarModule } from "src/app/core/ui/snackbar.module";
 import { UiModule } from "src/app/core/ui/ui.module";
+import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
 const appRoutes: Routes = [
-  { path: "cargar-categorias", component: CargarCategoriaComponent },
+  {
+    path: "cargar-categorias",
+    component: CargarCategoriaComponent,
+    canActivate: [AutenticadoGuard],
+  },
   {
     path: "cargar-categorias/:categorias_id",
     component: CargarCategoriaComponent,
+    canActivate: [AutenticadoGuard],
   },
   {
     path: "busqueda-categorias",
     component: BuscarCategoriaComponent,
+    canActivate: [AutenticadoGuard],
   },
 ];
 

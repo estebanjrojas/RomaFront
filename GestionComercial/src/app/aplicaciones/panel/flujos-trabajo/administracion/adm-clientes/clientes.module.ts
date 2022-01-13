@@ -6,14 +6,24 @@ import { MaterialModule } from "src/app/core/ui/material.module";
 import { SnackbarModule } from "src/app/core/ui/snackbar.module";
 import { BuscarClientesComponent } from "./buscar-clientes/buscar-clientes.component";
 import { CargarClientesComponent } from "./cargar-clientes/cargar-clientes.component";
+import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
 
 const appRoutes: Routes = [
-  { path: "cargar-clientes", component: CargarClientesComponent },
+  {
+    path: "cargar-clientes",
+    component: CargarClientesComponent,
+    canActivate: [AutenticadoGuard],
+  },
   {
     path: "cargar-clientes/:clientes_id",
     component: CargarClientesComponent,
+    canActivate: [AutenticadoGuard],
   },
-  { path: "busqueda-clientes", component: BuscarClientesComponent },
+  {
+    path: "busqueda-clientes",
+    component: BuscarClientesComponent,
+    canActivate: [AutenticadoGuard],
+  },
 ];
 
 @NgModule({

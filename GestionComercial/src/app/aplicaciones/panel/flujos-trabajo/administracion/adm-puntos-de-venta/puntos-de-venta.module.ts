@@ -9,19 +9,23 @@ import { BuscarPuntosDeVentaComponent } from "./buscar-puntos-de-venta/buscar-pu
 import { MaterialModule } from "src/app/core/ui/material.module";
 import { SnackbarModule } from "src/app/core/ui/snackbar.module";
 import { UiModule } from "src/app/core/ui/ui.module";
+import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
 
 const appRoutes: Routes = [
   {
     path: "cargar-puntos-venta",
     component: CargarPuntosDeVentaComponent,
+    canActivate: [AutenticadoGuard],
   },
   {
     path: "cargar-puntos-venta/:puntos_venta_id",
     component: CargarPuntosDeVentaComponent,
+    canActivate: [AutenticadoGuard],
   },
   {
     path: "busqueda-puntos-venta",
     component: BuscarPuntosDeVentaComponent,
+    canActivate: [AutenticadoGuard],
   },
 ];
 

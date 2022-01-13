@@ -11,23 +11,38 @@ import { CambiarPasswordComponent } from "./cambiar-password/cambiar-password.co
 import { MaterialModule } from "src/app/core/ui/material.module";
 import { SnackbarModule } from "src/app/core/ui/snackbar.module";
 import { UiModule } from "src/app/core/ui/ui.module";
+import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
 
 const appRoutes: Routes = [
-  { path: "cargar-usuarios", component: CargarUsuariosComponent },
+  {
+    path: "cargar-usuarios",
+    component: CargarUsuariosComponent,
+    canActivate: [AutenticadoGuard],
+  },
   {
     path: "cargar-usuarios/:usuarios_id",
     component: CargarUsuariosComponent,
   },
-  { path: "busqueda-usuarios", component: BuscarUsuariosComponent },
+  {
+    path: "busqueda-usuarios",
+    component: BuscarUsuariosComponent,
+    canActivate: [AutenticadoGuard],
+  },
   {
     path: "administrar-perfiles",
     component: AdministrarPerfilesComponent,
+    canActivate: [AutenticadoGuard],
   },
   {
     path: "administrar-perfiles/:empleados_id",
     component: AdministrarPerfilesComponent,
+    canActivate: [AutenticadoGuard],
   },
-  { path: "cambiar-password", component: CambiarPasswordComponent },
+  {
+    path: "cambiar-password",
+    component: CambiarPasswordComponent,
+    canActivate: [AutenticadoGuard],
+  },
 ];
 
 @NgModule({

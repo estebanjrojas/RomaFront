@@ -9,16 +9,22 @@ import { CargarEmpleadosComponent } from "./cargar-empleados/cargar-empleados.co
 import { MaterialModule } from "src/app/core/ui/material.module";
 import { SnackbarModule } from "src/app/core/ui/snackbar.module";
 import { UiModule } from "src/app/core/ui/ui.module";
-
+import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
 const appRoutes: Routes = [
   {
     path: "busqueda-empleados",
     component: BusquedaEmpleadosComponent,
+    canActivate: [AutenticadoGuard],
   },
-  { path: "cargar-empleados", component: CargarEmpleadosComponent },
+  {
+    path: "cargar-empleados",
+    component: CargarEmpleadosComponent,
+    canActivate: [AutenticadoGuard],
+  },
   {
     path: "cargar-empleados/:empleados_id",
     component: CargarEmpleadosComponent,
+    canActivate: [AutenticadoGuard],
   },
 ];
 
