@@ -9,8 +9,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { SnackBarService } from "src/app/core/ui/comunes/servicios/SnackBarService";
 import { TabgralService } from "../../../../../../comunes/servicios/tabgral.service";
-import { NestedTreeControl } from "@angular/cdk/tree";
-import { MatTreeNestedDataSource } from "@angular/material/tree";
+
 import { CategoriasService } from "../../../../../../comunes/servicios/categorias.service";
 import { Categorias } from "../../../../../../comunes/interfaces/Categorias";
 
@@ -34,12 +33,11 @@ export class CargarProductosComponent implements OnInit {
   //Instancias
   productosForm: FormGroup;
 
-  //Arbol de Categorias
-  treeControl = new NestedTreeControl<Categorias>((node) => node.children);
-  dataSource = new MatTreeNestedDataSource<Categorias>();
-
   tipo_producto = new Array<Tabgral>();
   urls = new Array<string>();
+
+  //Arbol de Categorias
+  objetosArbolCategorias = [];
 
   //Constructor
   constructor(
@@ -68,9 +66,6 @@ export class CargarProductosComponent implements OnInit {
     });
   }
 
-  hasChild = (_: number, node: Categorias) =>
-    !!node.children && node.children.length > 0;
-
   ngOnInit() {
     this.productosForm.controls.unidad.setValue(1);
 
@@ -83,22 +78,18 @@ export class CargarProductosComponent implements OnInit {
 
     this.getDatosProductos();
 
-    this.SrvCategorias.obtenerJSONTodasCategorias().subscribe((resp) => {
-      console.log({ "SrvCategorias.obtenerJSONTodasCategorias": resp });
-      let cast: any = resp;
-      this.SrvCategorias.setCategorias(JSON.parse(cast.categorias));
-    });
-
-    const categoriasObservable = this.SrvCategorias.getCategorias();
-    categoriasObservable.subscribe(
-      (categoriasData: Categorias[]) => {
-        console.log(categoriasData);
-        this.dataSource.data = categoriasData;
+    this.SrvCategorias.obtenerJSONTodasCategorias().subscribe(
+      (resp) => {
+        console.log({ "SrvCategorias.obtenerJSONTodasCategorias": resp });
+        let cast: any = resp;
+        this.SrvCategorias.setCategorias(JSON.parse(cast.categorias));
       },
-      (err) => {
-        console.error("Error al obtener categorias: " + err);
+      (error) => {
+        console.error(`Ha ocurrido un error: ${error}`);
       },
-      () => {}
+      () => {
+        this.llenarArbolCategorias();
+      }
     );
 
     //Lleno el combo de tipo producto
@@ -178,8 +169,16 @@ export class CargarProductosComponent implements OnInit {
     }
   }
 
-  compareFn(c1: any, c2: any): boolean {
-    return c1 && c2 ? c1 == c2 : false;
+  llenarArbolCategorias() {
+    let categoriasData: any[] = this.SrvCategorias.getCategorias();
+    this.objetosArbolCategorias = categoriasData;
+  }
+
+  actualizarSeleccionCategoria(categoriaSeleccionada) {
+    this.agregarCategoria(
+      categoriaSeleccionada.id,
+      categoriaSeleccionada.label
+    );
   }
 
   agregarDatosTablita() {
@@ -388,6 +387,10 @@ export class CargarProductosComponent implements OnInit {
   }
 
   agregarCategoria(id: number, nombre: string) {
+    const objetoAgregar = { id: id, nombre: nombre };
+    this.categorias_guardar = this.categorias_guardar.filter(
+      (objeto) => objeto.id !== objetoAgregar.id
+    );
     this.categorias_guardar.push({ id: id, nombre: nombre });
   }
 }
