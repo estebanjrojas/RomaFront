@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { UsuariosService } from "src/app/comunes/servicios/usuarios.service";
 import { AuthService } from "src/app/comunes/servicios/auth.service";
-import { isArray } from "util";
 
 @Component({
   selector: "app-navegacion",
@@ -23,20 +22,11 @@ export class NavegacionComponent implements OnInit {
     let usuario = this.Auth.getNombreUsuarioSesion();
     let menuLS = this.Auth.getMenuUsuarioSesion();
     this.menuArray = JSON.parse(menuLS).menu;
-    /*
-    this.menuArray = this.menuArray.map(menu => {
-      return {...menu, tiene_ruta: this.opcionMenuTieneRuta(menu), tiene_hijos: this.opcionMenuTieneHijos(menu)};
-    })*/
 
     this.SrvUsuarios.getDatosUsuario(usuario).subscribe((respuesta) => {
       let cast = respuesta;
       this.datos_usuario = cast[0];
-      // console.log(this.datos_usuario);
       this.Auth.setDebug(this.datos_usuario.debug);
-
-      if (this.Auth.getDebugUsuarioSesion() == 1) {
-        console.log({ "SrvUsuarios.getDatosUsuario": this.datos_usuario });
-      }
     });
   }
 
