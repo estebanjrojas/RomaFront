@@ -7,22 +7,22 @@ import { SnackbarModule } from "src/app/core/ui/snackbar.module";
 import { BuscarClientesComponent } from "./buscar-clientes/buscar-clientes.component";
 import { CargarClientesComponent } from "./cargar-clientes/cargar-clientes.component";
 import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
-
+import { PerfilGuard } from "src/app/comunes/guardas/perfil.guard";
 const appRoutes: Routes = [
   {
     path: "cargar-clientes",
     component: CargarClientesComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "cargar-clientes/:clientes_id",
     component: CargarClientesComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "busqueda-clientes",
     component: BuscarClientesComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
 ];
 

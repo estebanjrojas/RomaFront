@@ -10,21 +10,22 @@ import { MaterialModule } from "src/app/core/ui/material.module";
 import { SnackbarModule } from "src/app/core/ui/snackbar.module";
 import { UiModule } from "src/app/core/ui/ui.module";
 import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
+import { PerfilGuard } from "src/app/comunes/guardas/perfil.guard";
 const appRoutes: Routes = [
   {
     path: "busqueda-empleados",
     component: BusquedaEmpleadosComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "cargar-empleados",
     component: CargarEmpleadosComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "cargar-empleados/:empleados_id",
     component: CargarEmpleadosComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
 ];
 

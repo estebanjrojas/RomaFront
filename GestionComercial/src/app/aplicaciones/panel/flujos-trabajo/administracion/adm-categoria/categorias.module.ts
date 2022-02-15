@@ -8,21 +8,23 @@ import { MaterialModule } from "src/app/core/ui/material.module";
 import { SnackbarModule } from "src/app/core/ui/snackbar.module";
 import { UiModule } from "src/app/core/ui/ui.module";
 import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
+import { PerfilGuard } from "src/app/comunes/guardas/perfil.guard";
+PerfilGuard;
 const appRoutes: Routes = [
   {
     path: "cargar-categorias",
     component: CargarCategoriaComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "cargar-categorias/:categorias_id",
     component: CargarCategoriaComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "busqueda-categorias",
     component: BuscarCategoriaComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
 ];
 

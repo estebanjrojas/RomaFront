@@ -3,4 +3,5 @@ export class UsuarioSesion {
   tk_acceso: string;
   debug: number;
   menu: string;
+  perfiles: string;
 }

@@ -12,36 +12,37 @@ import { MaterialModule } from "src/app/core/ui/material.module";
 import { SnackbarModule } from "src/app/core/ui/snackbar.module";
 import { UiModule } from "src/app/core/ui/ui.module";
 import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
-
+import { PerfilGuard } from "src/app/comunes/guardas/perfil.guard";
 const appRoutes: Routes = [
   {
     path: "cargar-usuarios",
     component: CargarUsuariosComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "cargar-usuarios/:usuarios_id",
     component: CargarUsuariosComponent,
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "busqueda-usuarios",
     component: BuscarUsuariosComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "administrar-perfiles",
     component: AdministrarPerfilesComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "administrar-perfiles/:empleados_id",
     component: AdministrarPerfilesComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "cambiar-password",
     component: CambiarPasswordComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
 ];
 
