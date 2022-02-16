@@ -51,7 +51,7 @@ export class NavegacionComponent implements OnInit {
 
   cerrarSession() {
     localStorage.clear();
-    this.Auth.setUsuarioSesion("", "", 0, "");
+    this.Auth.setUsuarioSesion("", "", 0, "", "");
     this.router.navigate([""]);
   }
 }

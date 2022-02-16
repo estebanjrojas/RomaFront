@@ -5,7 +5,7 @@ import { SnackBarService } from "src/app/core/ui/comunes/servicios/SnackBarServi
 import { AuthService } from "../../comunes/servicios/auth.service";
 import { MenuService } from "../../comunes/servicios/menu.service";
 import { UsuarioSesion } from "../../comunes/interfaces/UsuarioSesion";
-
+import { UsuariosService } from "src/app/comunes/servicios/usuarios.service";
 @Component({
   selector: "app-login",
   templateUrl: "login.container.html",
@@ -16,12 +16,33 @@ export class LoginContainer {
     private router: Router,
     private Auth: AuthService,
     private SrvMenu: MenuService,
-    private snackBar: SnackBarService
+    private snackBar: SnackBarService,
+    private SrvUsuarios: UsuariosService
   ) {
     this.miUsuarioSesion = this.Auth.inicializarUsuarioSesion();
   }
 
   public ngOnInit(): void {}
+
+  obtenerPerfiles(usuario) {
+    this.SrvUsuarios.getPerfilesCodificados(usuario).subscribe(
+      (resp: any) => {
+        const listaPerfiles = resp.map((item) => item.perfiles);
+        const perfiles: string = JSON.stringify({
+          perfiles: listaPerfiles,
+        });
+        this.miUsuarioSesion.perfiles = perfiles;
+        this.Auth.setPerfiles(perfiles);
+      },
+      (error) =>
+        console.error(
+          `Ha ocurrido un error al intentar obtener los perfiles del usuario: ${error}`
+        ),
+      () => {
+        this.obtenerMenu(usuario);
+      }
+    );
+  }
 
   obtenerMenu(usuario) {
     this.SrvMenu.getMenu(usuario).subscribe(
@@ -48,10 +69,9 @@ export class LoginContainer {
       usuarioIngresado.passwordIngresada
     ).subscribe(
       (response) => {
-        //console.log({"Auth.solicitarAccesoUsuario" : response});
         var cast: any = response.body;
         if (response.status == 200 && cast.respuesta != undefined) {
-          let usuario = String(usuarioIngresado.usuarioIngresado);
+          const usuario = String(usuarioIngresado.usuarioIngresado);
           this.miUsuarioSesion.nombre_usuario = usuario;
           this.miUsuarioSesion.tk_acceso = String(cast.respuesta);
           this.miUsuarioSesion.debug = 0;
@@ -76,7 +96,7 @@ export class LoginContainer {
       },
       () => {
         if (autorizado) {
-          this.obtenerMenu(usuarioIngresado.usuarioIngresado);
+          this.obtenerPerfiles(usuarioIngresado.usuarioIngresado);
         }
       }
     );

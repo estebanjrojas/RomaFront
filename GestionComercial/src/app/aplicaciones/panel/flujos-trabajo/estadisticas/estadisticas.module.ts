@@ -13,17 +13,17 @@ import { ChartVentasMensualesComponent } from "./chart-ventas-mensuales/chart-ve
 import { ChartRendimientoVendedoresComponent } from "./chart-rendimiento-vendedores/chart-rendimiento-vendedores.component";
 import { UiModule } from "src/app/core/ui/ui.module";
 import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
-
+import { PerfilGuard } from "src/app/comunes/guardas/perfil.guard";
 const appRoutes: Routes = [
   {
     path: "estadisticas-home",
     component: EstadisticasHomeComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "predicciones-home",
     component: PrediccionesHomeComponent,
-    canActivate: [AutenticadoGuard],
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
 ];
 

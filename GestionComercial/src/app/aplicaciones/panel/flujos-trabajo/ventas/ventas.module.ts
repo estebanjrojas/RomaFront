@@ -12,18 +12,30 @@ import { VisualizacionVentasComponent } from "./visualizacion-ventas/visualizaci
 import { SeleccionClientesComponent } from "../administracion/adm-clientes/seleccion-clientes/seleccion-clientes.component";
 import { MaterialModule } from "src/app/core/ui/material.module";
 import { SnackbarModule } from "src/app/core/ui/snackbar.module";
+import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
+import { PerfilGuard } from "src/app/comunes/guardas/perfil.guard";
 
 const appRoutes: Routes = [
   {
     path: "promociones/cargar-promociones",
     component: CargarPromocionesComponent,
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
     path: "promociones/busqueda-promociones",
     component: BuscarPromocionesComponent,
+    canActivate: [AutenticadoGuard, PerfilGuard],
   },
-  { path: "busqueda-ventas", component: BusquedaVentasComponent },
-  { path: "nueva-venta", component: NuevaVentaComponent },
+  {
+    path: "busqueda-ventas",
+    component: BusquedaVentasComponent,
+    canActivate: [AutenticadoGuard, PerfilGuard],
+  },
+  {
+    path: "nueva-venta",
+    component: NuevaVentaComponent,
+    canActivate: [AutenticadoGuard, PerfilGuard],
+  },
 ];
 
 @NgModule({
