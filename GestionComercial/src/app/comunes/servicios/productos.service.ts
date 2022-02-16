@@ -174,6 +174,30 @@ export class ProductosService {
     };
     return this.http.get(environment.apiEndpoint + '/getNovedadesProductosLimit/' + fecha_desde + '/' + fecha_hasta + '/' + limit, httpOptions);
   }
+
+  verificarProductoPoseeCaracteristicas(productos_id: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
+    return this.http.get(environment.apiEndpoint + '/verificarProductoPoseeCaracteristicas/' + productos_id, httpOptions);
+  }
+
+  verificarProductoPoseeImagenes(productos_id: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
+    return this.http.get(environment.apiEndpoint + '/verificarProductoPoseeImagenes/' + productos_id, httpOptions);
+  }
   //---------------------------POST---------------------------//
 
   insertProductoReturnId(datos: any) {
@@ -313,5 +337,17 @@ export class ProductosService {
     return this.http.delete(url, httpOptions);
   }
 
+  eliminarProductoById(productos_id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
+    const url = environment.apiEndpoint + `/eliminarProductoById/` + productos_id;
+    return this.http.delete(url, httpOptions);
+  }
 
 }

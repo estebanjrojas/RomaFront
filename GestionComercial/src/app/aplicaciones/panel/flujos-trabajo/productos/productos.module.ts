@@ -34,6 +34,12 @@ const appRoutes: Routes = [
     component: DetalleProductoComponent,
     canActivate: [AutenticadoGuard],
   },
+
+  {
+    path: "productos/precios-productos",
+    component: PreciosProductosComponent,
+    //canActivate: [AutenticadoGuard],
+  }
 ];
 
 @NgModule({

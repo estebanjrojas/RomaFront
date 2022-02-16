@@ -30,12 +30,13 @@ export class BuscarProductosComponent implements OnInit {
   categorias: Categorias[];
   imagenes: Imagenes[];
   cantidad_imagenes: number = 0;
+  tiene_caracteristicas: any;
 
   constructor(
     private SrvProductos: ProductosService,
 
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
   ngOnInit() {
     this.buscarProductos();
   }
@@ -127,7 +128,7 @@ export class BuscarProductosComponent implements OnInit {
       (error) => {
         console.error(JSON.stringify(error));
       },
-      () => {}
+      () => { }
     );
   }
   /** posiciona el indice en el boton seleccionado */
@@ -160,13 +161,76 @@ export class BuscarProductosComponent implements OnInit {
     this.valor_boton_3 = paginarEnNumero + 1;
   }
 
-  actualizarProducto(productos_id) {
-    console.log("Actualizar: " + productos_id);
+  eliminarProducto(productos_id) {
+    let opcion = confirm("Esta acción procederá a eliminar el producto, desea continuar?");
+    if (opcion) {
+      this.verificarProductoPoseeCaracteristicas(productos_id);
+    }
   }
 
-  eliminarProducto(productos_id) {
-    alert("Baja sin emplementar");
-    console.log(" Baja de Producto: " + productos_id);
+  verificarProductoPoseeCaracteristicas(productos_id: any): any {
+    this.SrvProductos.verificarProductoPoseeCaracteristicas(productos_id).subscribe(respuesta => {
+      console.log({ 'SrvProductos.verificarProductoPoseeCaracteristicas': respuesta });
+      let cast: any = respuesta;
+      this.tiene_caracteristicas = cast[0].respuesta;
+    }, err => {
+      console.log({ 'ERROR': err });
+    }, () => {
+      this.eliminarCaracteristicasProductos(productos_id);
+    });
+  }
+
+  eliminarCaracteristicasProductos(productos_id: any) {
+    if (this.tiene_caracteristicas) {
+      this.SrvProductos.eliminarCaracteristicasProductos(productos_id).subscribe(respuesta => {
+        console.log({ 'SrvProductos.eliminarCaracteristicasProductos': respuesta });
+  
+      }, err => {
+        console.log({ 'ERROR': err });
+      }, () => {
+        this.verificarProductoPoseeImagenes(productos_id);
+      });
+    } else {
+      this.verificarProductoPoseeImagenes(productos_id);
+    }
+  }
+
+  verificarProductoPoseeImagenes(productos_id: any): any {
+    this.SrvProductos.verificarProductoPoseeImagenes(productos_id).subscribe(respuesta => {
+      console.log({ 'SrvProductos.verificarProductoPoseeImagenes': respuesta });
+      let cast: any = respuesta;
+      this.tiene_caracteristicas = cast[0].respuesta;
+    }, err => {
+      console.log({ 'ERROR': err });
+    }, () => {
+      this.eliminarImagenesProductos(productos_id);
+    });
+  }
+
+  eliminarImagenesProductos(productos_id: any) {
+    if (this.tiene_caracteristicas) {
+      this.SrvProductos.eliminarImagenesProductos(productos_id).subscribe(respuesta => {
+        console.log({ 'SrvProductos.eliminarImagenesProductos': respuesta });
+
+      }, err => {
+        console.log({ 'ERROR': err });
+      }, () => {
+        this.eliminarProductoById(productos_id);
+      });
+    } else {
+      this.eliminarProductoById(productos_id);
+    }
+  }
+
+  eliminarProductoById(productos_id: any) {
+    this.SrvProductos.eliminarProductoById(productos_id).subscribe(respuesta => {
+      console.log({ 'SrvProductos.eliminarProductoById': respuesta });
+
+    }, err => {
+      console.log({ 'ERROR': err });
+    }, () => {
+      this.buscarProductos();
+    });
   }
 
   mostrarDetallesProductos(productos) {
