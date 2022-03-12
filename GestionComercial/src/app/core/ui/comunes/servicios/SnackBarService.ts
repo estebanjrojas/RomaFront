@@ -6,7 +6,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
   MatSnackBarRef,
-} from "@angular/material";
+} from "@angular/material/snack-bar";
 
 @Injectable()
 export class SnackBarService {

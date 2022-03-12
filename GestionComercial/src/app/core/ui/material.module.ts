@@ -1,22 +1,15 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material";
 import { MAT_MOMENT_DATE_FORMATS } from "@angular/material-moment-adapter";
-import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatFormFieldModule,
-  MatAutocompleteModule,
-  MatOptionModule,
-  MatInputModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
-  MatSelectModule,
-  MatTreeModule,
-  MatIconModule,
-  MatRadioModule,
-  MatCardModule,
-} from "@angular/material";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatInputModule } from "@angular/material/input";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatSelectModule } from "@angular/material/select";
+import { MatIconModule } from "@angular/material/icon";
+import { MatRadioModule } from "@angular/material/radio";
 
 @NgModule({
   declarations: [],
@@ -26,35 +19,25 @@ import {
     MatCheckboxModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatOptionModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatSelectModule,
-    MatTreeModule,
     MatIconModule,
     MatRadioModule,
-    MatCardModule,
   ],
   exports: [
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatOptionModule,
+
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatSelectModule,
-    MatTreeModule,
     MatIconModule,
     MatRadioModule,
-    MatCardModule,
   ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: "en-GB" },
-    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-  ],
+  providers: [],
   schemas: [],
 })
 export class MaterialModule {}
