@@ -1,15 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { PanelContainer } from "./panel.container";
-import { UsuariosModule } from "./flujos-trabajo/administracion/adm-usuarios/usuarios.module";
-import { VentasModule } from "./flujos-trabajo/ventas/ventas.module";
-import { CategoriasModule } from "./flujos-trabajo/administracion/adm-categoria/categorias.module";
-import { ProductosModule } from "./flujos-trabajo/productos/productos.module";
 import { HomeComponent } from "./flujos-trabajo/home/home.component";
-import { ClientesModule } from "./flujos-trabajo/administracion/adm-clientes/clientes.module";
-import { EmpleadosModule } from "./flujos-trabajo/administracion/adm-empleados/empleados.module";
-import { PuntosDeVentaModule } from "./flujos-trabajo/administracion/adm-puntos-de-venta/puntos-de-venta.module";
-import { EstadisticasModule } from "./flujos-trabajo/estadisticas/estadisticas.module";
 import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
 const routes: Routes = [
   {
@@ -19,42 +11,66 @@ const routes: Routes = [
     children: [
       {
         path: "usuarios",
-        loadChildren: () => UsuariosModule,
+        loadChildren: () =>
+          import(
+            "./flujos-trabajo/administracion/adm-usuarios/usuarios.module"
+          ).then((m) => m.UsuariosModule),
         canActivate: [AutenticadoGuard],
       },
       {
         path: "clientes",
-        loadChildren: () => ClientesModule,
+        loadChildren: () =>
+          import(
+            "./flujos-trabajo/administracion/adm-clientes/clientes.module"
+          ).then((m) => m.ClientesModule),
         canActivate: [AutenticadoGuard],
       },
       {
         path: "empleados",
-        loadChildren: () => EmpleadosModule,
+        loadChildren: () =>
+          import(
+            "./flujos-trabajo/administracion/adm-empleados/empleados.module"
+          ).then((m) => m.EmpleadosModule),
         canActivate: [AutenticadoGuard],
       },
       {
         path: "puntos-venta",
-        loadChildren: () => PuntosDeVentaModule,
+        loadChildren: () =>
+          import(
+            "./flujos-trabajo/administracion/adm-puntos-de-venta/puntos-de-venta.module"
+          ).then((m) => m.PuntosDeVentaModule),
         canActivate: [AutenticadoGuard],
       },
       {
         path: "ventas",
-        loadChildren: () => VentasModule,
+        loadChildren: () =>
+          import("./flujos-trabajo/ventas/ventas.module").then(
+            (m) => m.VentasModule
+          ),
         canActivate: [AutenticadoGuard],
       },
       {
         path: "categorias",
-        loadChildren: () => CategoriasModule,
+        loadChildren: () =>
+          import(
+            "./flujos-trabajo/administracion/adm-categoria/categorias.module"
+          ).then((m) => m.CategoriasModule),
         canActivate: [AutenticadoGuard],
       },
       {
         path: "productos",
-        loadChildren: () => ProductosModule,
+        loadChildren: () =>
+          import("./flujos-trabajo/productos/productos.module").then(
+            (m) => m.ProductosModule
+          ),
         canActivate: [AutenticadoGuard],
       },
       {
         path: "estadisticas",
-        loadChildren: () => EstadisticasModule,
+        loadChildren: () =>
+          import("./flujos-trabajo/estadisticas/estadisticas.module").then(
+            (m) => m.EstadisticasModule
+          ),
         canActivate: [AutenticadoGuard],
       },
       {
