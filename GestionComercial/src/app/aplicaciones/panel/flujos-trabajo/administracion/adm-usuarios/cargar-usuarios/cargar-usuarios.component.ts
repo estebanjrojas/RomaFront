@@ -10,7 +10,6 @@ import { UsuariosService } from "../../../../../../comunes/servicios/usuarios.se
 import { Component, OnInit } from "@angular/core";
 import { Empleados } from "src/app/comunes/interfaces/Empleados";
 import { Router, ActivatedRoute } from "@angular/router";
-import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-cargar-usuarios",
@@ -29,8 +28,7 @@ export class CargarUsuariosComponent implements OnInit {
     private SrvEmpleados: EmpleadosService,
     private SrvUsuarios: UsuariosService,
     private route: ActivatedRoute,
-    private router: Router,
-    private toastr: ToastrService
+    private router: Router
   ) {
     this.usuariosForm = this.formBuilder.group({
       empleado: ["", Validators.compose([])],
@@ -165,7 +163,7 @@ export class CargarUsuariosComponent implements OnInit {
           this.empleadosInter
         ).subscribe((respuesta) => {
           console.log({ "SrvUsuarios.insertUsuarioReturnId": respuesta });
-          this.toastr.success("El Usuario se ha CARGADO Exitosamente");
+          alert("El Usuario se ha CARGADO Exitosamente");
           this.usuariosForm.reset();
         });
       } else {
@@ -183,7 +181,7 @@ export class CargarUsuariosComponent implements OnInit {
         ).subscribe((respuesta) => {
           console.log({ "SrvAvisos.actualizarDatosUsuarios": respuesta });
 
-          this.toastr.success("El usuario se ha ACTUALIZADO Exitosamente");
+          alert("El usuario se ha ACTUALIZADO Exitosamente");
           this.usuariosForm.reset();
           this.router.navigate(["usuarios/busqueda-usuarios"]);
         });
