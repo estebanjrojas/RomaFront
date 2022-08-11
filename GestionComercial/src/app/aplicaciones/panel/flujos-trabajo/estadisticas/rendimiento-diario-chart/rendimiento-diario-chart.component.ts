@@ -2,12 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { VentasService } from "../../../../../comunes/servicios/ventas.service";
 import { DatePipe } from "@angular/common";
 import { ChartOptions, ChartType } from "chart.js";
-import {
-  Label,
-  monkeyPatchChartJsLegend,
-  monkeyPatchChartJsTooltip,
-  SingleDataSet,
-} from "ng2-charts";
 
 @Component({
   selector: "app-rendimiento-diario-chart",
@@ -15,9 +9,9 @@ import {
   styleUrls: ["./rendimiento-diario-chart.component.scss"],
 })
 export class RendimientoDiarioChartComponent implements OnInit {
-  public pieChartLabels: Label[] = [];
-  public pieChartData: SingleDataSet = [];
-  public pieChartLegend = true;
+  public pieChartLabels: string[][] = [];
+  public pieChartData = [];
+  public pieChartLegend: boolean = true;
   public pieChartType: ChartType = "pie";
   public total = 0;
   public pieChartColors = [
@@ -25,22 +19,13 @@ export class RendimientoDiarioChartComponent implements OnInit {
       backgroundColor: ["#7c8981", "#a8bbaf", "#fffff0", "#748a9e", "#424f5c"],
     },
   ];
-  public options: ChartOptions = {
+  public options: ChartOptions<"pie"> = {
     responsive: true,
     maintainAspectRatio: true,
-    legend: {
-      labels: {
-        fontColor: "white",
-        fontSize: 14,
-      },
-    },
   };
 
   private fecha;
-  constructor(private SrvVentas: VentasService, private datePipe: DatePipe) {
-    monkeyPatchChartJsTooltip();
-    monkeyPatchChartJsLegend();
-  }
+  constructor(private SrvVentas: VentasService, private datePipe: DatePipe) {}
 
   ngOnInit() {
     this.fecha = new Date();
@@ -50,6 +35,10 @@ export class RendimientoDiarioChartComponent implements OnInit {
   setFecha(event) {
     this.fecha = event.target.value;
     this.calcularChart();
+  }
+
+  get fechaChart() {
+    return this.fecha;
   }
 
   calcularChart() {

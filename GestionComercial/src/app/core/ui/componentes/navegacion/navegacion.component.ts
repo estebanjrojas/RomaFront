@@ -54,4 +54,8 @@ export class NavegacionComponent implements OnInit {
     this.Auth.setUsuarioSesion("", "", 0, "", "");
     this.router.navigate([""]);
   }
+
+  get routerUrl() {
+    return this.router.url;
+  }
 }

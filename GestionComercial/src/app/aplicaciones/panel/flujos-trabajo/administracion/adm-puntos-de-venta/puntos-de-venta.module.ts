@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { ChartsModule } from "ng2-charts";
+import { NgChartsModule } from "ng2-charts";
 import { CargarPuntosDeVentaComponent } from "./cargar-puntos-de-venta/cargar-puntos-de-venta.component";
 import { BuscarPuntosDeVentaComponent } from "./buscar-puntos-de-venta/buscar-puntos-de-venta.component";
 import { MaterialModule } from "src/app/core/ui/material.module";
@@ -37,7 +37,7 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    ChartsModule,
+    NgChartsModule,
     MaterialModule,
     SnackbarModule,
     UiModule,

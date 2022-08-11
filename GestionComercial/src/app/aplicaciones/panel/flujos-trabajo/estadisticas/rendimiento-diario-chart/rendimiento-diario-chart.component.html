@@ -1,17 +1,21 @@
 <div class="row" id="container-chart-row">
-    <div class="col-lg-4 col-md-6 col-sm-12 text-center my-auto">
-        <input type="date" class="form-control" [value]="fecha | date:'yyyy-MM-dd'" (change)="setFecha($event)"/>
-        <h1>Rendimiento Diario</h1>
-        <h2>{{total |  currency}}</h2>
-    </div>
-    <div class="col-lg-8 col-md-6 col-sm-12">
-            <canvas baseChart
-                    [data]="pieChartData"
-                    [labels]="pieChartLabels"
-                    [chartType]="pieChartType"
-                    [options]="options"
-                    [colors]="pieChartColors"
-                    >
-              </canvas>
-    </div>
+  <div class="col-lg-4 col-md-6 col-sm-12 text-center my-auto">
+    <input
+      type="date"
+      class="form-control"
+      [value]="fechaChart | date: 'yyyy-MM-dd'"
+      (change)="setFecha($event)"
+    />
+    <h1>Rendimiento Diario</h1>
+    <h2>{{ total | currency }}</h2>
+  </div>
+  <div class="col-lg-8 col-md-6 col-sm-12">
+    <canvas
+      baseChart
+      [data]="pieChartData"
+      [labels]="pieChartLabels"
+      [options]="options"
+    >
+    </canvas>
+  </div>
 </div>

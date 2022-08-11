@@ -1,14 +1,16 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { VentasService } from "../../../../../comunes/servicios/ventas.service";
 import { DatePipe } from "@angular/common";
-import { ChartDataSets, ChartOptions, ChartType } from "chart.js";
-import { Color, BaseChartDirective, Label, SingleDataSet } from "ng2-charts";
+import { ChartDataset, ChartOptions, ChartType } from "chart.js";
+type Color = {
+  backgroundColor: string;
+  borderColor: string;
+  pointBackgroundColor: string;
+  pointBorderColor: string;
+  pointHoverBackgroundColor: string;
+  pointHoverBorderColor: string;
+};
 
 @Component({
   selector: "app-chart-ventas-diarias",
@@ -20,30 +22,10 @@ export class ChartVentasDiariasComponent implements OnInit {
   public arrayCantidades: number[] = [];
   public arrayFechas: string[] = [];
   public lineChartType: ChartType = "line";
-  public lineChartData: ChartDataSets[] = [];
-  public lineChartLabels: Label[] = [];
+  public lineChartData: ChartDataset[] = [];
+  public lineChartLabels: string[] = [];
   public lineChartOptions: ChartOptions = {
     responsive: true,
-    scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
-      xAxes: [{}],
-      yAxes: [
-        {
-          id: "y-axis-0",
-          position: "left",
-        },
-        {
-          id: "y-axis-1",
-          position: "right",
-          gridLines: {
-            color: "rgba(255,0,0,0.3)",
-          },
-          ticks: {
-            fontColor: "red",
-          },
-        },
-      ],
-    },
   };
   public lineChartColors: Color[] = [
     {

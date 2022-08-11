@@ -144,6 +144,9 @@ export class CargarPromocionesComponent implements OnInit {
       document.getElementById("tipo").focus();
     }
   }
+  guardar() {
+    //do something
+  }
 }
 
 interface Caracteristica {

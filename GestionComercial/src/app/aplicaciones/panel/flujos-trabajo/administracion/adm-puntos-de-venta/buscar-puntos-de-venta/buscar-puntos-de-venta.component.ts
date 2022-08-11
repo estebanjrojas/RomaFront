@@ -1,9 +1,4 @@
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { PuntosVentaService } from "src/app/comunes/servicios/puntos-venta.service";
 import { TabgralService } from "src/app/comunes/servicios/tabgral.service";
 import { Component, OnInit } from "@angular/core";
@@ -41,10 +36,8 @@ export class BuscarPuntosDeVentaComponent implements OnInit {
         let rel: Tabgral = { codigo: "0", descrip: "" };
         rel.codigo = cast[i].codigo;
         rel.descrip = cast[i].descrip;
-        // console.log("rel "+rel);
         this.sucursales.push(rel);
       }
-      //this.fallecidosForm.controls.sala.setValue(1);
     });
   }
 
