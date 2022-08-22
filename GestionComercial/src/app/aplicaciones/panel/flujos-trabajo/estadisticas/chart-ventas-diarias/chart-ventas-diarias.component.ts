@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { VentasService } from "../../../../../comunes/servicios/ventas.service";
 import { DatePipe } from "@angular/common";
 import { ChartDataset, ChartOptions, ChartType } from "chart.js";
+
+
 type Color = {
   backgroundColor: string;
   borderColor: string;
