@@ -9,8 +9,9 @@ import { ChartOptions, ChartType } from "chart.js";
   styleUrls: ["./rendimiento-diario-chart.component.scss"],
 })
 export class RendimientoDiarioChartComponent implements OnInit {
+  public datasets: {}[] = [];
   public pieChartLabels: string[][] = [];
-  public pieChartData = [];
+  public pieChartData: string[] = [];
   public pieChartLegend: boolean = true;
   public pieChartType: ChartType = "pie";
   public total = 0;
@@ -52,6 +53,7 @@ export class RendimientoDiarioChartComponent implements OnInit {
         let cast: any = resp;
         console.log(cast);
         this.pieChartData = cast.map((venta) => venta.total_vendido);
+        this.datasets.push({ data: this.pieChartData });
         this.pieChartLabels = cast.map((venta) => venta.nombre);
         this.pieChartData.forEach((monto) => {
           this.total = this.total + parseFloat(monto);
