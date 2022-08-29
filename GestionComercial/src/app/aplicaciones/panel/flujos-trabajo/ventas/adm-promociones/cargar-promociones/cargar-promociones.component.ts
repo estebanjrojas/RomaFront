@@ -9,7 +9,6 @@ import { ProductosService } from "../../../../../../comunes/servicios/productos.
 import { Router, ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { startWith, map } from "rxjs/operators";
-import { ToastrService } from "ngx-toastr";
 import { Observable } from "rxjs";
 
 export interface ProductosInterface {
@@ -39,8 +38,7 @@ export class CargarPromocionesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private SrvTabgral: TabgralService,
-    private SrvProductos: ProductosService,
-    private toastr: ToastrService
+    private SrvProductos: ProductosService
   ) {
     this.promocionesForm = this.formBuilder.group({
       nombre_promocion: ["", Validators.compose([Validators.required])],
@@ -143,9 +141,11 @@ export class CargarPromocionesComponent implements OnInit {
       this.promocionesForm.controls.unidad.reset();
     } else {
       alert("Todos los campos son obligatorios...");
-      this.toastr.error("Todos los campos son obligatorios...", "ERROR");
       document.getElementById("tipo").focus();
     }
+  }
+  guardar() {
+    //do something
   }
 }
 

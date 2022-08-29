@@ -6,7 +6,6 @@ import {
 } from "@angular/forms";
 import { UsuariosService } from "src/app/comunes/servicios/usuarios.service";
 import { Component, OnInit } from "@angular/core";
-import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-buscar-usuarios",
@@ -27,7 +26,6 @@ export class BuscarUsuariosComponent implements OnInit {
 
   constructor(
     private SrvUsuarios: UsuariosService,
-    private SrvToastr: ToastrService,
     private formBuilder: FormBuilder
   ) {
     this.formBusquedaUsuarios = this.formBuilder.group({

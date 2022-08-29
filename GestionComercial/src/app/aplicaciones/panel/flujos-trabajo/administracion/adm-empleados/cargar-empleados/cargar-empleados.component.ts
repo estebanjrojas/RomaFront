@@ -10,7 +10,6 @@ import { DomiciliosService } from "../../../../../../comunes/servicios/domicilio
 import { Ciudades } from "src/app/comunes/interfaces/Ciudades";
 import { Component, OnInit } from "@angular/core";
 import { startWith, map } from "rxjs/operators";
-import { ToastrService } from "ngx-toastr";
 import { Observable } from "rxjs";
 import { PersonasService } from "../../../../../../comunes/servicios/personas.service";
 import { Empleados } from "src/app/comunes/interfaces/Empleados";
@@ -45,7 +44,6 @@ export class CargarEmpleadosComponent implements OnInit {
     private SrvEmpleados: EmpleadosService,
     private SrvPersonas: PersonasService,
     private SrvDomicilios: DomiciliosService,
-    private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
@@ -330,7 +328,7 @@ export class CargarEmpleadosComponent implements OnInit {
               console.log({
                 "SrvEmpleados.guardarEmpleadoPersonaDomicilio": respuesta,
               });
-              this.toastr.success("El Empleado se ha ACTUALIZADO Exitosamente");
+              alert("El Empleado se ha ACTUALIZADO Exitosamente");
               //this.empleadosForm.reset();
               //this.router.navigate(['cementerios/busqueda-cementerios']);
             });
@@ -344,7 +342,7 @@ export class CargarEmpleadosComponent implements OnInit {
               console.log({
                 "SrvEmpleados.guardarEmpleadoPersonaDomicilio": respuesta,
               });
-              this.toastr.success("El Empleado se ha CARGADO Exitosamente");
+              alert("El Empleado se ha CARGADO Exitosamente");
               //this.empleadosForm.reset();
               //this.router.navigate(['cementerios/busqueda-cementerios']);
             });

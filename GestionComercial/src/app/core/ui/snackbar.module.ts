@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import {
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
-} from "@angular/material";
+} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [],

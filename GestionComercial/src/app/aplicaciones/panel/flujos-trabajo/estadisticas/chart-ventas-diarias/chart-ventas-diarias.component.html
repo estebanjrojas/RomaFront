@@ -1,63 +1,83 @@
-<form  [formGroup]="chartVentasDiariasForm">
-    <h5 class="text-azul mb-4">Ventas Diarias</h5>
-    <div class="row">
-        <div class="col-md-2 col-lg-2 col-sm-12">
-            <mat-label>Fechas</mat-label>
-        </div>
-        <div class="col-md-4 col-lg-4 col-sm-12">
-            <mat-form-field class="example-full-width">
-                <input matInput [matDatepicker]="pickerFechaDesde"
-                placeholder="Desde" formControlName="fecha_desde">
-                <mat-datepicker-toggle matSuffix [for]="pickerFechaDesde"></mat-datepicker-toggle>
-                <mat-datepicker #pickerFechaDesde></mat-datepicker>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4 col-lg-4 col-sm-12">
-            <mat-form-field class="example-full-width">
-                <input matInput [matDatepicker]="pickerFechaHasta"
-                placeholder="Hasta" formControlName="fecha_hasta">
-                <mat-datepicker-toggle matSuffix [for]="pickerFechaHasta"></mat-datepicker-toggle>
-                <mat-datepicker #pickerFechaHasta></mat-datepicker>
-            </mat-form-field>
-        </div>
+<form [formGroup]="chartVentasDiariasForm">
+  <h5 class="text-azul mb-4">Ventas Diarias</h5>
+  <div class="row">
+    <div class="col-md-2 col-lg-2 col-sm-12">
+      <mat-label>Fechas</mat-label>
     </div>
-    <div class="row mt-4">
-        <div class="col-12 text-center">
-            <button type="button" class="btn btn-primary btn-lg" (click)="calcularChart()">Calcular</button>
-        </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          [matDatepicker]="pickerFechaDesde"
+          placeholder="Desde"
+          formControlName="fecha_desde"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerFechaDesde"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pickerFechaDesde></mat-datepicker>
+      </mat-form-field>
     </div>
-    <hr>
-    <div class="row" *ngIf="lineChartData.length > 0">
-        <div class="col-12">
-            <div style="display: block;">
-                <canvas baseChart
-                            [datasets]="lineChartData"
-                            [labels]="lineChartLabels"
-                            [chartType]="lineChartType"
-                            [options]="lineChartOptions"
-                            [colors]="lineChartColors">
-                </canvas>
-            </div>
-        </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          [matDatepicker]="pickerFechaHasta"
+          placeholder="Hasta"
+          formControlName="fecha_hasta"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerFechaHasta"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pickerFechaHasta></mat-datepicker>
+      </mat-form-field>
     </div>
-    <div class="row mt-3" *ngIf="arrayFechas.length > 0">
-        <div class="col-12">
-            <div style="display: block;">
-                <table class="table table-striped">
-                    <thead class="thead-light">
-                        <th>Fecha</th>
-                        <th class="text-center">Cantidad de Articulos</th>
-                        <th class="text-right">Monto</th>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let data of arrayFechas; let i = index">
-                            <td>{{data}}</td>
-                            <td class="text-center">{{arrayCantidades[i]}}</td>
-                            <td class="text-right">{{arrayMontos[i]}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-12 text-center">
+      <button
+        type="button"
+        class="btn btn-primary btn-lg"
+        (click)="calcularChart()"
+      >
+        Calcular
+      </button>
     </div>
+  </div>
+  <hr />
+  <div class="row" *ngIf="lineChartData.length > 0">
+    <div class="col-12">
+      <div style="display: block">
+        <canvas
+          baseChart
+          [data]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+        >
+        </canvas>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3" *ngIf="arrayFechas.length > 0">
+    <div class="col-12">
+      <div style="display: block">
+        <table class="table table-striped">
+          <thead class="thead-light">
+            <th>Fecha</th>
+            <th class="text-center">Cantidad de Articulos</th>
+            <th class="text-right">Monto</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of arrayFechas; let i = index">
+              <td>{{ data }}</td>
+              <td class="text-center">{{ arrayCantidades[i] }}</td>
+              <td class="text-right">{{ arrayMontos[i] }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </form>

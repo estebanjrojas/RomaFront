@@ -23,7 +23,7 @@ export class VisualizacionVentasComponent implements OnInit {
     nombre_cliente: "",
     fecha_anulacion: "",
     usuario_anulacion: "",
-    anulada: "",
+    anulada: false,
     monto_total: 0,
   };
   ventaDetalles: VentasDetalleInterface[] = [];
@@ -115,7 +115,7 @@ interface VentasInterface {
   apellido_cliente: string;
   nombre_cliente: string;
   monto_total: number;
-  anulada: string;
+  anulada: boolean;
   fecha_anulacion: string;
   usuario_anulacion: string;
 }

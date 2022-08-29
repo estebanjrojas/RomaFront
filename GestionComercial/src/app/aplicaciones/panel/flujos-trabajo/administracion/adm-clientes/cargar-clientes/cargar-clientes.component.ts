@@ -16,14 +16,14 @@ import { PersonasService } from "../../../../../../comunes/servicios/personas.se
 import { Provincias } from "../../../../../../comunes/interfaces/Provincias";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Inject, Injectable, Optional } from "@angular/core";
-import { MAT_DATE_LOCALE } from "@angular/material";
+//import { MAT_DATE_LOCALE } from "@angular/material";
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { Moment } from "moment";
 import * as moment from "moment";
 
 @Injectable()
 export class MomentUtcDateAdapter extends MomentDateAdapter {
-  constructor(@Optional() @Inject(MAT_DATE_LOCALE) dateLocale: string) {
+  constructor(@Optional() @Inject("MAT_DATE_LOCALE") dateLocale: string) {
     super(dateLocale);
   }
 

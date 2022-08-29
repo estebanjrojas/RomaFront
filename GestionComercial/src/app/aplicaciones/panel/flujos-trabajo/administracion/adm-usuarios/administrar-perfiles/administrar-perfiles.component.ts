@@ -10,7 +10,6 @@ import { UsuariosService } from "../../../../../../comunes/servicios/usuarios.se
 import { Component, OnInit } from "@angular/core";
 import { Empleados } from "src/app/comunes/interfaces/Empleados";
 import { Router, ActivatedRoute } from "@angular/router";
-import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-administrar-perfiles",
@@ -31,8 +30,7 @@ export class AdministrarPerfilesComponent implements OnInit {
     private SrvEmpleados: EmpleadosService,
     private SrvUsuarios: UsuariosService,
     private route: ActivatedRoute,
-    private router: Router,
-    private toastr: ToastrService
+    private router: Router
   ) {
     this.perfilesForm = this.formBuilder.group({
       empleado: ["", Validators.compose([])],
@@ -133,10 +131,10 @@ export class AdministrarPerfilesComponent implements OnInit {
             usuario_id
           ).subscribe((resp) => {
             console.log({ "SrvUsuarios.insertPerfilesAsignados": resp });
-            this.toastr.success("Caracteristicas cargadas exitosamente");
+            alert("Caracteristicas cargadas exitosamente");
           });
         }
-        this.toastr.success("Los perfiles se han CARGADO Exitosamente");
+        alert("Los perfiles se han CARGADO Exitosamente");
         this.router.navigate(["usuarios/cargar-usuarios/" + empleados_id]);
       });
     } else {

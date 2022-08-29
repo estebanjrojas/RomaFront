@@ -1,29 +1,42 @@
 <!----## Inicio Form Principal ##---->
-<form id="buscarPuntosVentaFormId" [formGroup]="buscarPuntosVentaForm" (ngSubmit)="guardar()">
-  <input type="hidden" formControlName="nombre_usuario">
+<form id="buscarPuntosVentaFormId" [formGroup]="buscarPuntosVentaForm">
+  <input type="hidden" formControlName="nombre_usuario" />
   <!----## Inicio Container Principal ##---->
   <div class="container">
     <!----## Inicio Row Principal ##---->
     <div class="row">
       <!----## Inicio Columna 12  ##---->
       <div class="col-md-12 m-0 p-0">
-        <br>
+        <br />
         <div class="card" id="cardPrincipal">
           <div class="card-body">
-              <h3>Puntos de Venta</h3>
-              <hr>
-            
+            <h3>Puntos de Venta</h3>
+            <hr />
+
             <!--Inicio Busqueda-->
             <div class="row">
               <div class="col-md-5">
-                <input type="text" id="txtNumero" formControlName="txtBuscar" class="form-control" placeholder="Número" />
+                <input
+                  type="text"
+                  id="txtNumero"
+                  formControlName="txtBuscar"
+                  class="form-control"
+                  placeholder="Número"
+                />
               </div>
               <div class="col-md-5">
-                <button type="button" class="btn btn-outline-primary" (click)="buscarPuntosVenta();" id="btnBuscar">Buscar</button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="buscarPuntosVenta()"
+                  id="btnBuscar"
+                >
+                  Buscar
+                </button>
               </div>
             </div>
             <!--Fin Busqueda-->
-            <br>
+            <br />
 
             <!----## Inicio Row 2 Interior  ##---->
             <div class="row">
@@ -32,28 +45,34 @@
                 <div class="card">
                   <table class="table table-hover table-sm">
                     <thead class="thead-dark" style="text-align: center">
-                      <th style='width:30%; text-align: left'>Punto de Venta</th>
-                      <th style='width:30%;text-align: left'>Sucursal</th>
-                      <th style='width:20%;'></th>
+                      <th style="width: 30%; text-align: left">
+                        Punto de Venta
+                      </th>
+                      <th style="width: 30%; text-align: left">Sucursal</th>
+                      <th style="width: 20%"></th>
                     </thead>
                     <tbody>
                       <tr *ngFor="let pv of cast">
-                        <td>{{pv.numero}}</td>
-                        <td>{{pv.sucursal_descrip}}</td>
-                        <td style='text-align: center'>
-                          <button class="btn btn-info btn-sm" [routerLink]="['/puntos-venta/cargar-puntos-venta', pv.id]" routerLinkActive="active">Modificar</button>&nbsp;
+                        <td>{{ pv.numero }}</td>
+                        <td>{{ pv.sucursal_descrip }}</td>
+                        <td style="text-align: center">
+                          <button
+                            class="btn btn-info btn-sm"
+                            [routerLink]="[
+                              '/puntos-venta/cargar-puntos-venta',
+                              pv.id
+                            ]"
+                            routerLinkActive="active"
+                          >
+                            Modificar</button
+                          >&nbsp;
                           <button class="btn btn-danger btn-sm">Baja</button>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <br>
-                <div class="row">
-                  <div class="col-md-12" align="center">
-                    <input type="submit" class="btn btn-primary" value="Nuevo" />
-                  </div>
-                </div>
+                <br />
               </div>
               <!----## Fin Col 12  ##---->
             </div>
@@ -65,7 +84,7 @@
     </div>
     <!----## Fin Row Principal ##---->
   </div>
-  <br>
+  <br />
   <!----## Fin Container Principal ##---->
 </form>
 <!----## Fin Form Principal ##---->

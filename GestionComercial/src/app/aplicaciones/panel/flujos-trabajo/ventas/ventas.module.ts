@@ -14,6 +14,7 @@ import { MaterialModule } from "src/app/core/ui/material.module";
 import { SnackbarModule } from "src/app/core/ui/snackbar.module";
 import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
 import { PerfilGuard } from "src/app/comunes/guardas/perfil.guard";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 const appRoutes: Routes = [
   {
@@ -58,5 +59,6 @@ const appRoutes: Routes = [
     SnackbarModule,
   ],
   providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class VentasModule {}

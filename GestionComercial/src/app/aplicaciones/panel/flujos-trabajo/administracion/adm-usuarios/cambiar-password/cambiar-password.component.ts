@@ -7,7 +7,7 @@ import {
 import { UsuariosService } from "src/app/comunes/servicios/usuarios.service";
 import { AuthService } from "src/app/comunes/servicios/auth.service";
 import { Component, OnInit } from "@angular/core";
-import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
+import { SnackBarService } from "src/app/core/ui/comunes/servicios/SnackBarService";
 import { Router } from "@angular/router";
 
 @Component({
@@ -22,7 +22,7 @@ export class CambiarPasswordComponent implements OnInit {
   constructor(
     private SrvUsuarios: UsuariosService,
     private SrvAuth: AuthService,
-    private snackBar: MatSnackBar,
+    private snackBar: SnackBarService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
@@ -48,20 +48,6 @@ export class CambiarPasswordComponent implements OnInit {
     this.cambiarPassForm.controls.nombre_usuario.setValue(this.nomb_usr);
   }
 
-  mostrarMensajeError(mensaje) {
-    const config = new MatSnackBarConfig();
-    config.duration = 3000;
-    config.panelClass = ["error-alert"];
-    this.snackBar.open(`${mensaje}`, "Cerrar", config);
-  }
-
-  mostrarMensajeInformativo(mensaje) {
-    const config = new MatSnackBarConfig();
-    config.duration = 3000;
-    config.panelClass = ["info-alert"];
-    this.snackBar.open(`${mensaje}`, "Cerrar", config);
-  }
-
   guardar() {
     let viejapass = this.cambiarPassForm.controls.oldpassword.value;
     let nuevapass = this.cambiarPassForm.controls.newpassword.value;
@@ -80,7 +66,7 @@ export class CambiarPasswordComponent implements OnInit {
                   console.log({ "SrvUsuarios.cambiarPassword": response });
                   var cast: any = response.body;
                   console.log({ cast: cast });
-                  this.mostrarMensajeInformativo(
+                  this.snackBar.mostrarMensaje(
                     "La contrase\u00f1a se cambió exitosamente"
                   );
                   localStorage.clear();
@@ -88,17 +74,17 @@ export class CambiarPasswordComponent implements OnInit {
                 }
               );
             } else {
-              this.mostrarMensajeError("Las contraseñas no coinciden.");
+              this.snackBar.mostrarMensaje("Las contraseñas no coinciden.");
               document.getElementById("nuevo_pass").focus();
             }
           } else {
-            this.mostrarMensajeError("El password actual no es correcto.");
+            this.snackBar.mostrarMensaje("El password actual no es correcto.");
             document.getElementById("vieja_pass").focus();
           }
         }
       );
     } else {
-      this.mostrarMensajeError("Hay errores en los datos ingresados");
+      this.snackBar.mostrarMensaje("Hay errores en los datos ingresados");
     }
   }
 }

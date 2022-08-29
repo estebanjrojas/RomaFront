@@ -1,4 +1,4 @@
-import { Ciudades } from './ciudades';
+import { Ciudades } from "./ciudades";
 
 export class Domicilios {
   domicilios_id: string;

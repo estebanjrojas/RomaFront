@@ -7,7 +7,6 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-busqueda-empleados",
@@ -28,7 +27,6 @@ export class BusquedaEmpleadosComponent implements OnInit {
 
   constructor(
     private SrvEmpleados: EmpleadosService,
-    private SrvToastr: ToastrService,
     private router: Router,
     private formBuilder: FormBuilder
   ) {

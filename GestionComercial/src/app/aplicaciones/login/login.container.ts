@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
 import { SnackBarService } from "src/app/core/ui/comunes/servicios/SnackBarService";
 import { AuthService } from "../../comunes/servicios/auth.service";
 import { MenuService } from "../../comunes/servicios/menu.service";

@@ -20,8 +20,8 @@ export class HomeComponent implements OnInit {
   faProjectDiagram = faProjectDiagram;
   faFileInvoice = faFileInvoice;
   faUserCog = faUserCog;
-  datos_usuario = [];
-  novedades_productos = [];
+  datos_usuario: any = {};
+  novedades_productos: {}[] = [];
   constructor(
     private Auth: AuthService,
     private SrvUsuarios: UsuariosService,

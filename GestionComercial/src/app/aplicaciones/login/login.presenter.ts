@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
+import { SnackBarService } from "src/app/core/ui/comunes/servicios/SnackBarService";
 
 @Injectable()
 export class LoginPresenter {
@@ -8,7 +8,7 @@ export class LoginPresenter {
   public usuario: FormControl;
   public password: FormControl;
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor(private snackBar: SnackBarService) {
     this.usuario = new FormControl("", Validators.required);
     this.password = new FormControl("", [Validators.required]);
 
@@ -16,12 +16,6 @@ export class LoginPresenter {
       usuario: this.usuario,
       password: this.password,
     });
-  }
-  mostrarMensajeError(mensaje) {
-    const config = new MatSnackBarConfig();
-    config.duration = 3000;
-    config.panelClass = ["error-alert"];
-    this.snackBar.open(`${mensaje}`, "Cerrar", config);
   }
 
   public get formEsInvalido() {
@@ -57,13 +51,15 @@ export class LoginPresenter {
       }
 
       if (errorUsuario && errorContrasenia) {
-        this.mostrarMensajeError(
+        this.snackBar.mostrarMensaje(
           "Debe ingresar un nombre de usuario y contraseña para continuar"
         );
       } else if (errorUsuario && !errorContrasenia) {
-        this.mostrarMensajeError("Debe ingresar un nombre de usuario valido");
+        this.snackBar.mostrarMensaje(
+          "Debe ingresar un nombre de usuario valido"
+        );
       } else if (!errorUsuario && errorContrasenia) {
-        this.mostrarMensajeError("Debe ingresar la contraseña");
+        this.snackBar.mostrarMensaje("Debe ingresar la contraseña");
       }
     }
   }

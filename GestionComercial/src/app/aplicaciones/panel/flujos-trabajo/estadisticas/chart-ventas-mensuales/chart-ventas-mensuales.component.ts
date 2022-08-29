@@ -7,8 +7,6 @@ import {
 } from "@angular/forms";
 import { VentasService } from "../../../../../comunes/servicios/ventas.service";
 import { DatePipe } from "@angular/common";
-import { ChartDataSets, ChartOptions, ChartType } from "chart.js";
-import { Color, BaseChartDirective, Label, SingleDataSet } from "ng2-charts";
 
 @Component({
   selector: "app-chart-ventas-mensuales",
@@ -31,4 +29,8 @@ export class ChartVentasMensualesComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  calcularChart() {
+    //do something...
+  }
 }

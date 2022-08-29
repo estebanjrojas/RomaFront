@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-pie',
-  templateUrl: './pie.component.html',
-  styleUrls: ['./pie.component.scss']
+  selector: "app-pie",
+  templateUrl: "./pie.component.html",
+  styleUrls: ["./pie.component.scss"],
 })
 export class PieComponent implements OnInit {
   anio_actual: number = new Date().getFullYear();
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  get routerUrl() {
+    return this.router.url;
   }
-
 }
