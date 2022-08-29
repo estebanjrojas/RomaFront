@@ -1,0 +1,104 @@
+<!----## Inicio Form Principal ##---->
+<form id="empleadosFormId" [formGroup]="categoriasForm">
+  <input type="hidden" formControlName="categorias_padre_id" />
+  <!----## Inicio Container Principal ##---->
+  <div class="container">
+    <!----## Inicio Row Principal ##---->
+    <div class="row">
+      <!----## Inicio Columna 12  ##---->
+      <div class="col-md-12 m-0 p-0">
+        <br />
+        <!----## Inicio Row 1 Interior  ##---->
+        <div class="row">
+          <!----## Inicio Col 12  ##---->
+          <div class="col-md-12">
+            <!----## Inicio Card ##---->
+            <div class="card" id="cardPrincipal">
+              <!----## Inicio Card Body ##---->
+              <div class="card-body">
+                <h3>Categor&iacute;as</h3>
+                <hr />
+                <div class="row">
+                  <!----## Inicio Primera Columna 6 ##---->
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!--~~~~~~~~~ Nombre Categoria ~~~~~~~~~~~-->
+                        <mat-form-field
+                          class="example-full-width"
+                          style="width: 90%"
+                        >
+                          <input
+                            matInput
+                            placeholder="Nombre"
+                            formControlName="nombre"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!--~~~~~~~~~ Descripción Categoria ~~~~~~~~~~~-->
+                        <mat-form-field
+                          class="example-full-width"
+                          style="width: 90%"
+                        >
+                          <input
+                            matInput
+                            placeholder="Descripción"
+                            formControlName="descripcion"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <!----## Fin Primera Columna 6 ##---->
+                </div>
+                <br />
+                <!-- Inicio Card Caracteristicas del producto -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5>Seleccione la Categoría Padre</h5>
+                    <app-tree
+                      *ngIf="objetosArbolCategorias.length > 0"
+                      [data]="objetosArbolCategorias"
+                      [allSelectable]="true"
+                      (newSelectedItem)="actualizarCategoriaPadre($event)"
+                    ></app-tree>
+                  </div>
+                </div>
+                <br />
+                <div class="row h-100">
+                  <div class="col-md-12 text-center">
+                    <input
+                      type="button"
+                      class="btn btn-outline-primary btn-xs col-md-2"
+                      value="Volver"
+                      [routerLink]="['/panel/categorias/busqueda-categorias']"
+                    />
+                    &nbsp;
+                    <input
+                      type="submit"
+                      class="btn btn-primary btn-xs col-md-2"
+                      value="Guardar"
+                      (click)="guardar()"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!----## Fin Card Body ##---->
+            </div>
+            <!----## Fin Card ##---->
+          </div>
+          <!----## Fin Col 12  ##---->
+        </div>
+        <!----## Fin Row 1 Interior  ##---->
+        <br />
+      </div>
+      <!----## Fin Columna 12  ##---->
+    </div>
+    <!----## Fin Row Principal ##---->
+  </div>
+  <!----## Fin Container Principal ##---->
+</form>
+<!----## Fin Form Principal ##---->

@@ -1,0 +1,364 @@
+<!----## Inicio Form Principal ##---->
+<form id="empleadosFormId">
+  <!----## Inicio Container Principal ##---->
+  <div class="container">
+    <!----## Inicio Row Principal ##---->
+    <div class="row">
+      <!----## Inicio Columna 12  ##---->
+      <div class="col-md-12 m-0 p-0">
+        <br />
+        <div class="card" id="cardPrincipal">
+          <div class="card-body">
+            <h3>Productos</h3>
+            <hr />
+            <!--Inicio Busqueda-->
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="buscar_codigo" name="buscar_codigo"
+                    [(ngModel)]="buscar_codigo" (change)="buscarProductos()" checked />
+                  <label class="custom-control-label" for="buscar_codigo">CODIGO</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="buscar_nombre" name="buscar_nombre"
+                    [(ngModel)]="buscar_nombre" (change)="buscarProductos()" checked />
+                  <label class="custom-control-label" for="buscar_nombre">NOMBRE</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="buscar_descripcion" name="buscar_descripcion"
+                    [(ngModel)]="buscar_descripcion" (change)="buscarProductos()" checked />
+                  <label class="custom-control-label" for="buscar_descripcion">DESCRIPCION</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                  <input type="checkbox" class="custom-control-input" id="buscar_categoria" name="buscar_categoria"
+                    [(ngModel)]="buscar_categoria" (change)="buscarProductos()" checked />
+                  <label class="custom-control-label" for="buscar_categoria">CATEGORIA</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="input-group input-group-sm mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Buscar</span>
+                  </div>
+                  <input type="text" class="form-control" id="buscar" name="buscar" [(ngModel)]="buscar"
+                    (keyup)="buscarProductos()" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-sm"
+                    placeholder="Introduzca Texto para Reducir el Listado(tilde o destilde las columnas por las cuales realizará la busqueda)" />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <nav aria-label="...">
+                <ul class="pagination">
+                  <li *ngIf="this.cantidad_paginas > 4" class="page-item">
+                    <a class="page-link" id="primeraPagina" (click)="setPaginaByComponenteId(1)" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li *ngIf="this.cantidad_paginas > 3" class="page-item">
+                    <a class="page-link" id="paginaAnterior" (click)="setPaginaByComponenteId(this.valor_boton_1 - 1)">
+                      Anterior
+                    </a>
+                  </li>
+                  <li *ngIf="this.cantidad_paginas > 1" class="page-item" [ngClass]="{
+                      active: this.pagina_actual == this.valor_boton_1
+                    }" id="paginaObjLiNumero1" name="paginaObjLiNumero">
+                    <a class="page-link" id="paginaNumero1" name="paginaNumero"
+                      (click)="setPaginaByComponenteId(this.valor_boton_1)">
+                      {{ this.valor_boton_1 }}
+                    </a>
+                  </li>
+                  <li *ngIf="this.cantidad_paginas > 1" class="page-item" [ngClass]="{
+                      active: this.pagina_actual == this.valor_boton_2
+                    }" id="paginaObjLiNumero2" name="paginaObjLiNumero">
+                    <a class="page-link" id="paginaNumero2" name="paginaNumero"
+                      (click)="setPaginaByComponenteId(this.valor_boton_2)">
+                      {{ this.valor_boton_2 }}
+                    </a>
+                  </li>
+                  <li *ngIf="this.cantidad_paginas > 2" class="page-item" [ngClass]="{
+                      active: this.pagina_actual == this.valor_boton_3
+                    }" id="paginaObjLiNumero3" name="paginaObjLiNumero">
+                    <a class="page-link" id="paginaNumero3" name="paginaNumero"
+                      (click)="setPaginaByComponenteId(this.valor_boton_3)">
+                      {{ this.valor_boton_3 }}
+                    </a>
+                  </li>
+                  <li *ngIf="this.cantidad_paginas > 3" class="page-item">
+                    <a class="page-link" id="paginaSiguiente" (click)="setPaginaByComponenteId(this.valor_boton_3 + 1)">
+                      Siguiente
+                    </a>
+                  </li>
+                  <li *ngIf="this.cantidad_paginas > 4" class="page-item">
+                    <a class="page-link" id="ultimaPagina" (click)="setPaginaByComponenteId(this.cantidad_paginas)"
+                      aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <!--Fin Busqueda-->
+            <br />
+
+            <!----## Inicio Row 2 Interior  ##---->
+            <div class="row">
+              <!----## Inicio Col 12  ##---->
+              <div class="col-md-12">
+                <div class="card">
+                  <table class="table table-hover">
+                    <thead class="thead-dark">
+                      <th>Código</th>
+                      <th style="width: 3%">Código</th>
+                      <th style="width: 21%">Nombre</th>
+                      <th style="width: 21%">Descripción</th>
+                      <th style="width: 20%; text-align: center">
+                        Categor&iacute;a
+                      </th>
+                      <th style="width: 25%; text-align: center">Opciones</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let prod of cast">
+                        <td>
+                          <img src="{{ prod.imagen }}" class="img-thumbnail" />
+                        </td>
+                        <td>{{ prod.codigo }}</td>
+                        <td>{{ prod.nombre }}</td>
+                        <td>{{ prod.descripcion }}</td>
+                        <td style="text-align: center">
+                          {{ prod.nombre_categoria }}
+                        </td>
+                        <td style="text-align: center">
+                          <button type="button" class="btn btn-outline-info btn-sm" title="Modificar/Editar"
+                            [routerLink]="[
+                              '../cargar-productos',
+                              prod.productos_id
+                            ]" routerLinkActive="active">
+                            <img src="./assets/modificar.png" alt="" /></button>&nbsp;
+                          <button type="button" class="btn btn-outline-primary btn-sm" title="Detalle"
+                            data-toggle="modal" [attr.data-target]="'#detalle_' + prod.codigo" (click)="
+                              getCaracteristicasProductos(prod.productos_id)
+                            ">
+                            <img src="./assets/detalle.png" alt="" /></button>&nbsp;
+                          <button type="button" class="btn btn-outline-danger btn-sm" title="Eliminar"
+                            (click)="eliminarProducto(prod.productos_id)">
+                            <img src="./assets/eliminar.png" alt="" />
+                          </button>
+                        </td>
+                        <!--Modal Detalle-->
+                        <div id="detalle_{{ prod.codigo }}" class="modal fade bd-example-modal-lg" tabindex="-1"
+                          role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header" style="
+                                  background-color: rgb(55, 106, 158);
+                                  color: white;
+                                ">
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                  Detalle del Producto
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="row">
+                                  <div class="col-12">
+                                    <h5>{{ prod.nombre }}</h5>
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                      <li class="nav-item">
+                                        <a class="nav-link active" id="resumen-tab" data-toggle="tab" [attr.href]="
+                                            '#d_resumen_' + prod.productos_id
+                                          " role="tab" aria-controls="resumen" aria-selected="false">Resumen</a>
+                                      </li>
+                                      <li class="nav-item">
+                                        <a class="nav-link" id="caracteristicas-tab" data-toggle="tab" [attr.href]="
+                                            '#caracteristicas_' +
+                                            prod.productos_id
+                                          " role="tab" aria-controls="caracteristicas"
+                                          aria-selected="false">Caracter&iacute;sticas</a>
+                                      </li>
+                                      <li class="nav-item">
+                                        <a class="nav-link" id="categorias-tab" data-toggle="tab" [attr.href]="
+                                            '#categorias_' + prod.productos_id
+                                          " role="tab" aria-controls="categorias"
+                                          aria-selected="false">Categor&iacute;as</a>
+                                      </li>
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent">
+                                      <div class="tab-pane fade show active" id="d_resumen_{{ prod.productos_id }}"
+                                        role="tabpanel" aria-labelledby="resumen-tab">
+                                        <div class="row">
+                                          <div class="col-7">
+                                            <div id="carouselImagenes_{{
+                                                prod.productos_id
+                                              }}" class="carousel slide" data-ride="carousel">
+                                              <ol class="carousel-indicators" *ngIf="cantidad_imagenes > 1">
+                                                <li *ngFor="
+                                                    let img of imagenes;
+                                                    let i = index
+                                                  " [attr.data-target]="
+                                                    '#carouselImagenes_' +
+                                                    prod.productos_id
+                                                  " [attr.data-slide-to]="i" class="{{
+                                                    i == 0 ? 'active' : ''
+                                                  }}"></li>
+                                              </ol>
+                                              <div class="carousel-inner" role="listbox">
+                                                <div *ngFor="
+                                                    let img of imagenes;
+                                                    let i = index
+                                                  " class="{{
+                                                    i == 0
+                                                      ? 'carousel-item active'
+                                                      : 'carousel-item'
+                                                  }}">
+                                                  <img class="
+                                                      d-block
+                                                      w-100
+                                                      imagen-limitada
+                                                    " src="{{ img.imagen }}" alt="{{ i }}" />
+                                                </div>
+                                              </div>
+                                              <a class="carousel-control-prev" [attr.href]="
+                                                  '#carouselImagenes_' +
+                                                  prod.productos_id
+                                                " role="button" data-slide="prev" *ngIf="cantidad_imagenes > 1">
+                                                <span class="
+                                                    carousel-control-prev-icon
+                                                  " aria-hidden="true"></span>
+                                                <span class="sr-only">Anterior</span>
+                                              </a>
+                                              <a class="carousel-control-next" [attr.href]="
+                                                  '#carouselImagenes_' +
+                                                  prod.productos_id
+                                                " role="button" data-slide="next" *ngIf="cantidad_imagenes > 1">
+                                                <span class="
+                                                    carousel-control-next-icon
+                                                  " aria-hidden="true"></span>
+                                                <span class="sr-only">Siguiente</span>
+                                              </a>
+                                            </div>
+                                          </div>
+                                          <div class="col-5">
+                                            <p>
+                                              <b>C&oacute;digo: </b>{{ prod.codigo }}
+                                            </p>
+                                            <p>
+                                              <b>Descripci&oacute;n: </b><br />{{ prod.descripcion }}
+                                            </p>
+                                            <p>
+                                              <b>Descripci&oacute;n Factura: </b><br />{{
+                                              prod.descripcion_factura
+                                              }}
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="tab-pane fade" id="caracteristicas_{{
+                                          prod.productos_id
+                                        }}" role="tabpanel" aria-labelledby="caracteristicas-tab">
+                                        <div class="row">
+                                          <div class="col-12" style="padding-top: 5px">
+                                            <table class="table table-sm table-hover" width="85%">
+                                              <thead class="thead-light">
+                                                <th>Nombre</th>
+                                                <th>Descripci&oacute;n</th>
+                                                <th>Valor</th>
+                                              </thead>
+                                              <tbody>
+                                                <tr *ngFor="
+                                                    let caract of caracteristicas
+                                                  ">
+                                                  <td class="textoCompacto">
+                                                    {{ caract.nombre }}
+                                                  </td>
+                                                  <td class="textoCompacto">
+                                                    {{ caract.descripcion }}
+                                                  </td>
+                                                  <td class="textoCompacto">
+                                                    {{ caract.valor }}
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="tab-pane fade" id="categorias_{{ prod.productos_id }}" role="tabpanel"
+                                        aria-labelledby="categorias-tab">
+                                        <div class="row">
+                                          <div class="col-12" style="padding-top: 5px">
+                                            <table class="table table-sm table-hover" width="85%">
+                                              <thead class="thead-light">
+                                                <th>Descripci&oacute;n</th>
+                                              </thead>
+                                              <tbody>
+                                                <tr *ngFor="
+                                                    let categ of categorias
+                                                  ">
+                                                  <td class="textoCompacto">
+                                                    {{ categ.nombre }} ({{
+                                                    categ.categoria_padre
+                                                    }})
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row pie">
+                                  <div class="col-12">
+                                    Fecha de Creaci&oacute;n:
+                                    {{ prod.fecha_desde | date: "dd/MM/yyyy"
+                                    }}<br />
+                                    Fecha de Baja:
+                                    {{ prod.fecha_hasta | date: "dd/MM/yyyy" }}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer" style="background-color: #f2f6f9">
+                                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">
+                                  Cerrar
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-md-12" align="center">
+                    <a class="btn btn-primary" [routerLink]="['../cargar-productos']" routerLinkActive="active">Nuevo
+                      Producto</a>
+                  </div>
+                </div>
+              </div>
+              <!----## Fin Col 12  ##---->
+            </div>
+            <!----## Fin Row 1 Interior  ##---->
+          </div>
+        </div>
+      </div>
+      <!----## Fin Columna 12  ##---->
+    </div>
+    <!----## Fin Row Principal ##---->
+  </div>
+  <br />
+  <!----## Fin Container Principal ##---->
+</form>
+<!----## Fin Form Principal ##---->

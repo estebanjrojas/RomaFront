@@ -1,0 +1,34 @@
+<li id="branch-{{ data.id }}" class="tree-branch">
+  <div [ngClass]="data.state === 'selected' ? 'my-2 selected' : 'my-2'">
+    <label
+      *ngIf="data.selectable === true"
+      (click)="selectItem(data)"
+      class="selectable"
+      >{{ data.label }}</label
+    >
+    <label *ngIf="data.selectable === false">{{ data.label }}</label>
+
+    <span
+      class="text-right"
+      *ngIf="data.expandable === true"
+      (click)="toggle(data)"
+    >
+      <i
+        *ngIf="data.isExpanded === true"
+        class="bi bi-chevron-compact-down"
+      ></i>
+      <i
+        *ngIf="data.isExpanded === false"
+        class="bi bi-chevron-compact-right"
+      ></i>
+    </span>
+  </div>
+
+  <ng-container *ngIf="data.childrens != undefined">
+    <ul [ngClass]="data.isExpanded === false ? 'hidden-tree-branch' : ''">
+      <ng-container *ngFor="let branch of data.childrens">
+        <app-tree-branch [data]="branch"></app-tree-branch>
+      </ng-container>
+    </ul>
+  </ng-container>
+</li>

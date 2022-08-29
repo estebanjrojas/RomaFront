@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -36,27 +37,27 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
 
 ];
 
+=======
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { HttpClientModule } from "@angular/common/http";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { LoginModule } from "./aplicaciones/login/login.module";
+import { UiModule } from "./core/ui/ui.module";
+import { AppComponent } from "./app.component";
+import { APP_BASE_HREF, DatePipe } from "@angular/common";
+import { AppRoutingModule } from "./app-routing.module";
+>>>>>>> b7aff6c8ccf2252aa2de3bee613558b28bfc423d
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CabeceraComponent,
-    PieComponent,
-    NavegacionComponent,
-    LoginComponent,
-    NavegacionSubmenuComponent,
-    HomeComponent,
-    RendimientoDiarioChartComponent
-  ],
+  declarations: [AppComponent],
   imports: [
-    RouterModule.forRoot(appRoutes),
+    LoginModule,
+    UiModule,
     BrowserModule,
-    FontAwesomeModule,
-    ChartsModule,
     HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
+<<<<<<< HEAD
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
@@ -90,4 +91,13 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+=======
+    AppRoutingModule,
+  ],
+  exports: [],
+  providers: [DatePipe, { provide: APP_BASE_HREF, useValue: "" }],
+>>>>>>> b7aff6c8ccf2252aa2de3bee613558b28bfc423d
 
+  bootstrap: [AppComponent],
+})
+export class AppModule {}

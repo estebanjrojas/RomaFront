@@ -1,0 +1,132 @@
+#banner-principal {
+  background-image: url("src/assets/background-tile.png");
+  width: 100%;
+  background-repeat: repeat;
+  height: 100%;
+}
+.container-principal {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: 90vh;
+}
+
+.container-principal .banner-container {
+  width: 70%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.container-principal .novedades {
+  background-color: #fff;
+  width: 30%;
+  font-size: 14px;
+  padding: 1.2rem;
+}
+
+.novedades > h5 {
+  font-size: 1.4em;
+  font-weight: 500;
+  color: #2c70b2;
+}
+
+h5.novedad-tipo {
+  font-size: 1.3em;
+}
+
+span.novedad-fecha {
+  color: grey;
+}
+
+.container-botones-accion {
+  display: flex;
+  flex-direction: row;
+  background-color: #e2e2e2;
+  width: 100%;
+}
+
+.container-botones-accion .accion {
+  margin: 40px;
+  border-radius: 5px;
+  border: 2px solid #2c70b2;
+  background-color: #fff;
+  width: 25%;
+  min-height: 200px;
+  cursor: pointer;
+}
+
+.container-botones-accion .accion:hover {
+  background-color: #f0f6fa;
+}
+.accion {
+  width: 100;
+  margin: auto;
+  padding: 10px;
+  color: #2c70b2;
+  text-align: center;
+}
+
+.contenido-accion {
+  height: 80%;
+  margin-bottom: 10%;
+  margin-top: 10%;
+}
+
+.icono-accion {
+  color: #2c70b2;
+  margin: auto;
+  align-self: center;
+}
+
+@media (max-width: 420px) {
+  #banner-principal {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .container-principal {
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+
+  .container-principal .banner-container {
+    align-items: stretch;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .container-principal .novedades {
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+    margin: 0;
+    font-size: 12px;
+  }
+
+  .novedades > h5 {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #e2e2e2;
+  }
+
+  h5.novedad-tipo {
+    font-size: 1.1em;
+  }
+
+  .container-botones-accion {
+    flex-direction: column;
+  }
+
+  .container-botones-accion .accion {
+    margin: auto;
+    margin-bottom: 10px;
+    width: 90%;
+  }
+
+  .container-botones-accion .accion:first-child {
+    margin-top: 10px;
+  }
+}
