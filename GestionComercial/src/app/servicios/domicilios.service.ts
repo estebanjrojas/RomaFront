@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
+import { Domicilios } from '../modelos/Domicilios';
 
 
 
@@ -9,8 +10,38 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class DomiciliosService {
+  miDomicilios: Domicilios = this.inicializarDomicilios();
 
   constructor(private http: HttpClient, private Auth: AuthService) { }
+
+  inicializarDomicilios() {
+    return {
+      ciudades_id: '',
+      calles_id: '',
+      calle_descripcion: '',
+      numero_puerta: '',
+      piso: '',
+      departamento_descripcion: '',
+      manzana: '',
+      lote: '',
+      barrio: '',
+      observaciones: '',
+      nombre_usuario: '',
+      domicilios_id: '',
+      tipo_domicilio: 0,
+      persona_id: ''
+    }
+  }
+
+  setDomicilio(domicilio: Domicilios) {
+    this.miDomicilios = domicilio;
+  }
+
+  getDomicilio() {
+    return this.miDomicilios;
+  }
+
+
 
   getProvinciasPorPais(paices_id){
     const httpOptions = {
@@ -89,6 +120,21 @@ export class DomiciliosService {
     };
     return this.http.get(url + calle_nombre, httpOptions);
   }
+
+
+  getCallesIdPorNombre(nombre: string, usuario: string) {
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization':  this.Auth.getTokenUsuarioSesion()
+        }
+      )
+    };
+    return this.http.get(environment.apiEndpoint + '/getCallesIdPorNombre/' + nombre + '/' + usuario, httpOptions);
+  }
+
+
 
   insert(domicilio: any) {
     const httpOptions = {

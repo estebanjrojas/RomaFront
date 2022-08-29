@@ -49,7 +49,7 @@
                               </div>
                               <div class="col-md-2">
                                 <button type="button" class="btn btn-outline-secondary"
-                                  (click)="buscarPorDocumento()">Buscar</button>
+                                  >Buscar</button>
                               </div>
                             </div>
 
@@ -85,7 +85,7 @@
                                 <mat-form-field class="example-full-width" style="width:100%;">
                                   <mat-select placeholder="Sexo" formControlName="sexo" [compareWith]="compareFn">
                                     <mat-option *ngFor="let sex of this.sexo" [value]="sex.codigo">
-                                      {{sex.descrip}}  
+                                      {{sex.descrip}}
                                     </mat-option>
                                   </mat-select>
                                 </mat-form-field>

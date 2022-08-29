@@ -243,6 +243,11 @@ export class CargarProductosComponent implements OnInit {
     array.splice(value, 1);
   }
 
+  borrarFilaTablaCategorias(value) {
+    var array = this.categorias_guardar;
+    array.splice(value, 1);
+  }
+
 
   detectFiles(event) {
     //this.urls = [];
@@ -389,7 +394,9 @@ export class CargarProductosComponent implements OnInit {
   }
 
 
-  agregarCategoria(id: number, nombre: string) {
+  agregarCategoria(id, nombre: string) {
+    const found = this.categorias_guardar.indexOf(id); 
+
     this.categorias_guardar.push({ id: id, nombre: nombre });
   }
 

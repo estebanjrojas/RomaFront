@@ -138,14 +138,14 @@ export class CargarClientesComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       if (params.clientes_id != null) {
-        this.clientesForm.controls.clientes_id.setValue(params.clientes_id);  
+        this.getDatosCliente(params.clientes_id);
+        this.clientesForm.controls.clientes_id.setValue(params.clientes_id);
       }
     }, err => {
       console.error(`Ocurrio un error al obtener el parametro del cliente. ${err}`);
     });
-    this.getDatosCliente(this.clientesForm.controls.clientes_id.value);
-    
-    
+    //this.getDatosCliente(this.clientesForm.controls.clientes_id.value);
+
 
     //Filtro de ciudades por provincia
     this.filteredOptions = this.clientesForm.controls.ciudades.valueChanges
@@ -180,7 +180,7 @@ export class CargarClientesComponent implements OnInit {
 
 
       this.clientesForm.patchValue({
-     
+
         nombre: cast[0].nombre,
         apellido: cast[0].apellido,
         documento: cast[0].nro_doc,
@@ -202,7 +202,7 @@ export class CargarClientesComponent implements OnInit {
       });
 
       this.ciudades.push({ id: cast[0].ciudades_id, descrip: cast[0].ciudad_nombre.trim() });
- 
+
     });
   }
 
@@ -214,7 +214,7 @@ export class CargarClientesComponent implements OnInit {
       for (let i = 0; i < cast.length; i++) {
         this.provincias.push({ 'id': cast[i].id, 'nombre': cast[i].nombre });
       }
-      
+
     }, error => {
       console.error(`Ocurrio un error al obtener las provincias. ${error.message}`);
     }, ()=> {
