@@ -152,6 +152,7 @@ export class CargarClientesComponent implements OnInit {
     this.route.params.subscribe(
       (params) => {
         if (params.clientes_id != null) {
+          this.getDatosCliente(params.clientes_id);
           this.clientesForm.controls.clientes_id.setValue(params.clientes_id);
         }
       },
@@ -161,7 +162,6 @@ export class CargarClientesComponent implements OnInit {
         );
       }
     );
-    this.getDatosCliente(this.clientesForm.controls.clientes_id.value);
 
     //Filtro de ciudades por provincia
     this.filteredOptions =

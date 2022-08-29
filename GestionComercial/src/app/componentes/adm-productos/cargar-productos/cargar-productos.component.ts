@@ -1,19 +1,19 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ProductosService } from '../../../servicios/productos.service';
+import { ProductosService } from '../../../comunes/servicios/productos.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { TabgralService } from '../../../servicios/tabgral.service';
+import { TabgralService } from '../../../comunes/servicios/tabgral.service';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
-import { CategoriasService } from '../../../servicios/categorias.service';
-import { Categorias } from '../../../modelos/Categorias';
-import { CargarCategoriaComponent } from '../../adm-categoria/cargar-categoria/cargar-categoria.component';
+import { CategoriasService } from '../../../comunes/servicios/categorias.service';
+import { Categorias } from '../../../comunes/interfaces/Categorias';
+import { CargarCategoriaComponent } from '../../../aplicaciones/panel/flujos-trabajo/administracion/adm-categoria/cargar-categoria/cargar-categoria.component';
 
 @Component({
   selector: 'app-cargar-productos',
   templateUrl: './cargar-productos.component.html',
-  styleUrls: ['./cargar-productos.component.css']
+  //styleUrls: ['']
 })
 export class CargarProductosComponent implements OnInit {
 
@@ -310,7 +310,7 @@ export class CargarProductosComponent implements OnInit {
           console.log({ "SrvProductos.insertProductoReturnId": respuesta });
           let cast: any = respuesta;
 
-          
+
 
           for (let caract of this.caracteristicas) {
             this.SrvProductos.insertCaracteristicasProducto(caract, cast.id).subscribe(resp => {
@@ -395,7 +395,7 @@ export class CargarProductosComponent implements OnInit {
 
 
   agregarCategoria(id, nombre: string) {
-    const found = this.categorias_guardar.indexOf(id); 
+    const found = this.categorias_guardar.indexOf(id);
 
     this.categorias_guardar.push({ id: id, nombre: nombre });
   }

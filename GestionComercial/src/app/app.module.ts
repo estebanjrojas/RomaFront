@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -16,19 +15,22 @@ import {
   MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS
 } from '@angular/material';
 import { AppComponent } from './app.component';
-import { CabeceraComponent } from './componentes/interfaz/cabecera/cabecera.component';
-import { PieComponent } from './componentes/interfaz/pie/pie.component';
-import { NavegacionComponent } from './componentes/interfaz/navegacion/navegacion.component';
-import { LoginComponent } from './componentes/login/login.component';
+import { CabeceraComponent } from '../app/core/ui/componentes/cabecera/cabecera.component';
+import { PieComponent } from '../app/core/ui/componentes/pie/pie.component';
+import { NavegacionComponent } from '../app/core/ui/componentes/navegacion/navegacion.component';
+import { LoginComponent } from '../app/aplicaciones/login/login.component';
 import { APP_BASE_HREF, DatePipe } from '@angular/common';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
-import { NavegacionSubmenuComponent } from './componentes/interfaz/navegacion-submenu/navegacion-submenu.component';
-import { HomeComponent } from './componentes/home/home.component';
-import { AdministracionModule } from './modulos/administracion/administracion.module';
-import { ProductosModule } from './modulos/productos/productos.module';
-import { VentasModule } from './modulos/ventas/ventas.module';
-import { RendimientoDiarioChartComponent } from './componentes/rendimiento-diario-chart/rendimiento-diario-chart.component';
+import { NavegacionSubmenuComponent } from '../app/core/ui/componentes/navegacion-submenu/navegacion-submenu.component';
+import { HomeComponent } from '../app/aplicaciones/panel/flujos-trabajo/home/home.component';
+//import { AdministracionModule } from './modulos/administracion/administracion.module';
+import { ProductosModule } from '../app/aplicaciones/panel/flujos-trabajo/productos/productos.module';
+import { VentasModule } from '../app/aplicaciones/panel/flujos-trabajo/ventas/ventas.module';
+import { RendimientoDiarioChartComponent } from '../app/aplicaciones/panel/flujos-trabajo/estadisticas/rendimiento-diario-chart/rendimiento-diario-chart.component';
+import { LoginModule } from "./aplicaciones/login/login.module";
+import { UiModule } from "./core/ui/ui.module";
+import { AppRoutingModule } from "./app-routing.module";
 
 //Rutas para el Router de Angular
 const appRoutes: Routes = [{ path: '', component: LoginComponent }
@@ -37,17 +39,7 @@ const appRoutes: Routes = [{ path: '', component: LoginComponent }
 
 ];
 
-=======
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-import { HttpClientModule } from "@angular/common/http";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { LoginModule } from "./aplicaciones/login/login.module";
-import { UiModule } from "./core/ui/ui.module";
-import { AppComponent } from "./app.component";
-import { APP_BASE_HREF, DatePipe } from "@angular/common";
-import { AppRoutingModule } from "./app-routing.module";
->>>>>>> b7aff6c8ccf2252aa2de3bee613558b28bfc423d
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -57,7 +49,6 @@ import { AppRoutingModule } from "./app-routing.module";
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-<<<<<<< HEAD
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
@@ -78,9 +69,10 @@ import { AppRoutingModule } from "./app-routing.module";
       preventDuplicates: true,
       newestOnTop: true
     }),
-    AdministracionModule,
+    //AdministracionModule,
     ProductosModule,
-    VentasModule
+    VentasModule,
+    AppRoutingModule
   ],
   exports: [RouterModule],
   providers: [DatePipe, ThemeService, { provide: APP_BASE_HREF, useValue: '' },
@@ -91,13 +83,5 @@ import { AppRoutingModule } from "./app-routing.module";
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-=======
-    AppRoutingModule,
-  ],
-  exports: [],
-  providers: [DatePipe, { provide: APP_BASE_HREF, useValue: "" }],
->>>>>>> b7aff6c8ccf2252aa2de3bee613558b28bfc423d
 
-  bootstrap: [AppComponent],
-})
-export class AppModule {}
+
