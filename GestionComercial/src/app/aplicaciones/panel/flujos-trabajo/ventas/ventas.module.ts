@@ -2,8 +2,6 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import { CargarPromocionesComponent } from "./adm-promociones/cargar-promociones/cargar-promociones.component";
-import { BuscarPromocionesComponent } from "./adm-promociones/buscar-promociones/buscar-promociones.component";
 import { BusquedaVentasComponent } from "src/app/aplicaciones/panel/flujos-trabajo/ventas/busqueda-ventas/busqueda-ventas.component";
 import { NuevaVentaComponent } from "./nueva-venta/nueva-venta.component";
 import { CargaDetalleVentaComponent } from "./carga-detalle-venta/carga-detalle-venta.component";
@@ -18,16 +16,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 const appRoutes: Routes = [
   {
-    path: "promociones/cargar-promociones",
-    component: CargarPromocionesComponent,
-    canActivate: [AutenticadoGuard, PerfilGuard],
-  },
-  {
-    path: "promociones/busqueda-promociones",
-    component: BuscarPromocionesComponent,
-    canActivate: [AutenticadoGuard, PerfilGuard],
-  },
-  {
     path: "busqueda-ventas",
     component: BusquedaVentasComponent,
     canActivate: [AutenticadoGuard, PerfilGuard],
@@ -41,8 +29,6 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    CargarPromocionesComponent,
-    BuscarPromocionesComponent,
     BusquedaVentasComponent,
     NuevaVentaComponent,
     CargaDetalleVentaComponent,
