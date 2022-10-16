@@ -57,15 +57,12 @@ export class CambiarPasswordComponent implements OnInit {
     if (this.cambiarPassForm.valid) {
       this.SrvUsuarios.validarPassVieja(usuario, viejapass).subscribe(
         (response) => {
-          console.log({ "SrvUsuarios.validarPassVieja": response });
           var cast: any = response.body;
           if (response.status == 200 && cast.permitir_acceso == true) {
             if (nuevapass === nuevapass2) {
               this.SrvUsuarios.cambiarPassword(usuario, nuevapass).subscribe(
                 (response) => {
-                  console.log({ "SrvUsuarios.cambiarPassword": response });
                   var cast: any = response.body;
-                  console.log({ cast: cast });
                   this.snackBar.mostrarMensaje(
                     "La contrase\u00f1a se cambió exitosamente"
                   );

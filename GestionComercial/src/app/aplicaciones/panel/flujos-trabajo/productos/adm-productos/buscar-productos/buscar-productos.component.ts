@@ -36,7 +36,7 @@ export class BuscarProductosComponent implements OnInit {
     private SrvProductos: ProductosService,
 
     private formBuilder: FormBuilder
-  ) { }
+  ) {}
   ngOnInit() {
     this.buscarProductos();
   }
@@ -74,7 +74,6 @@ export class BuscarProductosComponent implements OnInit {
       this.buscar
     ).subscribe(
       (respuesta) => {
-        console.log({ "SrvProductos.getCantidadPaginasProductos": respuesta });
         let cast: any = respuesta.regCantidadPaginas.cantidad_paginas;
         this.cantidad_paginas = cast;
         this.pagina_actual = 1;
@@ -122,13 +121,12 @@ export class BuscarProductosComponent implements OnInit {
       this.buscar
     ).subscribe(
       (respuesta) => {
-        console.log({ "SrvProductos.getProductos": respuesta });
         this.cast = respuesta;
       },
       (error) => {
         console.error(JSON.stringify(error));
       },
-      () => { }
+      () => {}
     );
   }
   /** posiciona el indice en el boton seleccionado */
@@ -162,75 +160,90 @@ export class BuscarProductosComponent implements OnInit {
   }
 
   eliminarProducto(productos_id) {
-    let opcion = confirm("Esta acción procederá a eliminar el producto, desea continuar?");
+    let opcion = confirm(
+      "Esta acción procederá a eliminar el producto, desea continuar?"
+    );
     if (opcion) {
       this.verificarProductoPoseeCaracteristicas(productos_id);
     }
   }
 
   verificarProductoPoseeCaracteristicas(productos_id: any): any {
-    this.SrvProductos.verificarProductoPoseeCaracteristicas(productos_id).subscribe(respuesta => {
-      console.log({ 'SrvProductos.verificarProductoPoseeCaracteristicas': respuesta });
-      let cast: any = respuesta;
-      this.tiene_caracteristicas = cast[0].respuesta;
-    }, err => {
-      console.log({ 'ERROR': err });
-    }, () => {
-      this.eliminarCaracteristicasProductos(productos_id);
-    });
+    this.SrvProductos.verificarProductoPoseeCaracteristicas(
+      productos_id
+    ).subscribe(
+      (respuesta) => {
+        let cast: any = respuesta;
+        this.tiene_caracteristicas = cast[0].respuesta;
+      },
+      (err) => {
+        console.error({ ERROR: err });
+      },
+      () => {
+        this.eliminarCaracteristicasProductos(productos_id);
+      }
+    );
   }
 
   eliminarCaracteristicasProductos(productos_id: any) {
     if (this.tiene_caracteristicas) {
-      this.SrvProductos.eliminarCaracteristicasProductos(productos_id).subscribe(respuesta => {
-        console.log({ 'SrvProductos.eliminarCaracteristicasProductos': respuesta });
-  
-      }, err => {
-        console.log({ 'ERROR': err });
-      }, () => {
-        this.verificarProductoPoseeImagenes(productos_id);
-      });
+      this.SrvProductos.eliminarCaracteristicasProductos(
+        productos_id
+      ).subscribe(
+        (respuesta) => {},
+        (err) => {
+          console.error({ ERROR: err });
+        },
+        () => {
+          this.verificarProductoPoseeImagenes(productos_id);
+        }
+      );
     } else {
       this.verificarProductoPoseeImagenes(productos_id);
     }
   }
 
   verificarProductoPoseeImagenes(productos_id: any): any {
-    this.SrvProductos.verificarProductoPoseeImagenes(productos_id).subscribe(respuesta => {
-      console.log({ 'SrvProductos.verificarProductoPoseeImagenes': respuesta });
-      let cast: any = respuesta;
-      this.tiene_caracteristicas = cast[0].respuesta;
-    }, err => {
-      console.log({ 'ERROR': err });
-    }, () => {
-      this.eliminarImagenesProductos(productos_id);
-    });
+    this.SrvProductos.verificarProductoPoseeImagenes(productos_id).subscribe(
+      (respuesta) => {
+        let cast: any = respuesta;
+        this.tiene_caracteristicas = cast[0].respuesta;
+      },
+      (err) => {
+        console.error({ ERROR: err });
+      },
+      () => {
+        this.eliminarImagenesProductos(productos_id);
+      }
+    );
   }
 
   eliminarImagenesProductos(productos_id: any) {
     if (this.tiene_caracteristicas) {
-      this.SrvProductos.eliminarImagenesProductos(productos_id).subscribe(respuesta => {
-        console.log({ 'SrvProductos.eliminarImagenesProductos': respuesta });
-
-      }, err => {
-        console.log({ 'ERROR': err });
-      }, () => {
-        this.eliminarProductoById(productos_id);
-      });
+      this.SrvProductos.eliminarImagenesProductos(productos_id).subscribe(
+        (respuesta) => {},
+        (err) => {
+          console.error({ ERROR: err });
+        },
+        () => {
+          this.eliminarProductoById(productos_id);
+        }
+      );
     } else {
       this.eliminarProductoById(productos_id);
     }
   }
 
   eliminarProductoById(productos_id: any) {
-    this.SrvProductos.eliminarProductoById(productos_id).subscribe(respuesta => {
-      console.log({ 'SrvProductos.eliminarProductoById': respuesta });
-
-    }, err => {
-      console.log({ 'ERROR': err });
-    }, () => {
-      this.buscarProductos();
-    });
+    this.SrvProductos.eliminarProductoById(productos_id).subscribe(
+      (respuesta) => {},
+      (err) => {
+        console.error({ ERROR: err });
+      },
+      () => {
+        this.buscarProductos();
+      }
+    );
   }
 
   mostrarDetallesProductos(productos) {
@@ -241,12 +254,11 @@ export class BuscarProductosComponent implements OnInit {
   getCaracteristicasProductos(producto_id) {
     this.SrvProductos.getCaracteristicasProductos(producto_id).subscribe(
       (resp) => {
-        console.log({ "SrvProductos.getCaracteristicasProductos ": resp });
         let cast: any = resp;
         this.caracteristicas = cast;
       },
       (err) => {
-        console.log({ ERROR: err });
+        console.error({ ERROR: err });
       },
       () => {
         this.getCategoriasProductos(producto_id);
@@ -257,12 +269,11 @@ export class BuscarProductosComponent implements OnInit {
   getCategoriasProductos(producto_id) {
     this.SrvProductos.getCategoriasProductos(producto_id).subscribe(
       (resp) => {
-        console.log({ "SrvProductos.getCategoriasProductos": resp });
         let cast: any = resp;
         this.categorias = cast;
       },
       (err) => {
-        console.log({ ERROR: err });
+        console.error({ ERROR: err });
       },
       () => {
         this.getImagenesProductos(producto_id);
@@ -272,7 +283,6 @@ export class BuscarProductosComponent implements OnInit {
 
   getImagenesProductos(producto_id) {
     this.SrvProductos.getImagenesProductos(producto_id).subscribe((resp) => {
-      console.log({ "SrvProductos.getImagenesProductos": resp });
       let cast: any = resp;
       this.imagenes = cast;
       this.cantidad_imagenes = cast.length;

@@ -11,7 +11,6 @@ import { Component, OnInit } from "@angular/core";
 export class BuscarPuntosDeVentaComponent implements OnInit {
   buscarPuntosVentaForm: FormGroup;
   cast: any;
-
   sucursales = new Array<Tabgral>();
 
   constructor(
@@ -30,7 +29,6 @@ export class BuscarPuntosDeVentaComponent implements OnInit {
 
     //Llenado combo Sucursal
     this.SrvTabgral.selectByNroTab(6).subscribe((respuesta) => {
-      console.log({ "SrvTabgral.selectByNroTab(6)": respuesta });
       let cast: any = respuesta;
       for (var i = 0; i < cast.length; i++) {
         let rel: Tabgral = { codigo: "0", descrip: "" };
@@ -46,13 +44,11 @@ export class BuscarPuntosDeVentaComponent implements OnInit {
     if (busqueda == undefined || busqueda == "") {
       this.SrvPuntosVenta.getPuntosVentaTodos().subscribe((respuesta) => {
         this.cast = respuesta;
-        console.log({ "SrvPuntosVenta.getPuntosVentaTodos": this.cast });
       });
     } else {
       this.SrvPuntosVenta.getPuntosVentaBusqueda(busqueda).subscribe(
         (respuesta) => {
           this.cast = respuesta;
-          console.log({ "SrvPuntosVenta.getPuntosVentaBusqueda": this.cast });
         }
       );
     }

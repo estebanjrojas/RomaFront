@@ -47,7 +47,6 @@ export class SeleccionClientesComponent implements OnInit {
     this.SrvClientes.getClientesWhere(campo_busqueda, texto_busqueda).subscribe(
       (respuesta) => {
         this.clientes = respuesta;
-        console.log({ "SrvClientes.getClientesWhere": this.clientes });
       }
     );
   }
@@ -103,7 +102,6 @@ export class SeleccionClientesComponent implements OnInit {
     this.clientes = [];
 
     this.SrvClientes.setCliente(this.clienteSeleccionado);
-    console.log({ "SrvCliente.getCliente": this.SrvClientes.getCliente() });
     this.seElijioCliente.emit(this.clienteSeleccionado);
   }
 }

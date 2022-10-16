@@ -46,7 +46,6 @@ export class AdministrarPerfilesComponent implements OnInit {
     this.perfilesForm.controls.nomb_usr.setValue(this.nomb_usr);
     this.route.params.subscribe((params) => {
       this.perfilesForm.controls.id_empleado.setValue(params.empleados_id);
-      console.log(params);
     });
 
     this.obtenerEmpleado();
@@ -57,7 +56,6 @@ export class AdministrarPerfilesComponent implements OnInit {
     var id_empleado = this.perfilesForm.controls.id_empleado.value;
     this.SrvUsuarios.getDatosUsuariosCargados(id_empleado).subscribe((resp) => {
       let respuesta: any = resp;
-      console.log({ "SrvUsuarios.getDatosUsuariosCargados": respuesta });
       this.empleados.descripcion = respuesta[0].nomb_usr;
       this.perfilesForm.controls.id_usuario.setValue(respuesta[0].usuario_id);
     });
@@ -67,7 +65,6 @@ export class AdministrarPerfilesComponent implements OnInit {
     let id_empleado = this.perfilesForm.controls.id_empleado.value;
     this.SrvUsuarios.getPerfilesAsignados(id_empleado).subscribe(
       (respuesta) => {
-        console.log({ "SrvUsuarios.getPerfilesAsignados": respuesta });
         let cast: any = respuesta;
 
         for (let resp of cast)
@@ -76,13 +73,11 @@ export class AdministrarPerfilesComponent implements OnInit {
             nombre: resp.nombre,
             descripcion: resp.descripcion,
           });
-        console.log("Perfiles" + this.perfilesAsignados[0].nombre);
       }
     );
 
     this.SrvUsuarios.getPerfilesSinAsignar(id_empleado).subscribe(
       (respuesta) => {
-        console.log({ "SrvUsuarios.getPerfilesSinAsignar": respuesta });
         let cast: any = respuesta;
 
         for (let resp of cast)
@@ -120,17 +115,14 @@ export class AdministrarPerfilesComponent implements OnInit {
     let empleados_id = this.perfilesForm.controls.id_empleado.value;
 
     if (this.perfilesForm.valid) {
-      console.log(JSON.stringify(this.perfilesForm.value));
       this.SrvUsuarios.deletePerfiles(usuario_id).subscribe((respuesta) => {
-        console.log({ "SrvUsuarios.deletePerfiles": respuesta });
         let cast: any = respuesta;
 
         for (let caract of this.perfilesAsignados) {
           this.SrvUsuarios.insertPerfilesAsignados(
             caract,
             usuario_id
-          ).subscribe((resp) => {
-            console.log({ "SrvUsuarios.insertPerfilesAsignados": resp });
+          ).subscribe(() => {
             alert("Caracteristicas cargadas exitosamente");
           });
         }
@@ -139,7 +131,6 @@ export class AdministrarPerfilesComponent implements OnInit {
       });
     } else {
       this.perfilesForm.getError;
-      console.log(this.perfilesForm);
     }
   }
 }

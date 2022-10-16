@@ -44,7 +44,6 @@ export class PreciosProductosComponent implements OnInit {
   mostrarPrecioActual(productos_id) {
     this.SrvProductos.getUltimoPrecioValido(productos_id).subscribe((resp) => {
       let respuesta: any = resp;
-      console.log({ "SrvProductos.getUltimoPrecioValido": respuesta });
 
       this.preciosProductosForm.patchValue({
         precio_actual: respuesta[0].monto,
@@ -57,20 +56,12 @@ export class PreciosProductosComponent implements OnInit {
     let precio = this.preciosProductosForm.controls.nuevo_precio.value;
     this.SrvProductos.actualizarFechaHastaPrecio(
       this.producto.productos_id
-    ).subscribe((respuesta) => {
-      console.log({ "SrvAvisos.actualizarFechaHastaPrecio": respuesta });
-
+    ).subscribe(() => {
       this.SrvProductos.insertNuevoPrecioProducto(
         precio,
         this.producto.productos_id
-      ).subscribe((respuesta) => {
-        console.log({ "SrvProductos.insertProductoReturnId": respuesta });
-        let cast: any = respuesta;
-
+      ).subscribe(() => {
         this.snackBar.mostrarMensaje("El Producto se ha CARGADO Exitosamente");
-        console.log(
-          "El precio se ha actualizado e instalado satisfactoriamente"
-        );
       });
     });
     this.setform();
@@ -83,7 +74,6 @@ export class PreciosProductosComponent implements OnInit {
     }
     this.SrvProductos.getHistorialPrecios(this.producto.productos_id).subscribe(
       (resp) => {
-        console.log({ "SrvProductos.getHistorialPrecios": resp });
         let respuesta: any = resp;
 
         for (let resp of respuesta)

@@ -73,7 +73,7 @@ export class BuscarClientesComponent implements OnInit {
         this.setCantidadPaginas();
       },
       (error) => {
-        console.log(JSON.stringify(error));
+        console.error(JSON.stringify(error));
       }
     );
   }
@@ -117,7 +117,7 @@ export class BuscarClientesComponent implements OnInit {
         this.cast = respuesta;
       },
       (error) => {
-        console.log(JSON.stringify(error));
+        console.error(JSON.stringify(error));
       }
     );
   }

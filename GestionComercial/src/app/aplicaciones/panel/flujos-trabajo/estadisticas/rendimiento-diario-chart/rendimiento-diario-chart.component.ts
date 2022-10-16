@@ -51,14 +51,12 @@ export class RendimientoDiarioChartComponent implements OnInit {
     ).subscribe(
       (resp) => {
         let cast: any = resp;
-        console.log(cast);
         this.pieChartData = cast.map((venta) => venta.total_vendido);
         this.datasets.push({ data: this.pieChartData });
         this.pieChartLabels = cast.map((venta) => venta.nombre);
         this.pieChartData.forEach((monto) => {
           this.total = this.total + parseFloat(monto);
         });
-        console.log(this.pieChartData);
       },
       (error) => {
         console.error(

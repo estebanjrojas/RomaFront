@@ -1,4 +1,9 @@
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { ProductosService } from "../../../../../../comunes/servicios/productos.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
@@ -68,14 +73,12 @@ export class CargarProductosComponent implements OnInit {
     this.productosForm.controls.nombre_usuario.setValue(this.nomb_usr);
     this.route.params.subscribe((params) => {
       this.productosForm.controls.id_producto.setValue(params.productos_id);
-      console.log(params);
     });
 
     this.getDatosProductos();
 
     this.SrvCategorias.obtenerJSONTodasCategorias().subscribe(
       (resp) => {
-        console.log({ "SrvCategorias.obtenerJSONTodasCategorias": resp });
         let cast: any = resp;
         this.SrvCategorias.setCategorias(JSON.parse(cast.categorias));
       },
@@ -89,7 +92,6 @@ export class CargarProductosComponent implements OnInit {
 
     //Lleno el combo de tipo producto
     this.SrvTabgral.selectByNroTab(7).subscribe((respuesta) => {
-      console.log({ "SrvTabgral.selectByNroTab(7)": respuesta });
       let cast: any = respuesta;
       for (var i = 0; i < cast.length; i++) {
         let rel: Tabgral = { codigo: "0", descrip: "" };
@@ -105,7 +107,6 @@ export class CargarProductosComponent implements OnInit {
     if (id_producto != null || id_producto != undefined) {
       this.SrvProductos.getDatosProductos(id_producto).subscribe((resp) => {
         let respuesta: any = resp;
-        console.log({ "SrvProductos.getDatosProductos": respuesta });
 
         this.productosForm.patchValue({
           codigo: respuesta[0].codigo,
@@ -115,15 +116,11 @@ export class CargarProductosComponent implements OnInit {
           tipo: respuesta[0].tipo_producto,
           precio: respuesta[0].monto,
         });
-        console.log("Tipo Producto: " + this.productosForm.controls.tipo.value);
       });
 
       this.SrvProductos.getCaracteristicasProductos(id_producto).subscribe(
         (resp) => {
           let respuesta: any = resp;
-          console.log({
-            "SrvProductos.getCaracteristicasProductos": respuesta,
-          });
 
           for (let resp of respuesta)
             this.caracteristicas.push({
@@ -137,7 +134,6 @@ export class CargarProductosComponent implements OnInit {
       this.SrvProductos.getCategoriasProductos(id_producto).subscribe(
         (resp) => {
           let respuesta: any = resp;
-          console.log({ "SrvProductos.getCategoriasProductos": respuesta });
 
           for (let resp of respuesta)
             this.categorias_guardar.push({
@@ -148,7 +144,6 @@ export class CargarProductosComponent implements OnInit {
       );
 
       this.SrvProductos.getFotosCargadas(id_producto).subscribe((respuesta) => {
-        console.log({ "SrvProductos.getFotosCargadas": respuesta });
         let cast: any = respuesta;
         for (let i = 0; i < cast.length; i++) {
           this.urls[i] = cast[i].imagen;
@@ -215,25 +210,20 @@ export class CargarProductosComponent implements OnInit {
             imagen: reader.result.toString(),
             predeterminada: indice == this.indiceFotoPredeterminada,
           });
-          //console.log(this.imagenes[indice]);
           indice++;
           this.cantidadFotos = this.cantidadFotos + indice;
         };
         reader.readAsDataURL(file);
       }
     }
-    console.log(this.urls);
   }
 
   quitarFoto(posicion) {
-    console.log("Posicion: " + posicion);
     this.imagenes.splice(posicion, 1);
     this.urls.splice(posicion, 1);
-    console.log(this.imagenes);
   }
 
   setFotoPredeterminada(posicion) {
-    console.log({ "foto predeterminada": posicion });
     this.indiceFotoPredeterminada = posicion;
     for (let i = 0; i < this.imagenes.length; i++) {
       if (i == this.indiceFotoPredeterminada) {
@@ -242,7 +232,6 @@ export class CargarProductosComponent implements OnInit {
         this.imagenes[i].predeterminada = false;
       }
     }
-    console.log(JSON.stringify(this.imagenes[this.indiceFotoPredeterminada]));
   }
 
   //Guardar Nuevo Producto
@@ -252,21 +241,16 @@ export class CargarProductosComponent implements OnInit {
     if (id_producto == null || id_producto == undefined) {
       this.submitted = true;
       if (this.productosForm.valid) {
-        console.log(JSON.stringify(this.productosForm.value));
         this.SrvProductos.insertProductoReturnId(
           this.productosForm.value
         ).subscribe((respuesta) => {
-          console.log({ "SrvProductos.insertProductoReturnId": respuesta });
           let cast: any = respuesta;
 
           for (let caract of this.caracteristicas) {
             this.SrvProductos.insertCaracteristicasProducto(
               caract,
               cast.id
-            ).subscribe((resp) => {
-              console.log({
-                "SrvProductos.insertCaracteristicasProducto": resp,
-              });
+            ).subscribe(() => {
               this.snackBar.mostrarMensaje(
                 "Caracteristicas cargadas exitosamente"
               );
@@ -274,8 +258,7 @@ export class CargarProductosComponent implements OnInit {
           }
           for (let cat of this.categorias_guardar) {
             this.SrvProductos.insertCategoriasProducto(cat, cast.id).subscribe(
-              (resp) => {
-                console.log({ "SrvProductos.insertCategoriasProducto": resp });
+              () => {
                 this.snackBar.mostrarMensaje(
                   "Categorias cargadas exitosamente"
                 );
@@ -285,8 +268,7 @@ export class CargarProductosComponent implements OnInit {
 
           for (let imagen of this.imagenes) {
             this.SrvProductos.cargarImagenProducto(imagen, cast.id).subscribe(
-              (resp) => {
-                console.log({ "SrvProductos.cargarImagenProducto": resp });
+              () => {
                 this.snackBar.mostrarMensaje("Imagenes cargadas exitosamente");
               }
             );
@@ -301,32 +283,21 @@ export class CargarProductosComponent implements OnInit {
         });
       } else {
         this.productosForm.getError;
-        console.log(this.productosForm);
       }
     } else {
       //Modificar Producto
       if (this.productosForm.valid) {
-        console.log(JSON.stringify(this.productosForm.value));
         this.SrvProductos.actualizarDatosProductos(
           this.productosForm.value
-        ).subscribe((respuesta) => {
-          console.log({ "SrvAvisos.actualizarDatosProductos": respuesta });
-
+        ).subscribe(() => {
           this.SrvProductos.eliminarCaracteristicasProductos(
             id_producto
-          ).subscribe((respuesta) => {
-            console.log({
-              "SrvProductos.eliminarCaracteristicasProductos": respuesta,
-            });
-
+          ).subscribe(() => {
             for (let caract of this.caracteristicas) {
               this.SrvProductos.insertCaracteristicasProducto(
                 caract,
                 id_producto
-              ).subscribe((resp) => {
-                console.log({
-                  "SrvProductos.insertCaracteristicasProducto": resp,
-                });
+              ).subscribe(() => {
                 this.snackBar.mostrarMensaje(
                   "Caracteristicas actualizadas exitosamente"
                 );
@@ -338,7 +309,6 @@ export class CargarProductosComponent implements OnInit {
                 cat,
                 id_producto
               ).subscribe((resp) => {
-                console.log({ "SrvProductos.insertCategoriasProducto": resp });
                 this.snackBar.mostrarMensaje(
                   "Categorias actualizadas exitosamente"
                 );
@@ -347,14 +317,11 @@ export class CargarProductosComponent implements OnInit {
 
             this.SrvProductos.eliminarImagenesProductos(id_producto).subscribe(
               (resp) => {
-                console.log({ "SrvProductos.eliminarImagenesProductos": resp });
-
                 for (let imagen of this.imagenes) {
                   this.SrvProductos.cargarImagenProducto(
                     imagen,
                     id_producto
                   ).subscribe((resp) => {
-                    console.log({ "SrvProductos.cargarImagenProducto": resp });
                     this.snackBar.mostrarMensaje(
                       "Imagenes cargadas exitosamente"
                     );
@@ -376,7 +343,6 @@ export class CargarProductosComponent implements OnInit {
         });
       } else {
         this.productosForm.getError;
-        console.log(this.productosForm);
       }
     }
   }

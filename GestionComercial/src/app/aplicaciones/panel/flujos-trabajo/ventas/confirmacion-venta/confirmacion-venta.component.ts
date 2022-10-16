@@ -51,13 +51,11 @@ export class ConfirmacionVentaComponent implements OnInit {
 
   getClienteSeleccionado() {
     this.clienteSeleccionado = this.SrvClientes.getCliente();
-    console.log({ "SrvClientes.getCliente": this.clienteSeleccionado });
     this.getVendedor();
   }
 
   getVendedor() {
     this.SrvUsuarios.getDatosUsuario(this.usuario).subscribe((respuesta) => {
-      console.log({ "SrvUsuarios.getDatosUsuarios": respuesta });
       let cast: any = respuesta;
       this.vendedor = {
         empleados_id: cast[0].empleados_id,
@@ -87,9 +85,7 @@ export class ConfirmacionVentaComponent implements OnInit {
       vendedor: this.vendedor,
     };
 
-    this.SrvVentas.insertVentaReturningFactura(venta).subscribe((res) => {
-      console.log({ "SrvVentas.insertVentaReturningFactura": res });
-    });
+    this.SrvVentas.insertVentaReturningFactura(venta).subscribe(() => {});
   }
 }
 

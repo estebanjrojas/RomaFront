@@ -49,12 +49,9 @@ export class NuevaVentaComponent implements OnInit {
 
   actualizarDetalleVenta(event) {
     this.listaDetalleVentas = this.detalleVenta.listaDetalleVentas;
-    console.log({ parent: this.listaDetalleVentas });
   }
 
   ngOnInit() {}
 
-  seleccionarCliente(cliente) {
-    console.log(cliente);
-  }
+  seleccionarCliente(cliente) {}
 }

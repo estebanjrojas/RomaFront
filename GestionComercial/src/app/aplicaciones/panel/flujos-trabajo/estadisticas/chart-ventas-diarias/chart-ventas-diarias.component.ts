@@ -4,7 +4,6 @@ import { VentasService } from "../../../../../comunes/servicios/ventas.service";
 import { DatePipe } from "@angular/common";
 import { ChartDataset, ChartOptions, ChartType } from "chart.js";
 
-
 type Color = {
   backgroundColor: string;
   borderColor: string;
@@ -101,7 +100,6 @@ export class ChartVentasDiariasComponent implements OnInit {
         },
       ];
       this.lineChartLabels = this.arrayFechas;
-      console.log(this.arrayCantidades);
     });
   }
 }

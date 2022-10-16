@@ -54,12 +54,10 @@ export class CargarPuntosDeVentaComponent implements OnInit {
       this.puntosVentaForm.controls.id_punto_venta.setValue(
         params.puntos_venta_id
       );
-      console.log("Parametros:" + JSON.stringify(params));
     });
 
     //Lleno el combo de tipo
     this.SrvTabgral.selectByNroTab(5).subscribe((respuesta) => {
-      console.log({ "SrvTabgral.selectByNroTab(5)": respuesta });
       let cast: any = respuesta;
       for (var i = 0; i < cast.length; i++) {
         let rel: Tabgral = { codigo: "0", descrip: "" };
@@ -71,7 +69,6 @@ export class CargarPuntosDeVentaComponent implements OnInit {
 
     //Llenado combo Sucursal
     this.SrvTabgral.selectByNroTab(6).subscribe((respuesta) => {
-      console.log({ "SrvTabgral.selectByNroTab(6)": respuesta });
       let cast: any = respuesta;
       for (var i = 0; i < cast.length; i++) {
         let rel: Tabgral = { codigo: "0", descrip: "" };
@@ -129,21 +126,16 @@ export class CargarPuntosDeVentaComponent implements OnInit {
 
     if (id_punto_venta == null || id_punto_venta == undefined) {
       if (this.puntosVentaForm.valid) {
-        console.log(JSON.stringify(this.puntosVentaForm.value));
         this.SrvPuntosVenta.insertPuntoVentaReturnId(
           this.puntosVentaForm.value
         ).subscribe((respuesta) => {
-          console.log({ "SrvPuntosVenta.insertPuntoVentaReturnId": respuesta });
           let cast: any = respuesta;
 
           for (let caract of this.caracteristicas) {
             this.SrvPuntosVenta.insertCaracteristicasPuntoVenta(
               caract,
               cast.id
-            ).subscribe((resp) => {
-              console.log({
-                "SrvPuntosVenta.insertCaracteristicasPuntoVenta": resp,
-              });
+            ).subscribe(() => {
               this.snackBar.mostrarMensaje(
                 "Caracteristicas cargadas exitosamente"
               );
@@ -161,34 +153,21 @@ export class CargarPuntosDeVentaComponent implements OnInit {
         });
       } else {
         this.puntosVentaForm.getError;
-        console.log(this.puntosVentaForm);
       }
     } else {
       //Modificar Punto de Venta
       if (this.puntosVentaForm.valid) {
-        console.log(JSON.stringify(this.puntosVentaForm.value));
         this.SrvPuntosVenta.actualizarDatosPuntoVenta(
           this.puntosVentaForm.value
-        ).subscribe((respuesta) => {
-          console.log({
-            "SrvPuntosVenta.actualizarDatosPuntoVenta": respuesta,
-          });
-
+        ).subscribe(() => {
           this.SrvPuntosVenta.eliminarCaracteristicasPuntoVenta(
             id_punto_venta
-          ).subscribe((respuesta) => {
-            console.log({
-              "SrvPuntosVenta.eliminarCaracteristicasPuntoVenta": respuesta,
-            });
-
+          ).subscribe(() => {
             for (let caract of this.caracteristicas) {
               this.SrvPuntosVenta.insertCaracteristicasPuntoVenta(
                 caract,
                 id_punto_venta
-              ).subscribe((resp) => {
-                console.log({
-                  "SrvPuntosVenta.insertCaracteristicasPuntoVenta": resp,
-                });
+              ).subscribe(() => {
                 this.snackBar.mostrarMensaje(
                   "Caracteristicas cargadas exitosamente"
                 );
@@ -204,7 +183,6 @@ export class CargarPuntosDeVentaComponent implements OnInit {
         });
       } else {
         this.puntosVentaForm.getError;
-        console.log(this.puntosVentaForm);
       }
     }
   }
@@ -215,8 +193,6 @@ export class CargarPuntosDeVentaComponent implements OnInit {
       this.SrvPuntosVenta.getDatosPuntosVenta(id_punto_venta).subscribe(
         (resp) => {
           let respuesta: any = resp;
-          console.log({ "SrvPuntosVenta.getDatosPuntosVenta": respuesta });
-
           this.puntosVentaForm.patchValue({
             sucursal: respuesta[0].sucursal,
             numero: respuesta[0].numero,
@@ -232,10 +208,6 @@ export class CargarPuntosDeVentaComponent implements OnInit {
         id_punto_venta
       ).subscribe((resp) => {
         let respuesta: any = resp;
-        console.log({
-          "SrvPuntosVenta.getCaracteristicasPuntosVenta": respuesta,
-        });
-
         for (let resp of respuesta)
           this.caracteristicas.push({
             tipo: resp.tipo_comprobante,
@@ -251,9 +223,7 @@ export class CargarPuntosDeVentaComponent implements OnInit {
     this.router.navigate(["puntos-venta/busqueda-puntos-venta"]);
   }
 
-  obtenerNroComprobanteWS(punto_venta_id, tipo_comprobante) {
-    console.log(punto_venta_id + " " + tipo_comprobante);
-  }
+  obtenerNroComprobanteWS(punto_venta_id, tipo_comprobante) {}
 }
 
 interface Caracteristica {

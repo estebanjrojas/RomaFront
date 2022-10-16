@@ -84,14 +84,13 @@ export class BusquedaEmpleadosComponent implements OnInit {
       txtBuscar
     ).subscribe(
       (respuesta) => {
-        console.log({ "SrvEmpleados.getCantidadPaginasEmpleados": respuesta });
         let cast: any = respuesta.regCantidadPaginas.cantidad_paginas;
         this.cantidad_paginas = cast;
         this.pagina_actual = 1;
         this.setCantidadPaginas();
       },
       (error) => {
-        console.log("ERROR: " + JSON.stringify(error));
+        console.error("ERROR: " + JSON.stringify(error));
       }
     );
   }
@@ -137,11 +136,10 @@ export class BusquedaEmpleadosComponent implements OnInit {
       txtBuscar
     ).subscribe(
       (respuesta) => {
-        console.log({ "SrvEmpleados.getEmpleados": respuesta });
         this.cast = respuesta;
       },
       (error) => {
-        console.log(JSON.stringify(error));
+        console.error(JSON.stringify(error));
       }
     );
   }
@@ -175,11 +173,7 @@ export class BusquedaEmpleadosComponent implements OnInit {
     this.valor_boton_3 = paginarEnNumero + 1;
   }
 
-  actualizarEmpleado(empleados_id) {
-    console.log("Actualizar: " + empleados_id);
-  }
+  actualizarEmpleado(empleados_id) {}
 
-  eliminarEmpleado(empleados_id) {
-    console.log(" Baja de Empleado: " + empleados_id);
-  }
+  eliminarEmpleado(empleados_id) {}
 }

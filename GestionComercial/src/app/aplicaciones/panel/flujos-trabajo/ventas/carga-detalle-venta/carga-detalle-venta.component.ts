@@ -47,14 +47,12 @@ export class CargaDetalleVentaComponent implements OnInit {
 
   ngOnInit() {
     this.listaDetalleVentas = this.SrvVentas.getDetalleVentaActual();
-    console.log({ "LISTA VENTAS": this.listaDetalleVentas });
     this.cargaDetalleVentaForm.controls.cbTipoBusquedaProducto.setValue(
       "nombre"
     );
     this.cargaDetalleVentaForm.controls.txtCantidad.setValue("1");
 
     this.SrvCategorias.obtenerJSONTodasCategorias().subscribe((resp) => {
-      console.log({ "SrvCategorias.obtenerJSONTodasCategorias": resp });
       let cast: any = resp;
       this.SrvCategorias.setCategorias(JSON.parse(cast.categorias));
     });
@@ -62,7 +60,6 @@ export class CargaDetalleVentaComponent implements OnInit {
     const categoriasObservable = this.SrvCategorias.getCategorias();
     categoriasObservable.subscribe(
       (categoriasData: Categorias[]) => {
-        console.log(categoriasData);
         this.dataSource.data = categoriasData;
       },
       (err) => {
@@ -83,16 +80,12 @@ export class CargaDetalleVentaComponent implements OnInit {
       campoBuscar,
       textoBuscar
     ).subscribe((resp) => {
-      console.log({
-        "SrvProductos.getProductosPorCategoriaCampoBusqueda": resp,
-      });
       const cast: any = resp;
       this.productos = cast;
     });
   }
 
   seleccionarProducto(index, producto) {
-    console.log({ index: index, producto: producto });
     const cantidad = this.cargaDetalleVentaForm.get("txtCantidad").value;
     const subtotal = producto.precio * cantidad;
 
@@ -113,8 +106,6 @@ export class CargaDetalleVentaComponent implements OnInit {
 
     this.SrvVentas.agregarDetalleVentaActual(detalleVentaAgregar);
     this.listaDetalleVentas = this.SrvVentas.getDetalleVentaActual();
-    console.log(this.listaDetalleVentas);
-
     this.seModificoDetalle.emit(this.listaDetalleVentas);
   }
 
@@ -123,7 +114,6 @@ export class CargaDetalleVentaComponent implements OnInit {
   }
 
   seleccionarCategoria(categoria) {
-    console.log(categoria);
     this.categoriaSeleccionada = categoria;
   }
 }

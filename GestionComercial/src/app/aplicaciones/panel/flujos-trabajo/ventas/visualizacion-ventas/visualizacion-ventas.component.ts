@@ -48,7 +48,6 @@ export class VisualizacionVentasComponent implements OnInit {
     this.SrvVentas.getVentaPorId(this.ventas_id).subscribe(
       (resp) => {
         let cast: any = resp;
-        console.log(cast);
         this.venta.ventas_id = this.ventas_id;
         this.venta.fecha = cast[0].fecha;
         this.venta.monto_total = cast[0].monto;
@@ -73,7 +72,7 @@ export class VisualizacionVentasComponent implements OnInit {
         this.factura.vencimiento_cai = cast[0].fecha_vencimiento_cai;
       },
       (err) => {
-        console.log("Error al obtener los datos de la venta: " + err.message);
+        console.error("Error al obtener los datos de la venta: " + err.message);
       },
       () => {
         this.SrvVentas.getDetalleVentaPorVentasId(this.ventas_id).subscribe(

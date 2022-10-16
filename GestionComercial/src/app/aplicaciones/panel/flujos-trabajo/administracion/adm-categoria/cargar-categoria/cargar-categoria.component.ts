@@ -86,8 +86,6 @@ export class CargarCategoriaComponent implements OnInit {
   }
 
   guardar() {
-    console.log(this.categoriasForm.controls);
-
     const id_categoria = this.categoriasForm.get("id_categorias").value;
     const nombre = this.categoriasForm.get("nombre").value;
     const descripcion = this.categoriasForm.get("descripcion").value;
@@ -104,7 +102,6 @@ export class CargarCategoriaComponent implements OnInit {
 
     if (this.categorias_id == null) {
       this.SrvCategorias.guardarCategoria(categoria).subscribe((resp) => {
-        console.log({ "SrvCategorias.guardarCategoria": resp });
         this.snackBar.mostrarMensaje("Categorias guardada exitosamente");
         this.categoriasForm.reset();
         this.llenarArbolCategorias();
@@ -112,8 +109,7 @@ export class CargarCategoriaComponent implements OnInit {
     } else {
       //UPDATE
       this.SrvCategorias.updateCategoria(categoria).subscribe(
-        (resp) => {
-          console.log({ "SrvCategorias.updateCategoria": resp });
+        () => {
           this.snackBar.mostrarMensaje("Categoria actualizada exitosamente");
         },
         (err) => {

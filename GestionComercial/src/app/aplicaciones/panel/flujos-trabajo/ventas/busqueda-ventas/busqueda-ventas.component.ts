@@ -82,14 +82,13 @@ export class BusquedaVentasComponent implements OnInit {
       txtBuscar
     ).subscribe(
       (respuesta) => {
-        console.log({ "SrvVentas.getCantidadPaginasVentas": respuesta });
         let cast: any = respuesta.regCantidadPaginas.cantidad_paginas;
         this.cantidad_paginas = cast;
         this.pagina_actual = 1;
         this.setCantidadPaginas();
       },
       (error) => {
-        console.log("ERROR: " + JSON.stringify(error));
+        console.error("ERROR: " + JSON.stringify(error));
       }
     );
   }
@@ -135,11 +134,10 @@ export class BusquedaVentasComponent implements OnInit {
       txtBuscar
     ).subscribe(
       (respuesta) => {
-        console.log({ "SrvVentas.getVentas": respuesta });
         this.cast = respuesta;
       },
       (error) => {
-        console.log(JSON.stringify(error));
+        console.error(JSON.stringify(error));
       }
     );
   }
@@ -178,8 +176,7 @@ export class BusquedaVentasComponent implements OnInit {
     let autoriza = confirm("Está seguro que desea anular la venta?");
     if (autoriza) {
       const data = { ventas_id: ventas_id, usuario: usuario_anula };
-      this.SrvVentas.anularVenta(data).subscribe((res) => {
-        console.log(res);
+      this.SrvVentas.anularVenta(data).subscribe(() => {
         this.buscarVentas();
       });
     }

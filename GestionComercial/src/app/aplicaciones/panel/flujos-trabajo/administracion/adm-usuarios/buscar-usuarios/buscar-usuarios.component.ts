@@ -73,14 +73,13 @@ export class BuscarUsuariosComponent implements OnInit {
       txtBuscar
     ).subscribe(
       (respuesta) => {
-        console.log({ "SrvUsuarios.getCantidadPaginasUsuarios": respuesta });
         let cast: any = respuesta.regCantidadPaginas.cantidad_paginas;
         this.cantidad_paginas = cast;
         this.pagina_actual = 1;
         this.setCantidadPaginas();
       },
       (error) => {
-        console.log("ERROR: " + JSON.stringify(error));
+        console.error("ERROR: " + JSON.stringify(error));
       }
     );
   }
@@ -118,11 +117,10 @@ export class BuscarUsuariosComponent implements OnInit {
       txtBuscar
     ).subscribe(
       (respuesta) => {
-        console.log({ "SrvUsuarios.getUsuarios": respuesta });
         this.cast = respuesta;
       },
       (error) => {
-        console.log(JSON.stringify(error));
+        console.error(JSON.stringify(error));
       }
     );
   }

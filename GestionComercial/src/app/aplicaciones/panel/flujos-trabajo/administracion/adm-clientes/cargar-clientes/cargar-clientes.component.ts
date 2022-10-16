@@ -129,13 +129,11 @@ export class CargarClientesComponent implements OnInit {
 
     //Tabgral
     this.SrvTabgral.selectByNroTab(3).subscribe((respuesta) => {
-      //console.log({ 'SrvTabgral.selectByNroTab': respuesta });
       this.oficinas = respuesta;
     });
 
     //Sexo
     this.SrvTabgral.selectByNroTab(4).subscribe((respuesta) => {
-      //console.log({ "SrvTabgral.selectByNroTab(4)": respuesta });
       let cast: any = respuesta;
       for (var i = 0; i < cast.length; i++) {
         let rel: Tabgral = { codigo: "0", descrip: "" };
@@ -194,7 +192,6 @@ export class CargarClientesComponent implements OnInit {
   getDatosCliente(id_clientes) {
     this.SrvClientes.getDatosClientePorId(id_clientes).subscribe(
       (respuesta) => {
-        console.log({ "SrvClientes.getDatosClientePorId": respuesta });
         let cast: any = respuesta;
 
         this.clientesForm.patchValue({
@@ -230,7 +227,6 @@ export class CargarClientesComponent implements OnInit {
     //Llenado de combo provincias
     this.SrvDomicilios.getProvinciasPorPais(1).subscribe(
       (respuesta) => {
-        console.log({ "SrvDomicilios.getProvinciasPorPais": respuesta });
         let cast: any = respuesta;
         for (let i = 0; i < cast.length; i++) {
           this.provincias.push({ id: cast[i].id, nombre: cast[i].nombre });
@@ -253,7 +249,6 @@ export class CargarClientesComponent implements OnInit {
     this.SrvDomicilios.getCiudadesPorProvincia(provincias_id).subscribe(
       (respuesta) => {
         let cast: any = respuesta;
-        console.log({ "SrvDomicilios.getCiudadesPorProvincia": cast });
         for (let i = 0; i < cast.length; i++) {
           this.ciudades.push({
             id: cast[i].id,
@@ -267,27 +262,22 @@ export class CargarClientesComponent implements OnInit {
 
   guardarCliente() {
     let id_cliente = this.clientesForm.controls.clientes_id.value;
-    console.log({ "Form Valido": this.clientesForm.valid });
-    console.log(JSON.stringify(this.clientesForm.getRawValue()));
     if (this.clientesForm.valid) {
       //let ciudad_nombre = this.clientesForm.get('ciudades').value.descrip;
       let ciudad_nombre = (<HTMLInputElement>(
         document.getElementById("ciudades")
       )).value;
       if (id_cliente != null || id_cliente != undefined) {
-        console.log("Modificar...");
         this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(
           (respuesta) => {
-            console.log({ "SrvDomicilios.getCiudadesIdPorNombre": respuesta });
             let cast: any = respuesta;
             this.clientesForm.controls.ciudades_id.setValue(cast.id);
-            console.log(JSON.stringify(this.clientesForm.getRawValue()));
           },
           (err) => {
             this.snackBar.mostrarMensaje(
               "Debe seleccionar una ciudad de la lista desplegable."
             );
-            console.log(err);
+            console.error(err);
           },
           () => {
             this.SrvClientes.guardarClientePersonaDomicilio(
@@ -302,15 +292,13 @@ export class CargarClientesComponent implements OnInit {
           }
         );
       } else {
-        console.log("Insertar...");
         this.SrvDomicilios.getCiudadesIdPorNombre(ciudad_nombre).subscribe(
           (respuesta) => {
-            console.log({ "SrvDomicilios.getCiudadesIdPorNombre": respuesta });
             let cast: any = respuesta;
             this.clientesForm.controls.ciudades_id.setValue(cast.id);
           },
           (err) => {
-            console.log(err);
+            console.error(err);
           },
           () => {
             this.SrvClientes.guardarClientePersonaDomicilio(
@@ -326,7 +314,6 @@ export class CargarClientesComponent implements OnInit {
         );
       }
     } else {
-      console.log({ "Submit Invalido": this.clientesForm.controls });
       this.snackBar.mostrarMensaje("Hay errores en la información ingresada");
     }
   }

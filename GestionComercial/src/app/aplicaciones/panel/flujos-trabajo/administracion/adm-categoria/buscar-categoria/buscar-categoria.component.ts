@@ -72,9 +72,6 @@ export class BuscarCategoriaComponent implements OnInit {
       txtBuscar
     ).subscribe(
       (respuesta) => {
-        console.log({
-          "SrvCategorias.getCantidadPaginasCategorias": respuesta,
-        });
         let cast: any = respuesta.regCantidadPaginas.cantidad_paginas;
         this.cantidad_paginas = cast;
         this.pagina_actual = 1;
@@ -120,7 +117,6 @@ export class BuscarCategoriaComponent implements OnInit {
       txtBuscar
     ).subscribe(
       (respuesta) => {
-        console.log({ "SrvCategorias.getCategorias": respuesta });
         this.cast = respuesta;
       },
       (error) => {

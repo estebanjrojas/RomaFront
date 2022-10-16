@@ -18,7 +18,6 @@ export class DetalleProductoComponent implements OnInit {
     this.SrvProductos.getCaracteristicasProductos(
       this.producto.productos_id
     ).subscribe((resp) => {
-      console.log({ "SrvProductos.getCaracteristicasProductos ": resp });
       let cast: any = resp;
       this.caracteristicas = cast;
     });
@@ -26,7 +25,6 @@ export class DetalleProductoComponent implements OnInit {
     this.SrvProductos.getCategoriasProductos(
       this.producto.productos_id
     ).subscribe((resp) => {
-      console.log({ "SrvProductos.getCategoriasProductos": resp });
       let cast: any = resp;
       this.categorias = cast;
     });
@@ -34,13 +32,10 @@ export class DetalleProductoComponent implements OnInit {
     this.SrvProductos.getImagenesProductos(
       this.producto.productos_id
     ).subscribe((resp) => {
-      console.log({ "SrvProductos.getImagenesProductos": resp });
       let cast: any = resp;
       this.imagenes = cast;
       this.cantidad_imagenes = cast.length;
     });
-
-    console.log(this.imagenes);
   }
 }
 

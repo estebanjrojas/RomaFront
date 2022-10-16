@@ -191,7 +191,6 @@ export class UsuariosService {
       perfiles_id: perfiles.id,
       usuarios_id: id_usuario,
     });
-    console.log("Este es el json que armo en el service:" + json);
     return this.http.post(url, json, httpOptions);
   }
 
@@ -209,7 +208,6 @@ export class UsuariosService {
       usuario: datos.nomb_usr,
       personas_id: usuarios[0].personas_id,
     });
-    console.log("Este es el json que armo en el service:" + json);
     return this.http.post(url, json, httpOptions);
   }
 
@@ -223,7 +221,6 @@ export class UsuariosService {
       }),
     };
     let json = JSON.stringify({ usuario: usuario, password: password });
-    console.log("Este es el json que armo en el service:" + json);
     return this.http.put(
       environment.apiEndpoint + "/cambiarPassword",
       json,
