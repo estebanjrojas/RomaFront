@@ -1,0 +1,27 @@
+<div class="container base">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <h3 class="titulo">{{ titulo }}</h3>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-12">
+          <ng-content></ng-content>
+        </div>
+      </div>
+      <ng-container *ngIf="botonPrincipal">
+        <div *ngIf="botonPrincipal.mostrar === true" class="row">
+          <div
+            class="col-12 text-center"
+            (click)="ejecutarAccionBotonPrincipal()"
+          >
+            <button class="btn btn-primary">{{ botonPrincipal.texto }}</button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

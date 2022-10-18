@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { EmpleadosService } from "../../../../../../comunes/servicios/empleados.service";
+import { BotonDinamico } from "src/app/core/ui/comunes/interfaces/BotonDinamico";
 import {
   FormBuilder,
   FormControl,
@@ -25,6 +26,12 @@ export class BusquedaEmpleadosComponent implements OnInit {
   valor_boton_2: number = 2;
   valor_boton_3: number = 3;
 
+  botonPrincipal: BotonDinamico = {
+    mostrar: true,
+    accion: this.irNuevoEmpleado.bind(this),
+    texto: "Nuevo Empleado",
+  };
+
   constructor(
     private SrvEmpleados: EmpleadosService,
     private router: Router,
@@ -39,6 +46,10 @@ export class BusquedaEmpleadosComponent implements OnInit {
       txtBuscar: [""],
       cantidad_borrar: [],
     });
+  }
+
+  irNuevoEmpleado() {
+    this.router.navigate(["panel", "empleados", "cargar-empleados"]);
   }
 
   ngOnInit() {

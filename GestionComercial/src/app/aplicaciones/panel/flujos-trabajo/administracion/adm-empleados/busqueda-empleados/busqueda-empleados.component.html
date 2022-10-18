@@ -1,286 +1,242 @@
-<!----## Inicio Form Principal ##---->
-<form id="empleadosFormId" [formGroup]="formBusquedaEmpleados">
-  <!----## Inicio Container Principal ##---->
-  <div class="container">
-    <!----## Inicio Row Principal ##---->
-    <br />
+<app-plantilla-base-busqueda
+  titulo="Administración de Empleados"
+  [botonPrincipal]="botonPrincipal"
+>
+  <form id="empleadosFormId" [formGroup]="formBusquedaEmpleados">
+    <!--Inicio Busqueda-->
+
     <div class="row">
-      <!----## Inicio Columna 12  ##---->
-      <div class="col-md-12 m-0 p-0">
-        <div class="card" id="cardPrincipal">
-          <div class="card-body">
-            <h3>Administración de Empleados</h3>
-            <hr />
-            <!--Inicio Busqueda-->
-
-            <div class="row">
-              <div class="col-md-12">
-                <div
-                  class="custom-control custom-checkbox custom-control-inline"
-                >
-                  <input
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="buscar_nombre"
-                    name="buscar_nombre"
-                    formControlName="buscar_nombre"
-                    (change)="buscarEmpleados()"
-                    checked
-                  />
-                  <label class="custom-control-label" for="buscar_nombre"
-                    >NOMBRE Y APELLIDO</label
-                  >
-                </div>
-                <div
-                  class="custom-control custom-checkbox custom-control-inline"
-                >
-                  <input
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="buscar_documento"
-                    name="buscar_documento"
-                    formControlName="buscar_documento"
-                    (change)="buscarEmpleados()"
-                    checked
-                  />
-                  <label class="custom-control-label" for="buscar_documento"
-                    >DOCUMENTO</label
-                  >
-                </div>
-                <div
-                  class="custom-control custom-checkbox custom-control-inline"
-                >
-                  <input
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="buscar_fechanac"
-                    name="buscar_fechanac"
-                    formControlName="buscar_fechanac"
-                    (change)="buscarEmpleados()"
-                    checked
-                  />
-                  <label class="custom-control-label" for="buscar_fechanac"
-                    >FECHA NACIMIENTO</label
-                  >
-                </div>
-                <div
-                  class="custom-control custom-checkbox custom-control-inline"
-                >
-                  <input
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="buscar_oficina"
-                    name="buscar_oficina"
-                    formControlName="buscar_oficina"
-                    (change)="buscarEmpleados()"
-                    checked
-                  />
-                  <label class="custom-control-label" for="buscar_oficina"
-                    >OFICINA</label
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="input-group input-group-sm mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-sm"
-                      >Buscar</span
-                    >
-                  </div>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="buscar"
-                    name="buscar"
-                    formControlName="txtBuscar"
-                    (keyup)="buscarEmpleados()"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-sm"
-                    placeholder="Introduzca Texto para Reducir el Listado(tilde o destilde las columnas por las cuales realizará la busqueda)"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <nav aria-label="...">
-                  <ul class="pagination">
-                    <li *ngIf="this.cantidad_paginas > 4" class="page-item">
-                      <a
-                        class="page-link"
-                        id="primeraPagina"
-                        (click)="setPaginaByComponenteId(1)"
-                        aria-label="Previous"
-                      >
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                    </li>
-                    <li *ngIf="this.cantidad_paginas > 3" class="page-item">
-                      <a
-                        class="page-link"
-                        id="paginaAnterior"
-                        (click)="
-                          setPaginaByComponenteId(this.valor_boton_1 - 1)
-                        "
-                      >
-                        Anterior
-                      </a>
-                    </li>
-                    <li
-                      *ngIf="this.cantidad_paginas > 1"
-                      class="page-item"
-                      [ngClass]="{
-                        active: this.pagina_actual == this.valor_boton_1
-                      }"
-                      id="paginaObjLiNumero1"
-                      name="paginaObjLiNumero"
-                    >
-                      <a
-                        class="page-link"
-                        id="paginaNumero1"
-                        name="paginaNumero"
-                        (click)="setPaginaByComponenteId(this.valor_boton_1)"
-                      >
-                        {{ this.valor_boton_1 }}
-                      </a>
-                    </li>
-                    <li
-                      *ngIf="this.cantidad_paginas > 1"
-                      class="page-item"
-                      [ngClass]="{
-                        active: this.pagina_actual == this.valor_boton_2
-                      }"
-                      id="paginaObjLiNumero2"
-                      name="paginaObjLiNumero"
-                    >
-                      <a
-                        class="page-link"
-                        id="paginaNumero2"
-                        name="paginaNumero"
-                        (click)="setPaginaByComponenteId(this.valor_boton_2)"
-                      >
-                        {{ this.valor_boton_2 }}
-                      </a>
-                    </li>
-                    <li
-                      *ngIf="this.cantidad_paginas > 2"
-                      class="page-item"
-                      [ngClass]="{
-                        active: this.pagina_actual == this.valor_boton_3
-                      }"
-                      id="paginaObjLiNumero3"
-                      name="paginaObjLiNumero"
-                    >
-                      <a
-                        class="page-link"
-                        id="paginaNumero3"
-                        name="paginaNumero"
-                        (click)="setPaginaByComponenteId(this.valor_boton_3)"
-                      >
-                        {{ this.valor_boton_3 }}
-                      </a>
-                    </li>
-                    <li *ngIf="this.cantidad_paginas > 3" class="page-item">
-                      <a
-                        class="page-link"
-                        id="paginaSiguiente"
-                        (click)="
-                          setPaginaByComponenteId(this.valor_boton_3 + 1)
-                        "
-                      >
-                        Siguiente
-                      </a>
-                    </li>
-                    <li *ngIf="this.cantidad_paginas > 4" class="page-item">
-                      <a
-                        class="page-link"
-                        id="ultimaPagina"
-                        (click)="setPaginaByComponenteId(this.cantidad_paginas)"
-                        aria-label="Next"
-                      >
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-            <!--Fin Busqueda-->
-            <br />
-
-            <!----## Inicio Row 2 Interior  ##---->
-            <div class="row">
-              <!----## Inicio Col 12  ##---->
-              <div class="col-md-12">
-                <div class="card">
-                  <table class="table table-hover table-sm">
-                    <thead class="thead-dark">
-                      <th style="width: 20%">Nombre</th>
-                      <th style="width: 20%">Apellido</th>
-                      <th style="width: 5%">Documento</th>
-                      <th style="width: 10%">F. Nac.</th>
-                      <th style="width: 5%">Tel&eacute;fono</th>
-                      <th style="width: 10%">Oficina</th>
-                      <th style="width: 20%; text-align: center">Opciones</th>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let em of cast">
-                        <td>{{ em.nombre }}</td>
-                        <td>{{ em.apellido }}</td>
-                        <td>{{ em.nro_doc }}</td>
-                        <td>{{ em.fecha_nac | date: "dd-MM-yyyy" }}</td>
-                        <td>{{ em.telefono }}</td>
-                        <td>{{ em.oficina }}</td>
-                        <td style="text-align: center">
-                          <a
-                            class="btn btn-info btn-sm"
-                            [routerLink]="[
-                              '/panel/empleados/cargar-empleados',
-                              em.empleados_id
-                            ]"
-                            routerLinkActive="active"
-                            >Modificar</a
-                          >&nbsp;
-                          <input
-                            type="button"
-                            class="btn btn-danger btn-sm"
-                            (click)="eliminarEmpleado(em.empleados_id)"
-                            value="Eliminar"
-                          />
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <br />
-                <div class="row">
-                  <div class="col-md-12" align="center">
-                    <a
-                      class="btn btn-primary"
-                      [routerLink]="['/panel/empleados/cargar-empleados']"
-                      routerLinkActive="active"
-                      >Nuevo Empleado</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <!----## Fin Col 12  ##---->
-            </div>
-            <!----## Fin Row 1 Interior  ##---->
-          </div>
+      <div class="col-md-12">
+        <div class="custom-control custom-checkbox custom-control-inline">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="buscar_nombre"
+            name="buscar_nombre"
+            formControlName="buscar_nombre"
+            (change)="buscarEmpleados()"
+            checked
+          />
+          <label class="custom-control-label" for="buscar_nombre"
+            >NOMBRE Y APELLIDO</label
+          >
+        </div>
+        <div class="custom-control custom-checkbox custom-control-inline">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="buscar_documento"
+            name="buscar_documento"
+            formControlName="buscar_documento"
+            (change)="buscarEmpleados()"
+            checked
+          />
+          <label class="custom-control-label" for="buscar_documento"
+            >DOCUMENTO</label
+          >
+        </div>
+        <div class="custom-control custom-checkbox custom-control-inline">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="buscar_fechanac"
+            name="buscar_fechanac"
+            formControlName="buscar_fechanac"
+            (change)="buscarEmpleados()"
+            checked
+          />
+          <label class="custom-control-label" for="buscar_fechanac"
+            >FECHA NACIMIENTO</label
+          >
+        </div>
+        <div class="custom-control custom-checkbox custom-control-inline">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="buscar_oficina"
+            name="buscar_oficina"
+            formControlName="buscar_oficina"
+            (change)="buscarEmpleados()"
+            checked
+          />
+          <label class="custom-control-label" for="buscar_oficina"
+            >OFICINA</label
+          >
         </div>
       </div>
-      <!----## Fin Columna 12  ##---->
     </div>
-    <!----## Fin Row Principal ##---->
-  </div>
-  <br />
-  <!----## Fin Container Principal ##---->
-</form>
-<!----## Fin Form Principal ##---->
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group input-group-sm mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-sm"
+              >Buscar</span
+            >
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            id="buscar"
+            name="buscar"
+            formControlName="txtBuscar"
+            (keyup)="buscarEmpleados()"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-sm"
+            placeholder="Introduzca Texto para Reducir el Listado(tilde o destilde las columnas por las cuales realizará la busqueda)"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <nav aria-label="...">
+          <ul class="pagination">
+            <li *ngIf="this.cantidad_paginas > 4" class="page-item">
+              <a
+                class="page-link"
+                id="primeraPagina"
+                (click)="setPaginaByComponenteId(1)"
+                aria-label="Previous"
+              >
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li *ngIf="this.cantidad_paginas > 3" class="page-item">
+              <a
+                class="page-link"
+                id="paginaAnterior"
+                (click)="setPaginaByComponenteId(this.valor_boton_1 - 1)"
+              >
+                Anterior
+              </a>
+            </li>
+            <li
+              *ngIf="this.cantidad_paginas > 1"
+              class="page-item"
+              [ngClass]="{
+                active: this.pagina_actual == this.valor_boton_1
+              }"
+              id="paginaObjLiNumero1"
+              name="paginaObjLiNumero"
+            >
+              <a
+                class="page-link"
+                id="paginaNumero1"
+                name="paginaNumero"
+                (click)="setPaginaByComponenteId(this.valor_boton_1)"
+              >
+                {{ this.valor_boton_1 }}
+              </a>
+            </li>
+            <li
+              *ngIf="this.cantidad_paginas > 1"
+              class="page-item"
+              [ngClass]="{
+                active: this.pagina_actual == this.valor_boton_2
+              }"
+              id="paginaObjLiNumero2"
+              name="paginaObjLiNumero"
+            >
+              <a
+                class="page-link"
+                id="paginaNumero2"
+                name="paginaNumero"
+                (click)="setPaginaByComponenteId(this.valor_boton_2)"
+              >
+                {{ this.valor_boton_2 }}
+              </a>
+            </li>
+            <li
+              *ngIf="this.cantidad_paginas > 2"
+              class="page-item"
+              [ngClass]="{
+                active: this.pagina_actual == this.valor_boton_3
+              }"
+              id="paginaObjLiNumero3"
+              name="paginaObjLiNumero"
+            >
+              <a
+                class="page-link"
+                id="paginaNumero3"
+                name="paginaNumero"
+                (click)="setPaginaByComponenteId(this.valor_boton_3)"
+              >
+                {{ this.valor_boton_3 }}
+              </a>
+            </li>
+            <li *ngIf="this.cantidad_paginas > 3" class="page-item">
+              <a
+                class="page-link"
+                id="paginaSiguiente"
+                (click)="setPaginaByComponenteId(this.valor_boton_3 + 1)"
+              >
+                Siguiente
+              </a>
+            </li>
+            <li *ngIf="this.cantidad_paginas > 4" class="page-item">
+              <a
+                class="page-link"
+                id="ultimaPagina"
+                (click)="setPaginaByComponenteId(this.cantidad_paginas)"
+                aria-label="Next"
+              >
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <!--Fin Busqueda-->
+    <br />
+
+    <!----## Inicio Row 2 Interior  ##---->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <table class="table table-hover table-sm">
+            <thead class="thead-dark">
+              <th style="width: 20%">Nombre</th>
+              <th style="width: 20%">Apellido</th>
+              <th style="width: 5%">Documento</th>
+              <th style="width: 10%">F. Nac.</th>
+              <th style="width: 5%">Tel&eacute;fono</th>
+              <th style="width: 10%">Oficina</th>
+              <th style="width: 20%; text-align: center">Opciones</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let em of cast">
+                <td>{{ em.nombre }}</td>
+                <td>{{ em.apellido }}</td>
+                <td>{{ em.nro_doc }}</td>
+                <td>{{ em.fecha_nac | date: "dd-MM-yyyy" }}</td>
+                <td>{{ em.telefono }}</td>
+                <td>{{ em.oficina }}</td>
+                <td style="text-align: center">
+                  <a
+                    class="btn btn-info btn-sm"
+                    [routerLink]="[
+                      '/panel/empleados/cargar-empleados',
+                      em.empleados_id
+                    ]"
+                    routerLinkActive="active"
+                    >Modificar</a
+                  >&nbsp;
+                  <input
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    (click)="eliminarEmpleado(em.empleados_id)"
+                    value="Eliminar"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-plantilla-base-busqueda>

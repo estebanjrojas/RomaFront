@@ -1,0 +1,21 @@
+@media screen and (max-width: 800px) {
+  .container {
+    margin: 0 auto;
+    padding: 1px;
+    width: 100%;
+  }
+  .base {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .row {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .col-12 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

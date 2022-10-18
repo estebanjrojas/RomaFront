@@ -9,6 +9,7 @@ import { NavegacionComponent } from "./componentes/navegacion/navegacion.compone
 import { NavegacionSubmenuComponent } from "./componentes/navegacion-submenu/navegacion-submenu.component";
 import { CabeceraComponent } from "./componentes/cabecera/cabecera.component";
 import { RouterModule } from "@angular/router";
+import { PlantillaBaseBusquedaComponent } from "./componentes/plantilla-base-busqueda/plantilla-base-busqueda.component";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { RouterModule } from "@angular/router";
     NavegacionComponent,
     NavegacionSubmenuComponent,
     CabeceraComponent,
+    PlantillaBaseBusquedaComponent,
   ],
   exports: [
     TreeComponent,
@@ -26,6 +28,7 @@ import { RouterModule } from "@angular/router";
     NavegacionComponent,
     NavegacionSubmenuComponent,
     CabeceraComponent,
+    PlantillaBaseBusquedaComponent,
   ],
   imports: [CommonModule, RouterModule, SnackbarModule],
   providers: [SnackBarService],
