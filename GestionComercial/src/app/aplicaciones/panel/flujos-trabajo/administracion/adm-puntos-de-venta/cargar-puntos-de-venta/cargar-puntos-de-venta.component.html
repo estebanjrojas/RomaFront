@@ -1,23 +1,27 @@
 <!----## Inicio Form Principal ##---->
 <form id="empleadosFormId" [formGroup]="puntosVentaForm" (ngSubmit)="guardar()">
-  <input type="hidden" formControlName="nombre_usuario">
-  <input type="hidden" formControlName="id_punto_venta">
+  <input type="hidden" formControlName="nombre_usuario" />
+  <input type="hidden" formControlName="id_punto_venta" />
   <!----## Inicio Container Principal ##---->
   <div class="container">
     <!----## Inicio Row Principal ##---->
     <div class="row">
       <!----## Inicio Columna 12  ##---->
       <div class="col-md-12 m-0 p-0">
-        <br>
+        <br />
         <div class="card">
           <div class="card-body">
             <h3>Puntos de Venta</h3>
-            <hr>
+            <hr />
             <div class="row">
               <div class="col-md-6">
-                <mat-form-field style="width:90%">
+                <mat-form-field style="width: 90%">
                   <mat-select placeholder="Sucursal" formControlName="sucursal">
-                    <mat-option *ngFor="let suc of this.sucursales" [value]="suc.codigo">{{suc.descrip}}</mat-option>
+                    <mat-option
+                      *ngFor="let suc of this.sucursales"
+                      [value]="suc.id"
+                      >{{ suc.nombre }}</mat-option
+                    >
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -27,56 +31,84 @@
             <!----## Inicio Row Numero y Fecha ##---->
             <div class="row">
               <div class="col-md-6">
-                <mat-form-field class="example-full-width" style="width:90%">
-                  <input matInput placeholder="Número" formControlName="numero">
+                <mat-form-field class="example-full-width" style="width: 90%">
+                  <input
+                    matInput
+                    placeholder="Número"
+                    formControlName="numero"
+                  />
                 </mat-form-field>
               </div>
               <div class="col-md-6">
-                <mat-form-field style="width:40%">
-                  <input matInput [matDatepicker]="picker" placeholder="Fecha de Alta" formControlName="fecha_alta">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-form-field style="width: 40%">
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    placeholder="Fecha de Alta"
+                    formControlName="fecha_alta"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
               </div>
             </div>
             <!----## Fin Row Numero y Fecha ##---->
-            <br>
+            <br />
             <!----## Inicio Row 1 Interior  ##---->
             <div class="row">
               <!----## Inicio Col 12  ##---->
               <div class="col-md-12">
                 <!----## Inicio Card ##---->
                 <div class="card" id="cardPrincipal">
-                  <div class="card-header">
-                    Tipos de Facturas
-                  </div>
+                  <div class="card-header">Tipos de Facturas</div>
                   <!----## Inicio Card Body ##---->
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-4">
-                        <mat-form-field style="width:90%">
-                          <mat-select id="nombretablita" placeholder="Tipo" formControlName="tipo">
-                            <mat-option *ngFor="let tipo of this.tipo_factura" [value]="tipo">{{tipo.descrip}}
+                        <mat-form-field style="width: 90%">
+                          <mat-select
+                            id="nombretablita"
+                            placeholder="Tipo"
+                            formControlName="tipo"
+                          >
+                            <mat-option
+                              *ngFor="let tipo of this.tipo_factura"
+                              [value]="tipo"
+                              >{{ tipo.descrip }}
                             </mat-option>
                           </mat-select>
                         </mat-form-field>
                       </div>
                       <div class="col-md-3">
-                        <mat-form-field class="example-full-width" style="width:80%">
-                          <input matInput placeholder="Ultimo Nro. de Fact." formControlName="ultimo_nro_factura">
+                        <mat-form-field
+                          class="example-full-width"
+                          style="width: 80%"
+                        >
+                          <input
+                            matInput
+                            placeholder="Ultimo Nro. de Fact."
+                            formControlName="ultimo_nro_factura"
+                          />
                         </mat-form-field>
-
                       </div>
                       <div class="col-md-3">
-                        <mat-checkbox formControlName="por_defecto">Por Defecto</mat-checkbox>
+                        <mat-checkbox formControlName="por_defecto"
+                          >Por Defecto</mat-checkbox
+                        >
                         &nbsp;
-
                       </div>
                       <div class="col-md-2">
-                        <button mat-stroked-button type="button"
-                          (click)="agregarDatosTablita();validarTrue();">Agregar</button>
+                        <button
+                          mat-stroked-button
+                          type="button"
+                          (click)="agregarDatosTablita(); validarTrue()"
+                        >
+                          Agregar
+                        </button>
                       </div>
-
                     </div>
 
                     <div class="card">
@@ -93,27 +125,64 @@
                             <th style="width: 10%; text-align: right"></th>
                           </thead>
                           <tbody>
-                            <tr *ngFor="let caract of caracteristicas; let indice = index">
-                              <td style='text-align: center'>{{caract.tipo_descrip}}</td>
-                              <td style='text-align: center'>{{caract.ultimo_nro}}</td>
-                              <td style='text-align: center'>{{caract.por_defecto}}</td>
-                              <td style='text-align: right'>
-                                <button type="button" class="btn btn-info btn-sm" (click)="obtenerNroComprobanteWS(caract.puntos_venta_id, caract.tipo_comprobante);">Obtener Nro WS AFIP</button>
+                            <tr
+                              *ngFor="
+                                let caract of caracteristicas;
+                                let indice = index
+                              "
+                            >
+                              <td style="text-align: center">
+                                {{ caract.tipo_descrip }}
+                              </td>
+                              <td style="text-align: center">
+                                {{ caract.ultimo_nro }}
+                              </td>
+                              <td style="text-align: center">
+                                {{ caract.por_defecto }}
                               </td>
                               <td style="text-align: right">
-                                <button class='btn btn-danger btn-sm' type="button"
-                                  (click)='borrarFila(indice);'>X</button>
+                                <button
+                                  type="button"
+                                  class="btn btn-info btn-sm"
+                                  (click)="
+                                    obtenerNroComprobanteWS(
+                                      caract.puntos_venta_id,
+                                      caract.tipo_comprobante
+                                    )
+                                  "
+                                >
+                                  Obtener Nro WS AFIP
+                                </button>
+                              </td>
+                              <td style="text-align: right">
+                                <button
+                                  class="btn btn-danger btn-sm"
+                                  type="button"
+                                  (click)="borrarFila(indice)"
+                                >
+                                  X
+                                </button>
                               </td>
                             </tr>
                           </tbody>
                         </table>
                       </div>
                     </div>
-                    <br>
+                    <br />
                     <div class="row h-100">
                       <div class="col-md-12" align="center">
-                        <input type="button" class="btn btn-outline-primary btn-xs col-md-2" (click)="volver()" value="Volver" /> &nbsp;
-                        <input type="submit" class="btn btn-primary btn-xs col-md-2" value="Guardar" />
+                        <input
+                          type="button"
+                          class="btn btn-outline-primary btn-xs col-md-2"
+                          (click)="volver()"
+                          value="Volver"
+                        />
+                        &nbsp;
+                        <input
+                          type="submit"
+                          class="btn btn-primary btn-xs col-md-2"
+                          value="Guardar"
+                        />
                       </div>
                     </div>
                   </div>
@@ -127,7 +196,7 @@
           <!----## Fin Col 12  ##---->
         </div>
         <!----## Fin Row 1 Interior  ##---->
-        <br>
+        <br />
       </div>
       <!----## Fin Columna 12  ##---->
     </div>

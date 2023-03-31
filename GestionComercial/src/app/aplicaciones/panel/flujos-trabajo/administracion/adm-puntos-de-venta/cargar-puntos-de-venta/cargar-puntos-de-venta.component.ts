@@ -6,6 +6,7 @@ import {
 } from "@angular/forms";
 import { PuntosVentaService } from "src/app/comunes/servicios/puntos-venta.service";
 import { TabgralService } from "src/app/comunes/servicios/tabgral.service";
+import { SucursalesService } from "src/app/comunes/servicios/sucursales.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { SnackBarService } from "src/app/core/ui/comunes/servicios/SnackBarService";
@@ -22,7 +23,7 @@ export class CargarPuntosDeVentaComponent implements OnInit {
   nomb_usr: string;
 
   tipo_factura = new Array<Tabgral>();
-  sucursales = new Array<Tabgral>();
+  sucursales = new Array<{ id: number; nombre: string }>();
 
   caracteristicas = new Array<Caracteristica>();
 
@@ -32,7 +33,8 @@ export class CargarPuntosDeVentaComponent implements OnInit {
     private router: Router,
     private snackBar: SnackBarService,
     private SrvTabgral: TabgralService,
-    private SrvPuntosVenta: PuntosVentaService
+    private SrvPuntosVenta: PuntosVentaService,
+    private SrvSucursales: SucursalesService
   ) {
     this.puntosVentaForm = this.formBuilder.group({
       sucursal: ["", Validators.compose([Validators.required])],
@@ -68,13 +70,10 @@ export class CargarPuntosDeVentaComponent implements OnInit {
     });
 
     //Llenado combo Sucursal
-    this.SrvTabgral.selectByNroTab(6).subscribe((respuesta) => {
+    this.SrvSucursales.selectAbiertas().subscribe((respuesta) => {
       let cast: any = respuesta;
       for (var i = 0; i < cast.length; i++) {
-        let rel: Tabgral = { codigo: "0", descrip: "" };
-        rel.codigo = cast[i].codigo;
-        rel.descrip = cast[i].descrip;
-        this.sucursales.push(rel);
+        this.sucursales.push({ id: cast[i].id, nombre: cast[i].nombre });
       }
     });
 

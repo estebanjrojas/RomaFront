@@ -267,6 +267,19 @@ export class ProductosService {
       httpOptions
     );
   }
+
+  getTiposProductos(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: this.Auth.getTokenUsuarioSesion(),
+      }),
+    };
+    return this.http.get(
+      environment.apiEndpoint + "/productos/tipos/",
+      httpOptions
+    );
+  }
   //---------------------------POST---------------------------//
 
   insertProductoReturnId(datos: any) {

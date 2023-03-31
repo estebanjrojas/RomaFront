@@ -8,8 +8,6 @@ import { ProductosService } from "../../../../../../comunes/servicios/productos.
 import { Router, ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { SnackBarService } from "src/app/core/ui/comunes/servicios/SnackBarService";
-import { TabgralService } from "../../../../../../comunes/servicios/tabgral.service";
-
 import { CategoriasService } from "../../../../../../comunes/servicios/categorias.service";
 import { Categorias } from "../../../../../../comunes/interfaces/Categorias";
 
@@ -33,7 +31,7 @@ export class CargarProductosComponent implements OnInit {
   //Instancias
   productosForm: FormGroup;
 
-  tipo_producto = new Array<Tabgral>();
+  tipo_producto = new Array<{ id: number; descripcion: string }>();
   urls = new Array<string>();
 
   //Arbol de Categorias
@@ -45,7 +43,6 @@ export class CargarProductosComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: SnackBarService,
-    private SrvTabgral: TabgralService,
     private SrvProductos: ProductosService,
     private SrvCategorias: CategoriasService
   ) {
@@ -91,13 +88,13 @@ export class CargarProductosComponent implements OnInit {
     );
 
     //Lleno el combo de tipo producto
-    this.SrvTabgral.selectByNroTab(7).subscribe((respuesta) => {
+    this.SrvProductos.getTiposProductos().subscribe((respuesta) => {
       let cast: any = respuesta;
       for (var i = 0; i < cast.length; i++) {
-        let rel: Tabgral = { codigo: "0", descrip: "" };
-        rel.codigo = cast[i].codigo;
-        rel.descrip = cast[i].descrip;
-        this.tipo_producto.push(rel);
+        this.tipo_producto.push({
+          id: cast[i].id,
+          descripcion: cast[i].descripcion,
+        });
       }
     });
   }

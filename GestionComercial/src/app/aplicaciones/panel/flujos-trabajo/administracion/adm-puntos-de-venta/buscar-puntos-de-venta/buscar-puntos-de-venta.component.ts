@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { PuntosVentaService } from "src/app/comunes/servicios/puntos-venta.service";
-import { TabgralService } from "src/app/comunes/servicios/tabgral.service";
+import { SucursalesService } from "src/app/comunes/servicios/sucursales.service";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -11,12 +11,12 @@ import { Component, OnInit } from "@angular/core";
 export class BuscarPuntosDeVentaComponent implements OnInit {
   buscarPuntosVentaForm: FormGroup;
   cast: any;
-  sucursales = new Array<Tabgral>();
+  sucursales = new Array<{ id: number; nombre: string }>();
 
   constructor(
     private SrvPuntosVenta: PuntosVentaService,
-    private SrvTabgral: TabgralService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private SrvSucursales: SucursalesService
   ) {
     this.buscarPuntosVentaForm = this.formBuilder.group({
       nombre_usuario: ["", Validators.compose([])],
@@ -28,13 +28,10 @@ export class BuscarPuntosDeVentaComponent implements OnInit {
     this.buscarPuntosVenta();
 
     //Llenado combo Sucursal
-    this.SrvTabgral.selectByNroTab(6).subscribe((respuesta) => {
+    this.SrvSucursales.selectAbiertas().subscribe((respuesta) => {
       let cast: any = respuesta;
       for (var i = 0; i < cast.length; i++) {
-        let rel: Tabgral = { codigo: "0", descrip: "" };
-        rel.codigo = cast[i].codigo;
-        rel.descrip = cast[i].descrip;
-        this.sucursales.push(rel);
+        this.sucursales.push({ id: cast[i].id, nombre: cast[i].nombre });
       }
     });
   }
@@ -53,9 +50,4 @@ export class BuscarPuntosDeVentaComponent implements OnInit {
       );
     }
   }
-}
-
-interface Tabgral {
-  codigo: string;
-  descrip: string;
 }

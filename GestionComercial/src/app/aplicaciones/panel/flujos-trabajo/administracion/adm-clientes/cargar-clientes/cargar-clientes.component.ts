@@ -63,7 +63,6 @@ export interface CiudadesInterface {
 })
 export class CargarClientesComponent implements OnInit {
   provincias: Provincias[] = [];
-  oficinas: any;
   clientesForm: FormGroup;
 
   ciudades: CiudadesInterface[] = [];
@@ -126,11 +125,6 @@ export class CargarClientesComponent implements OnInit {
 
   ngOnInit() {
     this.obtenerProvincias();
-
-    //Tabgral
-    this.SrvTabgral.selectByNroTab(3).subscribe((respuesta) => {
-      this.oficinas = respuesta;
-    });
 
     //Sexo
     this.SrvTabgral.selectByNroTab(4).subscribe((respuesta) => {
