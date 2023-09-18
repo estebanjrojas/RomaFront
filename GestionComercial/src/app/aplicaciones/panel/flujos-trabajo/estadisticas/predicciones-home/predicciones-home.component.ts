@@ -16,6 +16,7 @@ export class PrediccionesHomeComponent implements OnInit {
 
   valX: number[] = [1, 2, 3, 4, 5, 6, 7];
   valY: any[];
+  disabledBtnCalcular: boolean = true;
 
   ngOnInit() {}
 
@@ -45,7 +46,11 @@ export class PrediccionesHomeComponent implements OnInit {
           this.mostrarMensajeError("Hay un error con el CSV o no se cargó... ");
         },
         () => {
-          console.log({ "this.arrayDatosCSV": this.arrayDatosCSV });
+          if (this.arrayDatosCSV.data.length > 0) {
+            this.disabledBtnCalcular = false;
+          } else {
+            this.disabledBtnCalcular = true;
+          }
         }
       );
     } else {
