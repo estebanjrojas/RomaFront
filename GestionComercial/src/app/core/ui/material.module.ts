@@ -11,6 +11,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatIconModule } from "@angular/material/icon";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatNativeDateModule } from "@angular/material/core";
+import { MatCardModule } from "@angular/material/card";
 @NgModule({
   declarations: [],
   imports: [
@@ -25,6 +26,7 @@ import { MatNativeDateModule } from "@angular/material/core";
     MatIconModule,
     MatRadioModule,
     MatNativeDateModule,
+    MatCardModule,
   ],
   exports: [
     MatButtonModule,
@@ -37,6 +39,7 @@ import { MatNativeDateModule } from "@angular/material/core";
     MatIconModule,
     MatRadioModule,
     MatNativeDateModule,
+    MatCardModule,
   ],
   providers: [],
   schemas: [],

@@ -1,25 +1,97 @@
 <!----## Inicio Form Principal ##---->
 <form id="estadisticasForm">
-    <!----## Inicio Container Principal ##---->
-    <div class="container mt-4">
-      <!----## Inicio Row Principal ##---->
-      <div class="row">
-        <!----## Inicio Columna 12  ##---->
-        <div class="col-md-12 m-0 p-0">
-            <div class="card" id="cardPrincipal">
-                <div class="card-body">
-                    <h3><span><fa-icon [icon]="faProjectDiagram"></fa-icon></span> Predicciones</h3>
-                    <hr>
-                </div>
+  <!----## Inicio Container Principal ##---->
+  <div class="container mt-4">
+    <!----## Inicio Row Principal ##---->
+    <div class="row">
+      <!----## Inicio Columna 12  ##---->
+      <div class="col-md-12 m-0 p-0">
+        <div class="card" id="cardPrincipal">
+          <div class="card-body">
+            <h3>
+              <span><fa-icon [icon]="faProjectDiagram"></fa-icon></span>
+              Predicciones
+            </h3>
+            <hr />
+            <div class="row">
+              <div class="col-12">
+                <input
+                  type="file"
+                  (change)="onFileSelected($event)"
+                  accept=".csv"
+                />
+                <button
+                  type="submit"
+                  [disabled]="!selectedFile"
+                  (click)="onFileSubmit()"
+                >
+                  Cargar archivo
+                </button>
+              </div>
             </div>
+            <div class="row">
+              <div class="col-12">
+                <mat-form-field
+                  class="example-full-width"
+                  style="margin-left: 30px; width: 90%"
+                >
+                  <mat-label>Repeticiones</mat-label>
+                  <input matInput type="number" id="repeticiones" value="100" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <!-- <mat-form-field
+                  class="example-full-width"
+                  style="margin-left: 30px; width: 90%"
+                >
+                  <mat-label>Dia a predecir</mat-label>
+                  <input matInput type="number" id="nuevoValX" value="8" />
+                </mat-form-field> -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12" style="text-align: center">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  style="width: 150px"
+                  onclick="learnLinear()"
+                >
+                  Calcular
+                </button>
+              </div>
+            </div>
+            <br /><br />
+            <div class="row">
+              <div class="col-3"></div>
+              <div class="col-6">
+                <mat-card class="example-card">
+                  <mat-card-header>
+                    <mat-card-subtitle>
+                      <h3><p>Resultados:</p></h3>
+                    </mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p>Repetici&oacute;n N°: <span id="valy"></span></p>
+                    <p>Epoch: <span id="epocas"></span></p>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              <div class="col-3"></div>
+            </div>
+          </div>
         </div>
-
-        <!----## Fin Columna 12  ##---->
       </div>
-      <!----## Fin Row Principal ##---->
+
+      <!----## Fin Columna 12  ##---->
     </div>
-    <br>
-    <!----## Fin Container Principal ##---->
-  </form>
-  <!----## Fin Form Principal ##---->
-  
+
+    <div class="row"></div>
+    <!----## Fin Row Principal ##---->
+  </div>
+  <br />
+  <!----## Fin Container Principal ##---->
+</form>
+<!----## Fin Form Principal ##---->
