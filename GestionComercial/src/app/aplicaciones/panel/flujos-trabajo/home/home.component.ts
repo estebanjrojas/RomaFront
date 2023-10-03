@@ -9,6 +9,7 @@ import {
   faUserCog,
 } from "@fortawesome/free-solid-svg-icons";
 import { DatePipe } from "@angular/common";
+//import * as tf from '@tensorflow/tfjs';
 
 @Component({
   selector: "app-home",
@@ -22,6 +23,9 @@ export class HomeComponent implements OnInit {
   faUserCog = faUserCog;
   datos_usuario: any = {};
   novedades_productos: {}[] = [];
+
+  //modelo: tf.LayersModel;
+
   constructor(
     private Auth: AuthService,
     private SrvUsuarios: UsuariosService,
@@ -53,5 +57,19 @@ export class HomeComponent implements OnInit {
         });
       }
     });
+
+    // tf.loadLayersModel("ruta/al/modelo/model.json").then((modelo) => {
+    //   this.modelo = modelo;
+    // });
+  }
+
+  realizarPrediccion(datos: any): void {
+    // Preprocesar los datos de entrada según sea necesario
+    // Realizar la predicción utilizando el modelo cargado
+    //const predicciones = this.modelo.predict(datos);
+    // Procesar los resultados de las predicciones
+    // ...
+    // Hacer lo que necesites con las predicciones
+    // ...
   }
 }
