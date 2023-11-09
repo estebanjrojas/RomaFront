@@ -6,6 +6,7 @@ import {
 } from "@angular/forms";
 import { CategoriasService } from "../../../../../../comunes/servicios/categorias.service";
 import { Component, OnInit } from "@angular/core";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-buscar-categoria",
@@ -25,6 +26,7 @@ export class BuscarCategoriaComponent implements OnInit {
 
   constructor(
     private SrvCategorias: CategoriasService,
+    private snackBar2: MatSnackBar,
     private formBuilder: FormBuilder
   ) {
     this.formBusquedaCategorias = this.formBuilder.group({
@@ -117,6 +119,7 @@ export class BuscarCategoriaComponent implements OnInit {
       txtBuscar
     ).subscribe(
       (respuesta) => {
+        console.log({ respuesta: respuesta });
         this.cast = respuesta;
       },
       (error) => {
@@ -152,5 +155,44 @@ export class BuscarCategoriaComponent implements OnInit {
     this.valor_boton_1 = paginarEnNumero - 1;
     this.valor_boton_2 = paginarEnNumero;
     this.valor_boton_3 = paginarEnNumero + 1;
+  }
+
+  deleteCategoria(id: any) {
+    let opcion = confirm(
+      "Esta acción procederá a eliminar la categoria, desea continuar?"
+    );
+    if (opcion) {
+      this.SrvCategorias.deleteCategoria(id).subscribe(
+        (respuesta) => {
+          console.log({ "SrvCategorias.deleteCategoria": respuesta });
+        },
+        (err) => {
+          console.log({ err: err });
+          this.mostrarMensajeError(
+            "Ha ocurrido un error al intentar eliminar la categoria. " + err
+          );
+        },
+        () => {
+          this.mostrarMensajeInformativo(
+            "La categoria se ha eliminado correctamente... "
+          );
+          this.buscarCategorias();
+        }
+      );
+    }
+  }
+
+  mostrarMensajeError(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["error-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
+  }
+
+  mostrarMensajeInformativo(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["info-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
   }
 }

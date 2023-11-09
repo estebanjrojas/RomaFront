@@ -10,6 +10,7 @@ import { Component, OnInit } from "@angular/core";
 import { SnackBarService } from "src/app/core/ui/comunes/servicios/SnackBarService";
 import { CategoriasService } from "../../../../../../comunes/servicios/categorias.service";
 import { Categorias } from "../../../../../../comunes/interfaces/Categorias";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-cargar-productos",
@@ -36,6 +37,13 @@ export class CargarProductosComponent implements OnInit {
 
   //Arbol de Categorias
   objetosArbolCategorias = [];
+  jsonFinal: {
+    producto_id: any;
+    producto: any;
+    caracteristicas: Caracteristica[];
+    categorias: { id: number; nombre: string }[];
+    imagenes: { imagen: string; predeterminada: boolean }[];
+  };
 
   //Constructor
   constructor(
@@ -43,6 +51,7 @@ export class CargarProductosComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: SnackBarService,
+    private snackBar2: MatSnackBar,
     private SrvProductos: ProductosService,
     private SrvCategorias: CategoriasService
   ) {
@@ -189,7 +198,7 @@ export class CargarProductosComponent implements OnInit {
     }
   }
 
-  borrarFila(value) {
+  borrarFilaCaracteristicas(value) {
     var array = this.caracteristicas;
     array.splice(value, 1);
   }
@@ -232,117 +241,176 @@ export class CargarProductosComponent implements OnInit {
   }
 
   //Guardar Nuevo Producto
-  guardar() {
+  guardarV2() {
     let id_producto = this.productosForm.controls.id_producto.value;
+    this.jsonFinal = {
+      producto_id: id_producto,
+      producto: this.productosForm.value,
+      caracteristicas: this.caracteristicas,
+      categorias: this.categorias_guardar,
+      imagenes: this.imagenes,
+    };
 
-    if (id_producto == null || id_producto == undefined) {
-      this.submitted = true;
-      if (this.productosForm.valid) {
-        this.SrvProductos.insertProductoReturnId(
-          this.productosForm.value
-        ).subscribe((respuesta) => {
-          let cast: any = respuesta;
-
-          for (let caract of this.caracteristicas) {
-            this.SrvProductos.insertCaracteristicasProducto(
-              caract,
-              cast.id
-            ).subscribe(() => {
-              this.snackBar.mostrarMensaje(
-                "Caracteristicas cargadas exitosamente"
+    if (this.productosForm.valid) {
+      if (id_producto == null || id_producto == undefined) {
+        //Insertar Producto
+        this.submitted = true;
+        try {
+          this.SrvProductos.insertProducto(this.jsonFinal).subscribe(
+            (respuesta) => {
+              console.log({ "SrvProductos.insertProducto": respuesta });
+            },
+            (err) => {
+              console.log({ err: err });
+            },
+            () => {
+              this.mostrarMensajeInformativo(
+                "El producto se ha insertado correctamente... "
               );
-            });
-          }
-          for (let cat of this.categorias_guardar) {
-            this.SrvProductos.insertCategoriasProducto(cat, cast.id).subscribe(
-              () => {
-                this.snackBar.mostrarMensaje(
-                  "Categorias cargadas exitosamente"
-                );
-              }
-            );
-          }
-
-          for (let imagen of this.imagenes) {
-            this.SrvProductos.cargarImagenProducto(imagen, cast.id).subscribe(
-              () => {
-                this.snackBar.mostrarMensaje("Imagenes cargadas exitosamente");
-              }
-            );
-          }
-          this.snackBar.mostrarMensaje(
-            "El Producto se ha CARGADO Exitosamente"
+            }
           );
-          this.productosForm.reset();
-          while (this.caracteristicas.length > 0) {
-            this.caracteristicas.pop();
-          }
-        });
+        } catch (error) {
+          this.mostrarMensajeError(
+            "Ocurrió un error al intentar guardar el producto... " + error
+          );
+        }
       } else {
-        this.productosForm.getError;
+        //Modificar Producto
+        this.SrvProductos.updateProducto(this.jsonFinal).subscribe(
+          (respuesta) => {
+            console.log({ "SrvProductos.updateProducto": respuesta });
+          },
+          (err) => {
+            console.log({ err: err });
+          },
+          () => {
+            this.mostrarMensajeInformativo(
+              "El producto se actualizó exitosamente"
+            );
+          }
+        );
       }
     } else {
-      //Modificar Producto
-      if (this.productosForm.valid) {
-        this.SrvProductos.actualizarDatosProductos(
-          this.productosForm.value
-        ).subscribe(() => {
-          this.SrvProductos.eliminarCaracteristicasProductos(
-            id_producto
-          ).subscribe(() => {
-            for (let caract of this.caracteristicas) {
-              this.SrvProductos.insertCaracteristicasProducto(
-                caract,
-                id_producto
-              ).subscribe(() => {
-                this.snackBar.mostrarMensaje(
-                  "Caracteristicas actualizadas exitosamente"
-                );
-              });
-            }
-
-            for (let cat of this.categorias_guardar) {
-              this.SrvProductos.insertCategoriasProducto(
-                cat,
-                id_producto
-              ).subscribe((resp) => {
-                this.snackBar.mostrarMensaje(
-                  "Categorias actualizadas exitosamente"
-                );
-              });
-            }
-
-            this.SrvProductos.eliminarImagenesProductos(id_producto).subscribe(
-              (resp) => {
-                for (let imagen of this.imagenes) {
-                  this.SrvProductos.cargarImagenProducto(
-                    imagen,
-                    id_producto
-                  ).subscribe((resp) => {
-                    this.snackBar.mostrarMensaje(
-                      "Imagenes cargadas exitosamente"
-                    );
-                  });
-                }
-
-                this.snackBar.mostrarMensaje(
-                  "La imagen se ha ACTUALIZADO Exitosamente"
-                );
-              }
-            );
-
-            this.snackBar.mostrarMensaje(
-              "El producto se ha ACTUALIZADO Exitosamente"
-            );
-            this.productosForm.reset();
-            this.router.navigate(["productos/busqueda-productos"]);
-          });
-        });
-      } else {
-        this.productosForm.getError;
-      }
+      this.productosForm.getError;
+      this.mostrarMensajeError("Existen campos obligatorios sin completar... ");
     }
   }
+
+  //Guardar Nuevo Producto
+  // guardar() {
+  //   let id_producto = this.productosForm.controls.id_producto.value;
+
+  //   if (id_producto == null || id_producto == undefined) {
+  //     this.submitted = true;
+  //     if (this.productosForm.valid) {
+  //       this.SrvProductos.insertProductoReturnId(
+  //         this.productosForm.value
+  //       ).subscribe((respuesta) => {
+  //         let cast: any = respuesta;
+
+  //         for (let caract of this.caracteristicas) {
+  //           this.SrvProductos.insertCaracteristicasProducto(
+  //             caract,
+  //             cast.id
+  //           ).subscribe((resp) => {
+  //             console.log({
+  //               "SrvProductos.insertCaracteristicasProducto": resp,
+  //             });
+  //             this.snackBar.mostrarMensaje(
+  //               "Caracteristicas cargadas exitosamente"
+  //             );
+  //           });
+  //         }
+  //         for (let cat of this.categorias_guardar) {
+  //           this.SrvProductos.insertCategoriasProducto(cat, cast.id).subscribe(
+  //             () => {
+  //               this.snackBar.mostrarMensaje(
+  //                 "Categorias cargadas exitosamente"
+  //               );
+  //             }
+  //           );
+  //         }
+
+  //         for (let imagen of this.imagenes) {
+  //           this.SrvProductos.cargarImagenProducto(imagen, cast.id).subscribe(
+  //             () => {
+  //               this.snackBar.mostrarMensaje("Imagenes cargadas exitosamente");
+  //             }
+  //           );
+  //         }
+  //         this.snackBar.mostrarMensaje(
+  //           "El Producto se ha CARGADO Exitosamente"
+  //         );
+  //         this.productosForm.reset();
+  //         while (this.caracteristicas.length > 0) {
+  //           this.caracteristicas.pop();
+  //         }
+  //       });
+  //     } else {
+  //       this.productosForm.getError;
+  //     }
+  //   } else {
+  //     //Modificar Producto
+  //     if (this.productosForm.valid) {
+  //       this.SrvProductos.actualizarDatosProductos(
+  //         this.productosForm.value
+  //       ).subscribe(() => {
+  //         this.SrvProductos.eliminarCaracteristicasProductos(
+  //           id_producto
+  //         ).subscribe(() => {
+  //           for (let caract of this.caracteristicas) {
+  //             this.SrvProductos.insertCaracteristicasProducto(
+  //               caract,
+  //               id_producto
+  //             ).subscribe(() => {
+  //               this.snackBar.mostrarMensaje(
+  //                 "Caracteristicas actualizadas exitosamente"
+  //               );
+  //             });
+  //           }
+
+  //           for (let cat of this.categorias_guardar) {
+  //             this.SrvProductos.insertCategoriasProducto(
+  //               cat,
+  //               id_producto
+  //             ).subscribe((resp) => {
+  //               this.snackBar.mostrarMensaje(
+  //                 "Categorias actualizadas exitosamente"
+  //               );
+  //             });
+  //           }
+
+  //           this.SrvProductos.eliminarImagenesProductos(id_producto).subscribe(
+  //             (resp) => {
+  //               for (let imagen of this.imagenes) {
+  //                 this.SrvProductos.cargarImagenProducto(
+  //                   imagen,
+  //                   id_producto
+  //                 ).subscribe((resp) => {
+  //                   this.snackBar.mostrarMensaje(
+  //                     "Imagenes cargadas exitosamente"
+  //                   );
+  //                 });
+  //               }
+
+  //               this.snackBar.mostrarMensaje(
+  //                 "La imagen se ha ACTUALIZADO Exitosamente"
+  //               );
+  //             }
+  //           );
+
+  //           this.snackBar.mostrarMensaje(
+  //             "El producto se ha ACTUALIZADO Exitosamente"
+  //           );
+  //           this.productosForm.reset();
+  //           this.router.navigate(["productos/busqueda-productos"]);
+  //         });
+  //       });
+  //     } else {
+  //       this.productosForm.getError;
+  //     }
+  //   }
+  // }
 
   agregarCategoria(id: number, nombre: string) {
     const objetoAgregar = { id: id, nombre: nombre };
@@ -350,6 +418,25 @@ export class CargarProductosComponent implements OnInit {
       (objeto) => objeto.id !== objetoAgregar.id
     );
     this.categorias_guardar.push({ id: id, nombre: nombre });
+  }
+
+  borrarFilaCategoria(value) {
+    var array = this.categorias_guardar;
+    array.splice(value, 1);
+  }
+
+  mostrarMensajeError(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["error-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
+  }
+
+  mostrarMensajeInformativo(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["info-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
   }
 }
 

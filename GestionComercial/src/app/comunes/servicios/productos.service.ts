@@ -355,6 +355,20 @@ export class ProductosService {
     return this.http.post(url, json, httpOptions);
   }
 
+  insertProducto(datos: any) {
+    console.log({ datos: datos });
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: this.Auth.getTokenUsuarioSesion(),
+      }),
+    };
+    const url = environment.apiEndpoint + `/insertProducto`;
+    let json = JSON.stringify(datos);
+    console.log({ json: json });
+    return this.http.post(url, json, httpOptions);
+  }
+
   //---------------------------PUT---------------------------//
 
   actualizarDatosProductos(datos: any): Observable<any> {
@@ -382,6 +396,21 @@ export class ProductosService {
     let json = JSON.stringify({ productos_id: productos_id });
     return this.http.put(
       environment.apiEndpoint + "/actualizarFechaHastaPrecio",
+      json,
+      httpOptions
+    );
+  }
+
+  updateProducto(datos: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: this.Auth.getTokenUsuarioSesion(),
+      }),
+    };
+    let json = JSON.stringify(datos);
+    return this.http.put(
+      environment.apiEndpoint + "/updateProducto",
       json,
       httpOptions
     );
@@ -424,6 +453,17 @@ export class ProductosService {
     };
     const url =
       environment.apiEndpoint + `/eliminarProductoById/` + productos_id;
+    return this.http.delete(url, httpOptions);
+  }
+
+  deleteProducto(productos_id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: this.Auth.getTokenUsuarioSesion(),
+      }),
+    };
+    const url = environment.apiEndpoint + `/deleteProducto/` + productos_id;
     return this.http.delete(url, httpOptions);
   }
 }

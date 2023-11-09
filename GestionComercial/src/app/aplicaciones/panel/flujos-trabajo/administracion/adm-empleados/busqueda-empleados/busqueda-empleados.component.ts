@@ -8,6 +8,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-busqueda-empleados",
@@ -35,6 +36,7 @@ export class BusquedaEmpleadosComponent implements OnInit {
   constructor(
     private SrvEmpleados: EmpleadosService,
     private router: Router,
+    private snackBar2: MatSnackBar,
     private formBuilder: FormBuilder
   ) {
     this.formBusquedaEmpleados = this.formBuilder.group({
@@ -186,5 +188,47 @@ export class BusquedaEmpleadosComponent implements OnInit {
 
   actualizarEmpleado(empleados_id) {}
 
-  eliminarEmpleado(empleados_id) {}
+  eliminarEmpleado(empleados_id) {
+    let opcion = confirm(
+      "Esta acción procederá a eliminar el producto, desea continuar?"
+    );
+    if (opcion) {
+      this.deleteEmpleado(empleados_id);
+      //this.verificarProductoPoseeCaracteristicas(productos_id);
+    }
+  }
+
+  deleteEmpleado(empleados_id: any) {
+    this.SrvEmpleados.deleteEmpleado(empleados_id).subscribe(
+      (respuesta) => {
+        console.log({ "SrvEmpleados.deleteEmpleado": respuesta });
+      },
+      (err) => {
+        console.log({ err: err });
+        this.mostrarMensajeError(
+          "Ha ocurrido un error al intentar eliminar el producto. " + err
+        );
+      },
+      () => {
+        this.mostrarMensajeInformativo(
+          "El producto se ha eliminado correctamente... "
+        );
+        this.buscarEmpleados();
+      }
+    );
+  }
+
+  mostrarMensajeError(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["error-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
+  }
+
+  mostrarMensajeInformativo(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["info-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
+  }
 }

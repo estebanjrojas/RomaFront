@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { Categorias } from "../interfaces/Categorias";
 import { Observable } from "rxjs";
+import { AuthService } from "./auth.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,7 +18,7 @@ const httpOptions = {
 export class CategoriasService {
   categorias: Categorias[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private Auth: AuthService) {}
 
   setCategorias(json) {
     this.categorias = json;
@@ -165,4 +166,14 @@ export class CategoriasService {
   }
 
   //DELETE's
+  deleteCategoria(categoria_id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: this.Auth.getTokenUsuarioSesion(),
+      }),
+    };
+    const url = environment.apiEndpoint + `/categorias/delete/` + categoria_id;
+    return this.http.delete(url, httpOptions);
+  }
 }

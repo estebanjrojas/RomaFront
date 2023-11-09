@@ -6,6 +6,7 @@ import {
 } from "@angular/forms";
 import { ProductosService } from "../../../../../../comunes/servicios/productos.service";
 import { Component, OnInit } from "@angular/core";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-buscar-productos",
@@ -34,7 +35,7 @@ export class BuscarProductosComponent implements OnInit {
 
   constructor(
     private SrvProductos: ProductosService,
-
+    private snackBar2: MatSnackBar,
     private formBuilder: FormBuilder
   ) {}
   ngOnInit() {
@@ -164,8 +165,29 @@ export class BuscarProductosComponent implements OnInit {
       "Esta acción procederá a eliminar el producto, desea continuar?"
     );
     if (opcion) {
-      this.verificarProductoPoseeCaracteristicas(productos_id);
+      this.deleteProducto(productos_id);
+      //this.verificarProductoPoseeCaracteristicas(productos_id);
     }
+  }
+
+  deleteProducto(productos_id: any) {
+    this.SrvProductos.deleteProducto(productos_id).subscribe(
+      (respuesta) => {
+        console.log({ "SrvProductos.deleteProducto": respuesta });
+      },
+      (err) => {
+        console.log({ err: err });
+        this.mostrarMensajeError(
+          "Ha ocurrido un error al intentar eliminar el producto. " + err
+        );
+      },
+      () => {
+        this.mostrarMensajeInformativo(
+          "El producto se ha eliminado correctamente... "
+        );
+        this.buscarProductos();
+      }
+    );
   }
 
   verificarProductoPoseeCaracteristicas(productos_id: any): any {
@@ -287,6 +309,20 @@ export class BuscarProductosComponent implements OnInit {
       this.imagenes = cast;
       this.cantidad_imagenes = cast.length;
     });
+  }
+
+  mostrarMensajeError(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["error-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
+  }
+
+  mostrarMensajeInformativo(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["info-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
   }
 }
 

@@ -1,5 +1,5 @@
 <!----## Inicio Form Principal ##---->
-<form id="empleadosFormId" [formGroup]="productosForm" (ngSubmit)="guardar()">
+<form id="empleadosFormId" [formGroup]="productosForm" (ngSubmit)="guardarV2()">
   <input type="hidden" formControlName="nombre_usuario" />
   <input type="hidden" formControlName="id_producto" />
   <!----## Inicio Container Principal ##---->
@@ -320,7 +320,9 @@
                                     <button
                                       class="btn btn-danger btn-sm"
                                       type="button"
-                                      (click)="borrarFila(indice)"
+                                      (click)="
+                                        borrarFilaCaracteristicas(indice)
+                                      "
                                     >
                                       X
                                     </button>
@@ -370,7 +372,7 @@
                             <button
                               class="btn btn-danger btn-sm"
                               type="button"
-                              (click)="borrarFila(indice)"
+                              (click)="borrarFilaCategoria(indice)"
                             >
                               X
                             </button>

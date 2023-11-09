@@ -7,7 +7,7 @@ import {
 import { TabgralService } from "../../../../../../comunes/servicios/tabgral.service";
 import { EmpleadosService } from "../../../../../../comunes/servicios/empleados.service";
 import { DomiciliosService } from "../../../../../../comunes/servicios/domicilios.service";
-import { Ciudades } from "src/app/comunes/interfaces/Ciudades";
+//import { Ciudades } from "src/app/comunes/interfaces/Ciudades";
 import { Component, OnInit } from "@angular/core";
 import { startWith, map } from "rxjs/operators";
 import { Observable } from "rxjs";
@@ -15,6 +15,7 @@ import { PersonasService } from "../../../../../../comunes/servicios/personas.se
 import { Empleados } from "src/app/comunes/interfaces/Empleados";
 import { Provincias } from "src/app/comunes/interfaces/Provincias";
 import { ActivatedRoute, Router } from "@angular/router";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
 export interface CiudadesInterface {
   id: number;
@@ -33,11 +34,12 @@ export class CargarEmpleadosComponent implements OnInit {
   empleadosForm: FormGroup;
 
   ciudades: CiudadesInterface[] = [];
-  ciudadesClass: Ciudades = new Ciudades();
+  ///ciudadesClass: Ciudades = new Ciudades();
 
   ciudades_id: any = 0;
 
   filteredOptions: Observable<CiudadesInterface[]>;
+  jsonFinal: { ciudad: string; formulario: any; empleado_id: any };
 
   constructor(
     private SrvTabgral: TabgralService,
@@ -45,13 +47,19 @@ export class CargarEmpleadosComponent implements OnInit {
     private SrvPersonas: PersonasService,
     private SrvDomicilios: DomiciliosService,
     private formBuilder: FormBuilder,
+    private snackBar2: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.empleadosForm = this.formBuilder.group({
       documento: [
         "",
-        Validators.compose([Validators.required, Validators.pattern("[0-9]*")]),
+        [
+          Validators.required,
+          Validators.minLength(7),
+          Validators.maxLength(8),
+          Validators.pattern("[0-9]*"),
+        ],
       ],
       apellido: [
         "",
@@ -84,9 +92,9 @@ export class CargarEmpleadosComponent implements OnInit {
       nombre_usuario: ["", Validators.compose([])],
       tipo_doc: ["", Validators.compose([Validators.required])],
       sexo: ["", Validators.compose([Validators.required])],
-      telefono: ["", Validators.compose([])],
-      celular: ["", Validators.compose([])],
-      email: ["", Validators.compose([])],
+      telefono: ["", [Validators.pattern("[0-9]*")]],
+      celular: ["", [Validators.pattern("[0-9]*")]],
+      email: ["", [Validators.email, Validators.required]],
       empleados_id: [],
       personas_id: [],
       empresas_id: ["1", Validators.compose([])],
@@ -101,6 +109,7 @@ export class CargarEmpleadosComponent implements OnInit {
         this.empleadosForm.controls.empleados_id.setValue(params.empleados_id);
         this.SrvEmpleados.getDatosEmpleadoPorId(params.empleados_id).subscribe(
           (respuesta) => {
+            console.log({ "SrvEmpleados.getDatosEmpleadoPorId": respuesta });
             let cast: any = respuesta;
             //Datos personales
             this.empleadosForm.controls.apellido.setValue(cast[0].apellido);
@@ -160,6 +169,7 @@ export class CargarEmpleadosComponent implements OnInit {
 
     //Llenado de combo provincias
     this.SrvDomicilios.getProvinciasPorPais(1).subscribe((respuesta) => {
+      console.log({ "SrvDomicilios.getProvinciasPorPais": respuesta });
       let cast: any = respuesta;
       for (let i = 0; i < cast.length; i++) {
         this.provincias.push({ id: cast[i].id, nombre: cast[i].nombre });
@@ -169,7 +179,7 @@ export class CargarEmpleadosComponent implements OnInit {
       this.getCiudadesPorProvincia();
     });
 
-    this.SrvTabgral.selectByNroTab(3).subscribe((respuesta) => {
+    this.SrvEmpleados.getOficinas().subscribe((respuesta) => {
       this.oficinas = respuesta;
     });
 
@@ -271,6 +281,59 @@ export class CargarEmpleadosComponent implements OnInit {
     return c1 && c2 ? c1 == c2 : false;
   }
 
+  guardarEmpleadoV2() {
+    let id_empleado = this.empleadosForm.controls.empleados_id.value;
+    let ciudad_nombre = (<HTMLInputElement>document.getElementById("ciudades"))
+      .value;
+
+    this.jsonFinal = {
+      ciudad: ciudad_nombre,
+      formulario: this.empleadosForm.getRawValue(),
+      empleado_id: id_empleado,
+    };
+    if (this.empleadosForm.valid) {
+      if (id_empleado != null || id_empleado != undefined) {
+        this.SrvEmpleados.insertEmpleado(this.jsonFinal).subscribe(
+          (resp) => {
+            console.log({ "SrvEmpleados.insertEmpleado": resp });
+            alert("El Empleado se ha ACTUALIZADO Exitosamente");
+          },
+          (err) => {
+            this.mostrarMensajeError(
+              "Ocurrió un error al intentar insertar los datos del empleado... "
+            );
+          },
+          () => {
+            this.mostrarMensajeInformativo(
+              "El empleado fue dado de alta exitosamente. "
+            );
+          }
+        );
+      } else {
+        this.SrvEmpleados.insertEmpleado(this.jsonFinal).subscribe(
+          (resp) => {
+            console.log({ "SrvEmpleados.updateEmpleado": resp });
+            alert("El Empleado se ha CARGADO Exitosamente");
+          },
+          (err) => {
+            this.mostrarMensajeError(
+              "Ocurrió un error al intentar insertar los datos del empleado... "
+            );
+          },
+          () => {
+            this.mostrarMensajeInformativo(
+              "El empleado fue dado de alta exitosamente. "
+            );
+          }
+        );
+      }
+    } else {
+      this.mostrarMensajeError(
+        "Existen campos obligatorios sin completar. Por favor verifique. "
+      );
+    }
+  }
+
   guardarEmpleado() {
     let id_empleado = this.empleadosForm.controls.empleados_id.value;
     if (this.empleadosForm.valid) {
@@ -311,5 +374,19 @@ export class CargarEmpleadosComponent implements OnInit {
       });
       this.empleadosForm.getError;
     }
+  }
+
+  mostrarMensajeError(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["error-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
+  }
+
+  mostrarMensajeInformativo(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["info-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
   }
 }

@@ -52,6 +52,42 @@
                                     placeholder="Documento"
                                     formControlName="documento"
                                   />
+                                  <mat-error
+                                    *ngIf="
+                                      empleadosForm.controls.documento.hasError(
+                                        'required'
+                                      )
+                                    "
+                                  >
+                                    Debe ingresar su número de documento
+                                  </mat-error>
+                                  <mat-error
+                                    *ngIf="
+                                      empleadosForm.controls.documento.hasError(
+                                        'minlength'
+                                      )
+                                    "
+                                  >
+                                    La longitud minima es de 7 digitos
+                                  </mat-error>
+                                  <mat-error
+                                    *ngIf="
+                                      empleadosForm.controls.documento.hasError(
+                                        'maxlength'
+                                      )
+                                    "
+                                  >
+                                    La longitud m&aacute;xima es de 8 digitos
+                                  </mat-error>
+                                  <mat-error
+                                    *ngIf="
+                                      empleadosForm.controls.documento.hasError(
+                                        'pattern'
+                                      )
+                                    "
+                                  >
+                                    Solo se aceptan n&uacute;meros
+                                  </mat-error>
                                 </mat-form-field>
                               </div>
                               <div class="col-md-2">
@@ -75,6 +111,24 @@
                                 placeholder="Apellido"
                                 formControlName="apellido"
                               />
+                              <mat-error
+                                *ngIf="
+                                  empleadosForm.controls.apellido.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Debe ingresar su Apellido
+                              </mat-error>
+                              <mat-error
+                                *ngIf="
+                                  empleadosForm.controls.apellido.hasError(
+                                    'pattern'
+                                  )
+                                "
+                              >
+                                Solo se aceptan letras (sin acentos).
+                              </mat-error>
                             </mat-form-field>
                           </div>
                         </div>
@@ -87,6 +141,24 @@
                                 placeholder="Nombre"
                                 formControlName="nombre"
                               />
+                              <mat-error
+                                *ngIf="
+                                  empleadosForm.controls.nombre.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Debe ingresar su Nombre
+                              </mat-error>
+                              <mat-error
+                                *ngIf="
+                                  empleadosForm.controls.nombre.hasError(
+                                    'pattern'
+                                  )
+                                "
+                              >
+                                Solo se aceptan letras (sin acentos).
+                              </mat-error>
                             </mat-form-field>
                           </div>
                         </div>
@@ -109,6 +181,15 @@
                                   <mat-datepicker
                                     #pickerFechaNac
                                   ></mat-datepicker>
+                                  <mat-error
+                                    *ngIf="
+                                      empleadosForm.controls.fecha_nacimiento.hasError(
+                                        'required'
+                                      )
+                                    "
+                                  >
+                                    Debe ingresar su fecha de nacimiento
+                                  </mat-error>
                                 </mat-form-field>
                               </div>
                               <div class="col-md-6">
@@ -132,6 +213,24 @@
                                     placeholder="Tel&eacute;fono"
                                     formControlName="telefono"
                                   />
+                                  <mat-error
+                                    *ngIf="
+                                      empleadosForm.controls.telefono.hasError(
+                                        'required'
+                                      )
+                                    "
+                                  >
+                                    Debe ingresar su número de Telefono
+                                  </mat-error>
+                                  <mat-error
+                                    *ngIf="
+                                      empleadosForm.controls.telefono.hasError(
+                                        'pattern'
+                                      )
+                                    "
+                                  >
+                                    Solo se aceptan n&uacute;meros
+                                  </mat-error>
                                 </mat-form-field>
                               </div>
                               <div class="col-md-6">
@@ -141,6 +240,24 @@
                                     placeholder="Celular"
                                     formControlName="celular"
                                   />
+                                  <mat-error
+                                    *ngIf="
+                                      empleadosForm.controls.celular.hasError(
+                                        'required'
+                                      )
+                                    "
+                                  >
+                                    Debe ingresar su número de Telefono
+                                  </mat-error>
+                                  <mat-error
+                                    *ngIf="
+                                      empleadosForm.controls.celular.hasError(
+                                        'pattern'
+                                      )
+                                    "
+                                  >
+                                    Solo se aceptan n&uacute;meros
+                                  </mat-error>
                                 </mat-form-field>
                               </div>
                             </div>
@@ -153,6 +270,15 @@
                                     placeholder="Email"
                                     formControlName="email"
                                   />
+                                  <mat-error
+                                    *ngIf="
+                                      empleadosForm.controls.email.hasError(
+                                        'required'
+                                      )
+                                    "
+                                  >
+                                    Email es un campo obligatorio.
+                                  </mat-error>
                                 </mat-form-field>
                               </div>
                             </div>
@@ -177,6 +303,15 @@
                                 placeholder="Legajo"
                                 formControlName="legajo"
                               />
+                              <mat-error
+                                *ngIf="
+                                  empleadosForm.controls.legajo.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                El Legajo es un campo obligatorio.
+                              </mat-error>
                             </mat-form-field>
                           </div>
                           <div class="col-md-12">
@@ -189,9 +324,9 @@
                               >
                                 <mat-option
                                   *ngFor="let oficina of this.oficinas"
-                                  [value]="oficina.codigo"
+                                  [value]="oficina.id"
                                 >
-                                  {{ oficina.descrip }}
+                                  {{ oficina.descripcion }}
                                 </mat-option>
                               </mat-select>
                             </mat-form-field>
@@ -209,6 +344,15 @@
                                 [for]="picker"
                               ></mat-datepicker-toggle>
                               <mat-datepicker #picker></mat-datepicker>
+                              <mat-error
+                                *ngIf="
+                                  empleadosForm.controls.fecha_ingreso.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                La fecha de ingreso es obligatoria
+                              </mat-error>
                             </mat-form-field>
                           </div>
                           <div class="col-md-12">
@@ -218,6 +362,15 @@
                                 placeholder="Descripci&oacute;n"
                                 formControlName="descripcion"
                               />
+                              <mat-error
+                                *ngIf="
+                                  empleadosForm.controls.descripcion.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                La descripción es un campo obligatorio.
+                              </mat-error>
                             </mat-form-field>
                           </div>
                         </div>
@@ -253,6 +406,15 @@
                                 placeholder="Calle"
                                 formControlName="calle"
                               />
+                              <mat-error
+                                *ngIf="
+                                  empleadosForm.controls.calle.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Campo obligatorio.
+                              </mat-error>
                             </mat-form-field>
                           </div>
                           <div class="col-md-2">
@@ -262,6 +424,15 @@
                                 placeholder="Número"
                                 formControlName="numero"
                               />
+                              <mat-error
+                                *ngIf="
+                                  empleadosForm.controls.numero.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Campo obligatorio.
+                              </mat-error>
                             </mat-form-field>
                           </div>
                           <div class="col-md-2">
@@ -324,6 +495,15 @@
                                 matInput
                                 [matAutocomplete]="auto"
                               />
+                              <mat-error
+                                *ngIf="
+                                  empleadosForm.controls.ciudades.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Campo obligatorio.
+                              </mat-error>
                               <mat-autocomplete
                                 #auto="matAutocomplete"
                                 [displayWith]="displayFn"
@@ -356,7 +536,7 @@
                       type="button"
                       class="btn btn-primary btn-xs col-md-2"
                       value="Guardar"
-                      (click)="guardarEmpleado()"
+                      (click)="guardarEmpleadoV2()"
                     />
                   </div>
                 </div>
