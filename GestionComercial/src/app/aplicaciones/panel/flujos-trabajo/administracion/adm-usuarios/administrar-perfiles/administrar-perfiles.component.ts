@@ -10,6 +10,7 @@ import { UsuariosService } from "../../../../../../comunes/servicios/usuarios.se
 import { Component, OnInit } from "@angular/core";
 import { Empleados } from "src/app/comunes/interfaces/Empleados";
 import { Router, ActivatedRoute } from "@angular/router";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-administrar-perfiles",
@@ -23,12 +24,15 @@ export class AdministrarPerfilesComponent implements OnInit {
   empleados: Empleados = new Empleados();
   perfilesAsignados = new Array<Perfiles>();
   perfilesSinAsignar = new Array<Perfiles>();
+  jsonFinal: { usuarioId: any; empleadoId: any; perfiles: Perfiles[] };
+  usuarioId: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private SrvTabgral: TabgralService,
     private SrvEmpleados: EmpleadosService,
     private SrvUsuarios: UsuariosService,
+    private snackBar2: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -46,6 +50,7 @@ export class AdministrarPerfilesComponent implements OnInit {
     this.perfilesForm.controls.nomb_usr.setValue(this.nomb_usr);
     this.route.params.subscribe((params) => {
       this.perfilesForm.controls.id_empleado.setValue(params.empleados_id);
+      this.usuarioId = params.usuario_id;
     });
 
     this.obtenerEmpleado();
@@ -53,12 +58,15 @@ export class AdministrarPerfilesComponent implements OnInit {
   }
 
   obtenerEmpleado() {
-    var id_empleado = this.perfilesForm.controls.id_empleado.value;
-    this.SrvUsuarios.getDatosUsuariosCargados(id_empleado).subscribe((resp) => {
-      let respuesta: any = resp;
-      this.empleados.descripcion = respuesta[0].nomb_usr;
-      this.perfilesForm.controls.id_usuario.setValue(respuesta[0].usuario_id);
-    });
+    // var id_empleado = this.perfilesForm.controls.id_empleado.value;
+    this.SrvUsuarios.getDatosUsuariosCargados(this.usuarioId).subscribe(
+      (resp) => {
+        console.log({ "SrvUsuarios.getDatosUsuariosCargados": resp });
+        let respuesta: any = resp;
+        this.empleados.descripcion = respuesta[0].nomb_usr;
+        this.perfilesForm.controls.id_usuario.setValue(respuesta[0].usuario_id);
+      }
+    );
   }
 
   agregarArregloTabla() {
@@ -110,6 +118,35 @@ export class AdministrarPerfilesComponent implements OnInit {
     array.splice(value, 1);
   }
 
+  guardarV2() {
+    let id_empleado = this.perfilesForm.controls.id_empleado.value;
+    this.jsonFinal = {
+      usuarioId: this.usuarioId,
+      empleadoId: id_empleado,
+      perfiles: this.perfilesAsignados,
+    };
+    if (this.perfilesForm.valid) {
+      this.SrvUsuarios.updatePerfiles(this.jsonFinal).subscribe(
+        (respuesta) => {
+          let cast: any = respuesta;
+        },
+        (err) => {
+          this.mostrarMensajeError("Ocurrió un error. " + err);
+        },
+        () => {
+          this.router.navigate([
+            "panel/usuarios/cargar-usuarios/" + this.usuarioId,
+          ]);
+          this.mostrarMensajeInformativo(
+            "Se han actualizado los perfiles correctamente. "
+          );
+        }
+      );
+    } else {
+      this.mostrarMensajeError("Hay campos obligatorios sin completar.");
+    }
+  }
+
   guardar() {
     let usuario_id = this.perfilesForm.controls.id_usuario.value;
     let empleados_id = this.perfilesForm.controls.id_empleado.value;
@@ -127,11 +164,28 @@ export class AdministrarPerfilesComponent implements OnInit {
           });
         }
         alert("Los perfiles se han CARGADO Exitosamente");
-        this.router.navigate(["usuarios/cargar-usuarios/" + empleados_id]);
+        //this.router.navigate([
+        //  "panel/usuarios/cargar-usuarios/" + empleados_id,
+        //]);
       });
     } else {
+      this.mostrarMensajeError("Hay campos obligatorios sin completar.");
       this.perfilesForm.getError;
     }
+  }
+
+  mostrarMensajeError(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["error-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
+  }
+
+  mostrarMensajeInformativo(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["info-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
   }
 }
 

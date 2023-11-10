@@ -148,7 +148,10 @@ export class CargarUsuariosComponent implements OnInit {
 
   administrarPerfiles() {
     this.router.navigate([
-      "usuarios/administrar-perfiles/" + this.empleadosInter[0].empleados_id,
+      "panel/usuarios/administrar-perfiles/" +
+        this.empleadosInter[0].empleados_id +
+        "/" +
+        this.usuariosForm.controls.id_usuario.value,
     ]);
   }
 }

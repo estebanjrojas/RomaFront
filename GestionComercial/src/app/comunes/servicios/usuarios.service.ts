@@ -243,6 +243,22 @@ export class UsuariosService {
     );
   }
 
+  updatePerfiles(datos: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: this.Auth.getTokenUsuarioSesion(),
+      }),
+    };
+    let json = JSON.stringify(datos);
+    console.log({ json: json });
+    return this.http.put(
+      environment.apiEndpoint + "/updatePerfiles",
+      json,
+      httpOptions
+    );
+  }
+
   //DELETE's
 
   deletePerfiles(id_usuario: number): Observable<any> {

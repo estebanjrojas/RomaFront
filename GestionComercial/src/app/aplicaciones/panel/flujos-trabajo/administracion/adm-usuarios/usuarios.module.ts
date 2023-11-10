@@ -35,7 +35,7 @@ const appRoutes: Routes = [
     canActivate: [AutenticadoGuard, PerfilGuard],
   },
   {
-    path: "administrar-perfiles/:empleados_id",
+    path: "administrar-perfiles/:empleados_id/:usuario_id",
     component: AdministrarPerfilesComponent,
     canActivate: [AutenticadoGuard, PerfilGuard],
   },

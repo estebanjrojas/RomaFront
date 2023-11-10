@@ -117,6 +117,7 @@ export class BuscarUsuariosComponent implements OnInit {
       txtBuscar
     ).subscribe(
       (respuesta) => {
+        console.log({ "SrvUsuarios.getUsuarios": respuesta });
         this.cast = respuesta;
       },
       (error) => {

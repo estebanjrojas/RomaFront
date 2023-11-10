@@ -100,7 +100,8 @@
                 <input
                   type="submit"
                   class="btn btn-outline-primary btn-xs col-md-2"
-                  onClick="window.history.go(-1)"
+                  [routerLink]="['/panel/usuarios/busqueda-usuarios']"
+                  routerLinkActive="active"
                   value="Volver"
                 />
                 &nbsp;

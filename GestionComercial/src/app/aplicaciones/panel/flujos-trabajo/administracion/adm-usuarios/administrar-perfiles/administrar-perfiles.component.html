@@ -1,44 +1,57 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!----## Inicio Form Principal ##---->
-<form id="admPerfilesFormid" [formGroup]="perfilesForm" (ngSubmit)="guardar()">
-  <input type="hidden" formControlName="id_empleado">
-  <input type="hidden" formControlName="id_usuario">
+<form
+  id="admPerfilesFormid"
+  [formGroup]="perfilesForm"
+  (ngSubmit)="guardarV2()"
+>
+  <input type="hidden" formControlName="id_empleado" />
+  <input type="hidden" formControlName="id_usuario" />
   <!----## Inicio Container Principal ##---->
   <div class="container">
     <!----## Inicio Row Principal ##---->
     <div class="row">
       <!----## Inicio Columna 12  ##---->
       <div class="col-md-12 m-0 p-0">
-        <br>
+        <br />
         <div class="card" id="cardPrincipal">
           <div class="card-body">
-              <h3>Usuarios</h3>
-              <h5>Administraci&oacute;n de Perfiles: &nbsp; <b> {{empleados.descripcion}} </b></h5>
-              <hr>
+            <h3>Usuarios</h3>
+            <h5>
+              Administraci&oacute;n de Perfiles: &nbsp;
+              <b> {{ empleados.descripcion }} </b>
+            </h5>
+            <hr />
             <!----## Inicio Row Principal Interna ##---->
             <div class="row">
-              <div class="col-md-6">
-                Perfiles No Asignados
-              </div>
-              <div class="col-md-6">
-                Perfiles Asignados
-              </div>
+              <div class="col-md-6">Perfiles No Asignados</div>
+              <div class="col-md-6">Perfiles Asignados</div>
             </div>
             <div class="row">
               <div class="col-md-6">
                 <table class="table table-hover table-sm">
                   <thead class="thead-light">
-                    <th style='width:30%;'>Nombre</th>
-                    <th style='width:60%;'>Descripcion</th>
-                    <th style='width:10%;'></th>
+                    <th style="width: 30%">Nombre</th>
+                    <th style="width: 60%">Descripcion</th>
+                    <th style="width: 10%"></th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let perf of perfilesSinAsignar; let indice = index">
-                      <td> {{perf.nombre}}</td>
-                      <td> {{perf.descripcion}}</td>
-                      <td style='text-align: center'>
-                        <button class='btn btn-info btn-sm' type="button"
-                          (click)='agregarFila(indice);'>Agregar</button>
+                    <tr
+                      *ngFor="
+                        let perf of perfilesSinAsignar;
+                        let indice = index
+                      "
+                    >
+                      <td>{{ perf.nombre }}</td>
+                      <td>{{ perf.descripcion }}</td>
+                      <td style="text-align: center">
+                        <button
+                          class="btn btn-info btn-sm"
+                          type="button"
+                          (click)="agregarFila(indice)"
+                        >
+                          Agregar
+                        </button>
                       </td>
                     </tr>
                   </tbody>
@@ -47,17 +60,24 @@
               <div class="col-md-6">
                 <table class="table table-hover table-sm">
                   <thead class="thead-light">
-                    <th style='width:30%;'>Nombre</th>
-                    <th style='width:60%;'>Descripcion</th>
-                    <th style='width:10%;'></th>
+                    <th style="width: 30%">Nombre</th>
+                    <th style="width: 60%">Descripcion</th>
+                    <th style="width: 10%"></th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let perf of perfilesAsignados; let indice = index">
-                      <td> {{perf.nombre}}</td>
-                      <td> {{perf.descripcion}}</td>
-                      <td style='text-align: center'>
-                        <button class='btn btn-danger btn-sm' type="button"
-                          (click)='borrarFila(indice);'>Quitar</button>
+                    <tr
+                      *ngFor="let perf of perfilesAsignados; let indice = index"
+                    >
+                      <td>{{ perf.nombre }}</td>
+                      <td>{{ perf.descripcion }}</td>
+                      <td style="text-align: center">
+                        <button
+                          class="btn btn-danger btn-sm"
+                          type="button"
+                          (click)="borrarFila(indice)"
+                        >
+                          Quitar
+                        </button>
                       </td>
                     </tr>
                   </tbody>
@@ -65,18 +85,27 @@
               </div>
             </div>
             <!----## Fin Row Principal Interna ##---->
-            <br><br>
-            <hr>
+            <br /><br />
+            <hr />
             <div class="row h-100">
               <div class="col-md-12" align="center">
-                <input type="submit" class="btn btn-outline-primary btn-xs col-md-2" onClick='window.history.go(-1)'
-                  value="Volver" /> &nbsp;
-                <input type="submit" class="btn btn-primary btn-xs col-md-2" value="Guardar" />
+                <input
+                  type="submit"
+                  class="btn btn-outline-primary btn-xs col-md-2"
+                  onClick="window.history.go(-1)"
+                  value="Volver"
+                />
+                &nbsp;
+                <input
+                  type="submit"
+                  class="btn btn-primary btn-xs col-md-2"
+                  value="Guardar"
+                />
               </div>
             </div>
           </div>
         </div>
-        <br>
+        <br />
       </div>
       <!----## Fin Columna 12  ##---->
     </div>
