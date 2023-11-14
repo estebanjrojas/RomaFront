@@ -6,6 +6,7 @@ import {
 } from "@angular/forms";
 import { ClientesService } from "../../../../../../comunes/servicios/clientes.service";
 import { Component, OnInit } from "@angular/core";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-buscar-clientes",
@@ -27,6 +28,7 @@ export class BuscarClientesComponent implements OnInit {
 
   constructor(
     private SrvClientes: ClientesService,
+    private snackBar2: MatSnackBar,
     private formBuilder: FormBuilder
   ) {}
 
@@ -149,5 +151,49 @@ export class BuscarClientesComponent implements OnInit {
     this.valor_boton_1 = paginarEnNumero - 1;
     this.valor_boton_2 = paginarEnNumero;
     this.valor_boton_3 = paginarEnNumero + 1;
+  }
+
+  eliminarCliente(clientes_id: any) {
+    let opcion = confirm(
+      "Esta acción procederá a dar de baja el cliente, desea continuar?"
+    );
+    if (opcion) {
+      this.deleteCliente(clientes_id);
+      //this.verificarProductoPoseeCaracteristicas(productos_id);
+    }
+  }
+
+  deleteCliente(clientes_id: any) {
+    this.SrvClientes.deleteCliente(clientes_id).subscribe(
+      (respuesta) => {
+        console.log({ "SrvClientes.deleteCliente": respuesta });
+      },
+      (err) => {
+        console.log({ err: err });
+        this.mostrarMensajeError(
+          "Ha ocurrido un error al intentar eliminar el cliente. " + err
+        );
+      },
+      () => {
+        this.mostrarMensajeInformativo(
+          "El cliente se ha eliminado correctamente... "
+        );
+        this.buscarClientes();
+      }
+    );
+  }
+
+  mostrarMensajeError(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["error-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
+  }
+
+  mostrarMensajeInformativo(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["info-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
   }
 }

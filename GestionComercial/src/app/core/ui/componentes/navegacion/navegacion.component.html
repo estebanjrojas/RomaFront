@@ -1,27 +1,28 @@
 <nav
-  class="navbar navbar-expand-lg navbar-light py-2 shadow-sm"
+  class="navbar navbar-expand-lg navbar-light bg-primary"
   id="barra_navegacion"
   *ngIf="routerUrl != '/'"
 >
   <button
+    class="navbar-toggler"
     type="button"
     data-toggle="collapse"
-    data-target="#navbarContent"
-    aria-controls="navbars"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
     aria-expanded="false"
     aria-label="Toggle navigation"
-    class="navbar-toggler"
   >
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="nav-link text-light" [routerLink]="['/panel/home']">
     <img src="../../assets/shopping_cart_white_logo-48px.png" alt="HOME" />
   </a>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <ng-container *ngFor="let ObjMenuItem of this.menuArray">
         <li class="nav-item dropdown">
           <a
+            id="navbarDropdown"
             class="nav-link dropdown-toggle text-light"
             role="button"
             data-toggle="dropdown"
@@ -30,7 +31,7 @@
           >
             {{ ObjMenuItem.menu_nombre }}
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <ul class="navbar-nav dropdown-item">
               <app-navegacion-submenu
                 [ObjeMenu]="ObjMenuItem.menu_hijo"

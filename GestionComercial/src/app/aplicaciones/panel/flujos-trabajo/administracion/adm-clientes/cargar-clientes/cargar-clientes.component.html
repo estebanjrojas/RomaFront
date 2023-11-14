@@ -56,6 +56,42 @@
                                     placeholder="Documento"
                                     formControlName="documento"
                                   />
+                                  <mat-error
+                                    *ngIf="
+                                      clientesForm.controls.documento.hasError(
+                                        'required'
+                                      )
+                                    "
+                                  >
+                                    Debe ingresar su número de documento
+                                  </mat-error>
+                                  <mat-error
+                                    *ngIf="
+                                      clientesForm.controls.documento.hasError(
+                                        'minlength'
+                                      )
+                                    "
+                                  >
+                                    La longitud minima es de 7 digitos
+                                  </mat-error>
+                                  <mat-error
+                                    *ngIf="
+                                      clientesForm.controls.documento.hasError(
+                                        'maxlength'
+                                      )
+                                    "
+                                  >
+                                    La longitud m&aacute;xima es de 8 digitos
+                                  </mat-error>
+                                  <mat-error
+                                    *ngIf="
+                                      clientesForm.controls.documento.hasError(
+                                        'pattern'
+                                      )
+                                    "
+                                  >
+                                    Solo se aceptan n&uacute;meros
+                                  </mat-error>
                                 </mat-form-field>
                               </div>
                               <!--div class="col-md-2">
@@ -115,6 +151,15 @@
                                   <mat-datepicker
                                     #pickerFechaNac
                                   ></mat-datepicker>
+                                  <mat-error
+                                    *ngIf="
+                                      clientesForm.controls.fecha_nacimiento.hasError(
+                                        'required'
+                                      )
+                                    "
+                                  >
+                                    Debe ingresar su fecha de nacimiento
+                                  </mat-error>
                                 </mat-form-field>
                               </div>
                               <div class="col-md-3">
@@ -125,14 +170,9 @@
                                   <mat-select
                                     placeholder="Sexo"
                                     formControlName="sexo"
-                                    [compareWith]="compareFn"
                                   >
-                                    <mat-option
-                                      *ngFor="let sex of this.sexo"
-                                      [value]="sex.codigo"
-                                    >
-                                      {{ sex.descrip }}
-                                    </mat-option>
+                                    <mat-option value="1">Masculino</mat-option>
+                                    <mat-option value="2">Femenino</mat-option>
                                   </mat-select>
                                 </mat-form-field>
                               </div>
@@ -289,6 +329,15 @@
                                 matInput
                                 [matAutocomplete]="auto"
                               />
+                              <mat-error
+                                *ngIf="
+                                  clientesForm.controls.ciudades.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Campo obligatorio.
+                              </mat-error>
                               <mat-autocomplete
                                 #auto="matAutocomplete"
                                 [displayWith]="displayFn"
@@ -321,7 +370,7 @@
                       type="button"
                       class="btn btn-primary btn-xs col-md-2"
                       value="Guardar"
-                      (click)="guardarCliente()"
+                      (click)="guardarClienteV2()"
                     />
                   </div>
                 </div>

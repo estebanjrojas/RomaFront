@@ -7,7 +7,6 @@ import {
 import { TabgralService } from "../../../../../../comunes/servicios/tabgral.service";
 import { ClientesService } from "../../../../../../comunes/servicios/clientes.service";
 import { DomiciliosService } from "../../../../../../comunes/servicios/domicilios.service";
-import { Ciudades } from "../../../../../../comunes/interfaces/Ciudades";
 import { Component, OnInit } from "@angular/core";
 import { startWith, map } from "rxjs/operators";
 import { SnackBarService } from "src/app/core/ui/comunes/servicios/SnackBarService";
@@ -20,6 +19,7 @@ import { Inject, Injectable, Optional } from "@angular/core";
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { Moment } from "moment";
 import * as moment from "moment";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
 @Injectable()
 export class MomentUtcDateAdapter extends MomentDateAdapter {
@@ -69,9 +69,9 @@ export class CargarClientesComponent implements OnInit {
   filteredOptions: Observable<CiudadesInterface[]>;
 
   nomb_usr: string;
-  ciudadesClass: Ciudades = new Ciudades();
 
   sexo = new Array<Tabgral>();
+  jsonFinal: { ciudad: string; formulario: any; cliente_id: any };
 
   constructor(
     private SrvTabgral: TabgralService,
@@ -80,13 +80,19 @@ export class CargarClientesComponent implements OnInit {
     private SrvPersonas: PersonasService,
     private SrvDomicilios: DomiciliosService,
     private snackBar: SnackBarService,
+    private snackBar2: MatSnackBar,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute
   ) {
     this.clientesForm = this.formBuilder.group({
       documento: [
         "",
-        Validators.compose([Validators.required, Validators.pattern("[0-9]*")]),
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(7),
+          Validators.maxLength(8),
+          Validators.pattern("[0-9]*"),
+        ]),
       ],
       apellido: [
         "",
@@ -127,15 +133,15 @@ export class CargarClientesComponent implements OnInit {
     this.obtenerProvincias();
 
     //Sexo
-    this.SrvTabgral.selectByNroTab(4).subscribe((respuesta) => {
-      let cast: any = respuesta;
-      for (var i = 0; i < cast.length; i++) {
-        let rel: Tabgral = { codigo: "0", descrip: "" };
-        rel.codigo = cast[i].codigo;
-        rel.descrip = cast[i].descrip;
-        this.sexo.push(rel);
-      }
-    });
+    // this.SrvTabgral.selectByNroTab(4).subscribe((respuesta) => {
+    //   let cast: any = respuesta;
+    //   for (var i = 0; i < cast.length; i++) {
+    //     let rel: Tabgral = { codigo: "0", descrip: "" };
+    //     rel.codigo = cast[i].codigo;
+    //     rel.descrip = cast[i].descrip;
+    //     this.sexo.push(rel);
+    //   }
+    // });
 
     this.nomb_usr = localStorage.getItem("nombre_usr");
     this.clientesForm.controls.nombre_usuario.setValue(this.nomb_usr);
@@ -194,7 +200,7 @@ export class CargarClientesComponent implements OnInit {
           documento: cast[0].nro_doc,
           tipo_doc: cast[0].tipo_doc + "",
           fecha_nacimiento: cast[0].fecha_nac,
-          sexo: cast[0].sexo,
+          sexo: String(cast[0].sexo),
           telefono: cast[0].telefono,
           celular: cast[0].telefono_cel,
           email: cast[0].email,
@@ -254,6 +260,59 @@ export class CargarClientesComponent implements OnInit {
     );
   }
 
+  guardarClienteV2() {
+    let id_cliente = this.clientesForm.controls.clientes_id.value;
+    let ciudad_nombre = (<HTMLInputElement>document.getElementById("ciudades"))
+      .value;
+
+    this.jsonFinal = {
+      ciudad: ciudad_nombre,
+      formulario: this.clientesForm.getRawValue(),
+      cliente_id: id_cliente,
+    };
+    if (this.clientesForm.valid) {
+      if (id_cliente != null || id_cliente != undefined) {
+        this.SrvClientes.insertCliente(this.jsonFinal).subscribe(
+          (resp) => {
+            console.log({ "SrvClientes.insertCliente": resp });
+            alert("El Cliente se ha ACTUALIZADO Exitosamente");
+          },
+          (err) => {
+            this.mostrarMensajeError(
+              "Ocurrió un error al intentar insertar los datos del empleado... "
+            );
+          },
+          () => {
+            this.mostrarMensajeInformativo(
+              "El cliente fue modificado exitosamente. "
+            );
+          }
+        );
+      } else {
+        this.SrvClientes.insertCliente(this.jsonFinal).subscribe(
+          (resp) => {
+            console.log({ "SrvEmpleados.updateEmpleado": resp });
+            alert("El Empleado se ha CARGADO Exitosamente");
+          },
+          (err) => {
+            this.mostrarMensajeError(
+              "Ocurrió un error al intentar insertar los datos del cliente... "
+            );
+          },
+          () => {
+            this.mostrarMensajeInformativo(
+              "El cliente fue dado de alta exitosamente. "
+            );
+          }
+        );
+      }
+    } else {
+      this.mostrarMensajeError(
+        "Existen campos obligatorios sin completar. Por favor verifique. "
+      );
+    }
+  }
+
   guardarCliente() {
     let id_cliente = this.clientesForm.controls.clientes_id.value;
     if (this.clientesForm.valid) {
@@ -310,6 +369,20 @@ export class CargarClientesComponent implements OnInit {
     } else {
       this.snackBar.mostrarMensaje("Hay errores en la información ingresada");
     }
+  }
+
+  mostrarMensajeError(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["error-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
+  }
+
+  mostrarMensajeInformativo(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["info-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
   }
 }
 

@@ -179,4 +179,32 @@ export class ClientesService {
       httpOptions
     );
   }
+
+  insertCliente(datos: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: this.Auth.getTokenUsuarioSesion(),
+      }),
+    };
+    let json = JSON.stringify(datos);
+    return this.http.post(
+      environment.apiEndpoint + "/insertCliente/",
+      json,
+      httpOptions
+    );
+  }
+
+  //DELETE
+
+  deleteCliente(cliente_id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: this.Auth.getTokenUsuarioSesion(),
+      }),
+    };
+    const url = environment.apiEndpoint + `/deleteCliente/` + cliente_id;
+    return this.http.delete(url, httpOptions);
+  }
 }

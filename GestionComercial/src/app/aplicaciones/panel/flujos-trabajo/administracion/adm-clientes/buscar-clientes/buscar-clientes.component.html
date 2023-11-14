@@ -216,7 +216,7 @@
                         <td>{{ cli.apellido }}</td>
                         <td style="text-align: center">{{ cli.nro_doc }}</td>
                         <td style="text-align: center">
-                          {{ cli.fecha_nac | date: "dd-MM-yyyy" }}
+                          {{ cli.fecha_nac | date : "dd-MM-yyyy" }}
                         </td>
                         <td style="text-align: center">
                           <button
@@ -229,7 +229,10 @@
                           >
                             Modificar</button
                           >&nbsp;
-                          <button class="btn btn-danger btn-sm">
+                          <button
+                            class="btn btn-danger btn-sm"
+                            (click)="eliminarCliente(cli.clientes_id)"
+                          >
                             Eliminar
                           </button>
                         </td>

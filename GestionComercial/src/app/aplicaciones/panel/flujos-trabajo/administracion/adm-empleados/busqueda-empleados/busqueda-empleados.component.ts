@@ -190,7 +190,7 @@ export class BusquedaEmpleadosComponent implements OnInit {
 
   eliminarEmpleado(empleados_id) {
     let opcion = confirm(
-      "Esta acción procederá a eliminar el producto, desea continuar?"
+      "Esta acción procederá a dar de baja el empleado, desea continuar?"
     );
     if (opcion) {
       this.deleteEmpleado(empleados_id);
@@ -206,12 +206,12 @@ export class BusquedaEmpleadosComponent implements OnInit {
       (err) => {
         console.log({ err: err });
         this.mostrarMensajeError(
-          "Ha ocurrido un error al intentar eliminar el producto. " + err
+          "Ha ocurrido un error al intentar eliminar el empleado. " + err
         );
       },
       () => {
         this.mostrarMensajeInformativo(
-          "El producto se ha eliminado correctamente... "
+          "El empleado se ha eliminado correctamente... "
         );
         this.buscarEmpleados();
       }
