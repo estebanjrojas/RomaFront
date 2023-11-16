@@ -13,6 +13,8 @@ import { SnackbarModule } from "src/app/core/ui/snackbar.module";
 import { AutenticadoGuard } from "src/app/comunes/guardas/autenticado.guard";
 import { PerfilGuard } from "src/app/comunes/guardas/perfil.guard";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { DetalleVentasDialogComponent } from "./detalle-ventas-dialog/detalle-ventas-dialog.component";
+import { DetalleVentasDialogService } from "./detalle-ventas-dialog/detalle-ventas-dialog.service";
 
 const appRoutes: Routes = [
   {
@@ -35,6 +37,7 @@ const appRoutes: Routes = [
     ConfirmacionVentaComponent,
     VisualizacionVentasComponent,
     SeleccionClientesComponent,
+    DetalleVentasDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -44,7 +47,7 @@ const appRoutes: Routes = [
     MaterialModule,
     SnackbarModule,
   ],
-  providers: [],
+  providers: [DetalleVentasDialogService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class VentasModule {}

@@ -9,6 +9,7 @@ import { Component, EventEmitter, OnInit, Input, Output } from "@angular/core";
 import { Clientes } from "../../../../../../comunes/interfaces/Clientes";
 import { Personas } from "../../../../../../comunes/interfaces/Personas";
 import { Domicilios } from "../../../../../../comunes/interfaces/Domicilios";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-seleccion-clientes",
@@ -25,6 +26,7 @@ export class SeleccionClientesComponent implements OnInit {
 
   constructor(
     private SrvClientes: ClientesService,
+    private snackBar2: MatSnackBar,
     private formBuilder: FormBuilder
   ) {
     this.seleccionClientesForm = this.formBuilder.group({
@@ -47,6 +49,10 @@ export class SeleccionClientesComponent implements OnInit {
     this.SrvClientes.getClientesWhere(campo_busqueda, texto_busqueda).subscribe(
       (respuesta) => {
         this.clientes = respuesta;
+      },
+      (err) => {
+        console.log({ err: err });
+        this.mostrarMensajeError("Ocurrió un error. " + err.error.mensaje);
       }
     );
   }
@@ -103,5 +109,19 @@ export class SeleccionClientesComponent implements OnInit {
 
     this.SrvClientes.setCliente(this.clienteSeleccionado);
     this.seElijioCliente.emit(this.clienteSeleccionado);
+  }
+
+  mostrarMensajeError(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["error-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
+  }
+
+  mostrarMensajeInformativo(mensaje: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 15000;
+    config.panelClass = ["info-alert"];
+    this.snackBar2.open(`${mensaje}`, "Cerrar", config);
   }
 }

@@ -1,0 +1,102 @@
+<mat-card>
+  <mat-card-header><h3>Información de la Venta</h3></mat-card-header>
+  <mat-card-content>
+    <br />
+    <div class="container">
+      <div class="row">
+        <div class="col-6">Fecha: {{ venta.fecha | date : "dd-MM-yyyy" }}</div>
+        <div class="col-6">
+          Cliente: {{ venta.apellido_cliente }} {{ venta.nombre_cliente }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">Monto: {{ venta.monto_total }}</div>
+      </div>
+      <div class="row anulada" *ngIf="venta.anulada == true">
+        <div class="col-6">
+          <strong
+            >Fecha Anulación:
+            {{ venta.fecha_anulacion | date : "dd-MM-yyyy" }}</strong
+          >
+        </div>
+        <div class="col-6">
+          <strong>Usuario Anulación: {{ venta.usuario_anulacion }}</strong>
+        </div>
+      </div>
+      <div *ngIf="factura.facturas_id != undefined">
+        <h5 class="mt-2">Factura</h5>
+        <div class="row m-2">
+          <div class="col-4">
+            <strong>N&uacute;mero: </strong>{{ factura.punto_venta }}-{{
+              factura.numero
+            }}
+          </div>
+          <div class="col-4"><strong>Tipo: </strong>{{ factura.tipo }}</div>
+          <div class="col-4">
+            <button
+              type="button"
+              class="btn btn-sm btn-success"
+              (click)="imprimirFactura(factura.facturas_id)"
+            >
+              Imprimir
+            </button>
+          </div>
+        </div>
+        <div class="row m-2">
+          <div class="col-4">
+            <strong>Fecha: </strong
+            >{{ factura.fecha_emision | date : "dd-MM-yyyy" }}
+          </div>
+          <div class="col-4">
+            <div *ngIf="factura.cae != undefined && factura.cai == undefined">
+              <strong>CAE: </strong>{{ factura.cae }}
+            </div>
+            <div *ngIf="factura.cae == undefined && factura.cai != undefined">
+              <strong>CAE: </strong>{{ factura.cae }}
+            </div>
+            <div *ngIf="factura.cae == undefined && factura.cai == undefined">
+              <strong>FACTURA RECHAZADA POR AFIP </strong>
+            </div>
+          </div>
+        </div>
+        <div class="row m-2">
+          <div class="col-4">
+            <strong>Monto Total: </strong>{{ factura.monto_total }}
+          </div>
+          <div class="col-4">
+            <strong>Monto Neto: </strong>{{ factura.monto_neto }}
+          </div>
+          <div class="col-4">
+            <strong>Monto IVA: </strong>{{ factura.monto_iva }}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-body">
+            <table class="table-striped">
+              <thead class="thead-dark">
+                <th>Producto</th>
+                <th>Precio Unid.</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let detalle of ventaDetalles">
+                  <td>{{ detalle.nombre_producto }}</td>
+                  <td>{{ detalle.monto_unidad }}</td>
+                  <td>{{ detalle.cantidad }}</td>
+                  <td>{{ detalle.subtotal }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-dialog-actions style="text-align: center">
+  <button mat-button [mat-dialog-close]="false">Cerrar</button>
+</mat-dialog-actions>

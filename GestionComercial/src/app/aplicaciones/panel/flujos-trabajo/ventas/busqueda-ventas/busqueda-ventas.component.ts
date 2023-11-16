@@ -6,6 +6,7 @@ import {
 } from "@angular/forms";
 import { VentasService } from "../../../../../comunes/servicios/ventas.service";
 import { Component, OnInit } from "@angular/core";
+import { DetalleVentasDialogService } from "../detalle-ventas-dialog/detalle-ventas-dialog.service";
 
 @Component({
   selector: "app-busqueda-ventas",
@@ -26,6 +27,7 @@ export class BusquedaVentasComponent implements OnInit {
 
   constructor(
     private SrvVentas: VentasService,
+    private srvDialog: DetalleVentasDialogService,
     private formBuilder: FormBuilder
   ) {
     this.formBusquedaVentas = this.formBuilder.group({
@@ -180,5 +182,21 @@ export class BusquedaVentasComponent implements OnInit {
         this.buscarVentas();
       });
     }
+  }
+
+  openDialogDetalle(ventasId: any) {
+    console.log({ ventasId: ventasId });
+    this.srvDialog.openDialogDetalle(ventasId).subscribe((result) => {
+      if (result === true) {
+        // El usuario hizo clic en "Sí", realiza la acción deseada aquí
+        console.log('El usuario hizo clic en "Sí"');
+        //  this.subscribir();
+      } else {
+        //this.cargaSuscripcion = false;
+        // El usuario hizo clic en "No" o cerró el diálogo, puedes manejarlo aquí
+        console.log('El usuario hizo clic en "No" o cerró el diálogo');
+        // location.reload();
+      }
+    });
   }
 }

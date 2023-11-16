@@ -8,6 +8,7 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatInputModule } from "@angular/material/input";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatSelectModule } from "@angular/material/select";
+import { MatDialogModule } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatNativeDateModule } from "@angular/material/core";
@@ -27,6 +28,7 @@ import { MatCardModule } from "@angular/material/card";
     MatRadioModule,
     MatNativeDateModule,
     MatCardModule,
+    MatDialogModule,
   ],
   exports: [
     MatButtonModule,
@@ -40,6 +42,7 @@ import { MatCardModule } from "@angular/material/card";
     MatRadioModule,
     MatNativeDateModule,
     MatCardModule,
+    MatDialogModule,
   ],
   providers: [],
   schemas: [],

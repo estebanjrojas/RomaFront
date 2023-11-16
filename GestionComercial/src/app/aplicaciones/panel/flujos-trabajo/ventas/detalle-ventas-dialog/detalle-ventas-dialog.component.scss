@@ -1,0 +1,9 @@
+/* Centrar horizontalmente los elementos dentro de mat-dialog-actions */
+.mat-dialog-actions {
+    justify-content: center;
+}
+
+/* Opcionalmente, puedes ajustar el espaciado entre los botones */
+.mat-dialog-actions button {
+    margin: 0 8px; /* Agrega un espacio entre los botones si lo deseas */
+}
