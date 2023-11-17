@@ -2,14 +2,30 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { UsuarioSesion } from "../interfaces/UsuarioSesion";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   miUsuarioSesion: UsuarioSesion = this.inicializarUsuarioSesion();
+  private redirectUrl: string = "";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
+
+  public setRedirectUrl(url: string): void {
+    this.redirectUrl = url;
+    //console.log({'this.redirectUrl': this.redirectUrl});
+  }
+
+  public login(): void {
+    if (this.redirectUrl) {
+      this.router.navigateByUrl(this.redirectUrl);
+      this.redirectUrl = "";
+    } else {
+      this.router.navigateByUrl("/panel/home");
+    }
+  }
 
   solicitarAccesoUsuario(usuario, password) {
     return this.http.get(

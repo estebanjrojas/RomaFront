@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { VentasService } from "../../../../../comunes/servicios/ventas.service";
 import { DatePipe } from "@angular/common";
 import { ChartDataset, ChartOptions, ChartType } from "chart.js";
+import { SnackbarService } from "src/app/comunes/servicios/snackbar.service";
 
 type Color = {
   backgroundColor: string;
@@ -53,6 +54,7 @@ export class ChartVentasDiariasComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private SrvVentas: VentasService,
+    private srvSnackBar: SnackbarService,
     private DatePipe: DatePipe
   ) {
     this.chartVentasDiariasForm = this.formBuilder.group({
@@ -76,30 +78,37 @@ export class ChartVentasDiariasComponent implements OnInit {
     this.SrvVentas.getEstadisticasVentasDiarias(
       fecha_desde,
       fecha_hasta
-    ).subscribe((resp) => {
-      //Filtro la respuesta para dejar solo los dias hábiles. Considero jornada de lunes a viernes
-      const arrayFiltroDiasHabiles = resp.filter((info) => {
-        return info._dia != "Sat" && info._dia != "Sun";
-      });
-      //Armo los arrays necesarios para el gráfico
-      this.arrayMontos = arrayFiltroDiasHabiles.map(
-        (montos) => montos._monto_total_vendido
-      );
-      this.arrayCantidades = arrayFiltroDiasHabiles.map(
-        (cantidades) => cantidades._cantidad_articulos_vendidos
-      );
-      this.arrayFechas = arrayFiltroDiasHabiles.map((fechas) => {
-        return this.DatePipe.transform(fechas._fecha, "dd/MM/yy");
-      });
-      this.lineChartData = [
-        { data: this.arrayMontos, label: "Monto Diario de Ventas" },
-        {
-          data: this.arrayCantidades,
-          label: "Cantidad de Articulos Vendidos",
-          yAxisID: "y-axis-1",
-        },
-      ];
-      this.lineChartLabels = this.arrayFechas;
-    });
+    ).subscribe(
+      (resp) => {
+        //Filtro la respuesta para dejar solo los dias hábiles. Considero jornada de lunes a viernes
+        const arrayFiltroDiasHabiles = resp.filter((info) => {
+          return info._dia != "Sat" && info._dia != "Sun";
+        });
+        //Armo los arrays necesarios para el gráfico
+        this.arrayMontos = arrayFiltroDiasHabiles.map(
+          (montos) => montos._monto_total_vendido
+        );
+        this.arrayCantidades = arrayFiltroDiasHabiles.map(
+          (cantidades) => cantidades._cantidad_articulos_vendidos
+        );
+        this.arrayFechas = arrayFiltroDiasHabiles.map((fechas) => {
+          return this.DatePipe.transform(fechas._fecha, "dd/MM/yy");
+        });
+        this.lineChartData = [
+          { data: this.arrayMontos, label: "Monto Diario de Ventas" },
+          {
+            data: this.arrayCantidades,
+            label: "Cantidad de Articulos Vendidos",
+            yAxisID: "y-axis-1",
+          },
+        ];
+        this.lineChartLabels = this.arrayFechas;
+      },
+      (err) => {
+        this.srvSnackBar.mostrarMensajeError(
+          "Ocurrió un error al obtener las ventas diarias. "
+        );
+      }
+    );
   }
 }

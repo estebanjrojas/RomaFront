@@ -7,6 +7,7 @@ import {
 } from "@angular/forms";
 import { VentasService } from "../../../../../comunes/servicios/ventas.service";
 import { DatePipe } from "@angular/common";
+import { SnackbarService } from "src/app/comunes/servicios/snackbar.service";
 
 @Component({
   selector: "app-chart-ventas-mensuales",
@@ -18,6 +19,7 @@ export class ChartVentasMensualesComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private SrvVentas: VentasService,
+    private srvSnackBar: SnackbarService,
     private DatePipe: DatePipe
   ) {
     this.chartVentasMensualesForm = this.formBuilder.group({

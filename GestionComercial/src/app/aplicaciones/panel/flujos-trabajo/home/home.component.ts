@@ -9,6 +9,7 @@ import {
   faUserCog,
 } from "@fortawesome/free-solid-svg-icons";
 import { DatePipe } from "@angular/common";
+import { SnackbarService } from "src/app/comunes/servicios/snackbar.service";
 //import * as tf from '@tensorflow/tfjs';
 
 @Component({
@@ -30,33 +31,48 @@ export class HomeComponent implements OnInit {
     private Auth: AuthService,
     private SrvUsuarios: UsuariosService,
     private SrvProductos: ProductosService,
+    private srvSnackBar: SnackbarService,
     private datePipe: DatePipe
   ) {}
 
   ngOnInit() {
     this.novedades_productos = [];
     let usuario = this.Auth.getNombreUsuarioSesion();
-    this.SrvUsuarios.getDatosUsuario(usuario).subscribe((respuesta) => {
-      let cast = respuesta;
-      this.datos_usuario = cast[0];
-    });
+    this.SrvUsuarios.getDatosUsuario(usuario).subscribe(
+      (respuesta) => {
+        let cast = respuesta;
+        this.datos_usuario = cast[0];
+      },
+      (err) => {
+        this.srvSnackBar.mostrarMensajeError(
+          "Ocurrió un error al obtener los datos del usuario. "
+        );
+      }
+    );
 
     this.SrvProductos.getNovedadesProductos(
       "2019-06-01",
       this.datePipe.transform(new Date(), "yyyy-MM-dd"),
       5
-    ).subscribe((respuesta) => {
-      let cast: any = respuesta;
-      for (let i = 0; i < cast.length; i++) {
-        this.novedades_productos.push({
-          id: cast[i]._id,
-          fecha: cast[i]._fecha,
-          tipo: cast[i]._tipo,
-          tipo_codigo: cast[i]._tipo_codigo,
-          descripcion: cast[i]._descripcion,
-        });
+    ).subscribe(
+      (respuesta) => {
+        let cast: any = respuesta;
+        for (let i = 0; i < cast.length; i++) {
+          this.novedades_productos.push({
+            id: cast[i]._id,
+            fecha: cast[i]._fecha,
+            tipo: cast[i]._tipo,
+            tipo_codigo: cast[i]._tipo_codigo,
+            descripcion: cast[i]._descripcion,
+          });
+        }
+      },
+      (err) => {
+        this.srvSnackBar.mostrarMensajeError(
+          "Ocurrió un error al obtener las novedades de productos. "
+        );
       }
-    });
+    );
 
     // tf.loadLayersModel("ruta/al/modelo/model.json").then((modelo) => {
     //   this.modelo = modelo;

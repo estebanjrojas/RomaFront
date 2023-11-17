@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { VentasService } from "../../../../../comunes/servicios/ventas.service";
 import { DatePipe } from "@angular/common";
 import { ChartOptions, ChartType } from "chart.js";
+import { SnackbarService } from "src/app/comunes/servicios/snackbar.service";
 
 @Component({
   selector: "app-rendimiento-diario-chart",
@@ -23,10 +24,15 @@ export class RendimientoDiarioChartComponent implements OnInit {
   public options: ChartOptions<"pie"> = {
     responsive: true,
     maintainAspectRatio: true,
+    color: "white",
   };
 
   private fecha;
-  constructor(private SrvVentas: VentasService, private datePipe: DatePipe) {}
+  constructor(
+    private SrvVentas: VentasService,
+    private datePipe: DatePipe,
+    private srvSnackBar: SnackbarService
+  ) {}
 
   ngOnInit() {
     this.fecha = new Date();
@@ -46,6 +52,7 @@ export class RendimientoDiarioChartComponent implements OnInit {
     this.total = 0;
     this.pieChartData = [];
     this.pieChartLabels = [];
+    this.datasets = [];
     this.SrvVentas.getVentasDiariasEmpleados(
       this.datePipe.transform(this.fecha, "yyyy-MM-dd")
     ).subscribe(
@@ -61,6 +68,9 @@ export class RendimientoDiarioChartComponent implements OnInit {
       (error) => {
         console.error(
           `Ocurrio un error al obtener los datos para el gráfico: ${error}`
+        );
+        this.srvSnackBar.mostrarMensajeError(
+          "Sin resultados al obtener las ventas diarias por empleado. "
         );
       }
     );
